@@ -5,7 +5,7 @@
 Date:           {2022-02-14}\
 Main focus:     {Backlog}\
 Chair:          {Viliam Vadocz}\
-Note taker:     {TODO}
+Note taker:     {Dimitar Nikolov}
 
 In italics, you will find some additional explanations of the agenda points. You will find mostly the same points in the next agendas.
 
