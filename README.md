@@ -10,9 +10,9 @@ Add your own name (do not add the names for others!) to the section below.
 
 | Profile Picture | Name | Email |
 |---|---|---|
-| ![](https://eu.ui-avatars.com/api/?name=OOPP&length=4&size=50&color=DDD&background=777&font-size=0.325) | Your Name Here | Y.NameHere@student.tudelft.nl |
 |![](https://avatars.githubusercontent.com/u/94116300?s=50&u=6488ac63f9d718ba412d57bad9fae6e8d2acab03&v=4)| Alexandru Bolfă | a.bolfa@student.tudelft.nl |
 | ![](https://secure.gravatar.com/avatar/8f7501b701af93c4e7824e68e9715f86?s=800&d=identicon&size=50) | Viliam Vadocz | V.Vadocz@student.tudelft.nl |
+| https://secure.gravatar.com/avatar/f0b2194f76430570db81e04555645c62?s=800&d=identicon&size=50 | Ariel Potolski Eilat | A.PotolskiEilat@student.tudelft.nl |
 
 <!-- Instructions (remove once assignment has been completed -->
 <!-- - Add (only!) your own name to the table above (use Markdown formatting) -->
