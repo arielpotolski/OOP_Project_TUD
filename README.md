@@ -14,6 +14,7 @@ Add your own name (do not add the names for others!) to the section below.
 | ![](https://secure.gravatar.com/avatar/8f7501b701af93c4e7824e68e9715f86?s=800&d=identicon&size=50) | Viliam Vadocz | V.Vadocz@student.tudelft.nl |
 | ![](https://secure.gravatar.com/avatar/9b63b2c9dd280b1a84186b1ff80887bd?s=800&d=identicon&size=50) | Viet Luong Hoang | LuongHoangViet@student.tudelft.nl |
 | <img src = "https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/4806/avatar.png" width = 50> | Dimitar Nikolov | D.N.Nikolov-1@student.tudelft.nl |
+| <img src="https://gitlab.ewi.tudelft.nl/uploads/-/system/user/avatar/4176/avatar.png" width=50> | Thomas Voss | T.A.Voss@student.tudelft.nl |
 | ![](https://secure.gravatar.com/avatar/f0b2194f76430570db81e04555645c62?s=800&d=identicon&size=50) | Ariel Potolski Eilat | A.PotolskiEilat@student.tudelft.nl |
 
 ## How to run it
