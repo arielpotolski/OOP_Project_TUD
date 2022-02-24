@@ -19,4 +19,9 @@ public class ActivityController {
         this.repository = repository;
     }
 
+    @GetMapping(path = {"", "/"})
+    public List<Activity> getAll() {
+        return  repository.findAll();
+    }
+
 }
