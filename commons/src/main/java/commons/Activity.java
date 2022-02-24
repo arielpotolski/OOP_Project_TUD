@@ -4,6 +4,7 @@ package commons;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.Objects;
 
 @Entity
 public class Activity {
@@ -95,5 +96,18 @@ public class Activity {
      */
     public void setSource(String source) {
         this.source = source;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Activity activity = (Activity) o;
+        return consumptionInWh == activity.consumptionInWh && id.equals(activity.id) && title.equals(activity.title) && source.equals(activity.source);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, consumptionInWh, source);
     }
 }
