@@ -15,14 +15,12 @@
  */
 package commons;
 
+import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Test;
-
 public class QuoteTest {
-
 	private static final Person SOME_PERSON = new Person("a", "b");
 
 	@Test

@@ -4,6 +4,7 @@
 	"https://checkstyle.org/dtds/configuration_1_3.dtd">
 
 <module name="Checker">
+	<property name="tabWidth" value="4"/>
 	<property name="fileExtensions" value="java"/>
 
 	<module name="LineLength">
@@ -11,8 +12,6 @@
 	</module>
 
 	<module name="TreeWalker">
-		<property name="tabWidth" value="4"/>
-
 		<!-- Enforce tab indentation -->
 		<module name="RegexpSinglelineJava">
 			<property name="format" value="^\t* "/>
@@ -26,7 +25,10 @@
 
 		<!-- Keeps those imports nice and tidy -->
 		<module name="AvoidStarImport"/>
-		<module name="ImportOrder"/>
+		<module name="ImportOrder">
+			<property name="groups" value="/^java\./,/^(client|server|commons)\./"/>
+			<property name="separated" value="true"/>
+		</module>
 		<module name="RedundantImport"/>
 		<module name="UnusedImports"/>
 
@@ -62,7 +64,6 @@
 
 		<!-- Extra stuff to avoid stupidity -->
 		<module name="EmptyBlock"/>
-		<module name="HideUtilityClassConstructor"/>
 		<module name="CovariantEquals"/>
 		<module name="UnusedLocalVariable"/>
 		<module name="StringLiteralEquality"/>
@@ -75,7 +76,6 @@
 			-->
 		<module name="EmptyForInitializerPad"/>
 		<module name="EmptyForIteratorPad"/>
-		<module name="EmptyLineSeparator"/>
 		<module name="GenericWhitespace"/>
 		<module name="MethodParamPad"/>
 		<module name="NoWhitespaceAfter"/>
