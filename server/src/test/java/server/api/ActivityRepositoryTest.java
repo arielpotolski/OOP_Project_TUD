@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-
 import commons.Activity;
+import server.database.ActivityRepository;
+
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import server.database.ActivityRepository;
 
 
 
@@ -199,7 +199,8 @@ class ActivityRepositoryTest implements ActivityRepository {
 	}
 
 	@Override
-	public <S extends Activity, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+	public <S extends Activity, R> R
+	findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
 		// TODO Auto-generated method stub
 		return null;
 	}
