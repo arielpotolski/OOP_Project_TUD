@@ -1,6 +1,6 @@
 # MINUTES MEETING 2
 
-## Did Last Week
+## Done Last Week
 - Dimitar: jfx, project report, ui design
 - Villiam: wrote the code of conduct, issues
 - Thomas: checkstyle configuration, looked at documentation of SpringBoot (having problems with scene builder and jfx)
