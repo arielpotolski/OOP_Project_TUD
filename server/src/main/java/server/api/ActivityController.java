@@ -25,4 +25,14 @@ public class ActivityController {
 		return  repository.findAll();
 	}
 
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Activity> deleteById(@PathVariable("id") String id) {
+		if ("".equals(id) || !repository.existsById(id)) {
+			return ResponseEntity.badRequest().build();
+		}
+
+		repository.deleteById(id);
+
+		return ResponseEntity.ok();
+	}
 }
