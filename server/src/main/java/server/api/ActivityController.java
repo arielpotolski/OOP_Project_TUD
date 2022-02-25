@@ -1,27 +1,28 @@
 package server.api;
 
+import java.util.List;
 
 import commons.Activity;
+import server.database.ActivityRepository;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import server.database.ActivityRepository;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/activities")
 public class ActivityController {
 
-    private final ActivityRepository repository;
+	private final ActivityRepository repository;
 
-    public ActivityController(ActivityRepository repository) {
-        this.repository = repository;
-    }
+	public ActivityController(ActivityRepository repository) {
+		this.repository = repository;
+	}
 
-    @GetMapping(path = {"", "/"})
-    public List<Activity> getAll() {
-        return  repository.findAll();
-    }
+	@GetMapping(path = {"", "/"})
+	public List<Activity> getAll() {
+		return  repository.findAll();
+	}
 
 }
