@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.QuestionScreenSinglePlayerCtrl">
+   <children>
+      <Button fx:id="answerButton1" layoutX="155.0" layoutY="256.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="280.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
+         <font>
+            <Font name="Calibri" size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="answerButton4" layoutX="489.0" layoutY="406.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="280.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 4">
+         <font>
+            <Font name="Calibri" size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="answerButton3" layoutX="155.0" layoutY="406.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="280.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 3">
+         <font>
+            <Font name="Calibri" size="30.0" />
+         </font>
+      </Button>
+      <Button fx:id="answerButton2" layoutX="489.0" layoutY="256.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="280.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 2">
+         <font>
+            <Font name="Calibri" size="30.0" />
+         </font>
+      </Button>
+      <Label fx:id="labelQuestion" layoutX="100.0" layoutY="48.0" prefHeight="147.0" prefWidth="700.0" style="-fx-label-padding: 0 150 0 150; -fx-background-color: #b4c7e7; -fx-background-radius: 20;" text="The question to be asked is being printed here" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imageViewQuestion" fitHeight="80.0" fitWidth="80.0" layoutX="130.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+      <Circle fx:id="circleTimer" fill="#4473c4" layoutX="729.0" layoutY="122.0" radius="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle fill="#b4c7e7" layoutX="729.0" layoutY="122.0" radius="29.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Label fx:id="labelTimer" layoutX="711.0" layoutY="101.0" text="30">
+         <font>
+            <Font name="Calibri" size="36.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
