@@ -3,9 +3,14 @@ package server.api;
 import java.util.List;
 
 import commons.Activity;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import server.database.ActivityRepository;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
