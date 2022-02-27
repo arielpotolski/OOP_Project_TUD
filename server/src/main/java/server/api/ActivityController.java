@@ -3,11 +3,9 @@ package server.api;
 import java.util.List;
 
 import commons.Activity;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import server.database.ActivityRepository;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -25,14 +23,18 @@ public class ActivityController {
 		return  repository.findAll();
 	}
 
-	@GetMapping(value = "/{id}")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Activity> deleteById(@PathVariable("id") String id) {
-		if ("".equals(id) || !repository.existsById(id)) {
+		if (isNullOrEmpty(id) || !repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();
 		}
 
 		repository.deleteById(id);
 
-		return ResponseEntity.ok();
+		return (ResponseEntity<Activity>) ResponseEntity.ok();
+	}
+
+	private static boolean isNullOrEmpty(String s) {
+		return s == null || s.isEmpty();
 	}
 }
