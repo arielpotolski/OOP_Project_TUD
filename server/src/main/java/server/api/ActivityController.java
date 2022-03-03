@@ -42,7 +42,8 @@ public class ActivityController {
 			newActivity == null ||
 			isNullOrEmpty(newActivity.getId()) ||
 			isNullOrEmpty(newActivity.getTitle()) ||
-			isNullOrEmpty(newActivity.getSource())
+			isNullOrEmpty(newActivity.getSource()) ||
+			newActivity.getConsumptionInWh() < 0
 		) {
 			return ResponseEntity.badRequest().build();
 		}
