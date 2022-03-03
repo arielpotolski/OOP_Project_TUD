@@ -31,9 +31,9 @@
       <Ellipse fx:id="doublePointsJoker" fill="#c3e2ff" layoutX="820.0" layoutY="184.0" radiusX="55.0" radiusY="37.0" stroke="BLACK" strokeType="INSIDE" />
       <Ellipse fx:id="eliminateAnswerJoker" fill="#c3e2ff" layoutX="820.0" layoutY="299.0" radiusX="55.0" radiusY="37.0" stroke="BLACK" strokeType="INSIDE" />
       <Ellipse fx:id="lessTimeJoker" fill="#c3e2ff" layoutX="817.0" layoutY="76.0" radiusX="55.0" radiusY="37.0" stroke="BLACK" strokeType="INSIDE" />
-      <Circle fx:id="circleTimer1" accessibleRole="BUTTON" fill="#4473c4" layoutX="35.0" layoutY="54.0" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle accessibleRole="BUTTON" fill="#4473c4" layoutX="35.0" layoutY="54.0" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Circle accessibleRole="BUTTON" fill="#b4c7e7" layoutX="35.0" layoutY="54.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <Label fx:id="labelTimer1" accessibleRole="BUTTON" alignment="CENTER" layoutX="29.0" layoutY="38.0" rotate="90.0" text=":)" textFill="#999696">
+      <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="29.0" layoutY="38.0" rotate="90.0" text=":)" textFill="#999696">
          <font>
             <Font name="Calibri" size="26.0" />
          </font>
@@ -58,17 +58,17 @@
             <Font name="Calibri Bold" size="39.0" />
          </font>
       </Label>
-      <Button fx:id="answerButton132" layoutX="825.0" layoutY="284.0" mnemonicParsing="false" prefHeight="8.0" prefWidth="35.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 2">
+      <Button layoutX="825.0" layoutY="284.0" mnemonicParsing="false" prefHeight="8.0" prefWidth="35.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 2">
          <font>
             <Font name="Calibri" size="5.0" />
          </font>
       </Button>
-      <Button fx:id="answerButton131" layoutX="780.0" layoutY="284.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="35.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
+      <Button layoutX="780.0" layoutY="284.0" mnemonicParsing="false" prefHeight="12.0" prefWidth="35.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
          <font>
             <Font name="Calibri" size="5.0" />
          </font>
       </Button>
-      <Button fx:id="answerButton1311" layoutX="802.0" layoutY="305.0" mnemonicParsing="false" prefHeight="8.0" prefWidth="35.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 3">
+      <Button layoutX="802.0" layoutY="305.0" mnemonicParsing="false" prefHeight="8.0" prefWidth="35.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 3">
          <font>
             <Font name="Calibri" size="5.0" />
          </font>
@@ -78,9 +78,9 @@
       <ImageView fx:id="imageFirst" fitHeight="150.0" fitWidth="200.0" layoutX="198.0" layoutY="241.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fx:id="imageSecond" fitHeight="150.0" fitWidth="200.0" layoutX="498.0" layoutY="240.0" pickOnBounds="true" preserveRatio="true" />
       <Rectangle fx:id="timeLeftBar" arcHeight="5.0" arcWidth="5.0" fill="#60cf0b" height="17.0" layoutX="7.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" width="887.0" />
-      <Circle fx:id="circleTimer11" accessibleRole="BUTTON" fill="#4473c4" layoutX="100.0" layoutY="54.0" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+      <Circle accessibleRole="BUTTON" fill="#4473c4" layoutX="100.0" layoutY="54.0" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Circle accessibleRole="BUTTON" fill="#b4c7e7" layoutX="100.0" layoutY="54.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <Label fx:id="labelTimer11" accessibleRole="BUTTON" alignment="CENTER" layoutX="93.0" layoutY="38.0" text="?" textFill="#999696">
+      <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="93.0" layoutY="38.0" text="?" textFill="#999696">
          <font>
             <Font name="Calibri" size="26.0" />
          </font>
