@@ -1,10 +1,10 @@
 package client.scenes;
 
-import com.sun.javafx.geom.Ellipse2D;
 import com.sun.javafx.geom.Rectangle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.Ellipse;
 
 public class MultiplayerQuestionScreenCtrl {
 
@@ -21,13 +21,13 @@ public class MultiplayerQuestionScreenCtrl {
 	private Button answerButton3;
 
 	@FXML
-	private Ellipse2D lessTimeJoker;
+	private Ellipse lessTimeJoker;
 
 	@FXML
-	private Ellipse2D doublePointsJoker;
+	private Ellipse doublePointsJoker;
 
 	@FXML
-	private Ellipse2D eliminateAnswerJoker;
+	private Ellipse eliminateAnswerJoker;
 
 	@FXML
 	private ImageView imageFirst;
