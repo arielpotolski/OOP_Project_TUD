@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 public class QuestionScreenSinglePlayerCtrl {
 
@@ -18,17 +18,14 @@ public class QuestionScreenSinglePlayerCtrl {
 	private Button answerButton3;
 
 	@FXML
-	private Button answerButton4;
-
-	@FXML
 	private Label labelQuestion;
 
 	@FXML
-	private Label labelTimer;
+	private ImageView imageFirst;
 
 	@FXML
-	private ImageView imageViewQuestion;
+	private ImageView imageSecond;
 
 	@FXML
-	private Circle circleTimer;
+	private Rectangle timeLeftBar;
 }
