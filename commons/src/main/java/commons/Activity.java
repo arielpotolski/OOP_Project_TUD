@@ -3,13 +3,13 @@ package commons;
 import java.util.Objects;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
 public class Activity {
 
-	private @Id @GeneratedValue String id;
+	@Id
+	private String id;
 	private String title;
 	private int consumptionInWh;
 	private String source;
