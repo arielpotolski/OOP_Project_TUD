@@ -32,7 +32,7 @@ public class ActivityController {
 		if ("".equals(id) || !repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();
 		}
-		return ResponseEntity.ok(repository.getById(id));
+		return ResponseEntity.ok(repository.findById(id).get());
 	}
 
 }
