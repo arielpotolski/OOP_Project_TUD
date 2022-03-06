@@ -6,7 +6,7 @@ import javafx.scene.shape.Rectangle;
 
 public class IntLeaderboardCtrl {
 
-    @FXML
-    private Rectangle timeUntilNextQuestion;
+	@FXML
+	private Rectangle timeUntilNextQuestion;
 
 }
