@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-public class HighestConsumptionQuestionTest extends Activity{
+public class HighestConsumptionQuestionTest{
 
 	private Activity activity1;
 	private Activity activity2;
