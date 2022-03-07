@@ -14,9 +14,9 @@ class ActivityTest {
 
 	@BeforeEach
 	void setUp(){
-		activity1 = new Activity("123", "title", 230, "some site");
-		activity2 = new Activity("123", "title", 230, "some site");
-		activity3 = new Activity("1233", "title", 230, "some site");
+		activity1 = new Activity("123", "title", 230, "pathpng", "some site");
+		activity2 = new Activity("123", "title", 230, "pathpng", "some site");
+		activity3 = new Activity("1233", "title", 230, "pathjpg", "some site");
 	}
 
 	@Test
@@ -41,6 +41,11 @@ class ActivityTest {
 	}
 
 	@Test
+	void getImagePath() {
+		assertEquals("pathpng", activity1.getImagePath());
+	}
+
+	@Test
 	void getSource() {
 		assertEquals("some site", activity1.getSource());
 	}
@@ -62,6 +67,13 @@ class ActivityTest {
 	void setConsumptionInWh() {
 		activity1.setConsumptionInWh(420);
 		assertEquals(420, activity1.getConsumptionInWh());
+	}
+
+
+	@Test
+	void setImagePath() {
+		activity1.setImagePath("imagegif");
+		assertEquals("imagegif", activity1.getImagePath());
 	}
 
 	@Test
