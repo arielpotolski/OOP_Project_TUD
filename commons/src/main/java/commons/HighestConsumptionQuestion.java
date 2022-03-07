@@ -112,7 +112,8 @@ public class HighestConsumptionQuestion {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		HighestConsumptionQuestion that = (HighestConsumptionQuestion) o;
-		return choice1.equals(that.choice1) && choice2.equals(that.choice2) && choice3.equals(that.choice3);
+		return choice1.equals(that.choice1) && choice2.equals(that.choice2)
+				&& choice3.equals(that.choice3);
 	}
 
 	@Override
