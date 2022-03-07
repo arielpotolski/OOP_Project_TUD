@@ -12,6 +12,7 @@ public class Activity {
 	private String id;
 	private String title;
 	private int consumptionInWh;
+	private String imagePath;
 	private String source;
 
 	/**
@@ -25,11 +26,13 @@ public class Activity {
 	 * @param id the unique identifier
 	 * @param title the title
 	 * @param consumptionInWh the consumption
+	 * @param imagePath the path to the image
 	 * @param source the source from where taken
 	 */
-	public Activity(String id, String title, int consumptionInWh, String source) {
+	public Activity(String id, String title, int consumptionInWh, String imagePath, String source) {
 		this.id = id;
 		this.title = title;
+		this.imagePath = imagePath;
 		this.consumptionInWh = consumptionInWh;
 		this.source = source;
 	}
@@ -56,6 +59,14 @@ public class Activity {
 	 */
 	public int getConsumptionInWh() {
 		return consumptionInWh;
+	}
+
+	/**
+	 * Getter for the image path
+	 * @return the path to the image for the activity
+	 */
+	public String getImagePath() {
+		return imagePath;
 	}
 
 	/**
@@ -91,6 +102,14 @@ public class Activity {
 	}
 
 	/**
+	 * Setter for the image path of the activity
+	 * @param imagePath the new image path for the activity
+	 */
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	/**
 	 * Setter for the source from where the activity has been taken
 	 * @param source the new source
 	 */
@@ -98,18 +117,27 @@ public class Activity {
 		this.source = source;
 	}
 
+	/**
+	 * Equals method for the activity class
+	 * @param o the object for comparison
+	 * @return true if the objects are equal and false otherwise
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Activity activity = (Activity) o;
-		return consumptionInWh == activity.consumptionInWh && id.equals(activity.id)
-				&& title.equals(activity.title) && source.equals(activity.source);
-
+		return consumptionInWh == activity.consumptionInWh && id.equals(activity.id) &&
+				title.equals(activity.title) && imagePath.equals(activity.imagePath) &&
+				source.equals(activity.source);
 	}
 
+	/**
+	 * Hashing function for the activity class
+	 * @return the hash code of the activity
+	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, title, consumptionInWh, source);
+		return Objects.hash(id, title, consumptionInWh, imagePath, source);
 	}
 }
