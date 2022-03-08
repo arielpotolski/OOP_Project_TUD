@@ -117,6 +117,19 @@ public class Activity {
 		this.source = source;
 	}
 
+
+	/**
+	 * Makes an Activity with wrong consumption for the purpose of InsteadOfQuestions
+	 */
+	public void makeFake() {
+		int prev = this.consumptionInWh;
+		do {
+			this.consumptionInWh = Math.round(
+					((Double) (Math.random() * 2 * this.consumptionInWh)).floatValue());
+		}
+		while (this.consumptionInWh == prev);
+	}
+
 	/**
 	 * Equals method for the activity class
 	 * @param o the object for comparison
