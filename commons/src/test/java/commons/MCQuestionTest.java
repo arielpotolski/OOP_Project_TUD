@@ -132,11 +132,11 @@ public class MCQuestionTest {
 			Assertions.assertEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer1());
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer2());
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer3());
-		} else if (mcQuestion3.getOrder().indexOf(1) == 1) {
+		} else if (mcQuestion3.getOrder().indexOf(2) == 0) {
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer1());
 			Assertions.assertEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer2());
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer3());
-		} else if (mcQuestion3.getOrder().indexOf(1) == 2) {
+		} else if (mcQuestion3.getOrder().indexOf(3) == 0) {
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer1());
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer2());
 			Assertions.assertEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer3());
