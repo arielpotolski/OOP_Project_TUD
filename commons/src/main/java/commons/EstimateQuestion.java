@@ -41,13 +41,14 @@ public class EstimateQuestion extends Question {
 	 * @param totalTime time player had to answer the question.
 	 * @return the amount of points player have earned in the question.
 	 */
-	public long pointsEarned(int maxPoints, int answerGiven, float timeToAnswer, float totalTime){
+	public int pointsEarned(int maxPoints, int answerGiven, float timeToAnswer, float totalTime){
 		double partialPoints; //points calculated from the difference (RA - AG)
 		float leftTime = totalTime - timeToAnswer;
 		double t = ((double) this.activity.getConsumptionInWh()) / ((double) answerGiven);
 		partialPoints = Math.abs(Math.log10(t));
 
-		return (Math.round((1 / (partialPoints + 1)) * 1000 * (leftTime / totalTime)));
+		return ((Long)((Math.round((1 / (partialPoints + 1))
+				* 1000 * (leftTime / totalTime))))).intValue();
 	}
 
 	/**
