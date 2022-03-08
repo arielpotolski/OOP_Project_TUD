@@ -21,12 +21,13 @@ public class InsteadOfQuestion {
 
 	}
 
+
 	/**
 	 * Constructor for InsteadOfQuestion
 	 * @param questionActivity the activity for the question
-	 * @param answer1 answer at position 1
-	 * @param answer2 answer at position 2
-	 * @param answer3 answer at position 3
+	 * @param answer1 initial answer activity at position 1
+	 * @param answer2 initial answer activity at position 2
+	 * @param answer3 initial answer activity at position 3
 	 */
 	public InsteadOfQuestion(Activity questionActivity, Activity answer1,
 							Activity answer2, Activity answer3) {
@@ -54,13 +55,35 @@ public class InsteadOfQuestion {
 	}
 
 	/**
+	 * Constructor for customizing fields in test
+	 * @param questionActivity the question Activity
+	 * @param answer1 the answer activity at position 1
+	 * @param answer2 the answer activity at position 2
+	 * @param answer3 the answer activity at position 3
+	 * @param c1 the custom coefficient
+	 * @param c2 the custom coefficient
+	 * @param c3 the custom coefficient
+	 */
+	public InsteadOfQuestion(Activity questionActivity, Activity answer1, Activity answer2,
+							Activity answer3, double c1, double c2, double c3) {
+		this.questionActivity = questionActivity;
+		this.answer1 = answer1;
+		this.answer2 = answer2;
+		this.answer3 = answer3;
+		this.realCoefficient1 = c1;
+		this.realCoefficient2 = c2;
+		this.realCoefficient3 = c3;
+	}
+
+
+	/**
 	 * A method which calculates and sets the original coefficients for the answers with
 	 * respect to the question
 	 * @param answer1 the original activity for answer 1
 	 * @param answer2 the original activity for answer 2
 	 * @param answer3 the original activity for answer 3
 	 */
-	public void calculateRealCoefficients(Activity answer1, Activity answer2, Activity answer3) {
+	private void calculateRealCoefficients(Activity answer1, Activity answer2, Activity answer3) {
 		this.realCoefficient1 = ((double) answer1.getConsumptionInWh())
 				/ this.questionActivity.getConsumptionInWh();
 		this.realCoefficient2 = ((double) answer2.getConsumptionInWh())
@@ -101,7 +124,7 @@ public class InsteadOfQuestion {
 	public String questionString() {
 		String result = "";
 		result += "Instead of " + questionActivity.getTitle().toLowerCase(Locale.ROOT);
-		result += "you could:";
+		result += " you could:";
 		return result;
 	}
 
