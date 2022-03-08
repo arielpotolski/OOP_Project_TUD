@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Objects;
 
-public class InsteadOfQuestion {
+public class InsteadOfQuestion extends Question {
 
 	private Activity questionActivity;
 	private Activity answer1;

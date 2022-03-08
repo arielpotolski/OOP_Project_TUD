@@ -2,7 +2,7 @@ package commons;
 
 import java.util.Objects;
 
-public class HighestConsumptionQuestion {
+public class HighestConsumptionQuestion extends Question {
 
 	private Activity choice1;
 	private Activity choice2;

@@ -2,7 +2,7 @@ package commons;
 
 import java.util.Objects;
 
-public class EstimateQuestion {
+public class EstimateQuestion extends Question {
 
 	private Activity activity;
 
