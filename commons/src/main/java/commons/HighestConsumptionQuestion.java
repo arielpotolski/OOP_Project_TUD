@@ -116,6 +116,10 @@ public class HighestConsumptionQuestion {
 				&& choice3.equals(that.choice3);
 	}
 
+	/**
+	 * Generates a hashcode for this question.
+	 * @return the hashcode that has been generated.
+	 */
 	@Override
 	public int hashCode() {
 		return Objects.hash(choice1, choice2, choice3);
