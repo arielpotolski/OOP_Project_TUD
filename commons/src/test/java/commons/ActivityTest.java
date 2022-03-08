@@ -14,9 +14,9 @@ class ActivityTest {
 
 	@BeforeEach
 	void setUp(){
-		activity1 = new Activity("123", "title", 230, "some site");
-		activity2 = new Activity("123", "title", 230, "some site");
-		activity3 = new Activity("1233", "title", 230, "some site");
+		activity1 = new Activity("123", "title", 230, "pathpng", "some site");
+		activity2 = new Activity("123", "title", 230, "pathpng", "some site");
+		activity3 = new Activity("1233", "title", 230, "pathjpg", "some site");
 	}
 
 	@Test
@@ -38,6 +38,11 @@ class ActivityTest {
 	@Test
 	void getConsumptionInWh() {
 		assertEquals(230, activity1.getConsumptionInWh());
+	}
+
+	@Test
+	void getImagePath() {
+		assertEquals("pathpng", activity1.getImagePath());
 	}
 
 	@Test
@@ -64,6 +69,13 @@ class ActivityTest {
 		assertEquals(420, activity1.getConsumptionInWh());
 	}
 
+
+	@Test
+	void setImagePath() {
+		activity1.setImagePath("imagegif");
+		assertEquals("imagegif", activity1.getImagePath());
+	}
+
 	@Test
 	void setSource() {
 		activity1.setSource("some other site");
@@ -79,5 +91,20 @@ class ActivityTest {
 	@Test
 	void testHashMethod() {
 		assertEquals(activity1.hashCode(), activity2.hashCode());
+	}
+
+	@Test
+	void makeFake() {
+		assertEquals(activity1, activity2);
+		activity1.makeFake();
+		assertNotEquals(activity1, activity2);
+	}
+
+	@Test
+	void toStringTest() {
+		String expected = "Activity{id='123', title='title', " +
+				"consumptionInWh=230, imagePath='pathpng', " +
+				"source='some site'}";
+		assertEquals(expected, activity1.toString());
 	}
 }
