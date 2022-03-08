@@ -99,4 +99,12 @@ class ActivityTest {
 		activity1.makeFake();
 		assertNotEquals(activity1, activity2);
 	}
+
+	@Test
+	void toStringTest() {
+		String expected = "Activity{id='123', title='title', " +
+				"consumptionInWh=230, imagePath='pathpng', " +
+				"source='some site'}";
+		assertEquals(expected, activity1.toString());
+	}
 }
