@@ -131,6 +131,21 @@ public class Activity {
 	}
 
 	/**
+	 * ToString method for an Activity
+	 * @return the object in the form of human-readable string
+	 */
+	@Override
+	public String toString() {
+		return "Activity{" +
+				"id='" + id + '\'' +
+				", title='" + title + '\'' +
+				", consumptionInWh=" + consumptionInWh +
+				", imagePath='" + imagePath + '\'' +
+				", source='" + source + '\'' +
+				'}';
+	}
+
+	/**
 	 * Equals method for the activity class
 	 * @param o the object for comparison
 	 * @return true if the objects are equal and false otherwise
