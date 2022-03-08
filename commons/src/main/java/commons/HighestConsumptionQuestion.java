@@ -78,24 +78,23 @@ public class HighestConsumptionQuestion extends Question {
 	 * @param totalTime total time user had to answer the question.
 	 * @return the amount of points user earned for this question.
 	 */
-	protected int pointsEarned(int maxPoints, String answerGivenTitle, float timeForAnswering,
+	public int pointsEarned(int maxPoints, int answerGivenTitle, float timeForAnswering,
 								float totalTime){
 
-		int maxConsumption;
-		Activity highestConsumptionAct;
+		int maxConsumption, positionHighest;
 
 		maxConsumption = (Math.max(this.choice1.getConsumptionInWh(),
 				Math.max(this.choice2.getConsumptionInWh(), this.choice3.getConsumptionInWh())));
 
-		if (choice1.getConsumptionInWh() == maxConsumption)
-			highestConsumptionAct = choice1;
-		else if (choice2.getConsumptionInWh() == maxConsumption)
-			highestConsumptionAct = choice2;
-		else
-			highestConsumptionAct = choice3;
+		if (choice1.getConsumptionInWh() == maxConsumption) {
+			positionHighest = 1;
+		} else if (choice2.getConsumptionInWh() == maxConsumption) {
+			positionHighest = 2;
+		} else {
+			positionHighest = 3;
+		}
 
-
-		if(!answerGivenTitle.equals(highestConsumptionAct.getTitle()))
+		if(answerGivenTitle != positionHighest)
 			return 0;
 		else
 			return Math.round((maxPoints * (totalTime - timeForAnswering)) / totalTime);

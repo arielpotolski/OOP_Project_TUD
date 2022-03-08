@@ -63,14 +63,14 @@ public class HighestConsumptionQuestionTest{
 
 	@Test
 	public void wrongAnswerTest(){
-		assertEquals(0, question.pointsEarned(1000, "act1",
+		assertEquals(0, question.pointsEarned(1000, 1,
 				5, 20));
 	}
 
 	@Test
 	public void correctAnswerTest1(){
 		assertEquals(500, question.pointsEarned(1000,
-				"act3", 10, 20));
+				3, 10, 20));
 	}
 
 	@Test
