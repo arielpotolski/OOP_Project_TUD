@@ -92,4 +92,11 @@ class ActivityTest {
 	void testHashMethod() {
 		assertEquals(activity1.hashCode(), activity2.hashCode());
 	}
+
+	@Test
+	void makeFake() {
+		assertEquals(activity1, activity2);
+		activity1.makeFake();
+		assertNotEquals(activity1, activity2);
+	}
 }
