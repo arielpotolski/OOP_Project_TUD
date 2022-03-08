@@ -1,5 +1,7 @@
 package commons;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 public class InsteadOfQuestion {
@@ -65,6 +67,109 @@ public class InsteadOfQuestion {
 				/ this.questionActivity.getConsumptionInWh();
 		this.realCoefficient3 = ((double) answer3.getConsumptionInWh())
 				/ this.questionActivity.getConsumptionInWh();
+	}
+
+	/**
+	 * Getter for the path to the image
+	 * @param numberOfAnswer the sequential number of the answer for which the picture is
+	 *                       required. It should be between 1 and 3 inclusive
+	 * @return The path to the image for the answer
+	 */
+	public String getImagePathAnswer(int numberOfAnswer) {
+		if (numberOfAnswer == 1) {
+			return answer1.getImagePath();
+		} else if (numberOfAnswer == 2) {
+			return answer2.getImagePath();
+		} else if (numberOfAnswer == 3) {
+			return answer3.getImagePath();
+		} else throw new
+				IllegalArgumentException("The input number should be between 1 and 3 inclusive");
+	}
+
+	/**
+	 * Getter for the image path of the question activity
+	 * @return the image path of the question activity
+	 */
+	public String getImagePathQuestion() {
+		return questionActivity.getImagePath();
+	}
+
+	/**
+	 * Method for the Label with the question that is asked
+	 * @return question activity in a user-friendly form as a string
+	 */
+	public String questionString() {
+		String result = "";
+		result += "Instead of " + questionActivity.getTitle().toLowerCase(Locale.ROOT);
+		result += "you could:";
+		return result;
+	}
+
+	/**
+	 * Method for the Buttons with the answers in them
+	 * @param numberOfAnswer the sequential number of the answer for which the text is
+	 *                       required. It should be between 1 and 3 inclusive
+	 * @return a ready to use string for the labels
+	 */
+	public String answerString(int numberOfAnswer) {
+		String result = "";
+		Activity current;
+		if (numberOfAnswer == 1) {
+			current = answer1;
+		} else if (numberOfAnswer == 2) {
+			current = answer2;
+		} else if (numberOfAnswer == 3) {
+			current = answer3;
+		} else throw new IllegalArgumentException("The answer asked to be stringed does not exist");
+		result += current.getTitle() + " ";
+		DecimalFormat df = new DecimalFormat("0.00");
+		result += df.format(((double) current.getConsumptionInWh()) /
+				((double) questionActivity.getConsumptionInWh()));
+		result += " times";
+		return result;
+	}
+
+	/**
+	 * Method used for creating a String with the activity so that it acts as if correct one
+	 * @param numberOfAnswer the number of the answer given
+	 * @return a string ready for comparison with the given answer
+	 */
+	private String correctAnswerString(int numberOfAnswer) {
+		String result = "";
+		double coefficient;
+		Activity current;
+		if (numberOfAnswer == 1) {
+			coefficient = realCoefficient1;
+			current = answer1;
+		} else if (numberOfAnswer == 2) {
+			coefficient = realCoefficient2;
+			current = answer2;
+		} else if (numberOfAnswer == 3) {
+			coefficient = realCoefficient3;
+			current = answer3;
+		} else throw new IllegalArgumentException("The answer asked to be stringed does not exist");
+		result += current.getTitle() + " ";
+		DecimalFormat df = new DecimalFormat("0.00");
+		result += df.format(coefficient);
+		result += " times";
+		return result;
+	}
+
+	/**
+	 * Calculates the points earned depending on the answer given
+	 * @param maxPoints the maximal amount of points possible
+	 * @param answerGiven the answer given by the user
+	 * @param timePassed the time passed before answering in seconds
+	 * @param totalTime total time available for answer in seconds
+	 * @return The total amount of points earned as an integer
+	 */
+	public int pointsEarned(int maxPoints, int answerGiven, float timePassed, float totalTime) {
+		if (!answerString(answerGiven).equals(correctAnswerString(answerGiven))){
+			return 0;
+		}
+		double coefficientTime = ((double) (totalTime - timePassed)) / ((double) totalTime);
+		float pointsEarned = ((Double) (coefficientTime * maxPoints)).floatValue();
+		return Math.round(pointsEarned);
 	}
 
 	/**
