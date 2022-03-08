@@ -128,17 +128,15 @@ public class MCQuestionTest {
 
 	@Test
 	void generateAnswers() {
-		if (mcQuestion3.getOrder().get(0) == 1) {
+		if (mcQuestion3.getOrder().indexOf(1) == 0) {
 			Assertions.assertEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer1());
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer2());
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer3());
-		}
-		if (mcQuestion3.getOrder().get(1) == 1) {
+		} else if (mcQuestion3.getOrder().indexOf(1) == 1) {
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer1());
 			Assertions.assertEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer2());
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer3());
-		}
-		if (mcQuestion3.getOrder().get(2) == 1) {
+		} else if (mcQuestion3.getOrder().indexOf(1) == 2) {
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer1());
 			Assertions.assertNotEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer2());
 			Assertions.assertEquals(activity.getConsumptionInWh(), mcQuestion3.getAnswer3());
