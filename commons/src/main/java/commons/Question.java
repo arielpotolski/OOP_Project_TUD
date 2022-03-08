@@ -5,5 +5,5 @@ public abstract class Question {
 
 	}
 	public abstract int pointsEarned(int maxPoints, int answerGiven,
-									 float timeToAnswer, float totalTime);
+									float timeToAnswer, float totalTime);
 }
