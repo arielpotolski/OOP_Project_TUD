@@ -1,7 +1,6 @@
 package server;
 
 import java.util.HashMap;
-import java.util.Map.Entry;
 
 import commons.LobbyResponse;
 
@@ -53,19 +52,12 @@ public class LobbyController {
 	 */
 	private void clearOld() {
 		long currentTime = System.currentTimeMillis();
-		HashMap<String, Long> players = new HashMap<>();
-		HashMap<String, Integer> ids = new HashMap<>();
-		for (Entry<String, Long> entry : this.players.entrySet()) {
-			String name = entry.getKey();
-			Long time = entry.getValue();
-			// Keep only names that are younger than TIMEOUT
-			if (currentTime < time + TIMEOUT_MILLISECONDS) {
-				players.put(name, time);
-				ids.put(name, this.ids.get(name));
-			}
-		}
-		this.players = players;
-		this.ids = ids;
+		this.players
+			.values()
+			.removeIf(time -> currentTime > time + TIMEOUT_MILLISECONDS);
+		this.ids
+			.keySet()
+			.removeIf(name -> !this.players.containsKey(name));
 	}
 
 	@GetMapping("/register/")
