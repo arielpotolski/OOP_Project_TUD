@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingScreenCtrl">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="185.0" layoutY="82.0" prefHeight="85.0" prefWidth="530.0" text="You Are in Waiting Lobby Now" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Calibri Bold" size="40.0" />
+         </font>
+      </Label>
+      <Label fx:id="peopleInTheRoomLabel" alignment="CENTER" layoutX="171.0" layoutY="183.0" prefHeight="54.0" prefWidth="558.0" text="Label for people in the room" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Calibri" size="29.0" />
+         </font>
+      </Label>
+      <Button fx:id="startButton" layoutX="322.0" layoutY="466.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="START">
+         <font>
+            <Font name="Calibri Bold" size="42.0" />
+         </font>
+      </Button>
+      <ScrollPane layoutX="237.0" layoutY="246.0" prefHeight="200.0" prefWidth="426.0">
+        <content>
+          <AnchorPane fx:id="peopleInTheLeaderBoardPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="398.0" />
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
