@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.IntermediateSceneCtrl">
+   <children>
+      <Rectangle fx:id="timeUntilNextQuestion" arcHeight="5.0" arcWidth="5.0" fill="#60cf0b" height="17.0" layoutX="7.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="887.0" />
+      <Label alignment="CENTER" layoutX="193.0" layoutY="369.0" prefHeight="87.0" prefWidth="517.0" text="Your Current Total Score: ">
+         <font>
+            <Font name="Calibri Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="191.0" layoutY="48.0" prefHeight="87.0" prefWidth="517.0" text="Answered:">
+         <font>
+            <Font name="Calibri Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label fx:id="playerPoints" alignment="CENTER" layoutX="364.0" layoutY="456.0" prefHeight="69.0" prefWidth="172.0" text="1650">
+         <font>
+            <Font name="Calibri Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label fx:id="questionsAnswered" alignment="CENTER" layoutX="386.0" layoutY="135.0" prefHeight="69.0" prefWidth="128.0" text="2 / 20">
+         <font>
+            <Font name="Calibri Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="210.0" layoutY="216.0" prefHeight="69.0" prefWidth="480.0" text="Points earned in this question:">
+         <font>
+            <Font name="Calibri Bold" size="36.0" />
+         </font>
+      </Label>
+      <Label fx:id="currentQuestionPointsEarned" alignment="CENTER" layoutX="378.0" layoutY="300.0" prefHeight="55.0" prefWidth="144.0" text="950/1000">
+         <font>
+            <Font name="Calibri Bold" size="36.0" />
+         </font>
+      </Label>
+   </children>
+</Pane>
