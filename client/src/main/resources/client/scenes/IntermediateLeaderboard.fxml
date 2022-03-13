@@ -2,34 +2,43 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.IntLeaderboardCtrl">
    <children>
-      <Rectangle fx:id="timeUntilNextQuestion" arcHeight="5.0" arcWidth="5.0" fill="#60cf0b" height="17.0" layoutX="7.0" layoutY="6.0" stroke="BLACK" strokeType="INSIDE" width="887.0" />
-      <Label alignment="CENTER" layoutX="131.0" layoutY="53.0" prefHeight="113.0" prefWidth="638.0" text="Intermediate Leaderboard">
-         <font>
-            <Font name="Calibri" size="48.0" />
-         </font>
-      </Label>
-      <ScrollPane layoutX="232.0" layoutY="173.0" prefHeight="296.0" prefWidth="423.0">
-         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="400.0" style="-fx-border-radius: 30;">
+      <ProgressBar fx:id="timeUntilNextQuestion" prefHeight="23.0" prefWidth="900.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="602.0" prefWidth="697.0" spacing="50.0">
                <children>
-                  <Label alignment="CENTER" layoutX="39.0" layoutY="14.0" prefHeight="29.0" prefWidth="75.0" style="-fx-underline: 10;" text="Player" textAlignment="CENTER">
+                  <Label alignment="CENTER" prefHeight="113.0" prefWidth="638.0" text="Intermediate Leaderboard">
                      <font>
-                        <Font name="Calibri Bold" size="18.0" />
+                        <Font name="Calibri" size="48.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="285.0" layoutY="11.0" prefHeight="35.0" prefWidth="76.0" style="-fx-underline: 10;" text="Score">
-                     <font>
-                        <Font name="Calibri Bold" size="18.0" />
-                     </font>
-                  </Label>
+                  <ScrollPane fx:id="leaderBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="296.0" prefWidth="423.0">
+                     <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="400.0" style="-fx-border-radius: 30;">
+                           <children>
+                              <Label alignment="CENTER" layoutX="39.0" layoutY="14.0" prefHeight="29.0" prefWidth="75.0" style="-fx-underline: 10;" text="Player" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Calibri Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="285.0" layoutY="11.0" prefHeight="35.0" prefWidth="76.0" style="-fx-underline: 10;" text="Score">
+                                 <font>
+                                    <Font name="Calibri Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                     </content>
+                  </ScrollPane>
                </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
