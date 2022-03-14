@@ -30,7 +30,7 @@ public class InsteadOfQuestion extends Question {
 	 * @param answer3 initial answer activity at position 3
 	 */
 	public InsteadOfQuestion(Activity questionActivity, Activity answer1,
-	                         Activity answer2, Activity answer3) {
+	Activity answer2, Activity answer3) {
 		this.questionActivity = questionActivity;
 		calculateRealCoefficients(answer1, answer2, answer3);
 
@@ -65,7 +65,7 @@ public class InsteadOfQuestion extends Question {
 	 * @param c3 the custom coefficient
 	 */
 	public InsteadOfQuestion(Activity questionActivity, Activity answer1, Activity answer2,
-	                         Activity answer3, double c1, double c2, double c3) {
+	Activity answer3, double c1, double c2, double c3) {
 		this.questionActivity = questionActivity;
 		this.answer1 = answer1;
 		this.answer2 = answer2;
