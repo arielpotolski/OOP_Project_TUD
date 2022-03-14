@@ -1,15 +1,24 @@
 package client.scenes;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 
-public class QuestionScreenSinglePlayerCtrl {
+
+
+public class QuestionScreenSinglePlayerCtrl implements Initializable {
+	private MainCtrl mainCtrl;
+	private ServerUtils server;
 
 	@FXML
-	private javafx.scene.control.Button answerButton1;
+	private TextField textField;
+
+	@FXML
+	private Button answerButton1;
 
 	@FXML
 	private Button answerButton2;
@@ -18,7 +27,7 @@ public class QuestionScreenSinglePlayerCtrl {
 	private Button answerButton3;
 
 	@FXML
-	private Label labelQuestion;
+	public Label labelQuestion;
 
 	@FXML
 	private ImageView imageFirst;
@@ -27,5 +36,144 @@ public class QuestionScreenSinglePlayerCtrl {
 	private ImageView imageSecond;
 
 	@FXML
-	private Rectangle timeLeftBar;
+	private ProgressBar timeLeftBar;
+
+	double progress = 1;
+
+	@Inject
+	/**
+	 * Constructor for question screen in single player mode.
+	 *
+	 * @param mainCtrl the injected main controller.
+	 * @param server the injected server.
+	 */
+	public QuestionScreenSinglePlayerCtrl(MainCtrl mainCtrl,ServerUtils server){
+		this.mainCtrl = mainCtrl;
+		this.server = server;
+	}
+
+	/**
+	 * this method set up the question in the label
+	 *
+	 * @param label the question.
+	 */
+	public void setUpLabel(String label){
+		labelQuestion.setText(label);
+	}
+
+	/**
+	 * this method set up the first answer in the first button
+	 *
+	 * @param label the first answer.
+	 */
+	public void setLabelButton1(String label){
+		answerButton1.setText(label);
+	}
+
+	/**
+	 * this method set up the second answer in the second button
+	 *
+	 * @param label the second answer.
+	 */
+	public void setLabelButton2(String label){
+		answerButton2.setText(label);
+	}
+
+	/**
+	 * this method set up the third answer in the third button
+	 *
+	 * @param label the third answer.
+	 */
+	public void setLabelButton3(String label){
+		answerButton3.setText(label);
+	}
+
+	/**
+	 * this method set up the visibility of the first button.
+	 *
+	 * @param visible the visibility of a button
+	 */
+	public void setVisibleButton1(boolean visible){
+		answerButton1.setVisible(visible);
+	}
+
+	/**
+	 * this method set up the visibility of the second button.
+	 *
+	 * @param visible the visibility of a button
+	 */
+	public void setVisibleButton2(boolean visible){
+		answerButton2.setVisible(visible);
+	}
+
+	/**
+	 * this method set up the visibility of the third button.
+	 *
+	 * @param visible the visibility of a button
+	 */
+	public void setVisibleButton3(boolean visible){
+		answerButton3.setVisible(visible);
+	}
+
+	/**
+	 * this method set up the visibility of the text field.
+	 *
+	 * @param visible the visibility of the text field.
+	 */
+	public void setVisibleTextField(boolean visible){
+		textField.setVisible(visible);
+	}
+
+	/**
+	 * this method shows answer when player click on one of the three buttons.
+	 *
+	 * @param event the player click on the button.
+	 */
+	public void answerReturn(ActionEvent event) {
+		if(event.getSource() == answerButton1){
+			mainCtrl.showAnswer(answerButton1,null);
+		} else if(event.getSource() == answerButton2){
+			mainCtrl.showAnswer(answerButton2,null);
+		} else if(event.getSource() == answerButton3){
+			mainCtrl.showAnswer(answerButton3,null);
+		} else if(event.getSource() == textField){
+			mainCtrl.showAnswer(null,textField);
+		}
+	}
+
+	@Override
+	/**
+	 * this method set up the color for the progress bar.
+	 */
+	public void initialize(URL location, ResourceBundle resources) {
+		timeLeftBar.setStyle("-fx-accent: #00FF00");
+	}
+
+	/**
+	 * this method decrease the progress
+	 */
+	public void decreaseProgress(){
+		progress -= 0.1;
+		timeLeftBar.setProgress(progress);
+	}
+
+	/**
+	 * this method returns the progress
+	 *
+	 * @return the progress.
+	 */
+	public double getProgress(){
+		return progress;
+	}
+
+	/**
+	 *this method set up the progress
+	 *
+	 * @param progress the starting number of for the progress bar
+	 *                    (basically progress will be set up 1).
+	 */
+	public void setProgress(double progress){
+		this.progress = progress;
+		timeLeftBar.setProgress(progress);
+	}
 }
