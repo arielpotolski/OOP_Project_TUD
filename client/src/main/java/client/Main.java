@@ -18,9 +18,14 @@ package client;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import client.scenes.AddQuoteCtrl;
+import client.scenes.GlobalLeaderboardScreenCtrl;
+import client.scenes.IntermediateSceneCtrl;
 import client.scenes.MainCtrl;
-import client.scenes.QuoteOverviewCtrl;
+import client.scenes.MultiplayerPreGameCtrl;
+import client.scenes.QuestionScreenSinglePlayerCtrl;
+import client.scenes.SinglePlayerFinalScreenCtrl;
+import client.scenes.SinglePlayerPreGameCtrl;
+import client.scenes.SplashCtrl;
 
 import com.google.inject.Injector;
 import javafx.application.Application;
@@ -38,10 +43,23 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 
-		var overview = FXML.load(QuoteOverviewCtrl.class, "client", "scenes", "QuoteOverview.fxml");
-		var add = FXML.load(AddQuoteCtrl.class, "client", "scenes", "AddQuote.fxml");
-
+		var singlePlayer = FXML.load(SinglePlayerPreGameCtrl.class,"client","scenes",
+				"SinglePlayerPreGame.fxml");
+		var multiPlayer = FXML.load(MultiplayerPreGameCtrl.class,"client","scenes",
+				"MultiplayerPreGame.fxml");
+		var splashScreen = FXML.load(SplashCtrl.class,"client","scenes",
+				"SplashScreen.fxml");
+		var singlePlayerQuestion = FXML.load(QuestionScreenSinglePlayerCtrl.class,"client","scenes",
+				"QuestionScreenSinglePlayer.fxml");
+		var globalLeaderBoard = FXML.load(GlobalLeaderboardScreenCtrl.class,"client","scenes",
+				"GlobalLeaderboard.fxml");
+		var intermediateScene = FXML.load(IntermediateSceneCtrl.class,"client","scenes",
+				"IntermediateScreen.fxml");
+		var singlePlayerFinalScene = FXML.load(SinglePlayerFinalScreenCtrl.class,"client","scenes",
+				"SinglePlayerFinalScreen.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-		mainCtrl.initialize(primaryStage, overview, add);
+		mainCtrl.initialize(primaryStage, singlePlayer, multiPlayer,splashScreen,
+				singlePlayerQuestion,globalLeaderBoard,intermediateScene, singlePlayerFinalScene);
 	}
 }
+	
