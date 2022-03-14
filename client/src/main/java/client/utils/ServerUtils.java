@@ -15,14 +15,12 @@
  */
 package client.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.List;
 
-import commons.Quote;
+import commons.Activity;
+import commons.Player;
 
+import com.google.inject.Inject;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
@@ -30,31 +28,57 @@ import org.glassfish.jersey.client.ClientConfig;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
-	private static final String SERVER = "http://localhost:8080/";
+	private String server;
 
-	public void getQuotesTheHardWay() throws IOException {
-		var url = new URL("http://localhost:8080/api/quotes");
-		var is = url.openConnection().getInputStream();
-		var br = new BufferedReader(new InputStreamReader(is));
-		String line;
-		while ((line = br.readLine()) != null) {
-			System.out.println(line);
-		}
+
+	/**
+	 * Constructor for the connection between client and server.
+	 *
+	 * @param server the link that player types before playing the game
+	 */
+	@Inject
+	public ServerUtils(String server){
+		this.server = server;
 	}
 
-	public List<Quote> getQuotes() {
-		return ClientBuilder.newClient(new ClientConfig()) //
-				.target(SERVER).path("api/quotes") //
-				.request(APPLICATION_JSON) //
-				.accept(APPLICATION_JSON) //
-				.get(new GenericType<List<Quote>>() {});
+	/**
+	 * The method add a player to database
+	 *
+	 * @param player an information of a player.
+	 * @return a player
+	 */
+	public Player addPlayer(Player player) {
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(server).path("api/players/addPlayer")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.put(Entity.entity(player, APPLICATION_JSON), Player.class);
 	}
 
-	public Quote addQuote(Quote quote) {
-		return ClientBuilder.newClient(new ClientConfig()) //
-				.target(SERVER).path("api/quotes") //
-				.request(APPLICATION_JSON) //
-				.accept(APPLICATION_JSON) //
-				.post(Entity.entity(quote, APPLICATION_JSON), Quote.class);
+	/**
+	 * The method get a list of activities from database.
+	 *
+	 * @return a list of activity.
+	 */
+	public List<Activity> getActivityList(){
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(server).path("api/activities/")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<List<Activity>>() {});
 	}
+
+	/**
+	 * this method get a list of players for global leader board.
+	 *
+	 * @return a list of players.
+	 */
+	public List<Player> getPlayers() {
+		return ClientBuilder.newClient(new ClientConfig())
+				.target(server).path("api/players")
+				.request(APPLICATION_JSON)
+				.accept(APPLICATION_JSON)
+				.get(new GenericType<List<Player>>() {});
+	}
+
 }
