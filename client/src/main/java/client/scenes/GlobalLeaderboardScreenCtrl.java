@@ -67,6 +67,6 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 	}
 
 	public void jumpToSplashScreen() {
-		mainCtrl.showSplashScreen();
+		//mainCtrl.showSplashScreen();
 	}
 }

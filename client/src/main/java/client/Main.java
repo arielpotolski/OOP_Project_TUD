@@ -18,8 +18,6 @@ package client;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-import client.scenes.MainCtrl;
-
 import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.stage.Stage;
