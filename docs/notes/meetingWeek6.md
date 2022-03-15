@@ -17,7 +17,7 @@
     -   Fixed merge conflicts.
 
 -   Vill
-    -   Make some acitivies and made sure there were no mistakes.
+    -   Make some activities and made sure there were no mistakes.
     -   Added connectivity to the server.
 
 -   Dimitar
@@ -39,8 +39,8 @@
 .
 
 -   Thomas
-    -   Created some acitivies for the activity bank.
-    -   Added support to get random acitivies, but Dimitar already did that.
+    -   Created some activities for the activity bank.
+    -   Added support to get random activities, but Dimitar already did that.
 
 .
 
@@ -56,7 +56,7 @@
 
 -   Single player works.
 -   There is a global leaderboard, but data isn't pretty printed.
--   You can answer questions, theres a timer between them, and they go
+-   You can answer questions, there's a timer between them, and they go
     sequentially (can't go backwards in single player mode).
 
 
@@ -66,7 +66,7 @@
 
 -   The server mostly works, but there is no frontend connected to it (yet).
 -   Server uses REST obviously.
--   Players have IDs so we can differenciate between new players and ones
+-   Players have IDs so we can differentiate between new players and ones
     refreshing their connections.
 
 
