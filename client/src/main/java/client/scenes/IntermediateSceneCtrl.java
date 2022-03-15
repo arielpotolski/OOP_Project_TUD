@@ -37,20 +37,20 @@ public class IntermediateSceneCtrl implements Initializable {
 	 * @param mainCtrl the injected main controller.
 	 * @param server the injected server.
 	 */
-	public IntermediateSceneCtrl(MainCtrl mainCtrl, ServerUtils server){
+	public IntermediateSceneCtrl(MainCtrl mainCtrl, ServerUtils server) {
 		this.mainCtrl = mainCtrl;
 		this.server = server;
 	}
 
-	public void setLabelPoint(int point){
+	public void setLabelPoint(int point) {
 		playerPoints.setText(Integer.toString(point));
 	}
 
-	public void setQuestionAnswer(int numberQuestion){
+	public void setQuestionAnswer(int numberQuestion) {
 		questionsAnswered.setText(Integer.toString(numberQuestion) + "/20");
 	}
 
-	public void setCurrentQuestionPointsEarned(int point){
+	public void setCurrentQuestionPointsEarned(int point) {
 		currentQuestionPointsEarned.setText(Integer.toString(point) + "/1000");
 	}
 
@@ -59,16 +59,16 @@ public class IntermediateSceneCtrl implements Initializable {
 		timeUntilNextQuestion.setStyle("-fx-accent: #00FF00");
 	}
 
-	public void decreaseProgress(){
+	public void decreaseProgress() {
 		progress -= 0.1;
 		timeUntilNextQuestion.setProgress(progress);
 	}
 
-	public double getProgress(){
+	public double getProgress() {
 		return progress;
 	}
 
-	public void setProgress(double progress){
+	public void setProgress(double progress) {
 		this.progress = progress;
 		timeUntilNextQuestion.setProgress(progress);
 	}
