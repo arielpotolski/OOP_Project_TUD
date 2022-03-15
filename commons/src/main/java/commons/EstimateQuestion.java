@@ -46,7 +46,7 @@ public class EstimateQuestion extends Question {
 		double t = ((double) this.activity.getConsumptionInWh()) / ((double) answerGiven);
 		double partialPoints = Math.abs(Math.log10(t));
 
-		return (int) Math.round(1000 * (leftTime / totalTime * (partialPoints + 1)));
+		return (int) Math.round(1000 * leftTime / (totalTime * (partialPoints + 1)));
 	}
 
 	/**
