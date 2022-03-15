@@ -2,12 +2,12 @@ package client.scenes;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.control.ProgressBar;
 
 public class IntermediateSceneCtrl {
 
 	@FXML
-	private Rectangle timeUntilNextQuestion;
+	private ProgressBar timeUntilNextQuestion;
 
 	@FXML
 	private Label playerPoints;
