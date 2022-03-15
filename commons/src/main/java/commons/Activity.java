@@ -2,17 +2,25 @@ package commons;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
+
 
 @Entity
 public class Activity {
 
-	@Id
-	private String id;
+
+	@JsonProperty ("id")
+	private @Id String id;
+	@JsonProperty("title")
 	private String title;
+	@JsonProperty("consumption_in_wh")
 	private int consumptionInWh;
+	@JsonProperty("image_path")
 	private String imagePath;
+	@JsonProperty("source")
 	private String source;
 
 	/**
