@@ -41,10 +41,10 @@ public class ActivityController {
 		if (isNullOrEmpty(id) || !repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();
 		}
-
+		Activity activity = repository.findById(id).get();
 		repository.deleteById(id);
 
-		return (ResponseEntity<Activity>) ResponseEntity.ok();
+		return ResponseEntity.ok(activity);
 	}
 
 	@GetMapping(value = "/{id}")
