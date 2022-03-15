@@ -187,7 +187,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return The total amount of points earned as an integer
 	 */
 	public int pointsEarned(int maxPoints, int answerGiven, float timePassed, float totalTime) {
-		if (!answerString(answerGiven).equals(correctAnswerString(answerGiven))){
+		if (!answerString(answerGiven).equals(correctAnswerString(answerGiven))) {
 			return 0;
 		}
 		double coefficientTime = ((double) (totalTime - timePassed)) / ((double) totalTime);
