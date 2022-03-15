@@ -39,3 +39,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Emacs ###
+.dir-locals.el
+\#*
+.\#*
