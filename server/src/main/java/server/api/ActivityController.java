@@ -8,6 +8,7 @@ import server.database.ActivityRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,17 @@ public class ActivityController {
 	@GetMapping(path = {"", "/"})
 	public List<Activity> getAll() {
 		return  repository.findAll();
+	}
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Activity> deleteById(@PathVariable("id") String id) {
+		if (isNullOrEmpty(id) || !repository.existsById(id)) {
+			return ResponseEntity.badRequest().build();
+		}
+
+		repository.deleteById(id);
+
+		return (ResponseEntity<Activity>) ResponseEntity.ok();
 	}
 
 	@GetMapping(value = "/{id}")
