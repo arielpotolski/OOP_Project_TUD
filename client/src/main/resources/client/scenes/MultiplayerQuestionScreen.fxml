@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.MultiplayerQuestionScreenCtrl">
+   <children>
+      <ProgressBar fx:id="progressBarTime" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="900.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <HBox prefHeight="600.0" prefWidth="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <VBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="300.0">
+                     <children>
+                        <Circle accessibleRole="BUTTON" fill="#4473c4" layoutX="50.0" layoutY="62.0" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Circle fx:id="innerCircleTutorial" accessibleRole="BUTTON" fill="#b4c7e7" layoutX="50.0" layoutY="62.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="44.0" layoutY="47.0" text="?" textFill="#999696">
+                           <font>
+                              <Font name="Calibri" size="26.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="300.0">
+                     <children>
+                        <Circle accessibleRole="BUTTON" fill="#4473c4" layoutX="50.0" layoutY="62.0" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Circle fx:id="innerCircleEmoticon" accessibleRole="BUTTON" fill="#b4c7e7" layoutX="50.0" layoutY="62.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+                        <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="44.0" layoutY="47.0" rotate="90.0" text=":)" textFill="#999696">
+                           <font>
+                              <Font name="Calibri" size="26.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" HBox.hgrow="SOMETIMES">
+               <children>
+                  <Label fx:id="labelQuestion" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="147.0" prefWidth="570.0" style="-fx-background-color: #b4c7e7; -fx-background-radius: 20;" text="The question to be asked is being printed here" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Calibri" size="18.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Label>
+                  <ImageView fx:id="imageQuestion" fitHeight="102.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="105.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefWidth="237.0">
+                           <children>
+                              <ImageView fx:id="imageFirst" fitHeight="100.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefWidth="237.0">
+                           <children>
+                              <ImageView fx:id="imageSecond" fitHeight="100.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" prefWidth="237.0">
+                           <children>
+                              <ImageView fx:id="imageThird" fitHeight="100.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" spacing="50.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Button fx:id="answerButton1" mnemonicParsing="false" prefHeight="74.0" prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Calibri" size="30.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="answerButton2" mnemonicParsing="false" prefHeight="74.0" prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Calibri" size="30.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="answerButton3" mnemonicParsing="false" prefHeight="74.0" prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="Calibri" size="30.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets top="30.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox HBox.hgrow="ALWAYS">
+               <children>
+                  <Pane prefHeight="100.0" prefWidth="300.0">
+                     <VBox.margin>
+                        <Insets top="60.0" />
+                     </VBox.margin>
+                     <children>
+                        <Ellipse fx:id="lessTimeJoker" fill="#c3e2ff" layoutX="47.0" layoutY="50.0" radiusX="33.0" radiusY="21.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#ff371f" layoutX="47.0" layoutY="50.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#e7ebef" layoutX="47.0" layoutY="50.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Arc fill="#f4b030" layoutX="59.0" layoutY="39.0" length="180.0" radiusX="5.0" radiusY="5.0" scaleX="-1.0" startAngle="42.4" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fill="#f4b030" layoutX="38.0" layoutY="38.0" length="180.0" radiusX="5.0" radiusY="5.0" startAngle="42.4" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Circle layoutX="47.0" layoutY="50.0" radius="1.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="5.0" layoutX="48.5" layoutY="50.0" rotate="-45.0" stroke="BLACK" strokeType="INSIDE" width="1.0" />
+                        <Line endX="100.0" layoutX="-42.0" layoutY="62.0" rotate="30.0" startX="94.79998779296875" />
+                        <Line endX="100.0" layoutX="-45.0" layoutY="50.0" startX="97.20002746582031" />
+                        <Line endX="98.00001525878906" endY="-7.62939453125E-6" layoutX="-57.0" layoutY="39.0" rotate="40.0" startX="94.79998779296875" />
+                        <Line endX="100.0" layoutX="-57.0" layoutY="50.0" startX="97.20002746582031" />
+                        <Line endX="100.0" layoutX="-51.5" layoutY="56.5" rotate="90.0" startX="97.20002746582031" />
+                        <Line endX="100.0" layoutX="-51.5" layoutY="43.5" rotate="90.0" startX="97.20002746582031" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="5.0" layoutX="46.5" layoutY="45.0" stroke="BLACK" strokeType="INSIDE" width="1.0" />
+                        <Line endX="98.00001525878906" endY="-7.62939453125E-6" layoutX="-40.0" layoutY="40.0" rotate="-40.0" startX="94.79998779296875" />
+                        <Line endX="100.0" layoutX="-60.0" layoutY="61.0" rotate="-30.0" startX="94.79998779296875" />
+                     </children></Pane>
+                  <Pane prefHeight="100.0" prefWidth="300.0">
+                     <children>
+                        <Ellipse fx:id="doublePointsJoker" fill="#c3e2ff" layoutX="48.0" layoutY="48.0" radiusX="33.0" radiusY="21.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label layoutX="34.0" layoutY="33.0" prefHeight="18.0" prefWidth="32.0" text="X2">
+                           <font>
+                              <Font name="Calibri Bold" size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="100.0" prefWidth="300.0">
+                     <children>
+                        <Ellipse fx:id="eliminateAnswerJoker" fill="#c3e2ff" layoutX="47.0" layoutY="50.0" radiusX="33.0" radiusY="21.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Button layoutX="27.0" layoutY="40.0" mnemonicParsing="false" prefHeight="4.0" prefWidth="18.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
+                           <font>
+                              <Font name="Calibri" size="3.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="37.0" layoutY="53.0" mnemonicParsing="false" prefHeight="4.0" prefWidth="18.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
+                           <font>
+                              <Font name="Calibri" size="3.0" />
+                           </font>
+                        </Button>
+                        <Button layoutX="50.0" layoutY="40.0" mnemonicParsing="false" prefHeight="4.0" prefWidth="18.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
+                           <font>
+                              <Font name="Calibri" size="3.0" />
+                           </font>
+                        </Button>
+                        <Line endX="97.00001525878906" endY="-1.399993896484375" layoutX="-53.0" layoutY="47.0" startX="81.39997863769531" startY="-6.399993896484375" stroke="#e71717" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

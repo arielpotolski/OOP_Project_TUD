@@ -8,9 +8,11 @@ import server.database.ActivityRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +37,33 @@ public class ActivityController {
 		return  repository.findAll();
 	}
 
-	@GetMapping(value = "/{id}")
+
+
+	@PutMapping("/addActivity")
+	public ResponseEntity<Activity> addActivity(@RequestBody Activity activity) {
+		if(activity == null
+				|| activity.getId() == null
+				|| activity.getSource() == null
+				|| activity.getTitle() == null
+				|| activity.getConsumptionInWh() < 0){
+			return ResponseEntity.badRequest().build();
+		}
+		Activity result = repository.save(activity);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Activity> deleteById(@PathVariable("id") String id) {
+		if (isNullOrEmpty(id) || !repository.existsById(id)) {
+			return ResponseEntity.badRequest().build();
+		}
+		Activity activity = repository.findById(id).get();
+		repository.deleteById(id);
+
+		return ResponseEntity.ok(activity);
+	}
+
+		@GetMapping(value = "/{id}")
 	public ResponseEntity<Activity> getById(@PathVariable("id") String id) {
 		if ("".equals(id) || !repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();

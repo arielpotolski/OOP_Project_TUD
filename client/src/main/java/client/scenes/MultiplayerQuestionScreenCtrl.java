@@ -2,12 +2,12 @@ package client.scenes;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
 
-public class QuestionScreenSinglePlayerCtrl {
+public class MultiplayerQuestionScreenCtrl {
 
 	@FXML
 	private ProgressBar progressBarTime;
@@ -22,7 +22,13 @@ public class QuestionScreenSinglePlayerCtrl {
 	private Button answerButton3;
 
 	@FXML
-	private Label labelQuestion;
+	private Ellipse lessTimeJoker;
+
+	@FXML
+	private Ellipse doublePointsJoker;
+
+	@FXML
+	private Ellipse eliminateAnswerJoker;
 
 	@FXML
 	private ImageView imageQuestion;
@@ -37,6 +43,8 @@ public class QuestionScreenSinglePlayerCtrl {
 	private ImageView imageThird;
 
 	@FXML
-	private Circle innerCircleTutorial;
+	private Circle innerCircleEmoticon;
 
+	@FXML
+	private Circle innerCircleTutorial;
 }
