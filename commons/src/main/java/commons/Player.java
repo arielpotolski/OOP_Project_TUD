@@ -12,7 +12,6 @@ import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
 public class Player {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long id;
@@ -24,27 +23,23 @@ public class Player {
 	private int points;
 
 	@SuppressWarnings("unused")
-	private Player() {
-		// for object mapper
-	}
+	private Player() {} // For object mapper
 
 	public int getPoint() {
-		return points;
+		return this.points;
 	}
 
 	public void setPoint(int point) {
 		this.points = point;
 	}
 
-	public Player(String nickname, int Point){
+	public Player(String nickname, int Point) {
 		this.nickname = nickname;
 		this.points = Point;
 	}
 
-
-
 	public String getNickName() {
-		return nickname;
+		return this.nickname;
 	}
 
 	public void setNickName(String nickname) {

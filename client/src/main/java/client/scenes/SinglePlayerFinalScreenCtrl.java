@@ -9,9 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Polygon;
 
-
 public class SinglePlayerFinalScreenCtrl {
-
 	MainCtrl mainCtrl;
 	ServerUtils server;
 
@@ -30,13 +28,13 @@ public class SinglePlayerFinalScreenCtrl {
 	@FXML
 	private Polygon backArrow;
 
-	@Inject
 	/**
 	 * Constructor for single player final screen controller
 	 *
 	 * @param mainCtrl the injected main controller.
 	 * @param server the injected server.
 	 */
+	@Inject
 	public void singlePlayerFinalScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
 		this.mainCtrl = mainCtrl;
 		this.server = server;
@@ -48,7 +46,7 @@ public class SinglePlayerFinalScreenCtrl {
 	 * @param numberOfCorrectAnswers the number of correct answers.
 	 */
 	public void setCorrectAnswers(int numberOfCorrectAnswers) {
-		correctAnswers.setText(Integer.toString(numberOfCorrectAnswers) + "/20");
+		this.correctAnswers.setText(numberOfCorrectAnswers + "/20");
 	}
 
 	/**
@@ -56,7 +54,7 @@ public class SinglePlayerFinalScreenCtrl {
 	 * @param point the point of the player
 	 */
 	public void setTotalScore(int point) {
-		totalScore.setText(Integer.toString(point));
+		this.totalScore.setText(Integer.toString(point));
 	}
 
 	/**
@@ -64,7 +62,7 @@ public class SinglePlayerFinalScreenCtrl {
 	 *
 	 */
 	public void jumpToPreGameScene() {
-		mainCtrl.showSinglePlayerPreGameScreen();
+		this.mainCtrl.showSinglePlayerPreGameScreen();
 	}
 
 	/**
@@ -72,7 +70,7 @@ public class SinglePlayerFinalScreenCtrl {
 	 *
 	 */
 	public void jumpToSplashScreen() {
-		mainCtrl.showSplashScreen();
+		this.mainCtrl.showSplashScreen();
 	}
 
 	/**
@@ -81,7 +79,7 @@ public class SinglePlayerFinalScreenCtrl {
 	 * @param player a player.
 	 */
 	public void addPlayer(Player player) {
-		server.addPlayer(player);
+		this.server.addPlayer(player);
 	}
 
 	/**

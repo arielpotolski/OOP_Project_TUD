@@ -26,7 +26,6 @@ import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
 public class Person {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long id;
@@ -35,9 +34,7 @@ public class Person {
 	public String lastName;
 
 	@SuppressWarnings("unused")
-	private Person() {
-		// for object mapper
-	}
+	private Person() {} // For object mapper
 
 	public Person(String firstName, String lastName) {
 		this.firstName = firstName;

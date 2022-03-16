@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 
-
 public class IntermediateSceneCtrl implements Initializable {
 	private MainCtrl mainCtrl;
 	private ServerUtils server;
@@ -30,46 +29,46 @@ public class IntermediateSceneCtrl implements Initializable {
 
 	double progress = 1;
 
-	@Inject
 	/**
 	 * Constructor for intermediate scene controller.
 	 *
 	 * @param mainCtrl the injected main controller.
 	 * @param server the injected server.
 	 */
+	@Inject
 	public IntermediateSceneCtrl(MainCtrl mainCtrl, ServerUtils server) {
 		this.mainCtrl = mainCtrl;
 		this.server = server;
 	}
 
 	public void setLabelPoint(int point) {
-		playerPoints.setText(Integer.toString(point));
+		this.playerPoints.setText(Integer.toString(point));
 	}
 
 	public void setQuestionAnswer(int numberQuestion) {
-		questionsAnswered.setText(Integer.toString(numberQuestion) + "/20");
+		this.questionsAnswered.setText(numberQuestion + "/20");
 	}
 
 	public void setCurrentQuestionPointsEarned(int point) {
-		currentQuestionPointsEarned.setText(Integer.toString(point) + "/1000");
+		this.currentQuestionPointsEarned.setText(point + "/1000");
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		timeUntilNextQuestion.setStyle("-fx-accent: #00FF00");
+		this.timeUntilNextQuestion.setStyle("-fx-accent: #00FF00");
 	}
 
 	public void decreaseProgress() {
-		progress -= 0.1;
-		timeUntilNextQuestion.setProgress(progress);
+		this.progress -= 0.1;
+		this.timeUntilNextQuestion.setProgress(this.progress);
 	}
 
 	public double getProgress() {
-		return progress;
+		return this.progress;
 	}
 
 	public void setProgress(double progress) {
 		this.progress = progress;
-		timeUntilNextQuestion.setProgress(progress);
+		this.timeUntilNextQuestion.setProgress(progress);
 	}
 }

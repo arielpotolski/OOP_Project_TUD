@@ -1,13 +1,9 @@
 package client.scenes;
 
-
 import com.google.inject.Inject;
 
-
 public class SplashCtrl {
-
 	private MainCtrl mainCtrl;
-
 
 	/**
 	 * Constructor for splash controller.
@@ -24,7 +20,7 @@ public class SplashCtrl {
 	 * screen when you click on single player button.
 	 */
 	public void changeToSinglePlayer() {
-		mainCtrl.showSinglePlayerPreGameScreen();
+		this.mainCtrl.showSinglePlayerPreGameScreen();
 	}
 
 	/**
@@ -32,7 +28,7 @@ public class SplashCtrl {
 	 * screen when you click on single player button.
 	 */
 	public void changeToMultiplayer() {
-		mainCtrl.showMultiplePlayersPreGameScreen();
+		this.mainCtrl.showMultiplePlayersPreGameScreen();
 	}
 
 	/**
@@ -40,10 +36,9 @@ public class SplashCtrl {
 	 * global leader board screen when you click on single player button.
 	 */
 	public void changeToLeaderboard() {
-		mainCtrl.showGlobalLeaderboardScreen();
+		this.mainCtrl.showGlobalLeaderboardScreen();
 	}
 
 	public void showHelp() {
 	}
-
 }

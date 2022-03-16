@@ -40,7 +40,6 @@ import javafx.util.Pair;
 
 
 public class MainCtrl {
-
 	private Stage primaryStage;
 
 	private SplashCtrl splashCtrl;
@@ -76,8 +75,6 @@ public class MainCtrl {
 	private int currentPoint;
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
-
-
 
 	/**
 	 * Initialize all the screens
@@ -167,7 +164,7 @@ public class MainCtrl {
 		player = singlePlayerPreGameCtrl.getPlayer();
 
 		// This timeline will execute on another thread - run the count-down timer.
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
 			questionScreenSinglePlayerCtrl.decreaseProgress();
 		}));
 		timeLine.setCycleCount(10);
@@ -183,11 +180,11 @@ public class MainCtrl {
 		if (question instanceof EstimateQuestion) {
 			setUpEstimateQuestion((EstimateQuestion) question);
 		} else if (question instanceof HighestConsumptionQuestion) {
-			setUpHighestQuestion((HighestConsumptionQuestion)question);
+			setUpHighestQuestion((HighestConsumptionQuestion) question);
 		} else if (question instanceof MCQuestion) {
 			setUpMultipleChoice((MCQuestion) question);
 		} else if (question instanceof InsteadOfQuestion) {
-			setUpInsteadQuestion((InsteadOfQuestion)question);
+			setUpInsteadQuestion((InsteadOfQuestion) question);
 		}
 		primaryStage.setScene(questionScreenSinglePlayer);
 	}
@@ -295,13 +292,13 @@ public class MainCtrl {
 		primaryStage.setScene(intermediateScene);
 
 		// This timeline will execute on another thread - run the count-down timer.
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
 			intermediateSceneCtrl.decreaseProgress();
 		}));
 		timeLine.setCycleCount(10);
 		timeLine.play();
-		timeLine.setOnFinished(event ->{
-			intermediateSceneCtrl.setProgress(1); // reset the progress bar after
+		timeLine.setOnFinished(_e -> {
+			intermediateSceneCtrl.setProgress(1); // Reset the progress bar after
 			showQuestionScreenSinglePlayer();     // the timeline finish its cycle.
 		});
 	}
@@ -329,7 +326,7 @@ public class MainCtrl {
 
 		// Get the time the player used for guessing the answer
 		double timePassed = questionScreenSinglePlayerCtrl.getProgress();
-		if(question instanceof MCQuestion) {
+		if (question instanceof MCQuestion) {
 			MCQuestion multipleChoiceQuestion = (MCQuestion) question;
 
 			// The point which the player will receive after answered the question
@@ -340,14 +337,12 @@ public class MainCtrl {
 			player.setPoint(player.getPoint() + currentPoint);
 
 			// If the player clicked on the correct answer,
-			// Number of correct answers would be increased.
+			// number of correct answers would be increased.
 			if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
 					== Integer.parseInt(button.getText())) {
 				numberOfCorrectAnswered++;
 			}
-
 		} else if (question instanceof HighestConsumptionQuestion) {
-
 			HighestConsumptionQuestion highConsumptionQuestion
 					= (HighestConsumptionQuestion) question;
 			currentPoint = highConsumptionQuestion.pointsEarned(1000,
@@ -359,16 +354,14 @@ public class MainCtrl {
 			}
 
 		} else if (question instanceof InsteadOfQuestion) {
-
 			InsteadOfQuestion insteadQuestion = (InsteadOfQuestion) question;
 			currentPoint = insteadQuestion.pointsEarned(1000,
 					Integer.parseInt(String.valueOf(button.getId().charAt(12))), timePassed);
 			player.setPoint(player.getPoint() + currentPoint);
-			if(insteadQuestion.correctAnswer().getConsumptionInWh()
-					== insteadQuestion.returnEnergyConsumption(button.getText())){
+			if (insteadQuestion.correctAnswer().getConsumptionInWh()
+					== insteadQuestion.returnEnergyConsumption(button.getText())) {
 				numberOfCorrectAnswered++;
 			}
-
 		} else if (question instanceof EstimateQuestion) {
 			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
 			currentPoint = estimateQuestion.pointsEarned(1000,

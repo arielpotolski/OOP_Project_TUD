@@ -3,7 +3,6 @@ package commons;
 import java.util.Objects;
 
 public class HighestConsumptionQuestion extends Question {
-
 	private Activity choice1;
 	private Activity choice2;
 	private Activity choice3;
@@ -25,7 +24,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return title of the first activity.
 	 */
 	public String getActivity1Title() {
-		return choice1.getTitle();
+		return this.choice1.getTitle();
 	}
 
 	/**
@@ -33,7 +32,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return title of the second activity.
 	 */
 	public String getActivity2Title() {
-		return choice2.getTitle();
+		return this.choice2.getTitle();
 	}
 
 	/**
@@ -41,7 +40,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return the title of the third activity.
 	 */
 	public String getActivity3Title() {
-		return choice3.getTitle();
+		return this.choice3.getTitle();
 	}
 
 	/**
@@ -49,7 +48,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return the imagePath of the first activity.
 	 */
 	public String getActivity1ImagePath() {
-		return choice1.getImagePath();
+		return this.choice1.getImagePath();
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return the imagePath of the second activity.
 	 */
 	public String getActivity2ImagePath() {
-		return choice2.getImagePath();
+		return this.choice2.getImagePath();
 	}
 
 	/**
@@ -65,7 +64,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return the imagePath of the third activity.
 	 */
 	public String getActivity3ImagePath() {
-		return choice3.getImagePath();
+		return this.choice3.getImagePath();
 	}
 
 	/**
@@ -79,9 +78,13 @@ public class HighestConsumptionQuestion extends Question {
 	 */
 	public int pointsEarned(int maxPoints, int answerGivenConsumption, double progress) {
 		int maxConsumption, positionHighest;
-
-		maxConsumption = (Math.max(this.choice1.getConsumptionInWh(),
-				Math.max(this.choice2.getConsumptionInWh(), this.choice3.getConsumptionInWh())));
+		maxConsumption = Math.max(
+			this.choice1.getConsumptionInWh(),
+			Math.max(
+				this.choice2.getConsumptionInWh(),
+				this.choice3.getConsumptionInWh()
+			)
+		);
 
 		if (choice1.getConsumptionInWh() == maxConsumption) {
 			positionHighest = 1;
@@ -93,8 +96,7 @@ public class HighestConsumptionQuestion extends Question {
 
 		if (answerGivenConsumption != positionHighest)
 			return 0;
-		else
-			return (int) Math.round(maxPoints * progress);
+		return (int) Math.round(maxPoints * progress);
 	}
 
 	/**
@@ -103,24 +105,29 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return the activity which has the highest consumption.
 	 */
 	public Activity getCorrectAnswer() {
-		int maxConsumption = (Math.max(this.choice1.getConsumptionInWh(),
-				Math.max(this.choice2.getConsumptionInWh(), this.choice3.getConsumptionInWh())));
+		int maxConsumption = Math.max(
+			this.choice1.getConsumptionInWh(),
+			Math.max(
+				this.choice2.getConsumptionInWh(),
+				this.choice3.getConsumptionInWh()
+			)
+		);
 
-		if (choice1.getConsumptionInWh() == maxConsumption) {
-			return choice1;
-		} else if (choice2.getConsumptionInWh() == maxConsumption) {
-			return choice2;
+		if (this.choice1.getConsumptionInWh() == maxConsumption) {
+			return this.choice1;
+		} else if (this.choice2.getConsumptionInWh() == maxConsumption) {
+			return this.choice2;
 		}
-		return choice3;
+		return this.choice3;
 	}
 
 	public int returnEnergyConsumption(String title) {
-		if (title.equals(choice1.getTitle())) {
-			return choice1.getConsumptionInWh();
-		} else if (title.equals(choice2.getTitle())) {
-			return choice2.getConsumptionInWh();
+		if (title.equals(this.choice1.getTitle())) {
+			return this.choice1.getConsumptionInWh();
+		} else if (title.equals(this.choice2.getTitle())) {
+			return this.choice2.getConsumptionInWh();
 		}
-		return choice3.getConsumptionInWh();
+		return this.choice3.getConsumptionInWh();
 	}
 
 	/**
@@ -131,11 +138,13 @@ public class HighestConsumptionQuestion extends Question {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		HighestConsumptionQuestion that = (HighestConsumptionQuestion) o;
-		return choice1.equals(that.choice1) && choice2.equals(that.choice2)
-				&& choice3.equals(that.choice3);
+		return this.choice1.equals(that.choice1) && this.choice2.equals(that.choice2)
+				&& this.choice3.equals(that.choice3);
 	}
 
 	/**
@@ -144,6 +153,6 @@ public class HighestConsumptionQuestion extends Question {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(choice1, choice2, choice3);
+		return Objects.hash(this.choice1, this.choice2, this.choice3);
 	}
 }

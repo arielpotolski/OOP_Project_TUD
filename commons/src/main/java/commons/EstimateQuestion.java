@@ -3,7 +3,6 @@ package commons;
 import java.util.Objects;
 
 public class EstimateQuestion extends Question {
-
 	private Activity activity;
 
 	/**
@@ -56,10 +55,12 @@ public class EstimateQuestion extends Question {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		EstimateQuestion that = (EstimateQuestion) o;
-		return activity.equals(that.activity);
+		return this.activity.equals(that.activity);
 	}
 
 	/**
@@ -68,7 +69,7 @@ public class EstimateQuestion extends Question {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(activity);
+		return Objects.hash(this.activity);
 	}
 }
 

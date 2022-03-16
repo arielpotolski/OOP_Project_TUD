@@ -15,7 +15,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
-
 public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	private MainCtrl mainCtrl;
 	private ServerUtils server;
@@ -67,7 +66,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param label the question.
 	 */
 	public void setUpLabel(String label) {
-		labelQuestion.setText(label);
+		this.labelQuestion.setText(label);
 	}
 
 	/**
@@ -76,7 +75,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param label the first answer.
 	 */
 	public void setLabelButton1(String label) {
-		answerButton1.setText(label);
+		this.answerButton1.setText(label);
 	}
 
 	/**
@@ -85,7 +84,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param label the second answer.
 	 */
 	public void setLabelButton2(String label) {
-		answerButton2.setText(label);
+		this.answerButton2.setText(label);
 	}
 
 	/**
@@ -94,7 +93,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param label the third answer.
 	 */
 	public void setLabelButton3(String label) {
-		answerButton3.setText(label);
+		this.answerButton3.setText(label);
 	}
 
 	/**
@@ -103,7 +102,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param visible the visibility of a button
 	 */
 	public void setVisibleButton1(boolean visible) {
-		answerButton1.setVisible(visible);
+		this.answerButton1.setVisible(visible);
 	}
 
 	/**
@@ -112,7 +111,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param visible the visibility of a button
 	 */
 	public void setVisibleButton2(boolean visible) {
-		answerButton2.setVisible(visible);
+		this.answerButton2.setVisible(visible);
 	}
 
 	/**
@@ -121,7 +120,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param visible the visibility of a button
 	 */
 	public void setVisibleButton3(boolean visible) {
-		answerButton3.setVisible(visible);
+		this.answerButton3.setVisible(visible);
 	}
 
 	/**
@@ -130,7 +129,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param visible the visibility of the text field.
 	 */
 	public void setVisibleTextField(boolean visible) {
-		textField.setVisible(visible);
+		this.textField.setVisible(visible);
 	}
 
 	/**
@@ -139,14 +138,15 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param event the player click on the button.
 	 */
 	public void answerReturn(ActionEvent event) {
-		if (event.getSource() == answerButton1) {
-			mainCtrl.showAnswer(answerButton1,null);
-		} else if (event.getSource() == answerButton2) {
-			mainCtrl.showAnswer(answerButton2,null);
-		} else if (event.getSource() == answerButton3) {
-			mainCtrl.showAnswer(answerButton3,null);
-		} else if (event.getSource() == textField) {
-			mainCtrl.showAnswer(null,textField);
+		Object source = event.getSource();
+		if (answerButton1.equals(source)) {
+			mainCtrl.showAnswer(answerButton1, null);
+		} else if (answerButton2.equals(source)) {
+			mainCtrl.showAnswer(answerButton2, null);
+		} else if (answerButton3.equals(source)) {
+			mainCtrl.showAnswer(answerButton3, null);
+		} else if (textField.equals(source)) {
+			mainCtrl.showAnswer(null, textField);
 		}
 	}
 
@@ -155,15 +155,15 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		progressBarTime.setStyle("-fx-accent: #00FF00");
+		this.progressBarTime.setStyle("-fx-accent: #00FF00");
 	}
 
 	/**
 	 * This method decrease the progress
 	 */
 	public void decreaseProgress() {
-		progress -= 0.1;
-		progressBarTime.setProgress(progress);
+		this.progress -= 0.1;
+		this.progressBarTime.setProgress(this.progress);
 	}
 
 	/**
@@ -172,7 +172,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @return the progress.
 	 */
 	public double getProgress() {
-		return progress;
+		return this.progress;
 	}
 
 	/**
@@ -183,6 +183,6 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 */
 	public void setProgress(double progress) {
 		this.progress = progress;
-		progressBarTime.setProgress(progress);
+		this.progressBarTime.setProgress(progress);
 	}
 }

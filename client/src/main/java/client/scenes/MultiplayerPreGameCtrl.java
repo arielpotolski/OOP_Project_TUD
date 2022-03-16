@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 public class MultiplayerPreGameCtrl {
-
 	private final ServerUtils server;
 	private final MainCtrl mainCtrl;
 
