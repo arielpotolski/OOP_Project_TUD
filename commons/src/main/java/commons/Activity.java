@@ -11,9 +11,7 @@ import javax.persistence.Id;
 @Entity
 public class Activity {
 
-
-	@JsonProperty ("id")
-	private @Id String id;
+	private @Id @JsonProperty("id") String id;
 	@JsonProperty("title")
 	private String title;
 	@JsonProperty("consumption_in_wh")
@@ -176,3 +174,4 @@ public class Activity {
 		return Objects.hash(id, title, consumptionInWh, imagePath, source);
 	}
 }
+
