@@ -23,7 +23,7 @@ public class QuestionSet {
 	}
 
 	/**
-	 *Constructor for the QuestionsSet
+	 * Constructor for the QuestionsSet
 	 *
 	 * @param activities list of activities
 	 */
