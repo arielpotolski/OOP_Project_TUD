@@ -91,12 +91,15 @@ public class MainCtrl {
 	 * @param intermediateScene a pair of intermediate screen with parent
 	 * @param singlePlayerFinalScene a pair of final single player screen with parent.
 	 */
-	public void initialize(Stage primaryStage, Pair<SinglePlayerPreGameCtrl, Parent> singlePlayer,
-	                       Pair<MultiplayerPreGameCtrl, Parent> multiPlayer, Pair<SplashCtrl,Parent> splash,
-	                       Pair<QuestionScreenSinglePlayerCtrl,Parent> questionScreenSinglePlayer,
-	                       Pair<GlobalLeaderboardScreenCtrl,Parent> globalLeaderBoard,
-	                       Pair<IntermediateSceneCtrl,Parent> intermediateScene,
-	                       Pair<SinglePlayerFinalScreenCtrl,Parent> singlePlayerFinalScene) {
+	public void initialize(Stage primaryStage,
+		Pair<SinglePlayerPreGameCtrl, Parent> singlePlayer,
+		Pair<MultiplayerPreGameCtrl, Parent> multiPlayer,
+		Pair<SplashCtrl,Parent> splash,
+		Pair<QuestionScreenSinglePlayerCtrl,Parent> questionScreenSinglePlayer,
+		Pair<GlobalLeaderboardScreenCtrl,Parent> globalLeaderBoard,
+		Pair<IntermediateSceneCtrl,Parent> intermediateScene,
+		Pair<SinglePlayerFinalScreenCtrl,Parent> singlePlayerFinalScene
+	) {
 		this.primaryStage = primaryStage;
 
 		multiplayerPreGameCtrl = multiPlayer.getKey();
