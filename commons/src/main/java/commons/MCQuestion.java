@@ -68,8 +68,8 @@ public class MCQuestion extends Question{
 		do {
 			// At random principle answer is generated and this answer is of the same magnitude
 			// At least in most of the time
-			float moreOrLess = ((Double) (Math.random() * 2)).floatValue();
-			result = Math.round(this.activity.getConsumptionInWh() * moreOrLess);
+			double moreOrLess = Math.random() * 2;
+			result = (int) Math.round(this.activity.getConsumptionInWh() * moreOrLess);
 		}
 		while (result == this.activity.getConsumptionInWh());
 		return  result;
