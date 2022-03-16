@@ -80,6 +80,7 @@ public class ActivityController {
 			isNullOrEmpty(newActivity.getId()) ||
 			isNullOrEmpty(newActivity.getTitle()) ||
 			isNullOrEmpty(newActivity.getSource()) ||
+			isNullOrEmpty(newActivity.getImagePath()) ||
 			newActivity.getConsumptionInWh() < 0
 		) {
 			return ResponseEntity.badRequest().build();
