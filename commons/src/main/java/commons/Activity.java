@@ -6,11 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-
-
 @Entity
 public class Activity {
-
 	private @Id @JsonProperty("id") String id;
 	@JsonProperty("title")
 	private String title;
@@ -24,8 +21,7 @@ public class Activity {
 	/**
 	 * An empty constructor
 	 */
-	public Activity() {
-	}
+	public Activity() {}
 
 	/**
 	 * A constructor for an activity
@@ -48,7 +44,7 @@ public class Activity {
 	 * @return the identifier of the activity
 	 */
 	public String getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
@@ -56,7 +52,7 @@ public class Activity {
 	 * @return the title of the activity
 	 */
 	public String getTitle() {
-		return title;
+		return this.title;
 	}
 
 	/**
@@ -64,7 +60,7 @@ public class Activity {
 	 * @return the consumption of the activity in Wh
 	 */
 	public int getConsumptionInWh() {
-		return consumptionInWh;
+		return this.consumptionInWh;
 	}
 
 	/**
@@ -72,7 +68,7 @@ public class Activity {
 	 * @return the path to the image for the activity
 	 */
 	public String getImagePath() {
-		return imagePath;
+		return this.imagePath;
 	}
 
 	/**
@@ -80,7 +76,7 @@ public class Activity {
 	 * @return the source in the form of a URL
 	 */
 	public String getSource() {
-		return source;
+		return this.source;
 	}
 
 	/**
@@ -131,8 +127,7 @@ public class Activity {
 		int prev = this.consumptionInWh;
 		do {
 			this.consumptionInWh = (int) Math.round(Math.random() * 2 * this.consumptionInWh);
-		}
-		while (this.consumptionInWh == prev);
+		} while (this.consumptionInWh == prev);
 	}
 
 	/**
@@ -142,11 +137,11 @@ public class Activity {
 	@Override
 	public String toString() {
 		return "Activity{" +
-				"id='" + id + '\'' +
-				", title='" + title + '\'' +
-				", consumptionInWh=" + consumptionInWh +
-				", imagePath='" + imagePath + '\'' +
-				", source='" + source + '\'' +
+				"id='" + this.id + '\'' +
+				", title='" + this.title + '\'' +
+				", consumptionInWh=" + this.consumptionInWh +
+				", imagePath='" + this.imagePath + '\'' +
+				", source='" + this.source + '\'' +
 				'}';
 	}
 
@@ -157,12 +152,14 @@ public class Activity {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		Activity activity = (Activity) o;
-		return consumptionInWh == activity.consumptionInWh && id.equals(activity.id) &&
-				title.equals(activity.title) && imagePath.equals(activity.imagePath) &&
-				source.equals(activity.source);
+		return this.consumptionInWh == activity.consumptionInWh && this.id.equals(activity.id) &&
+				this.title.equals(activity.title) && imagePath.equals(activity.imagePath) &&
+				this.source.equals(activity.source);
 	}
 
 	/**
@@ -171,7 +168,7 @@ public class Activity {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, title, consumptionInWh, imagePath, source);
+		return Objects.hash(this.id, this.title, this.consumptionInWh, this.imagePath, this.source);
 	}
 }
 

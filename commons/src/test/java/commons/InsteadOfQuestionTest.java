@@ -186,7 +186,7 @@ public class InsteadOfQuestionTest {
 
 	@Test
 	void questionString() {
-		String expected = "Instead of title for the question you could:";
+		String expected = "Instead of title for the question you could: ";
 		assertEquals(expected, insteadOfQuestionFixed1.questionString());
 	}
 

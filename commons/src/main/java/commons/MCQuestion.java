@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class MCQuestion extends Question{
-
 	private Activity activity;
 	private int answer1;
 	private int answer2;
@@ -18,9 +17,7 @@ public class MCQuestion extends Question{
 	/**
 	 * An empty constructor
 	 */
-	public MCQuestion() {
-
-	}
+	public MCQuestion() {}
 
 	/**
 	 * Constructor of a MCQuestion
@@ -53,7 +50,7 @@ public class MCQuestion extends Question{
 	 * 1, 2 and 3
 	 */
 	private void generateSequence() {
-		ArrayList<Integer> result = new ArrayList<Integer>(Arrays.asList(1, 2, 3));
+		ArrayList<Integer> result = new ArrayList<>(Arrays.asList(1, 2, 3));
 		Collections.shuffle(result);
 		// Sets the order so that the other methods could be tested
 		this.order = result;
@@ -70,9 +67,8 @@ public class MCQuestion extends Question{
 			// At least in most of the time
 			double moreOrLess = Math.random() * 2;
 			result = (int) Math.round(this.activity.getConsumptionInWh() * moreOrLess);
-		}
-		while (result == this.activity.getConsumptionInWh());
-		return  result;
+		} while (result == this.activity.getConsumptionInWh());
+		return result;
 	}
 
 	/**
@@ -82,12 +78,9 @@ public class MCQuestion extends Question{
 	private HashMap<Integer, Integer> generateAnswers() {
 		generateSequence();
 		HashMap<Integer, Integer> result = new HashMap<>();
-		for (Integer i : order) {
-			if (order.indexOf(i) == 0) {
-				result.put(order.get(0), this.activity.getConsumptionInWh());
-				continue;
-			}
-			result.put(i, generateAnswer());
+		for (Integer i : this.order) {
+			result.put(i, this.order.indexOf(i) == 0 ?
+				this.activity.getConsumptionInWh() : generateAnswer());
 		}
 		return result;
 	}
@@ -101,7 +94,8 @@ public class MCQuestion extends Question{
 	 * @return the amount of points the user achieved
 	 */
 	public int pointsEarned(int maxPoints, int answerGiven, double progress) {
-		if (answerGiven != activity.getConsumptionInWh()) return 0;
+		if (answerGiven != this.activity.getConsumptionInWh())
+			return 0;
 		return (int) Math.round(maxPoints * progress);
 	}
 
@@ -110,7 +104,7 @@ public class MCQuestion extends Question{
 	 * @return the title of the activity asked as a question
 	 */
 	public String printQuestion() {
-		return activity.getTitle() + " takes:";
+		return this.activity.getTitle() + " takes: ";
 	}
 
 	/**
@@ -118,7 +112,7 @@ public class MCQuestion extends Question{
 	 * @return the first answer in a form ready for output
 	 */
 	public String printAnswer1() {
-		return answer1 + " Wh";
+		return this.answer1 + " Wh";
 	}
 
 	/**
@@ -126,7 +120,7 @@ public class MCQuestion extends Question{
 	 * @return the second answer in a form ready for output
 	 */
 	public String printAnswer2() {
-		return answer2 + " Wh";
+		return this.answer2 + " Wh";
 	}
 
 	/**
@@ -134,7 +128,7 @@ public class MCQuestion extends Question{
 	 * @return the third answer in a form ready for output
 	 */
 	public String printAnswer3() {
-		return answer3 + " Wh";
+		return this.answer3 + " Wh";
 	}
 
 	/**
@@ -142,7 +136,7 @@ public class MCQuestion extends Question{
 	 * @return the activity related with this question
 	 */
 	public Activity getActivity() {
-		return activity;
+		return this.activity;
 	}
 
 	/**
@@ -150,7 +144,7 @@ public class MCQuestion extends Question{
 	 * @return the answer at position 1
 	 */
 	public int getAnswer1() {
-		return answer1;
+		return this.answer1;
 	}
 
 	/**
@@ -158,7 +152,7 @@ public class MCQuestion extends Question{
 	 * @return the answer at position 2
 	 */
 	public int getAnswer2() {
-		return answer2;
+		return this.answer2;
 	}
 
 	/**
@@ -166,7 +160,7 @@ public class MCQuestion extends Question{
 	 * @return the answer at position 3
 	 */
 	public int getAnswer3() {
-		return answer3;
+		return this.answer3;
 	}
 
 	/**
@@ -174,7 +168,7 @@ public class MCQuestion extends Question{
 	 * @return the path of the image
 	 */
 	public String getPicturePath() {
-		return activity.getImagePath();
+		return this.activity.getImagePath();
 	}
 
 	/**
@@ -224,11 +218,15 @@ public class MCQuestion extends Question{
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		MCQuestion that = (MCQuestion) o;
-		return answer1 == that.answer1 && answer2 == that.answer2 && answer3 == that.answer3 &&
-				activity.equals(that.activity);
+		return this.answer1 == that.answer1
+			&& this.answer2 == that.answer2
+			&& this.answer3 == that.answer3
+			&& this.activity.equals(that.activity);
 	}
 
 	/**
@@ -237,6 +235,6 @@ public class MCQuestion extends Question{
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(activity, answer1, answer2, answer3);
+		return Objects.hash(this.activity, this.answer1, this.answer2, this.answer3);
 	}
 }

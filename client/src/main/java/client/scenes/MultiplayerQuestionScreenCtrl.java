@@ -8,7 +8,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
 
 public class MultiplayerQuestionScreenCtrl {
-
 	@FXML
 	private ProgressBar progressBarTime;
 

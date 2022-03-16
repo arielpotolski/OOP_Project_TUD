@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-
 public class SinglePlayerPreGameCtrl {
 	public ServerUtils server;
 	private MainCtrl mainCtrl;
@@ -41,13 +40,13 @@ public class SinglePlayerPreGameCtrl {
 	 * the method change the single player pre-game screen to question screen.
 	 */
 	public void changeToQuestionScreen() {
-		url = serverURL.getText();
-		nickName = nickname.getText();
-		player = new Player(nickName,0);
-		server = new ServerUtils(url);
-		mainCtrl.setServer(server);
-		mainCtrl.setUpQuestions();
-		mainCtrl.showQuestionScreenSinglePlayer();
+		this.url = this.serverURL.getText();
+		this.nickName = this.nickname.getText();
+		this.player = new Player(this.nickName,0);
+		this.server = new ServerUtils(this.url);
+		this.mainCtrl.setServer(this.server);
+		this.mainCtrl.setUpQuestions();
+		this.mainCtrl.showQuestionScreenSinglePlayer();
 	}
 
 	/**
@@ -56,7 +55,6 @@ public class SinglePlayerPreGameCtrl {
 	 * @return a player
 	 */
 	public Player getPlayer() {
-		return player;
+		return this.player;
 	}
 }
-

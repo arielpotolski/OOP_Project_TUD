@@ -77,7 +77,7 @@ public class ServerUtils {
 				.target(server).path("api/players")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
-				.get(new GenericType<List<Player>>() {});
+				.get(new GenericType<>() {});
 	}
 
 }

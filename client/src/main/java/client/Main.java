@@ -42,7 +42,6 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-
 		var singlePlayer = FXML.load(SinglePlayerPreGameCtrl.class,"client","scenes",
 				"SinglePlayerPreGame.fxml");
 		var multiPlayer = FXML.load(MultiplayerPreGameCtrl.class,"client","scenes",

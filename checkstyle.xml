@@ -35,7 +35,7 @@
 		<!-- Enforce Javadoc -->
 		<module name="JavadocMethod"/>
 
-		<!-- Enforce naming convensions
+		<!-- Enforce naming conventions
 			 - Constants ARE_NAMED_LIKE_THIS
 			 - Type variables (such as in Generics<T>) must be a capital letter
 			 - Exceptions captured in a  `try { } catch (Exception err) { }'  block must be called `err'
@@ -48,7 +48,11 @@
 		</module>
 		<module name="ClassTypeParameterName"/>
 		<module name="InterfaceTypeParameterName"/>
-		<module name="LambdaParameterName"/>
+		<module name="LambdaParameterName">
+			<!-- Allow lambda params to start with an underscore to denote the fact they are unused
+				-->
+			<property name="format" value="^_?[a-z]([a-zA-Z]+)*$"/>
+		</module>
 		<module name="LocalVariableName"/>
 		<module name="MemberName"/>
 		<module name="MethodName"/>

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/players")
 public class PlayerController {
-
 	private final PlayerRepository playerRepository;
 
 	public PlayerController(PlayerRepository playerRepository) {
@@ -25,7 +24,7 @@ public class PlayerController {
 
 	@GetMapping(path = {"", "/"})
 	public List<Player> getAll() {
-		return  playerRepository.findAll();
+		return this.playerRepository.findAll();
 	}
 
 	@PutMapping("/addPlayer")

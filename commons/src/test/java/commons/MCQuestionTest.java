@@ -99,7 +99,7 @@ public class MCQuestionTest {
 
 	@Test
 	void printQuestion() {
-		Assertions.assertEquals(activity.getTitle() + " takes:", mcQuestion3.printQuestion());
+		Assertions.assertEquals(activity.getTitle() + " takes: ", mcQuestion3.printQuestion());
 	}
 
 	@Test

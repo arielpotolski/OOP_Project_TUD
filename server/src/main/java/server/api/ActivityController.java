@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/api/activities")
 public class ActivityController {
-
 	private final ActivityRepository repository;
 
 	public ActivityController(ActivityRepository repository) {
@@ -34,41 +32,41 @@ public class ActivityController {
 
 	@GetMapping(path = {"", "/"})
 	public List<Activity> getAll() {
-		return  repository.findAll();
+		return this.repository.findAll();
 	}
-
-
 
 	@PutMapping("/addActivity")
 	public ResponseEntity<Activity> addActivity(@RequestBody Activity activity) {
-		if(activity == null
-				|| activity.getId() == null
-				|| activity.getSource() == null
-				|| activity.getTitle() == null
-				|| activity.getConsumptionInWh() < 0){
+		if (
+			activity == null
+			|| activity.getId() == null
+			|| activity.getSource() == null
+			|| activity.getTitle() == null
+			|| activity.getConsumptionInWh() < 0
+		) {
 			return ResponseEntity.badRequest().build();
 		}
-		Activity result = repository.save(activity);
+		Activity result = this.repository.save(activity);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Activity> deleteById(@PathVariable("id") String id) {
-		if (isNullOrEmpty(id) || !repository.existsById(id)) {
+		if (isNullOrEmpty(id) || !this.repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();
 		}
-		Activity activity = repository.findById(id).get();
-		repository.deleteById(id);
+		Activity activity = this.repository.findById(id).get();
+		this.repository.deleteById(id);
 
 		return ResponseEntity.ok(activity);
 	}
 
-		@GetMapping(value = "/{id}")
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Activity> getById(@PathVariable("id") String id) {
-		if ("".equals(id) || !repository.existsById(id)) {
+		if ("".equals(id) || !this.repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();
 		}
-		return ResponseEntity.ok(repository.findById(id).get());
+		return ResponseEntity.ok(this.repository.findById(id).get());
 	}
 
 	@PostMapping(path = {"", "/"},
@@ -76,12 +74,12 @@ public class ActivityController {
 			produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Activity> create(@RequestBody Activity newActivity) {
 		if (
-			newActivity == null ||
-			isNullOrEmpty(newActivity.getId()) ||
-			isNullOrEmpty(newActivity.getTitle()) ||
-			isNullOrEmpty(newActivity.getSource()) ||
-			isNullOrEmpty(newActivity.getImagePath()) ||
-			newActivity.getConsumptionInWh() < 0
+			newActivity == null
+			|| isNullOrEmpty(newActivity.getId())
+			|| isNullOrEmpty(newActivity.getTitle())
+			|| isNullOrEmpty(newActivity.getSource())
+			|| isNullOrEmpty(newActivity.getImagePath())
+			|| newActivity.getConsumptionInWh() < 0
 		) {
 			return ResponseEntity.badRequest().build();
 		}

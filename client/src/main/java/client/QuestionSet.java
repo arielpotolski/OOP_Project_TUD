@@ -3,6 +3,7 @@ package client;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Stream;
 
 import commons.Activity;
 import commons.EstimateQuestion;
@@ -12,12 +13,12 @@ import commons.MCQuestion;
 import commons.Question;
 
 public class QuestionSet {
-
 	private List<Question> questions;
-	List<Activity> activities;
-	Random random;
-	int size;
+	private List<Activity> activities;
+	private Random random;
+	private int size;
 
+	// FIXME: This is unsafe.  Rewrite it in rust?
 	public List<Question> getQuestions() {
 		return questions;
 	}
@@ -29,9 +30,9 @@ public class QuestionSet {
 	 */
 	public QuestionSet(List<Activity> activities) {
 		this.questions = new ArrayList<>();
-		random = new Random();
+		this.random = new Random();
 		this.activities = activities;
-		size = activities.size();
+		this.size = activities.size();
 	}
 
 	/**
@@ -39,14 +40,16 @@ public class QuestionSet {
 	 * @param numberOfQuestions the number of questions contained in the class
 	 */
 	public void fillSet(int numberOfQuestions) {
-		List<Character> sequence = generateSequence(numberOfQuestions);
-
-		for (Character c : sequence) {
-			if (c == 'M') generateMCQ();
-			if (c == 'H') generateHigh();
-			if (c == 'E') generateEstimate();
-			if (c == 'I') generateInstead();
-		}
+		generateSequence(numberOfQuestions).forEach(c -> {
+			switch (c) {
+			case 'M' -> generateMCQ();
+			case 'H' -> generateHigh();
+			case 'E' -> generateEstimate();
+			case 'I' -> generateInstead();
+			default -> throw new IllegalArgumentException(
+				"Invalid question type, expected [MHEI] but got '" + c + "'");
+			}
+		});
 	}
 
 	/**
@@ -97,24 +100,10 @@ public class QuestionSet {
 		int numberOfHigh = ((Long) Math.round(numberOfQuestions * 0.30)).intValue();
 		int numberOfInstead = numberOfQuestions - numberOfEst - numberOfMCQ - numberOfHigh;
 
-		List<Character> result = new ArrayList<>();
-
-		for (int i = 0; i < numberOfMCQ; i++) {
-			result.add('M');
-		}
-
-		for (int i = 0; i < numberOfEst; i++) {
-			result.add('E');
-		}
-
-		for (int i = 0; i < numberOfHigh; i++) {
-			result.add('H');
-		}
-
-		for (int i = 0; i < numberOfInstead; i++) {
-			result.add('I');
-		}
-
-		return result;
+		var a = Stream.generate(() -> 'M').limit(numberOfMCQ);
+		var b = Stream.generate(() -> 'E').limit(numberOfEst);
+		var c = Stream.generate(() -> 'H').limit(numberOfHigh);
+		var d = Stream.generate(() -> 'I').limit(numberOfInstead);
+		return Stream.concat(a, Stream.concat(b, Stream.concat(c, d))).toList();
 	}
 }

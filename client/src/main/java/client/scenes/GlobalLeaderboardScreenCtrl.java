@@ -15,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polygon;
 
 public class GlobalLeaderboardScreenCtrl implements Initializable {
-
 	private final MainCtrl mainCtrl;
 	private final ServerUtils server;
 
@@ -31,7 +30,6 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 	@FXML
 	private ListView<Player> listView;
 
-
 	/**
 	 * Constructor for global leader board controllers.
 	 *
@@ -43,7 +41,6 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 		this.server = new ServerUtils("http://localhost:8080/");
 	}
 
-
 	/**
 	 * This method updates the list view by getting all the list of player in database.
 	 *
@@ -52,21 +49,21 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		scrollPane.prefWidthProperty().bind(listView.widthProperty());
-		scrollPane.prefHeightProperty().bind(listView.heightProperty());
-		scrollPane.setContent(listView);
-		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+		this.scrollPane.prefWidthProperty().bind(this.listView.widthProperty());
+		this.scrollPane.prefHeightProperty().bind(this.listView.heightProperty());
+		this.scrollPane.setContent(this.listView);
+		this.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
 	}
 
 	/**
 	 * This method helps for updating the list view after a new player finished his/her game.
 	 */
 	public void getItems() {
-		listView.getItems().addAll(server.getPlayers());
+		this.listView.getItems().addAll(this.server.getPlayers());
 	}
 
 	public void jumpToSplashScreen() {
-		mainCtrl.showSplashScreen();
+		this.mainCtrl.showSplashScreen();
 	}
 }

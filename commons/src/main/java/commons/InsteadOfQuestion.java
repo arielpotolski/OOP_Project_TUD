@@ -5,7 +5,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class InsteadOfQuestion extends Question {
-
 	private Activity questionActivity;
 	private Activity answer1;
 	private double realCoefficient1;
@@ -17,9 +16,7 @@ public class InsteadOfQuestion extends Question {
 	/**
 	 * Empty constructor.
 	 */
-	public InsteadOfQuestion() {
-
-	}
+	public InsteadOfQuestion() {}
 
 	/**
 	 * Constructor for InsteadOfQuestion
@@ -39,7 +36,7 @@ public class InsteadOfQuestion extends Question {
 
 		// The following part generates exactly one of the answers to be correct
 		// and guarantees that all the others are wrong
-		double correctAnswer  = Math.random();
+		double correctAnswer = Math.random();
 		if (correctAnswer < 1.0 / 3.0) {
 			answer2.makeFake();
 			answer3.makeFake();
@@ -85,7 +82,6 @@ public class InsteadOfQuestion extends Question {
 		this.realCoefficient3 = c3;
 	}
 
-
 	/**
 	 * A method which calculates and sets the original coefficients for the answers with
 	 * respect to the question
@@ -109,14 +105,12 @@ public class InsteadOfQuestion extends Question {
 	 * @return The path to the image for the answer
 	 */
 	public String getImagePathAnswer(int numberOfAnswer) {
-		if (numberOfAnswer == 1) {
-			return answer1.getImagePath();
-		} else if (numberOfAnswer == 2) {
-			return answer2.getImagePath();
-		} else if (numberOfAnswer == 3) {
-			return answer3.getImagePath();
-		} else throw new
-				IllegalArgumentException("The input number should be between 1 and 3 inclusive");
+		return switch (numberOfAnswer) {
+			case 1 -> this.answer1.getImagePath();
+			case 2 -> this.answer2.getImagePath();
+			case 3 -> this.answer3.getImagePath();
+			default -> throw new IllegalArgumentException("The input number should be 0 < n < 4");
+		};
 	}
 
 	/**
@@ -124,7 +118,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return the image path of the question activity
 	 */
 	public String getImagePathQuestion() {
-		return questionActivity.getImagePath();
+		return this.questionActivity.getImagePath();
 	}
 
 	/**
@@ -132,10 +126,9 @@ public class InsteadOfQuestion extends Question {
 	 * @return question activity in a user-friendly form as a string
 	 */
 	public String questionString() {
-		String result = "";
-		result += "Instead of " + questionActivity.getTitle().toLowerCase(Locale.ROOT);
-		result += " you could:";
-		return result;
+		return "Instead of "
+			+ this.questionActivity.getTitle().toLowerCase(Locale.ROOT)
+			+ " you could: ";
 	}
 
 	/**
@@ -145,21 +138,19 @@ public class InsteadOfQuestion extends Question {
 	 * @return a ready to use string for the labels
 	 */
 	public String answerString(int numberOfAnswer) {
-		String result = "";
-		Activity current;
-		if (numberOfAnswer == 1) {
-			current = answer1;
-		} else if (numberOfAnswer == 2) {
-			current = answer2;
-		} else if (numberOfAnswer == 3) {
-			current = answer3;
-		} else throw new IllegalArgumentException("The answer asked to be stringed does not exist");
-		result += current.getTitle() + " ";
 		DecimalFormat df = new DecimalFormat("0.00");
-		result += df.format(((double) current.getConsumptionInWh()) /
-				((double) questionActivity.getConsumptionInWh()));
-		result += " times";
-		return result;
+		Activity current = switch (numberOfAnswer) {
+			case 1 -> this.answer1;
+			case 2 -> this.answer2;
+			case 3 -> this.answer3;
+			default ->
+				throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
+		};
+
+		return current.getTitle() + " "
+			+ df.format(((double) current.getConsumptionInWh())
+				/ ((double) questionActivity.getConsumptionInWh()))
+			+ " times";
 	}
 
 	/**
@@ -168,47 +159,57 @@ public class InsteadOfQuestion extends Question {
 	 * @return a string ready for comparison with the given answer
 	 */
 	private String correctAnswerString(int numberOfAnswer) {
-		String result = "";
 		double coefficient;
 		Activity current;
-		if (numberOfAnswer == 1) {
+
+		switch (numberOfAnswer) {
+		case 1:
 			coefficient = realCoefficient1;
 			current = answer1;
-		} else if (numberOfAnswer == 2) {
+			break;
+		case 2:
 			coefficient = realCoefficient2;
 			current = answer2;
-		} else if (numberOfAnswer == 3) {
+			break;
+		case 3:
 			coefficient = realCoefficient3;
 			current = answer3;
-		} else throw new IllegalArgumentException("The answer asked to be stringed does not exist");
-		result += current.getTitle() + " ";
+			break;
+		default:
+			throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
+		}
+
 		DecimalFormat df = new DecimalFormat("0.00");
-		result += df.format(coefficient);
-		result += " times";
-		return result;
+		return current.getTitle() + " " + df.format(coefficient) + " times";
 	}
 
 	public Activity correctAnswer() {
-		double distanceFromOneOfCoefficient1 = 1 - realCoefficient1;
-		double distanceFromOneOfCoefficient2 = 1 - realCoefficient2;
-		double distanceFromOneOfCoefficient3 = 1 - realCoefficient3;
-		double result = Math.min(distanceFromOneOfCoefficient1,
-				Math.min(distanceFromOneOfCoefficient2, distanceFromOneOfCoefficient3));
+		double distanceFromOneOfCoefficient1 = 1 - this.realCoefficient1;
+		double distanceFromOneOfCoefficient2 = 1 - this.realCoefficient2;
+		double distanceFromOneOfCoefficient3 = 1 - this.realCoefficient3;
+		double result = Math.min(
+			distanceFromOneOfCoefficient1,
+			Math.min(
+				distanceFromOneOfCoefficient2,
+				distanceFromOneOfCoefficient3
+			)
+		);
+
 		if (result == distanceFromOneOfCoefficient1) {
-			return answer1;
+			return this.answer1;
 		} else if (result == distanceFromOneOfCoefficient2) {
-			return answer2;
+			return this.answer2;
 		}
-		return answer3;
+		return this.answer3;
 	}
 
 	public int returnEnergyConsumption(String title) {
-		if (title.equals(answer1.getTitle())) {
-			return answer1.getConsumptionInWh();
+		if (title.equals(this.answer1.getTitle())) {
+			return this.answer1.getConsumptionInWh();
 		} else if (title.equals(answer2.getTitle())) {
-			return answer2.getConsumptionInWh();
+			return this.answer2.getConsumptionInWh();
 		}
-		return answer3.getConsumptionInWh();
+		return this.answer3.getConsumptionInWh();
 	}
 
 	/**
@@ -231,7 +232,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return the activity related to the question
 	 */
 	public Activity getQuestionActivity() {
-		return questionActivity;
+		return this.questionActivity;
 	}
 
 	/**
@@ -239,7 +240,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return the answer activity at position 1
 	 */
 	public Activity getAnswer1() {
-		return answer1;
+		return this.answer1;
 	}
 
 	/**
@@ -247,7 +248,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return the original coefficient with respect to the question
 	 */
 	public double getRealCoefficient1() {
-		return realCoefficient1;
+		return this.realCoefficient1;
 	}
 
 	/**
@@ -255,7 +256,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return the answer activity at position 2
 	 */
 	public Activity getAnswer2() {
-		return answer2;
+		return this.answer2;
 	}
 
 	/**
@@ -263,7 +264,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return the original coefficient with respect to the question
 	 */
 	public double getRealCoefficient2() {
-		return realCoefficient2;
+		return this.realCoefficient2;
 	}
 
 	/**
@@ -271,7 +272,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return the answer activity at position 3
 	 */
 	public Activity getAnswer3() {
-		return answer3;
+		return this.answer3;
 	}
 
 	/**
@@ -279,7 +280,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return the original coefficient with respect to the question
 	 */
 	public double getRealCoefficient3() {
-		return realCoefficient3;
+		return this.realCoefficient3;
 	}
 
 	/**
@@ -345,15 +346,17 @@ public class InsteadOfQuestion extends Question {
 	 */
 	@Override
 	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
 		InsteadOfQuestion that = (InsteadOfQuestion) o;
-		return Double.compare(that.realCoefficient1, realCoefficient1) == 0
-				&& Double.compare(that.realCoefficient2, realCoefficient2) == 0
-				&& Double.compare(that.realCoefficient3, realCoefficient3) == 0
-				&& questionActivity.equals(that.questionActivity)
-				&& answer1.equals(that.answer1) && answer2.equals(that.answer2)
-				&& answer3.equals(that.answer3);
+		return Double.compare(that.realCoefficient1, this.realCoefficient1) == 0
+				&& Double.compare(that.realCoefficient2, this.realCoefficient2) == 0
+				&& Double.compare(that.realCoefficient3, this.realCoefficient3) == 0
+				&& this.questionActivity.equals(that.questionActivity)
+				&& this.answer1.equals(that.answer1) && this.answer2.equals(that.answer2)
+				&& this.answer3.equals(that.answer3);
 	}
 
 	/**
@@ -362,8 +365,8 @@ public class InsteadOfQuestion extends Question {
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hash(questionActivity, answer1, realCoefficient1,
-				answer2, realCoefficient2, answer3, realCoefficient3);
+		return Objects.hash(this.questionActivity, this.answer1, this.realCoefficient1,
+				this.answer2, this.realCoefficient2, this.answer3, this.realCoefficient3);
 	}
 
 	/**
@@ -373,13 +376,13 @@ public class InsteadOfQuestion extends Question {
 	@Override
 	public String toString() {
 		return "InsteadOfQuestion{" +
-				"questionActivity=" + questionActivity +
-				", answer1=" + answer1 +
-				", realCoefficient1=" + realCoefficient1 +
-				", answer2=" + answer2 +
-				", realCoefficient2=" + realCoefficient2 +
-				", answer3=" + answer3 +
-				", realCoefficient3=" + realCoefficient3 +
+				"questionActivity=" + this.questionActivity +
+				", answer1=" + this.answer1 +
+				", realCoefficient1=" + this.realCoefficient1 +
+				", answer2=" + this.answer2 +
+				", realCoefficient2=" + this.realCoefficient2 +
+				", answer3=" + this.answer3 +
+				", realCoefficient3=" + this.realCoefficient3 +
 				'}';
 	}
 }
