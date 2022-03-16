@@ -222,8 +222,7 @@ public class InsteadOfQuestion extends Question {
 		if (!answerString(answerGiven).equals(correctAnswerString(answerGiven))) {
 			return 0;
 		}
-		double coefficientTime = progress;
-		float pointsEarned = ((Double) (coefficientTime * maxPoints)).floatValue();
+		float pointsEarned = (float) progress * maxPoints;
 		return Math.round(pointsEarned);
 	}
 

@@ -40,13 +40,12 @@ public class EstimateQuestion extends Question {
 	 * @param progress time left
 	 * @return the amount of points player have earned in the question.
 	 */
-	public int pointsEarned(int maxPoints, int answerGiven, double progress){
-		double leftTime = progress;
+	public int pointsEarned(int maxPoints, int answerGiven, double progress) {
 		double t = ((double) this.activity.getConsumptionInWh()) / ((double) answerGiven);
 		double partialPoints = Math.abs(Math.log10(t));
-		return (int) Math.round(1000 * leftTime * 1/(partialPoints + 1));
-
+		return (int) Math.round(1000 * progress / (partialPoints + 1));
 	}
+
 
 	/**
 	 * Compares this question with a given object and
