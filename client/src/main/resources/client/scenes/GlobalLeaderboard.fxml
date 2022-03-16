@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.GlobalLeaderboardScreenCtrl">
+   <children>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox alignment="CENTER" prefHeight="602.0" prefWidth="701.0" spacing="50.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="100.0" prefWidth="98.0">
+                           <children>
+                              <Circle fill="#0881f2" layoutX="52.0" layoutY="52.0" radius="32.0" stroke="BLACK" strokeType="INSIDE" />
+                              <SVGPath content="M40,60 C42,48 44,30 25,32" fill="#079c48" layoutX="-2.0" layoutY="6.0" rotate="25.0" />
+                              <SVGPath content="M40,60 C42,48 44,30 25,32" fill="#079c48" layoutX="26.0" layoutY="-14.0" rotate="120.0" />
+                              <SVGPath content="M40,60 C42,48 44,30 25,32" fill="#079c48" layoutX="24.0" layoutY="8.0" rotate="-150.0" />
+                           </children>
+                        </Pane>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="71.0" prefWidth="524.0" text="Global Leaderboard">
+                           <font>
+                              <Font name="Calibri Bold" size="48.0" />
+                           </font>
+                        </Label>
+                        <Pane prefHeight="100.0" prefWidth="126.0">
+                           <children>
+                              <Polygon fill="#ffa821" layoutX="-121.0" layoutY="34.0" points="119.99996948242188, -18.0, 177.39999389648438, 51.600006103515625, 229.99996948242188, -18.0, 214.19998168945312, -18.0, 177.39999389648438, 30.800018310546875, 136.60000610351562, -18.0" stroke="#f21212" strokeType="INSIDE" strokeWidth="4.0" />
+                              <Circle fill="#ffcb21" layoutX="57.0" layoutY="84.0" radius="14.0" stroke="#dc9912" strokeType="INSIDE" strokeWidth="3.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+                  <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="229.0" prefWidth="384.0">
+                    <content>
+                      <AnchorPane fx:id="leaderboard" minHeight="0.0" minWidth="0.0" prefHeight="414.0" prefWidth="362.0">
+                           <children>
+                              <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="24.0" prefWidth="47.0" text="Player">
+                                 <font>
+                                    <Font name="Calibri Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="317.0" layoutY="15.0" text="Score">
+                                 <font>
+                                    <Font name="Calibri Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </ScrollPane>
+               </children>
+            </VBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-202.0" layoutY="383.0" points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label alignment="CENTER" layoutX="7.0" layoutY="546.0" prefHeight="17.0" prefWidth="53.0" text="Back">
+                           <font>
+                              <Font name="Calibri Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

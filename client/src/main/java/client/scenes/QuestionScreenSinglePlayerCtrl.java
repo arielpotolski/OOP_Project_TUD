@@ -3,13 +3,17 @@ package client.scenes;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 
 public class QuestionScreenSinglePlayerCtrl {
 
 	@FXML
-	private javafx.scene.control.Button answerButton1;
+	private ProgressBar progressBarTime;
+
+	@FXML
+	private Button answerButton1;
 
 	@FXML
 	private Button answerButton2;
@@ -21,11 +25,18 @@ public class QuestionScreenSinglePlayerCtrl {
 	private Label labelQuestion;
 
 	@FXML
+	private ImageView imageQuestion;
+
+	@FXML
 	private ImageView imageFirst;
 
 	@FXML
 	private ImageView imageSecond;
 
 	@FXML
-	private Rectangle timeLeftBar;
+	private ImageView imageThird;
+
+	@FXML
+	private Circle innerCircleTutorial;
+
 }
