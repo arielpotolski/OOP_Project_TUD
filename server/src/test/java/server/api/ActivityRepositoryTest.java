@@ -76,7 +76,7 @@ class ActivityRepositoryTest implements ActivityRepository {
 	@Override
 	public void deleteAllByIdInBatch(Iterable<String> ids) {
 		// TODO Auto-generated method stub
-
+		return;
 	}
 
 	@Override

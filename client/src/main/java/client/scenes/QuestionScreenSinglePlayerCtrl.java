@@ -30,6 +30,9 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	public Label labelQuestion;
 
 	@FXML
+	private ImageView imageQuestion;
+
+	@FXML
 	private ImageView imageFirst;
 
 	@FXML
