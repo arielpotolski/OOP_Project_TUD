@@ -1,47 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Polygon?>
+<?import javafx.scene.shape.SVGPath?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.GlobalLeaderboardScreenCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.GlobalLeaderboardScreenCtrl">
     <children>
-        <Label alignment="CENTER" layoutX="188.0" layoutY="52.0" prefHeight="71.0" prefWidth="524.0" text="Global Leaderboard">
-            <font>
-                <Font name="Calibri Bold" size="48.0" />
-            </font>
-        </Label>
-        <ScrollPane fx:id="scrollPane" layoutX="298.0" layoutY="165.0" prefHeight="271.0" prefWidth="305.0">
-            <content>
-                <AnchorPane fx:id="leaderboard" minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="284.0">
-                    <children>
-                        <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="24.0" prefWidth="47.0" text="Player">
-                            <font>
-                                <Font name="Calibri Bold" size="18.0" />
-                            </font>
-                        </Label>
-                        <Label alignment="CENTER" layoutX="228.0" layoutY="15.0" text="Score">
-                            <font>
-                                <Font name="Calibri Bold" size="18.0" />
-                            </font>
-                        </Label>
-                        <ListView fx:id="listView" layoutX="42.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" />
-                    </children>
-                </AnchorPane>
-            </content>
-        </ScrollPane>
-        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="593.0" layoutY="379.0" onMouseClicked="#jumpToSplashScreen" points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
-        <Label alignment="CENTER" layoutX="803.0" layoutY="543.0" onMouseClicked="#jumpToSplashScreen" prefHeight="17.0" prefWidth="53.0" text="back">
-            <font>
-                <Font name="Calibri Bold" size="18.0" />
-            </font>
-        </Label>
-        <Circle fill="#0881f2" layoutX="188.0" layoutY="88.0" radius="32.0" stroke="BLACK" strokeType="INSIDE" />
-        <Polygon fill="#ffa821" layoutX="552.0" layoutY="69.0" points="119.99996948242188, -18.0, 177.39999389648438, 51.600006103515625, 229.99996948242188, -18.0, 214.19998168945312, -18.0, 177.39999389648438, 30.800018310546875, 136.60000610351562, -18.0" stroke="#f21212" strokeType="INSIDE" strokeWidth="4.0" />
-        <Circle fill="#ffcb21" layoutX="727.0" layoutY="111.0" radius="14.0" stroke="#dc9912" strokeType="INSIDE" strokeWidth="3.0" />
-        <SVGPath content="M40,60 C42,48 44,30 25,32" fill="#079c48" layoutX="133.0" layoutY="43.0" rotate="28.1" />
-        <SVGPath content="M40,60 C42,48 44,30 25,32" fill="#079c48" layoutX="159.0" layoutY="19.0" rotate="117.6" />
-        <SVGPath content="M40,60 C42,48 44,30 25,32" fill="#079c48" layoutX="158.0" layoutY="46.0" rotate="-149.0" />
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox alignment="CENTER" prefHeight="602.0" prefWidth="685.0" spacing="35.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                                <Circle fill="#0881f2" layoutX="86.0" layoutY="37.0" radius="32.0" stroke="BLACK" strokeType="INSIDE" />
+                                <SVGPath content="M40,60 C42,48 44,30 25,32" fill="#079c48" layoutX="59.0" layoutY="-4.0" rotate="210.0" />
+                                <SVGPath content="M40,60 C42,48 44,30 25,32" fill="#079c48" layoutX="56.0" layoutY="-30.0" rotate="120.0" />
+                                <SVGPath content="M40,60 C42,48 44,30 25,32" fill="#079c48" layoutX="32.0" layoutY="-3.0" rotate="25.0" />
+                           </children>
+                        </Pane>
+                          <Label alignment="CENTER" prefHeight="71.0" prefWidth="524.0" text="Global Leaderboard">
+                              <font>
+                                  <Font name="Calibri Bold" size="48.0" />
+                              </font>
+                          </Label>
+                        <Pane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                                <Polygon fill="#ffa821" layoutX="-118.0" layoutY="23.0" points="119.99996948242188, -18.0, 177.39999389648438, 51.600006103515625, 229.99996948242188, -18.0, 214.19998168945312, -18.0, 177.39999389648438, 30.800018310546875, 136.60000610351562, -18.0" stroke="#f21212" strokeType="INSIDE" strokeWidth="4.0" />
+                                <Circle fill="#ffcb21" layoutX="59.0" layoutY="69.0" radius="14.0" stroke="#dc9912" strokeType="INSIDE" strokeWidth="3.0" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+                    <ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="271.0" prefWidth="294.0">
+                        <content>
+                            <AnchorPane fx:id="leaderboard" minHeight="0.0" minWidth="0.0" prefHeight="413.0" prefWidth="284.0">
+                                <children>
+                                    <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" prefHeight="24.0" prefWidth="47.0" text="Player">
+                                        <font>
+                                            <Font name="Calibri Bold" size="18.0" />
+                                        </font>
+                                    </Label>
+                                    <Label alignment="CENTER" layoutX="228.0" layoutY="15.0" text="Score">
+                                        <font>
+                                            <Font name="Calibri Bold" size="18.0" />
+                                        </font>
+                                    </Label>
+                                    <ListView fx:id="listView" layoutX="42.0" layoutY="60.0" prefHeight="200.0" prefWidth="200.0" />
+                                </children>
+                            </AnchorPane>
+                        </content>
+                    </ScrollPane>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                          <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-202.0" layoutY="-17.0" onMouseClicked="#jumpToSplashScreen" points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
+                          <Label alignment="CENTER" layoutX="8.0" layoutY="146.0" onMouseClicked="#jumpToSplashScreen" prefHeight="17.0" prefWidth="53.0" text="Back">
+                              <font>
+                                  <Font name="Calibri Bold" size="18.0" />
+                              </font>
+                          </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
     </children>
-</Pane>
+</AnchorPane>
