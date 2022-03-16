@@ -37,7 +37,7 @@ public class EstimateQuestionTest {
 	@Test
 	public void pointsEarnedTest(){
 		assertEquals(250, this.question.pointsEarned(1000, 100,
-				10, 20));
+				0.5));
 	}
 
 	@Test

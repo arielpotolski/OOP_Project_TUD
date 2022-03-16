@@ -73,14 +73,11 @@ public class HighestConsumptionQuestion extends Question {
 	 * It compares the selected answer by the player (its title)
 	 * to the title of the correct answer, and see if it matches.
 	 * @param maxPoints maximum of points that is possible to earn.
-	 * @param answerGivenTitle title of the option selected by the user.
-	 * @param timeForAnswering time user took to answer the question.
-	 * @param totalTime total time user had to answer the question.
+	 * @param answerGivenConsumption title of the option selected by the user.
+	 * @param progress time left
 	 * @return the amount of points user earned for this question.
 	 */
-	public int pointsEarned(int maxPoints, int answerGivenTitle, float timeForAnswering,
-								float totalTime) {
-
+	public int pointsEarned(int maxPoints, int answerGivenConsumption, double progress) {
 		int maxConsumption, positionHighest;
 
 		maxConsumption = (Math.max(this.choice1.getConsumptionInWh(),
@@ -94,10 +91,36 @@ public class HighestConsumptionQuestion extends Question {
 			positionHighest = 3;
 		}
 
-		if (answerGivenTitle != positionHighest)
+		if (answerGivenConsumption != positionHighest)
 			return 0;
 		else
-			return Math.round((maxPoints * (totalTime - timeForAnswering)) / totalTime);
+			return (int) Math.round(maxPoints * progress);
+	}
+
+	/**
+	 * Getter for the correct answer.
+	 *
+	 * @return the activity which has the highest consumption.
+	 */
+	public Activity getCorrectAnswer() {
+		int maxConsumption = (Math.max(this.choice1.getConsumptionInWh(),
+				Math.max(this.choice2.getConsumptionInWh(), this.choice3.getConsumptionInWh())));
+
+		if (choice1.getConsumptionInWh() == maxConsumption) {
+			return choice1;
+		} else if (choice2.getConsumptionInWh() == maxConsumption) {
+			return choice2;
+		}
+		return choice3;
+	}
+
+	public int returnEnergyConsumption(String title) {
+		if (title.equals(choice1.getTitle())) {
+			return choice1.getConsumptionInWh();
+		} else if (title.equals(choice2.getTitle())) {
+			return choice2.getConsumptionInWh();
+		}
+		return choice3.getConsumptionInWh();
 	}
 
 	/**
@@ -124,3 +147,5 @@ public class HighestConsumptionQuestion extends Question {
 		return Objects.hash(choice1, choice2, choice3);
 	}
 }
+
+

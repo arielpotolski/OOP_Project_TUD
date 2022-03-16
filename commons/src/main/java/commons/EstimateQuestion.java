@@ -37,17 +37,15 @@ public class EstimateQuestion extends Question {
 	 * to being close to the actual answer.
 	 * @param maxPoints maximum of points the player can earn.
 	 * @param answerGiven answer given by the player.
-	 * @param timeToAnswer time the player spent to answer the question.
-	 * @param totalTime time player had to answer the question.
+	 * @param progress time left
 	 * @return the amount of points player have earned in the question.
 	 */
-	public int pointsEarned(int maxPoints, int answerGiven, float timeToAnswer, float totalTime) {
-		float leftTime = totalTime - timeToAnswer;
+	public int pointsEarned(int maxPoints, int answerGiven, double progress) {
 		double t = ((double) this.activity.getConsumptionInWh()) / ((double) answerGiven);
 		double partialPoints = Math.abs(Math.log10(t));
-
-		return (int) Math.round(1000 * leftTime / (totalTime * (partialPoints + 1)));
+		return (int) Math.round(1000 * progress / (partialPoints + 1));
 	}
+
 
 	/**
 	 * Compares this question with a given object and
@@ -73,3 +71,5 @@ public class EstimateQuestion extends Question {
 		return Objects.hash(activity);
 	}
 }
+
+
