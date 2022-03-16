@@ -10,7 +10,7 @@ public class EstimateQuestion extends Question {
 	 * Constructor of the class.
 	 * @param activity activity that will be used in the question.
 	 */
-	public EstimateQuestion(Activity activity){
+	public EstimateQuestion(Activity activity) {
 		this.activity = activity;
 	}
 
@@ -18,7 +18,7 @@ public class EstimateQuestion extends Question {
 	 * Getter for the activity's title.
 	 * @return the title of the activity in this question.
 	 */
-	public String getActivityTitle(){
+	public String getActivityTitle() {
 		return this.activity.getTitle();
 	}
 
@@ -26,7 +26,7 @@ public class EstimateQuestion extends Question {
 	 * Getter for the activity's image path.
 	 * @return the image path of the activity in this question.
 	 */
-	public String getActivityImagePath(){
+	public String getActivityImagePath() {
 		return this.activity.getImagePath();
 	}
 
@@ -41,13 +41,11 @@ public class EstimateQuestion extends Question {
 	 * @return the amount of points player have earned in the question.
 	 */
 	public int pointsEarned(int maxPoints, int answerGiven, double progress){
-		double partialPoints; //points calculated from the difference (RA - AG)
 		double leftTime = progress;
 		double t = ((double) this.activity.getConsumptionInWh()) / ((double) answerGiven);
-		partialPoints = Math.abs(Math.log10(t));
+		double partialPoints = Math.abs(Math.log10(t));
+		return (int) Math.round(1000 * leftTime * 1/(partialPoints + 1));
 
-		return ((Long)((Math.round((1 / (partialPoints + 1))
-				* 1000 * (leftTime))))).intValue();
 	}
 
 	/**

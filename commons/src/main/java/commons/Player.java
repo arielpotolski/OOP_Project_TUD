@@ -17,11 +17,11 @@ public class Player {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public long id;
 
-	@JsonProperty("nickName")
-	private String nickName;
+	@JsonProperty("nickname")
+	private String nickname;
 
-	@JsonProperty("point")
-	private int point;
+	@JsonProperty("points")
+	private int points;
 
 	@SuppressWarnings("unused")
 	private Player() {
@@ -29,30 +29,30 @@ public class Player {
 	}
 
 	public int getPoint() {
-		return point;
+		return points;
 	}
 
 	public void setPoint(int point) {
-		this.point = point;
+		this.points = point;
 	}
 
-	public Player(String nickName, int Point){
-		this.nickName = nickName;
-		this.point = Point;
+	public Player(String nickname, int Point){
+		this.nickname = nickname;
+		this.points = Point;
 	}
 
 
 
 	public String getNickName() {
-		return nickName;
+		return nickname;
 	}
 
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickName(String nickname) {
+		this.nickname = nickname;
 	}
 
-	public Player(String nickName) {
-		this.nickName = nickName;
+	public Player(String nickname) {
+		this.nickname = nickname;
 	}
 
 	@Override
