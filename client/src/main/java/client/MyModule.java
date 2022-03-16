@@ -15,7 +15,14 @@
  */
 package client;
 
+import client.scenes.GlobalLeaderboardScreenCtrl;
+import client.scenes.IntermediateSceneCtrl;
 import client.scenes.MainCtrl;
+import client.scenes.MultiplayerPreGameCtrl;
+import client.scenes.QuestionScreenSinglePlayerCtrl;
+import client.scenes.SinglePlayerFinalScreenCtrl;
+import client.scenes.SinglePlayerPreGameCtrl;
+import client.scenes.SplashCtrl;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
@@ -24,6 +31,13 @@ import com.google.inject.Scopes;
 public class MyModule implements Module {
 	@Override
 	public void configure(Binder binder) {
+		binder.bind(GlobalLeaderboardScreenCtrl.class).in(Scopes.SINGLETON);
+		binder.bind(QuestionScreenSinglePlayerCtrl.class).in(Scopes.SINGLETON);
 		binder.bind(MainCtrl.class).in(Scopes.SINGLETON);
+		binder.bind(SinglePlayerPreGameCtrl.class).in(Scopes.SINGLETON);
+		binder.bind(SplashCtrl.class).in(Scopes.SINGLETON);
+		binder.bind(MultiplayerPreGameCtrl.class).in(Scopes.SINGLETON);
+		binder.bind(IntermediateSceneCtrl.class).in(Scopes.SINGLETON);
+		binder.bind(SinglePlayerFinalScreenCtrl.class).in(Scopes.SINGLETON);
 	}
 }
