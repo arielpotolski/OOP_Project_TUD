@@ -154,7 +154,7 @@ public class MainCtrl {
 	 */
 	public void showQuestionScreenSinglePlayer() {
 		// If the size of question set equals to zero, this method change to final screen.
-		if(questions.size() == 0){
+		if (questions.size() == 0) {
 			showSinglePlayerFinalScreen();
 			return;
 		}

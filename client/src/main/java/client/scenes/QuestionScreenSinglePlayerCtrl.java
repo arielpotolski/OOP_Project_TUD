@@ -133,13 +133,13 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * @param event the player click on the button.
 	 */
 	public void answerReturn(ActionEvent event) {
-		if(event.getSource() == answerButton1){
+		if (event.getSource() == answerButton1) {
 			mainCtrl.showAnswer(answerButton1,null);
-		} else if(event.getSource() == answerButton2){
+		} else if (event.getSource() == answerButton2) {
 			mainCtrl.showAnswer(answerButton2,null);
-		} else if(event.getSource() == answerButton3){
+		} else if (event.getSource() == answerButton3) {
 			mainCtrl.showAnswer(answerButton3,null);
-		} else if(event.getSource() == textField){
+		} else if (event.getSource() == textField) {
 			mainCtrl.showAnswer(null,textField);
 		}
 	}
