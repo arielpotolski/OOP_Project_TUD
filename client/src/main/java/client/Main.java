@@ -52,7 +52,7 @@ public class Main extends Application {
 		var singlePlayerQuestion = FXML.load(QuestionScreenSinglePlayerCtrl.class,"client","scenes",
 				"QuestionScreenSinglePlayer.fxml");
 		var globalLeaderBoard = FXML.load(GlobalLeaderboardScreenCtrl.class,"client","scenes",
-				"GlobalLeaderboard.fxml");
+				"GlobalLeaderBoardScreen.fxml");
 		var intermediateScene = FXML.load(IntermediateSceneCtrl.class,"client","scenes",
 				"IntermediateScreen.fxml");
 		var singlePlayerFinalScene = FXML.load(SinglePlayerFinalScreenCtrl.class,"client","scenes",
