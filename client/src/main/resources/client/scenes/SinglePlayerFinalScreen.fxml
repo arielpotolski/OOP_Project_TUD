@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SinglePlayerFinalScreenCtrl">
+   <children>
+      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="691.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="735.0">
+                     <children>
+                        <Label fx:id="correctAnswers" alignment="CENTER" prefHeight="99.0" prefWidth="828.0" text="You have correctly answered  13/20  questions">
+                           <font>
+                              <Font name="Calibri" size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label alignment="CENTER" prefHeight="135.0" prefWidth="394.0" text="Total Score:">
+                     <font>
+                        <Font size="42.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalScore" alignment="CENTER" prefHeight="100.0" prefWidth="312.0" text="11.648">
+                     <font>
+                        <Font name="Calibri Bold" size="64.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="906.0" spacing="225.0">
+                     <children>
+                        <Button fx:id="playAgain" alignment="CENTER" mnemonicParsing="false" prefHeight="63.0" prefWidth="174.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="PlayAgain">
+                           <font>
+                              <Font name="Calibri Bold" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="multiplayer" alignment="CENTER" mnemonicParsing="false" prefHeight="63.0" prefWidth="174.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Multiplayer">
+                           <font>
+                              <Font name="Calibri Bold" size="24.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="602.0" prefWidth="110.0">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-195.0" layoutY="-75.0" points="240.800048828125, 152.79998779296875, 220.1999969482422, 167.0, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label alignment="CENTER" layoutX="24.0" layoutY="88.0" text="back">
+                           <font>
+                              <Font name="Calibri Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
