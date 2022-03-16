@@ -30,14 +30,13 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 public class ServerUtils {
 	private String server;
 
-
 	/**
 	 * Constructor for the connection between client and server.
 	 *
 	 * @param server the link that player types before playing the game
 	 */
 	@Inject
-	public ServerUtils(String server){
+	public ServerUtils(String server) {
 		this.server = server;
 	}
 
@@ -60,7 +59,7 @@ public class ServerUtils {
 	 *
 	 * @return a list of activity.
 	 */
-	public List<Activity> getActivityList(){
+	public List<Activity> getActivityList() {
 		return ClientBuilder.newClient(new ClientConfig())
 				.target(server).path("api/activities/")
 				.request(APPLICATION_JSON)

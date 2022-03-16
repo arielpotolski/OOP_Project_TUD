@@ -19,7 +19,6 @@ public class PlayerController {
 
 	private final PlayerRepository playerRepository;
 
-
 	public PlayerController(PlayerRepository playerRepository) {
 		this.playerRepository = playerRepository;
 	}
@@ -29,10 +28,9 @@ public class PlayerController {
 		return  playerRepository.findAll();
 	}
 
-
 	@PutMapping("/addPlayer")
 	public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
-		if(player == null || player.getNickName().equals("")){
+		if (player == null || player.getNickName().equals("")) {
 			return ResponseEntity.badRequest().build();
 		}
 		Player result = playerRepository.save(player);
