@@ -65,9 +65,9 @@ public class MainCtrl {
 	private Scene singlePlayerFinalScene;
 
 	private ServerUtils server;
-	QuestionSet questionSet;
+	private QuestionSet questionSet;
 
-	public List<Question> questions;
+	private List<Question> questions;
 	private String answer;
 	private Question question;
 
@@ -126,7 +126,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method shows up the splash screen.
+	 * This method shows up the splash screen.
 	 */
 	public void showSplashScreen() {
 		primaryStage.setTitle("Quizzz");
@@ -134,7 +134,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method shows up the single player pre-game screen.
+	 * This method shows up the single player pre-game screen.
 	 */
 	public void showSinglePlayerPreGameScreen() {
 		primaryStage.setTitle("SinglePlayer");
@@ -142,7 +142,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method shows up multiplayer pre-game screen
+	 * This method shows up multiplayer pre-game screen
 	 */
 	public void showMultiplePlayersPreGameScreen() {
 		primaryStage.setTitle("Multiplayer");
@@ -150,21 +150,20 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method shows up the question screen in single player mode.
-	 *
+	 * This method shows up the question screen in single player mode.
 	 */
 	public void showQuestionScreenSinglePlayer() {
-		// if the size of question set equals to zero, this method change to final screen.
+		// If the size of question set equals to zero, this method change to final screen.
 		if(questions.size() == 0){
 			showSinglePlayerFinalScreen();
 			return;
 		}
 
-		// assign the player variable that got from
-		// singlePlayerPreGame to player variable in MainCtrl
+		// Assign the player variable that got from
+		// SinglePlayerPreGame to player variable in MainCtrl
 		player = singlePlayerPreGameCtrl.getPlayer();
 
-		// this timeline will execute on another thread - run the count-down timer.
+		// This timeline will execute on another thread - run the count-down timer.
 		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 			questionScreenSinglePlayerCtrl.decreaseProgress();
 		}));
@@ -173,31 +172,31 @@ public class MainCtrl {
 
 		primaryStage.setTitle("Question");
 
-		//get first question of the set and delete that question.
+		// Get first question of the set and delete that question.
 		question = questions.get(0);
 		questions.remove(0);
 
 		numberOfQuestionAnswered++;
-		if(question instanceof EstimateQuestion){
+		if(question instanceof EstimateQuestion) {
 			setUpEstimateQuestion((EstimateQuestion) question);
-		}else if(question instanceof HighestConsumptionQuestion){
+		} else if(question instanceof HighestConsumptionQuestion) {
 			setUpHighestQuestion((HighestConsumptionQuestion)question);
-		} else if(question instanceof MCQuestion){
+		} else if(question instanceof MCQuestion) {
 			setUpMultipleChoice((MCQuestion) question);
-		} else if(question instanceof InsteadOfQuestion){
+		} else if(question instanceof InsteadOfQuestion) {
 			setUpInsteadQuestion((InsteadOfQuestion)question);
 		}
 		primaryStage.setScene(questionScreenSinglePlayer);
 	}
 
-	public void setServer(ServerUtils server){
+	public void setServer(ServerUtils server) {
 		this.server = server;
 	}
 
 	/**
-	 * this method will set up the set of question
+	 * This method will set up the set of question
 	 */
-	public void setUpQuestions(){
+	public void setUpQuestions() {
 		List<Activity> activityList = server.getActivityList();
 		questionSet = new QuestionSet(activityList);
 		questionSet.fillSet(activityList.size());
@@ -205,13 +204,13 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method sets up the multiple choice question
+	 * This method sets up the multiple choice question
 	 * @param question multiple choice question
 	 */
 	public void setUpMultipleChoice(MCQuestion question) {
 		hideTextFieldAndRevealButtons();
 
-		//set up label for the question and answers.
+		// Set up label for the question and answers.
 		String questionText = question.getActivity().getTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
 		questionScreenSinglePlayerCtrl.setLabelButton1(Integer.toString(question.getAnswer1()));
@@ -220,13 +219,13 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method sets up the "instead of" question
+	 * This method sets up the "instead of" question
 	 * @param question "instead of" question
 	 */
 	public void setUpInsteadQuestion(InsteadOfQuestion question) {
 		hideTextFieldAndRevealButtons();
 
-		// set up label for the question and answers
+		// Set up label for the question and answers
 		String questionText = question.getQuestionActivity().getTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
 		questionScreenSinglePlayerCtrl.setLabelButton1(question.getAnswer1().getTitle());
@@ -235,13 +234,13 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method sets up the highest consumption question
+	 * This method sets up the highest consumption question
 	 * @param question highest consumption question
 	 */
 	public void setUpHighestQuestion(HighestConsumptionQuestion question) {
 		hideTextFieldAndRevealButtons();
 
-		// set up label for the question and answers.
+		// Set up label for the question and answers.
 		String questionText = "Which one of these activities consumes the most energy?";
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
 		questionScreenSinglePlayerCtrl.setLabelButton1(question.getActivity1Title());
@@ -250,9 +249,9 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method hide the text field and reveal the buttons.
+	 * This method hide the text field and reveal the buttons.
 	 */
-	public void hideTextFieldAndRevealButtons(){
+	public void hideTextFieldAndRevealButtons() {
 		questionScreenSinglePlayerCtrl.setVisibleButton1(true);
 		questionScreenSinglePlayerCtrl.setVisibleButton2(true);
 		questionScreenSinglePlayerCtrl.setVisibleButton3(true);
@@ -260,7 +259,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method sets up the estimate question
+	 * This method sets up the estimate question
 	 * @param question the estimate question.
 	 */
 	public void setUpEstimateQuestion(EstimateQuestion question) {
@@ -273,7 +272,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method shows the global leader board screen.
+	 * This method shows the global leader board screen.
 	 */
 	public void showGlobalLeaderboardScreen() {
 		globalLeaderboardScreenCtrl.getItems();
@@ -282,7 +281,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * this method shows the intermediate scene.
+	 * This method shows the intermediate scene.
 	 */
 	public void showIntermediateScene() {
 
@@ -292,7 +291,7 @@ public class MainCtrl {
 		primaryStage.setTitle("IntermediateScene");
 		primaryStage.setScene(intermediateScene);
 
-		// this timeline will execute on another thread - run the count-down timer.
+		// This timeline will execute on another thread - run the count-down timer.
 		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 			intermediateSceneCtrl.decreaseProgress();
 		}));
@@ -300,12 +299,12 @@ public class MainCtrl {
 		timeLine.play();
 		timeLine.setOnFinished(event ->{
 			intermediateSceneCtrl.setProgress(1); // reset the progress bar after
-			showQuestionScreenSinglePlayer();       // the timeline finish its cycle.
+			showQuestionScreenSinglePlayer();     // the timeline finish its cycle.
 		});
 	}
 
 	/**
-	 * this method shows the final screen.
+	 * This method shows the final screen.
 	 */
 	public void showSinglePlayerFinalScreen() {
 		singlePlayerFinalSceneCtrl.setTotalScore(player.getPoint());
@@ -318,35 +317,35 @@ public class MainCtrl {
 
 
 	/**
-	 * this method reveals the answer after the player clicked on the button
+	 * This method reveals the answer after the player clicked on the button
 	 * @param button the button
 	 * @param textField the text field.
 	 */
 	public void showAnswer(Button button, TextField textField) {
-		timeLine.stop(); // stop the count-down timer.
+		timeLine.stop(); // Stop the count-down timer.
 
-		// get the time the player used for guessing the answer
+		// Get the time the player used for guessing the answer
 		double timePassed = questionScreenSinglePlayerCtrl.getProgress();
 
 
-		if(question instanceof MCQuestion){
+		if(question instanceof MCQuestion) {
 			MCQuestion multipleChoiceQuestion = (MCQuestion) question;
 
-			//the point which the player will receive after answered the question
+			// The point which the player will receive after answered the question
 			currentPoint = multipleChoiceQuestion.pointsEarned(1000,
 					Integer.parseInt(button.getText()),timePassed);
 
-			//set the point for the player
+			// Set the point for the player
 			player.setPoint(player.getPoint() + currentPoint);
 
-			//if the player clicked on the correct answer,
-			// number of correct answers would be increased.
+			// If the player clicked on the correct answer,
+			// Number of correct answers would be increased.
 			if(multipleChoiceQuestion.getActivity().getConsumptionInWh()
-					== Integer.parseInt(button.getText())){
+					== Integer.parseInt(button.getText())) {
 				numberOfCorrectAnswered++;
 			}
 
-		} else if(question instanceof HighestConsumptionQuestion){
+		} else if(question instanceof HighestConsumptionQuestion) {
 
 			HighestConsumptionQuestion highConsumptionQuestion
 					= (HighestConsumptionQuestion) question;
@@ -358,7 +357,7 @@ public class MainCtrl {
 				numberOfCorrectAnswered++;
 			}
 
-		} else if(question instanceof InsteadOfQuestion){
+		} else if(question instanceof InsteadOfQuestion) {
 
 			InsteadOfQuestion insteadQuestion = (InsteadOfQuestion) question;
 			currentPoint = insteadQuestion.pointsEarned(1000,
@@ -369,7 +368,7 @@ public class MainCtrl {
 				numberOfCorrectAnswered++;
 			}
 
-		} else if(question instanceof EstimateQuestion){
+		} else if(question instanceof EstimateQuestion) {
 			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
 			currentPoint = estimateQuestion.pointsEarned(1000,
 					Integer.parseInt(textField.getText()),timePassed);
@@ -377,10 +376,10 @@ public class MainCtrl {
 			textField.clear();
 		}
 
-		// reset the count-down timer
+		// Reset the count-down timer
 		questionScreenSinglePlayerCtrl.setProgress(1);
 
-		// show the recent score.
+		// Show the recent score.
 		showIntermediateScene();
 	}
 }
