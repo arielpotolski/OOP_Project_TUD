@@ -10,7 +10,7 @@ public class EstimateQuestion extends Question {
 	 * Constructor of the class.
 	 * @param activity activity that will be used in the question.
 	 */
-	public EstimateQuestion(Activity activity){
+	public EstimateQuestion(Activity activity) {
 		this.activity = activity;
 	}
 
@@ -18,7 +18,7 @@ public class EstimateQuestion extends Question {
 	 * Getter for the activity's title.
 	 * @return the title of the activity in this question.
 	 */
-	public String getActivityTitle(){
+	public String getActivityTitle() {
 		return this.activity.getTitle();
 	}
 
@@ -26,7 +26,7 @@ public class EstimateQuestion extends Question {
 	 * Getter for the activity's image path.
 	 * @return the image path of the activity in this question.
 	 */
-	public String getActivityImagePath(){
+	public String getActivityImagePath() {
 		return this.activity.getImagePath();
 	}
 

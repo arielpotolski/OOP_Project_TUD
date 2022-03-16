@@ -24,7 +24,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the title of the first activity.
 	 * @return title of the first activity.
 	 */
-	public String getActivity1Title(){
+	public String getActivity1Title() {
 		return choice1.getTitle();
 	}
 
@@ -32,7 +32,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the title of the second activity.
 	 * @return title of the second activity.
 	 */
-	public String getActivity2Title(){
+	public String getActivity2Title() {
 		return choice2.getTitle();
 	}
 
@@ -40,7 +40,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the title of the third activity.
 	 * @return the title of the third activity.
 	 */
-	public String getActivity3Title(){
+	public String getActivity3Title() {
 		return choice3.getTitle();
 	}
 
@@ -48,7 +48,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the imagePath of the first activity.
 	 * @return the imagePath of the first activity.
 	 */
-	public String getActivity1ImagePath(){
+	public String getActivity1ImagePath() {
 		return choice1.getImagePath();
 	}
 
@@ -56,7 +56,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the imagePath of the second activity.
 	 * @return the imagePath of the second activity.
 	 */
-	public String getActivity2ImagePath(){
+	public String getActivity2ImagePath() {
 		return choice2.getImagePath();
 	}
 
@@ -64,7 +64,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the imagePath of the third activity.
 	 * @return the imagePath of the third activity.
 	 */
-	public String getActivity3ImagePath(){
+	public String getActivity3ImagePath() {
 		return choice3.getImagePath();
 	}
 
