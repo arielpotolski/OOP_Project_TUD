@@ -55,7 +55,7 @@ public class SinglePlayerPreGameCtrl {
 	 *
 	 * @return a player
 	 */
-	public Player getPlayer(){
+	public Player getPlayer() {
 		return player;
 	}
 }
