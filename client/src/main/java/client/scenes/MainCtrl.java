@@ -80,7 +80,7 @@ public class MainCtrl {
 
 
 	/**
-	 * initialize all the screens
+	 * Initialize all the screens
 	 *
 	 * @param primaryStage the primary stage
 	 * @param singlePlayer a pair of single player with parent
@@ -177,13 +177,13 @@ public class MainCtrl {
 		questions.remove(0);
 
 		numberOfQuestionAnswered++;
-		if(question instanceof EstimateQuestion) {
+		if (question instanceof EstimateQuestion) {
 			setUpEstimateQuestion((EstimateQuestion) question);
-		} else if(question instanceof HighestConsumptionQuestion) {
+		} else if (question instanceof HighestConsumptionQuestion) {
 			setUpHighestQuestion((HighestConsumptionQuestion)question);
-		} else if(question instanceof MCQuestion) {
+		} else if (question instanceof MCQuestion) {
 			setUpMultipleChoice((MCQuestion) question);
-		} else if(question instanceof InsteadOfQuestion) {
+		} else if (question instanceof InsteadOfQuestion) {
 			setUpInsteadQuestion((InsteadOfQuestion)question);
 		}
 		primaryStage.setScene(questionScreenSinglePlayer);
@@ -326,8 +326,6 @@ public class MainCtrl {
 
 		// Get the time the player used for guessing the answer
 		double timePassed = questionScreenSinglePlayerCtrl.getProgress();
-
-
 		if(question instanceof MCQuestion) {
 			MCQuestion multipleChoiceQuestion = (MCQuestion) question;
 
@@ -340,24 +338,24 @@ public class MainCtrl {
 
 			// If the player clicked on the correct answer,
 			// Number of correct answers would be increased.
-			if(multipleChoiceQuestion.getActivity().getConsumptionInWh()
+			if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
 					== Integer.parseInt(button.getText())) {
 				numberOfCorrectAnswered++;
 			}
 
-		} else if(question instanceof HighestConsumptionQuestion) {
+		} else if (question instanceof HighestConsumptionQuestion) {
 
 			HighestConsumptionQuestion highConsumptionQuestion
 					= (HighestConsumptionQuestion) question;
 			currentPoint = highConsumptionQuestion.pointsEarned(1000,
 					highConsumptionQuestion.returnEnergyConsumption(button.getText()),timePassed);
 			player.setPoint(player.getPoint() + currentPoint);
-			if(highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
+			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
 					== highConsumptionQuestion.returnEnergyConsumption(button.getText())){
 				numberOfCorrectAnswered++;
 			}
 
-		} else if(question instanceof InsteadOfQuestion) {
+		} else if (question instanceof InsteadOfQuestion) {
 
 			InsteadOfQuestion insteadQuestion = (InsteadOfQuestion) question;
 			currentPoint = insteadQuestion.pointsEarned(1000,
@@ -368,7 +366,7 @@ public class MainCtrl {
 				numberOfCorrectAnswered++;
 			}
 
-		} else if(question instanceof EstimateQuestion) {
+		} else if (question instanceof EstimateQuestion) {
 			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
 			currentPoint = estimateQuestion.pointsEarned(1000,
 					Integer.parseInt(textField.getText()),timePassed);
