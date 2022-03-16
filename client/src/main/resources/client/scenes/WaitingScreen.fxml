@@ -1,30 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.WaitingScreenCtrl">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="185.0" layoutY="82.0" prefHeight="85.0" prefWidth="530.0" text="You Are in Waiting Lobby Now" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Calibri Bold" size="40.0" />
-         </font>
-      </Label>
-      <Label fx:id="peopleInTheRoomLabel" alignment="CENTER" layoutX="171.0" layoutY="183.0" prefHeight="54.0" prefWidth="558.0" text="Label for people in the room" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Calibri" size="29.0" />
-         </font>
-      </Label>
-      <Button fx:id="startButton" layoutX="322.0" layoutY="466.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="START">
-         <font>
-            <Font name="Calibri Bold" size="42.0" />
-         </font>
-      </Button>
-      <ScrollPane layoutX="237.0" layoutY="246.0" prefHeight="200.0" prefWidth="426.0">
-        <content>
-          <AnchorPane fx:id="peopleInTheLeaderBoardPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="398.0" />
-        </content>
-      </ScrollPane>
+      <VBox alignment="TOP_CENTER" layoutX="34.0" layoutY="-32.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="You Are in Waiting Lobby Now" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Calibri Bold" size="40.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="50.0" />
+               </VBox.margin>
+            </Label>
+            <Label fx:id="peopleInTheRoomLabel" alignment="CENTER" text="Label for people in the room" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Calibri" size="29.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </Label>
+            <ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="426.0">
+               <content>
+                  <AnchorPane fx:id="peopleInTheLeaderBoardPane" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="481.0" />
+               </content>
+               <VBox.margin>
+                  <Insets left="200.0" right="200.0" top="50.0" />
+               </VBox.margin>
+            </ScrollPane>
+            <Button fx:id="startButton" mnemonicParsing="false" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="START">
+               <font>
+                  <Font name="Calibri Bold" size="42.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
