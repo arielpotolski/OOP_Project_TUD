@@ -132,7 +132,7 @@ public class Activity {
 	public void makeFake() {
 		int prev = this.consumptionInWh;
 		do {
-			this.consumptionInWh = (int) Math.round(Math.random() * 2 * this.consumptionInWh)
+			this.consumptionInWh = (int) Math.round(Math.random() * 2 * this.consumptionInWh);
 		}
 		while (this.consumptionInWh == prev);
 	}
