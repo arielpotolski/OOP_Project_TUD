@@ -45,7 +45,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	private ImageView imageSecond;
 
 	@FXML
-	private ProgressBar timeLeftBar;
+	private ProgressBar progressBarTime;
 
 	double progress = 1;
 
@@ -155,7 +155,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		timeLeftBar.setStyle("-fx-accent: #00FF00");
+		progressBarTime.setStyle("-fx-accent: #00FF00");
 	}
 
 	/**
@@ -163,7 +163,7 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 */
 	public void decreaseProgress() {
 		progress -= 0.1;
-		timeLeftBar.setProgress(progress);
+		progressBarTime.setProgress(progress);
 	}
 
 	/**
@@ -183,6 +183,6 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 */
 	public void setProgress(double progress) {
 		this.progress = progress;
-		timeLeftBar.setProgress(progress);
+		progressBarTime.setProgress(progress);
 	}
 }

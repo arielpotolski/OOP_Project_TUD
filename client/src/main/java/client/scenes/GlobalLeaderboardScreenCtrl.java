@@ -38,19 +38,19 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 	 * @param mainCtrl the injected main controller.
 	 */
 	@Inject
-	public GlobalLeaderboardScreenCtrl(MainCtrl mainCtrl) {
+	public GlobalLeaderboardScreenCtrl(MainCtrl mainCtrl){
 		this.mainCtrl = mainCtrl;
-		this.server = new ServerUtils("http://localhost:8080/");
+		server = new ServerUtils("http://localhost:8080/");
 	}
 
 
+	@Override
 	/**
 	 * This method updates the list view by getting all the list of player in database.
 	 *
 	 * @param location
 	 * @param resources
 	 */
-	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		scrollPane.prefWidthProperty().bind(listView.widthProperty());
 		scrollPane.prefHeightProperty().bind(listView.heightProperty());
@@ -62,11 +62,11 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 	/**
 	 * This method helps for updating the list view after a new player finished his/her game.
 	 */
-	public void getItems() {
+	public void getItems(){
 		listView.getItems().addAll(server.getPlayers());
 	}
 
 	public void jumpToSplashScreen() {
-		//mainCtrl.showSplashScreen();
+		mainCtrl.showSplashScreen();
 	}
 }

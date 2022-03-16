@@ -1,0 +1,4 @@
+2022-03-16 16:49:26 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "table_name" not found; SQL statement:
+ALTER TABLE "table_name"
+RENAME COLUMN "POINT" TO "POINTS" [42102-200]
