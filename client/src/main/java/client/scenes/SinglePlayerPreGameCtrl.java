@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 
-public class SinglePlayerPreGameCtrl{
+public class SinglePlayerPreGameCtrl {
 	public ServerUtils server;
 	private MainCtrl mainCtrl;
 	private String url;
@@ -25,14 +25,14 @@ public class SinglePlayerPreGameCtrl{
 	@FXML
 	private Button startButton;
 
-	@Inject
 	/**
 	 * Constructor for single player pre-game controller.
 	 *
 	 * @param mainCtrl the injected main controller.
 	 * @param server the injected server.
 	 */
-	public SinglePlayerPreGameCtrl(MainCtrl mainCtrl, ServerUtils server){
+	@Inject
+	public SinglePlayerPreGameCtrl(MainCtrl mainCtrl, ServerUtils server) {
 		this.mainCtrl = mainCtrl;
 		this.server = server;
 	}
@@ -40,7 +40,7 @@ public class SinglePlayerPreGameCtrl{
 	/**
 	 * the method change the single player pre-game screen to question screen.
 	 */
-	public void changeToQuestionScreen(){
+	public void changeToQuestionScreen() {
 		url = serverURL.getText();
 		nickName = nickname.getText();
 		player = new Player(nickName,0);

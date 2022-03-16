@@ -4,17 +4,18 @@ package client.scenes;
 import com.google.inject.Inject;
 
 
-public class SplashCtrl{
+public class SplashCtrl {
 
 	private MainCtrl mainCtrl;
 
-	@Inject
+
 	/**
 	 * Constructor for splash controller.
 	 *
 	 * @param mainCtrl the injected main controller.
 	 */
-	public SplashCtrl(MainCtrl mainCtrl){
+	@Inject
+	public SplashCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
 	}
 
