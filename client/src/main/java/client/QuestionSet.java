@@ -23,9 +23,9 @@ public class QuestionSet {
 	}
 
 	/**
+	 *Constructor for the QuestionsSet
 	 *
-	 *
-	 * @param activities
+	 * @param activities list of activities
 	 */
 	public QuestionSet(List<Activity> activities) {
 		this.questions = new ArrayList<>();
@@ -38,7 +38,7 @@ public class QuestionSet {
 	 * Fills all the container class with questions
 	 * @param numberOfQuestions the number of questions contained in the class
 	 */
-	public void fillSet(int numberOfQuestions){
+	public void fillSet(int numberOfQuestions) {
 		List<Character> sequence = generateSequence(numberOfQuestions);
 
 		for (Character c : sequence) {
