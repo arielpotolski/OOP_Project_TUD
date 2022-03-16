@@ -26,7 +26,7 @@ public class InsteadOfQuestionTest {
 
 	private final InsteadOfQuestion insteadOfQuestionRandomized =
 			new InsteadOfQuestion(activityQuestion, answer1Activity,
-			answer2Activity, answer3Activity);
+					answer2Activity, answer3Activity);
 	private InsteadOfQuestion insteadOfQuestionFixed;
 	private InsteadOfQuestion insteadOfQuestionFixed1;
 
@@ -192,16 +192,16 @@ public class InsteadOfQuestionTest {
 
 	@Test
 	void pointsEarned() {
-		assertEquals(500, insteadOfQuestionFixed1.pointsEarned(1000, 1, 15.0f, 30.0f));
-		assertEquals(0, insteadOfQuestionFixed1.pointsEarned(1000, 2, 15.0f, 30.0f));
-		assertEquals(0, insteadOfQuestionFixed1.pointsEarned(1000, 3, 15.0f, 30.0f));
+		assertEquals(500, insteadOfQuestionFixed1.pointsEarned(1000, 1, 0.5));
+		assertEquals(0, insteadOfQuestionFixed1.pointsEarned(1000, 2, 0.5));
+		assertEquals(0, insteadOfQuestionFixed1.pointsEarned(1000, 3, 0.5));
 	}
 
 	@Test
 	void singleCorrectAnswer() {
-		int points = insteadOfQuestionRandomized.pointsEarned(1000, 1, 0, 1);
-		points += insteadOfQuestionRandomized.pointsEarned(1000, 2, 0, 1);
-		points += insteadOfQuestionRandomized.pointsEarned(1000, 3, 0, 1);
+		int points = insteadOfQuestionRandomized.pointsEarned(1000, 1, 1.0);
+		points += insteadOfQuestionRandomized.pointsEarned(1000, 2, 1.0);
+		points += insteadOfQuestionRandomized.pointsEarned(1000, 3, 1.0);
 		assertEquals(1000, points);
 	}
 }

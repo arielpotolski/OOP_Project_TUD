@@ -1,3 +1,8 @@
+
+
+
+
+
 package commons;
 
 import org.junit.jupiter.api.Assertions;
@@ -145,7 +150,7 @@ public class MCQuestionTest {
 
 	@Test
 	void pointsEarned() {
-		Assertions.assertEquals(1000, mcQuestion4.pointsEarned(1000, 120, 0, 1));
+		Assertions.assertEquals(1000, mcQuestion4.pointsEarned(1000, 120, 1.0));
 	}
 
 

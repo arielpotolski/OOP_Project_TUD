@@ -82,7 +82,7 @@ public class MCQuestion extends Question{
 	private HashMap<Integer, Integer> generateAnswers() {
 		generateSequence();
 		HashMap<Integer, Integer> result = new HashMap<>();
-		for(Integer i : order) {
+		for (Integer i : order) {
 			if (order.indexOf(i) == 0) {
 				result.put(order.get(0), this.activity.getConsumptionInWh());
 				continue;
@@ -97,14 +97,12 @@ public class MCQuestion extends Question{
 	 * Works linearly with the times provided which can be changed
 	 * @param maxPoints the maximum amount of points
 	 * @param answerGiven the answer given by the user
-	 * @param timeTakenToAnswer the time that took the user to answer in seconds
-	 * @param totalTime the total time that the user had to answer in seconds
+	 * @param progress time left
 	 * @return the amount of points the user achieved
 	 */
-	public int pointsEarned(int maxPoints,
-			int answerGiven, float timeTakenToAnswer, float totalTime) {
+	public int pointsEarned(int maxPoints, int answerGiven, double progress) {
 		if (answerGiven != activity.getConsumptionInWh()) return 0;
-		return Math.round((maxPoints * (totalTime - timeTakenToAnswer)) / totalTime);
+		return (int) Math.round(maxPoints * progress);
 	}
 
 	/**
