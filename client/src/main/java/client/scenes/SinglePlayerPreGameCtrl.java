@@ -17,7 +17,7 @@ public class SinglePlayerPreGameCtrl {
 	private Player player;
 
 	@FXML
-	public TextField serverURL;
+	private TextField serverURL;
 
 	@FXML
 	private TextField nickname;
