@@ -147,5 +147,3 @@ public class HighestConsumptionQuestion extends Question {
 		return Objects.hash(choice1, choice2, choice3);
 	}
 }
-
-

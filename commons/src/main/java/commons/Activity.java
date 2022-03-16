@@ -174,3 +174,4 @@ public class Activity {
 		return Objects.hash(id, title, consumptionInWh, imagePath, source);
 	}
 }
+
