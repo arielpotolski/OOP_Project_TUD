@@ -21,7 +21,6 @@ public class InsteadOfQuestion extends Question {
 
 	}
 
-
 	/**
 	 * Constructor for InsteadOfQuestion
 	 * @param questionActivity the activity for the question
@@ -29,8 +28,12 @@ public class InsteadOfQuestion extends Question {
 	 * @param answer2 initial answer activity at position 2
 	 * @param answer3 initial answer activity at position 3
 	 */
-	public InsteadOfQuestion(Activity questionActivity, Activity answer1,
-	Activity answer2, Activity answer3) {
+	public InsteadOfQuestion(
+		Activity questionActivity,
+		Activity answer1,
+		Activity answer2,
+		Activity answer3
+	) {
 		this.questionActivity = questionActivity;
 		calculateRealCoefficients(answer1, answer2, answer3);
 
@@ -64,8 +67,15 @@ public class InsteadOfQuestion extends Question {
 	 * @param c2 the custom coefficient
 	 * @param c3 the custom coefficient
 	 */
-	public InsteadOfQuestion(Activity questionActivity, Activity answer1, Activity answer2,
-	Activity answer3, double c1, double c2, double c3) {
+	public InsteadOfQuestion(
+		Activity questionActivity,
+		Activity answer1,
+		Activity answer2,
+		Activity answer3,
+		double c1,
+		double c2,
+		double c3
+	) {
 		this.questionActivity = questionActivity;
 		this.answer1 = answer1;
 		this.answer2 = answer2;
@@ -178,29 +188,27 @@ public class InsteadOfQuestion extends Question {
 		return result;
 	}
 
-	public Activity correctAnswer(){
+	public Activity correctAnswer() {
 		double distanceFromOneOfCoefficient1 = 1 - realCoefficient1;
 		double distanceFromOneOfCoefficient2 = 1 - realCoefficient2;
 		double distanceFromOneOfCoefficient3 = 1 - realCoefficient3;
 		double result = Math.min(distanceFromOneOfCoefficient1,
 				Math.min(distanceFromOneOfCoefficient2, distanceFromOneOfCoefficient3));
-		if(result == distanceFromOneOfCoefficient1){
+		if (result == distanceFromOneOfCoefficient1) {
 			return answer1;
-		}else if(result == distanceFromOneOfCoefficient2){
+		} else if (result == distanceFromOneOfCoefficient2) {
 			return answer2;
-		}else {
-			return answer3;
 		}
+		return answer3;
 	}
 
-	public int returnEnergyConsumption(String title){
-		if(title.equals(answer1.getTitle())){
+	public int returnEnergyConsumption(String title) {
+		if (title.equals(answer1.getTitle())) {
 			return answer1.getConsumptionInWh();
-		} else if(title.equals(answer2.getTitle())){
+		} else if (title.equals(answer2.getTitle())) {
 			return answer2.getConsumptionInWh();
-		} else {
-			return answer3.getConsumptionInWh();
 		}
+		return answer3.getConsumptionInWh();
 	}
 
 	/**
@@ -211,11 +219,10 @@ public class InsteadOfQuestion extends Question {
 	 * @return The total amount of points earned as an integer
 	 */
 	public int pointsEarned(int maxPoints, int answerGiven, double progress) {
-		if (!answerString(answerGiven).equals(correctAnswerString(answerGiven))){
+		if (!answerString(answerGiven).equals(correctAnswerString(answerGiven))) {
 			return 0;
 		}
-		double coefficientTime = progress;
-		float pointsEarned = ((Double) (coefficientTime * maxPoints)).floatValue();
+		float pointsEarned = (float) progress * maxPoints;
 		return Math.round(pointsEarned);
 	}
 

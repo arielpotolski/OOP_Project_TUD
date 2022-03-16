@@ -77,8 +77,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @param progress time left
 	 * @return the amount of points user earned for this question.
 	 */
-	public int pointsEarned(int maxPoints, int answerGivenConsumption, double progress){
-
+	public int pointsEarned(int maxPoints, int answerGivenConsumption, double progress) {
 		int maxConsumption, positionHighest;
 
 		maxConsumption = (Math.max(this.choice1.getConsumptionInWh(),
@@ -92,7 +91,7 @@ public class HighestConsumptionQuestion extends Question {
 			positionHighest = 3;
 		}
 
-		if(answerGivenConsumption != positionHighest)
+		if (answerGivenConsumption != positionHighest)
 			return 0;
 		else
 			return (int) Math.round(maxPoints * progress);
@@ -101,32 +100,27 @@ public class HighestConsumptionQuestion extends Question {
 	/**
 	 * Getter for the correct answer.
 	 *
-	 *
 	 * @return the activity which has the highest consumption.
 	 */
-	public Activity getCorrectAnswer(){
-		int maxConsumption;
-
-		maxConsumption = (Math.max(this.choice1.getConsumptionInWh(),
+	public Activity getCorrectAnswer() {
+		int maxConsumption = (Math.max(this.choice1.getConsumptionInWh(),
 				Math.max(this.choice2.getConsumptionInWh(), this.choice3.getConsumptionInWh())));
 
 		if (choice1.getConsumptionInWh() == maxConsumption) {
 			return choice1;
 		} else if (choice2.getConsumptionInWh() == maxConsumption) {
 			return choice2;
-		} else {
-			return choice3;
 		}
+		return choice3;
 	}
 
-	public int returnEnergyConsumption(String title){
-		if(title.equals(choice1.getTitle())){
+	public int returnEnergyConsumption(String title) {
+		if (title.equals(choice1.getTitle())) {
 			return choice1.getConsumptionInWh();
-		} else if(title.equals(choice2.getTitle())){
+		} else if (title.equals(choice2.getTitle())) {
 			return choice2.getConsumptionInWh();
-		} else {
-			return choice3.getConsumptionInWh();
 		}
+		return choice3.getConsumptionInWh();
 	}
 
 	/**

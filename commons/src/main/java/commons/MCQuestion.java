@@ -82,7 +82,7 @@ public class MCQuestion extends Question{
 	private HashMap<Integer, Integer> generateAnswers() {
 		generateSequence();
 		HashMap<Integer, Integer> result = new HashMap<>();
-		for(Integer i : order) {
+		for (Integer i : order) {
 			if (order.indexOf(i) == 0) {
 				result.put(order.get(0), this.activity.getConsumptionInWh());
 				continue;
