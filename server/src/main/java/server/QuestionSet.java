@@ -18,8 +18,20 @@ public class QuestionSet {
 	private Random random;
 	private int size;
 
+	/**
+	 * Getter for the list of Questions in this question set.
+	 * @return list of Questions.
+	 */
 	public List<Question> getQuestions() {
 		return this.questions;
+	}
+
+	/**
+	 * Getter for the size of the question set.
+	 * @return the size of the question set.
+	 */
+	public int getQuestionSetSize() {
+		return this.questions.size();
 	}
 
 	/**
