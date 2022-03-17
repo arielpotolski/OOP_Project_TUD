@@ -206,9 +206,9 @@ public class MainCtrl {
 		// Set up label for the question and answers.
 		String questionText = question.getActivity().getTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setLabelButton1(Integer.toString(question.getAnswer1()));
-		questionScreenSinglePlayerCtrl.setLabelButton2(Integer.toString(question.getAnswer2()));
-		questionScreenSinglePlayerCtrl.setLabelButton3(Integer.toString(question.getAnswer3()));
+		questionScreenSinglePlayerCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
+		questionScreenSinglePlayerCtrl.setLabelButton2(Long.toString(question.getAnswer2()));
+		questionScreenSinglePlayerCtrl.setLabelButton3(Long.toString(question.getAnswer3()));
 	}
 
 	/**
@@ -332,7 +332,7 @@ public class MainCtrl {
 			// If the player clicked on the correct answer,
 			// number of correct answers would be increased.
 			if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
-					== Integer.parseInt(button.getText())) {
+					== Long.parseLong(button.getText())) {
 				numberOfCorrectAnswered++;
 			}
 		} else if (question instanceof HighestConsumptionQuestion) {
