@@ -30,6 +30,9 @@ public class HighestConsumptionQuestion extends Question {
 		this.choice3 = choice3;
 	}
 
+	/**
+	 * This constructor helps for create the Json Object
+	 */
 	public HighestConsumptionQuestion(){}
 
 	/**

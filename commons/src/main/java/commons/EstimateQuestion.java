@@ -21,6 +21,10 @@ public class EstimateQuestion extends Question {
 		this.activity = activity;
 	}
 
+
+	/**
+	 * This constructor helps for create the Json Object
+	 */
 	public EstimateQuestion() {
 
 	}
