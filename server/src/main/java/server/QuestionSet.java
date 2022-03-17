@@ -1,6 +1,7 @@
 package server;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -13,14 +14,12 @@ import commons.MCQuestion;
 import commons.Question;
 
 public class QuestionSet {
-	private List<Question> questions;
-	private List<Activity> activities;
-	private Random random;
-	private int size;
-
-	public List<Question> getQuestions() {
-		return this.questions;
-	}
+	private List<Question> questions; // List of the questions in this QuestionSet.
+	private List<Activity> activities; // List of Activities to be used in the questions.
+	private Random random; // Used to randomize the activities used per QuestionSet.
+	private int size; // Size of the list of activities.
+	private List<Integer> activityNumbers; // List containing the # of each activity
+											// so we can test its content.
 
 	/**
 	 * Constructor for the QuestionsSet
@@ -32,6 +31,31 @@ public class QuestionSet {
 		this.random = new Random();
 		this.activities = activities;
 		this.size = activities.size();
+		this.activityNumbers = new ArrayList<>();
+	}
+
+	/**
+	 * Getter for the list of Questions in this question set.
+	 * @return list of Questions.
+	 */
+	public List<Question> getQuestions() {
+		return this.questions;
+	}
+
+	/**
+	 * Getter for the size of the question set.
+	 * @return the size of the question set.
+	 */
+	public int getQuestionSetSize() {
+		return this.questions.size();
+	}
+
+	/**
+	 * Getter for the list of the activity numbers.
+	 * @return list of activity numbers.
+	 */
+	public List<Integer> getActivityNumbers() {
+		return this.activityNumbers;
 	}
 
 	/**
@@ -39,7 +63,10 @@ public class QuestionSet {
 	 * @param numberOfQuestions the number of questions contained in the class
 	 */
 	public void fillSet(int numberOfQuestions) {
-		generateSequence(numberOfQuestions).forEach(c -> {
+		ArrayList<Character> seq = new ArrayList<>(generateSequence(numberOfQuestions));
+		Collections.shuffle(seq);
+
+		seq.forEach(c -> {
 			switch (c) {
 			case 'M' -> generateMCQ();
 			case 'H' -> generateHigh();
@@ -55,7 +82,10 @@ public class QuestionSet {
 	 * Generates a random Multiple Choice Question
 	 */
 	private void generateMCQ() {
-		Activity activity = this.activities.get(this.random.nextInt(this.size));
+		int randNumber = this.random.nextInt(this.size);
+		this.activityNumbers.add(randNumber);
+
+		Activity activity = this.activities.get(randNumber);
 		this.questions.add(new MCQuestion(activity));
 	}
 
@@ -63,9 +93,17 @@ public class QuestionSet {
 	 * Generates the Highest Consumption Question
 	 */
 	private void generateHigh() {
-		Activity activity1 = this.activities.get(this.random.nextInt(this.size));
-		Activity activity2 = this.activities.get(this.random.nextInt(this.size));
-		Activity activity3 = this.activities.get(this.random.nextInt(this.size));
+		int randNumber1 = this.random.nextInt(this.size);
+		int randNumber2 = this.random.nextInt(this.size);
+		int randNumber3 = this.random.nextInt(this.size);
+
+		this.activityNumbers.add(randNumber1);
+		this.activityNumbers.add(randNumber2);
+		this.activityNumbers.add(randNumber3);
+
+		Activity activity1 = this.activities.get(randNumber1);
+		Activity activity2 = this.activities.get(randNumber2);
+		Activity activity3 = this.activities.get(randNumber3);
 		this.questions.add(new HighestConsumptionQuestion(activity1, activity2, activity3));
 	}
 
@@ -73,7 +111,10 @@ public class QuestionSet {
 	 * Generates a Estimate Question
 	 */
 	private void generateEstimate() {
-		Activity activity = this.activities.get(this.random.nextInt(this.size));
+		int randNumber = this.random.nextInt(this.size);
+		this.activityNumbers.add(randNumber);
+
+		Activity activity = this.activities.get(randNumber);
 		this.questions.add(new EstimateQuestion(activity));
 	}
 
@@ -81,10 +122,20 @@ public class QuestionSet {
 	 * Generates Instead of Question
 	 */
 	private void generateInstead() {
-		Activity activity1 = this.activities.get(this.random.nextInt(this.size));
-		Activity activity2 = this.activities.get(this.random.nextInt(this.size));
-		Activity activity3 = this.activities.get(this.random.nextInt(this.size));
-		Activity activity4 = this.activities.get(this.random.nextInt(this.size));
+		int randNumber1 = this.random.nextInt(this.size);
+		int randNumber2 = this.random.nextInt(this.size);
+		int randNumber3 = this.random.nextInt(this.size);
+		int randNumber4 = this.random.nextInt(this.size);
+
+		this.activityNumbers.add(randNumber1);
+		this.activityNumbers.add(randNumber2);
+		this.activityNumbers.add(randNumber3);
+		this.activityNumbers.add(randNumber4);
+
+		Activity activity1 = this.activities.get(randNumber1);
+		Activity activity2 = this.activities.get(randNumber2);
+		Activity activity3 = this.activities.get(randNumber3);
+		Activity activity4 = this.activities.get(randNumber4);
 		this.questions.add(new InsteadOfQuestion(activity1, activity2, activity3, activity4));
 	}
 
