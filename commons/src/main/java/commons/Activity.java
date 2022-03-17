@@ -1,6 +1,7 @@
 package commons;
 
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
@@ -143,6 +144,20 @@ public class Activity {
 				", imagePath='" + this.imagePath + '\'' +
 				", source='" + this.source + '\'' +
 				'}';
+	}
+
+	/**
+	 * Check if `this' is a valid activity.  An activity is considered valid if none of the
+	 * fields are null and the energy consumption is a non-negative integer.
+	 * @return True if the activity is valid and false otherwise.
+	 */
+	public boolean isValid() {
+		Predicate<String> isNotNullOrEmpty = s -> s != null && !s.isEmpty();
+
+		return isNotNullOrEmpty.test(this.id)
+			&& isNotNullOrEmpty.test(this.source)
+			&& isNotNullOrEmpty.test(this.title)
+			&& this.getConsumptionInWh() >= 0;
 	}
 
 	/**
