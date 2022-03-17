@@ -79,8 +79,9 @@ public class HighestConsumptionQuestion extends Question {
 	 * @param progress time left
 	 * @return the amount of points user earned for this question.
 	 */
-	public int pointsEarned(int maxPoints, int answerGivenConsumption, double progress) {
-		int maxConsumption, positionHighest;
+	public int pointsEarned(int maxPoints, long answerGivenConsumption, double progress) {
+		long maxConsumption;
+		int positionHighest;
 		maxConsumption = Math.max(
 			this.choice1.getConsumptionInWh(),
 			Math.max(
@@ -108,7 +109,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return the activity which has the highest consumption.
 	 */
 	public Activity getCorrectAnswer() {
-		int maxConsumption = Math.max(
+		long maxConsumption = Math.max(
 			this.choice1.getConsumptionInWh(),
 			Math.max(
 				this.choice2.getConsumptionInWh(),
@@ -124,7 +125,7 @@ public class HighestConsumptionQuestion extends Question {
 		return this.choice3;
 	}
 
-	public int returnEnergyConsumption(String title) {
+	public long returnEnergyConsumption(String title) {
 		if (title.equals(this.choice1.getTitle())) {
 			return this.choice1.getConsumptionInWh();
 		} else if (title.equals(this.choice2.getTitle())) {

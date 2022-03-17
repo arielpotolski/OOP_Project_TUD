@@ -18,7 +18,6 @@ public class QuestionSet {
 	private Random random;
 	private int size;
 
-	// FIXME: This is unsafe.  Rewrite it in rust?
 	public List<Question> getQuestions() {
 		return this.questions;
 	}
@@ -42,12 +41,12 @@ public class QuestionSet {
 	public void fillSet(int numberOfQuestions) {
 		generateSequence(numberOfQuestions).forEach(c -> {
 			switch (c) {
-				case 'M' -> generateMCQ();
-				case 'H' -> generateHigh();
-				case 'E' -> generateEstimate();
-				case 'I' -> generateInstead();
-				default -> throw new IllegalArgumentException(
-						"Invalid question type, expected [MHEI] but got '" + c + "'");
+			case 'M' -> generateMCQ();
+			case 'H' -> generateHigh();
+			case 'E' -> generateEstimate();
+			case 'I' -> generateInstead();
+			default -> throw new IllegalArgumentException(
+				"Invalid question type, expected [MHEI] but got '" + c + "'");
 			}
 		});
 	}

@@ -140,9 +140,9 @@ public class InsteadOfQuestion extends Question {
 	 *                       required. It should be between 1 and 3 inclusive
 	 * @return a ready to use string for the labels
 	 */
-	public String answerString(int numberOfAnswer) {
+	public String answerString(long numberOfAnswer) {
 		DecimalFormat df = new DecimalFormat("0.00");
-		Activity current = switch (numberOfAnswer) {
+		Activity current = switch ((int) numberOfAnswer) {
 			case 1 -> this.answer1;
 			case 2 -> this.answer2;
 			case 3 -> this.answer3;
@@ -161,11 +161,11 @@ public class InsteadOfQuestion extends Question {
 	 * @param numberOfAnswer the number of the answer given
 	 * @return a string ready for comparison with the given answer
 	 */
-	private String correctAnswerString(int numberOfAnswer) {
+	private String correctAnswerString(long numberOfAnswer) {
 		double coefficient;
 		Activity current;
 
-		switch (numberOfAnswer) {
+		switch ((int) numberOfAnswer) {
 		case 1:
 			coefficient = realCoefficient1;
 			current = answer1;
@@ -206,7 +206,7 @@ public class InsteadOfQuestion extends Question {
 		return this.answer3;
 	}
 
-	public int returnEnergyConsumption(String title) {
+	public long returnEnergyConsumption(String title) {
 		if (title.equals(this.answer1.getTitle())) {
 			return this.answer1.getConsumptionInWh();
 		} else if (title.equals(answer2.getTitle())) {
@@ -222,7 +222,7 @@ public class InsteadOfQuestion extends Question {
 	 * @param progress time left
 	 * @return The total amount of points earned as an integer
 	 */
-	public int pointsEarned(int maxPoints, int answerGiven, double progress) {
+	public int pointsEarned(int maxPoints, long answerGiven, double progress) {
 		if (!answerString(answerGiven).equals(correctAnswerString(answerGiven))) {
 			return 0;
 		}
