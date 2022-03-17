@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class QuestionScreenSinglePlayerCtrl implements Initializable {
@@ -42,6 +43,9 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 
 	@FXML
 	private ImageView imageSecond;
+
+	@FXML
+	private ImageView imageThird;
 
 	@FXML
 	private ProgressBar progressBarTime;
@@ -121,6 +125,70 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 */
 	public void setVisibleButton3(boolean visible) {
 		this.answerButton3.setVisible(visible);
+	}
+
+	/**
+	 * Sets the image for the question from a given path
+	 * @param path the path to the image
+	 */
+	public void setImageQuestionPath(String path) {
+		imageQuestion.setImage(new Image(path));
+	}
+
+	/**
+	 * Sets the image for the first of the sequence of images
+	 * @param path the path to the image
+	 */
+	public void setImageFirstPath(String path) {
+		imageFirst.setImage(new Image(path));
+	}
+
+	/**
+	 * Sets the image for the second of the sequence of images
+	 * @param path the path to the image
+	 */
+	public void setImageSecondPath(String path) {
+		imageSecond.setImage(new Image(path));
+	}
+
+	/**
+	 * Sets the image for the third of the sequence of images
+	 * @param path the path to the image
+	 */
+	public void setImageThirdPath(String path) {
+		imageThird.setImage(new Image(path));
+	}
+
+	/**
+	 * Setter for the visibility of the ImageView of the Question
+	 * @param visible the visibility of the ImageView
+	 */
+	public void setVisibleImageQuestion(boolean visible) {
+		this.imageQuestion.setVisible(visible);
+	}
+
+	/**
+	 * Setter for the visibility of the ImageView of the first one in the sequence
+	 * @param visible the visibility of the ImageView
+	 */
+	public void setVisibleImageFirst(boolean visible) {
+		this.imageFirst.setVisible(visible);
+	}
+
+	/**
+	 * Setter for the visibility of the ImageView of the second one in the sequence
+	 * @param visible the visibility of the ImageView
+	 */
+	public void setVisibleImageSecond(boolean visible) {
+		this.imageSecond.setVisible(visible);
+	}
+
+	/**
+	 * Setter for the visibility of the ImageView of the third on in the sequence
+	 * @param visible the visibility of the image view
+	 */
+	public void setVisibleImageThird(boolean visible) {
+		this.imageThird.setVisible(visible);
 	}
 
 	/**
