@@ -1,5 +1,9 @@
 package commons;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,14 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
-@JsonTypeName("MCQuestion")
+@JsonSubTypes.Type(value = MCQuestion.class, name = "MCQuestion")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class MCQuestion extends Question{
+	@JsonProperty("activity")
 	private Activity activity;
+	@JsonProperty("answer1")
 	private int answer1;
+	@JsonProperty("answer2")
 	private int answer2;
+	@JsonProperty("answer3")
 	private int answer3;
+	@JsonProperty("order")
 	private ArrayList<Integer> order;
 
 	/**
@@ -170,6 +178,7 @@ public class MCQuestion extends Question{
 	 * Return the image path related to this question
 	 * @return the path of the image
 	 */
+	@JsonProperty("picture_path")
 	public String getPicturePath() {
 		return this.activity.getImagePath();
 	}

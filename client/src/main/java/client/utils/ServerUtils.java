@@ -20,16 +20,17 @@ import java.util.List;
 import commons.Player;
 import commons.Question;
 
-
 import com.google.inject.Inject;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
 import org.glassfish.jersey.client.ClientConfig;
+
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 	private String server;
+
 
 	/**
 	 * Constructor for the connection between client and server.
