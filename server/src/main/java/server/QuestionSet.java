@@ -1,4 +1,4 @@
-package client;
+package server;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,8 @@ public class QuestionSet {
 	private Random random;
 	private int size;
 
-	// FIXME: This is unsafe.  Rewrite it in rust?
 	public List<Question> getQuestions() {
-		return questions;
+		return this.questions;
 	}
 
 	/**
@@ -56,7 +55,7 @@ public class QuestionSet {
 	 * Generates a random Multiple Choice Question
 	 */
 	private void generateMCQ() {
-		Activity activity = activities.get(random.nextInt(size));
+		Activity activity = this.activities.get(this.random.nextInt(this.size));
 		this.questions.add(new MCQuestion(activity));
 	}
 
@@ -64,17 +63,17 @@ public class QuestionSet {
 	 * Generates the Highest Consumption Question
 	 */
 	private void generateHigh() {
-		Activity activity = activities.get(random.nextInt(size));
-		Activity activity1 = activities.get(random.nextInt(size));
-		Activity activity2 = activities.get(random.nextInt(size));
-		this.questions.add(new HighestConsumptionQuestion(activity, activity1, activity2));
+		Activity activity1 = this.activities.get(this.random.nextInt(this.size));
+		Activity activity2 = this.activities.get(this.random.nextInt(this.size));
+		Activity activity3 = this.activities.get(this.random.nextInt(this.size));
+		this.questions.add(new HighestConsumptionQuestion(activity1, activity2, activity3));
 	}
 
 	/**
 	 * Generates a Estimate Question
 	 */
 	private void generateEstimate() {
-		Activity activity = activities.get(random.nextInt(size));
+		Activity activity = this.activities.get(this.random.nextInt(this.size));
 		this.questions.add(new EstimateQuestion(activity));
 	}
 
@@ -82,11 +81,11 @@ public class QuestionSet {
 	 * Generates Instead of Question
 	 */
 	private void generateInstead() {
-		Activity activity = activities.get(random.nextInt(size));
-		Activity activity1 = activities.get(random.nextInt(size));
-		Activity activity2 = activities.get(random.nextInt(size));
-		Activity activity3 = activities.get(random.nextInt(size));
-		this.questions.add(new InsteadOfQuestion(activity, activity1, activity2, activity3));
+		Activity activity1 = this.activities.get(this.random.nextInt(this.size));
+		Activity activity2 = this.activities.get(this.random.nextInt(this.size));
+		Activity activity3 = this.activities.get(this.random.nextInt(this.size));
+		Activity activity4 = this.activities.get(this.random.nextInt(this.size));
+		this.questions.add(new InsteadOfQuestion(activity1, activity2, activity3, activity4));
 	}
 
 	/**
