@@ -12,7 +12,7 @@ public class Activity {
 	@JsonProperty("title")
 	private String title;
 	@JsonProperty("consumption_in_wh")
-	private int consumptionInWh;
+	private long consumptionInWh;
 	@JsonProperty("image_path")
 	private String imagePath;
 	@JsonProperty("source")
@@ -31,7 +31,7 @@ public class Activity {
 	 * @param imagePath the path to the image
 	 * @param source the source from where taken
 	 */
-	public Activity(String id, String title, int consumptionInWh, String imagePath, String source) {
+	public Activity(String id, String title, long consumptionInWh, String imagePath, String source){
 		this.id = id;
 		this.title = title;
 		this.imagePath = imagePath;
@@ -59,7 +59,7 @@ public class Activity {
 	 * Getter for the consumption of the activity
 	 * @return the consumption of the activity in Wh
 	 */
-	public int getConsumptionInWh() {
+	public long getConsumptionInWh() {
 		return this.consumptionInWh;
 	}
 
@@ -124,9 +124,9 @@ public class Activity {
 	 * Makes an Activity with wrong consumption for the purpose of InsteadOfQuestions
 	 */
 	public void makeFake() {
-		int prev = this.consumptionInWh;
+		long prev = this.consumptionInWh;
 		do {
-			this.consumptionInWh = (int) Math.round(Math.random() * 2 * this.consumptionInWh);
+			this.consumptionInWh = Math.round(Math.random() * 2 * this.consumptionInWh);
 		} while (this.consumptionInWh == prev);
 	}
 
