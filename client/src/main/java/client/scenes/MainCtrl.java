@@ -202,10 +202,13 @@ public class MainCtrl {
 	 */
 	public void setUpMultipleChoice(MCQuestion question) {
 		hideTextFieldAndRevealButtons();
+		clearImages();
 
 		// Set up label for the question and answers.
 		String questionText = question.getActivity().getTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
+		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.getPicturePath());
+		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
 		questionScreenSinglePlayerCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
 		questionScreenSinglePlayerCtrl.setLabelButton2(Long.toString(question.getAnswer2()));
 		questionScreenSinglePlayerCtrl.setLabelButton3(Long.toString(question.getAnswer3()));
@@ -217,13 +220,22 @@ public class MainCtrl {
 	 */
 	public void setUpInsteadQuestion(InsteadOfQuestion question) {
 		hideTextFieldAndRevealButtons();
+		clearImages();
 
 		// Set up label for the question and answers
 		String questionText = question.getQuestionActivity().getTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
+		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.getImagePathQuestion());
+		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
 		questionScreenSinglePlayerCtrl.setLabelButton1(question.getAnswer1().getTitle());
+		questionScreenSinglePlayerCtrl.setImageFirstPath(question.getImagePathAnswer(1));
+		questionScreenSinglePlayerCtrl.setVisibleImageFirst(true);
 		questionScreenSinglePlayerCtrl.setLabelButton2(question.getAnswer2().getTitle());
+		questionScreenSinglePlayerCtrl.setImageFirstPath(question.getImagePathAnswer(2));
+		questionScreenSinglePlayerCtrl.setVisibleImageSecond(true);
 		questionScreenSinglePlayerCtrl.setLabelButton3(question.getAnswer3().getTitle());
+		questionScreenSinglePlayerCtrl.setImageFirstPath(question.getImagePathAnswer(3));
+		questionScreenSinglePlayerCtrl.setVisibleImageThird(true);
 	}
 
 	/**
@@ -232,13 +244,20 @@ public class MainCtrl {
 	 */
 	public void setUpHighestQuestion(HighestConsumptionQuestion question) {
 		hideTextFieldAndRevealButtons();
+		clearImages();
 
 		// Set up label for the question and answers.
 		String questionText = "Which one of these activities consumes the most energy?";
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
 		questionScreenSinglePlayerCtrl.setLabelButton1(question.getActivity1Title());
+		questionScreenSinglePlayerCtrl.setImageFirstPath(question.getActivity1ImagePath());
+		questionScreenSinglePlayerCtrl.setVisibleImageFirst(true);
 		questionScreenSinglePlayerCtrl.setLabelButton2(question.getActivity2Title());
+		questionScreenSinglePlayerCtrl.setImageSecondPath(question.getActivity2ImagePath());
+		questionScreenSinglePlayerCtrl.setVisibleImageSecond(true);
 		questionScreenSinglePlayerCtrl.setLabelButton3(question.getActivity3Title());
+		questionScreenSinglePlayerCtrl.setImageThirdPath(question.getActivity3ImagePath());
+		questionScreenSinglePlayerCtrl.setVisibleImageThird(true);
 	}
 
 	/**
@@ -256,12 +275,25 @@ public class MainCtrl {
 	 * @param question the estimate question.
 	 */
 	public void setUpEstimateQuestion(EstimateQuestion question) {
+		clearImages();
 		String questionText = question.getActivityTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
+		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.getActivityImagePath());
+		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
 		questionScreenSinglePlayerCtrl.setVisibleTextField(true);
 		questionScreenSinglePlayerCtrl.setVisibleButton1(false);
 		questionScreenSinglePlayerCtrl.setVisibleButton2(false);
 		questionScreenSinglePlayerCtrl.setVisibleButton3(false);
+	}
+
+	/**
+	 * Hides all the visible imageViews
+	 */
+	public void clearImages() {
+		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(false);
+		questionScreenSinglePlayerCtrl.setVisibleImageFirst(false);
+		questionScreenSinglePlayerCtrl.setVisibleImageSecond(false);
+		questionScreenSinglePlayerCtrl.setVisibleImageThird(false);
 	}
 
 	/**
