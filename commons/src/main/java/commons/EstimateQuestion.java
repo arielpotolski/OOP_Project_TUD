@@ -2,6 +2,10 @@ package commons;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+
+@JsonTypeName("EstimateQuestion")
 public class EstimateQuestion extends Question {
 	private Activity activity;
 

@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("MCQuestion")
 public class MCQuestion extends Question{
 	private Activity activity;
 	private int answer1;

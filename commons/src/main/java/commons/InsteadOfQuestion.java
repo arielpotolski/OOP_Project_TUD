@@ -4,6 +4,9 @@ import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("InsteadOfQuestion")
 public class InsteadOfQuestion extends Question {
 	private Activity questionActivity;
 	private Activity answer1;

@@ -3,6 +3,8 @@ package server.api;
 import java.util.List;
 
 import commons.Activity;
+import commons.Question;
+import server.QuestionSet;
 import server.database.ActivityRepository;
 
 import org.springframework.http.HttpStatus;
@@ -18,11 +20,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/activities")
-public class ActivityController {
+@RequestMapping("/api/questions")
+public class QuestionSetController {
 	private final ActivityRepository repository;
 
-	public ActivityController(ActivityRepository repository) {
+	public QuestionSetController(ActivityRepository repository) {
 		this.repository = repository;
 	}
 
@@ -30,9 +32,19 @@ public class ActivityController {
 		return s == null || s.isEmpty();
 	}
 
+	/**
+	 * This method will get a list of activities and transform it into a list of questions.
+	 * These questions are then sent to the client in the main controller.
+	 *
+	 * @return The list of returned questions
+	 */
+
 	@GetMapping(path = {"", "/"})
-	public List<Activity> getAll() {
-		return this.repository.findAll();
+	public List<Question> getAll() {
+		List<Activity> as = this.repository.findAll();
+		QuestionSet qs = new QuestionSet(as);
+		qs.fillSet(as.size());
+		return qs.getQuestions();
 	}
 
 	@PutMapping("/addActivity")

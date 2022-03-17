@@ -2,6 +2,9 @@ package commons;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
+@JsonTypeName("HighestConsumptionQuestion")
 public class HighestConsumptionQuestion extends Question {
 	private Activity choice1;
 	private Activity choice2;
