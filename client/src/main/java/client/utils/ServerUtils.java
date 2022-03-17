@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package client.utils;
 
 import java.util.List;
 
-import commons.Activity;
 import commons.Player;
+import commons.Question;
 
 import com.google.inject.Inject;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -55,16 +56,18 @@ public class ServerUtils {
 	}
 
 	/**
-	 * The method get a list of activities from database.
+	 * Get a list of questions from the server
 	 *
-	 * @return a list of activity.
+	 * @return A list of questions from the server
 	 */
-	public List<Activity> getActivityList() {
-		return ClientBuilder.newClient(new ClientConfig())
-				.target(server).path("api/activities/")
-				.request(APPLICATION_JSON)
-				.accept(APPLICATION_JSON)
-				.get(new GenericType<List<Activity>>() {});
+	public List<Question> getQuestions() {
+		return ClientBuilder
+			.newClient(new ClientConfig())
+			.target(server)
+			.path("api/questions/")
+			.request(APPLICATION_JSON)
+			.accept(APPLICATION_JSON)
+			.get(new GenericType<>() {});
 	}
 
 	/**

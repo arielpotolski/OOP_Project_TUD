@@ -18,9 +18,7 @@ package client.scenes;
 
 import java.util.List;
 
-import client.QuestionSet;
 import client.utils.ServerUtils;
-import commons.Activity;
 import commons.EstimateQuestion;
 import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
@@ -37,7 +35,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
-
 
 public class MainCtrl {
 	private Stage primaryStage;
@@ -64,7 +61,6 @@ public class MainCtrl {
 	private Scene singlePlayerFinalScene;
 
 	private ServerUtils server;
-	private QuestionSet questionSet;
 
 	private List<Question> questions;
 	private String answer;
@@ -194,13 +190,10 @@ public class MainCtrl {
 	}
 
 	/**
-	 * This method will set up the set of question
+	 * This method will get a list of questions
 	 */
-	public void setUpQuestions() {
-		List<Activity> activityList = server.getActivityList();
-		questionSet = new QuestionSet(activityList);
-		questionSet.fillSet(activityList.size());
-		questions = questionSet.getQuestions();
+	public void getQuestions() {
+		this.questions = server.getQuestions();
 	}
 
 	/**
