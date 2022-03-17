@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.stream.StreamSupport;
 
 import commons.Activity;
 import server.database.ActivityRepository;
@@ -14,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 
-
-
 class ActivityRepositoryTest implements ActivityRepository {
-
 	public final List<Activity> activities = new ArrayList<>();
 	public final List<String> calledMethods = new ArrayList<>();
 
@@ -45,8 +43,11 @@ class ActivityRepositoryTest implements ActivityRepository {
 
 	@Override
 	public <S extends Activity> List<S> saveAll(Iterable<S> entities) {
-		// TODO Auto-generated method stub
-		return null;
+		this.calledMethods.add("saveAll");
+		return StreamSupport
+			.stream(entities.spliterator(), false)
+			.map(this::save)
+			.toList();
 	}
 
 	@Override
@@ -122,15 +123,16 @@ class ActivityRepositoryTest implements ActivityRepository {
 	@Override
 	public <S extends Activity> S save(S entity) {
 		call("save");
-		entity.setId("group39" + activities.size());
 		activities.add(entity);
 		return entity;
 	}
 
 	@Override
 	public Optional<Activity> findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return this.activities
+			.stream()
+			.filter(a -> a.getId().equals(id))
+			.findFirst();
 	}
 
 	@Override
@@ -146,8 +148,7 @@ class ActivityRepositoryTest implements ActivityRepository {
 
 	@Override
 	public void deleteById(String id) {
-		// TODO Auto-generated method stub
-
+		this.activities.remove(this.findById(id).get());
 	}
 
 	@Override
