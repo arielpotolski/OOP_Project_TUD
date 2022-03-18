@@ -1,8 +1,13 @@
 package commons;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.imageio.ImageIO;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -128,6 +133,24 @@ public class Activity {
 		do {
 			this.consumptionInWh = Math.round(Math.random() * 2 * this.consumptionInWh);
 		} while (this.consumptionInWh == prev);
+	}
+
+	/**
+	 * Parses an image to byte array so that it could be more easily sent to the user
+	 * @return byte array containing information about the image
+	 * @throws IOException The exception if there is something wrong with the file
+	 */
+	public byte[] castImageToByteArray() throws IOException {
+		String extension = "";
+
+		int i = imagePath.lastIndexOf('.');
+		if (i > 0) {
+			extension = imagePath.substring(i+1);
+		}
+		BufferedImage bufferedImage = ImageIO.read(new File(imagePath));
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, extension, bos);
+		return bos.toByteArray();
 	}
 
 	/**
