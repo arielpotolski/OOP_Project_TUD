@@ -33,11 +33,11 @@ public class QuestionSetController {
 	 * @return The list of returned questions
 	 */
 	@GetMapping(path = {"", "/"})
-	public List<Question> getAll() {
+	public ResponseEntity<List<Question>> getAll() {
 		List<Activity> as = this.repository.findAll();
 		QuestionSet qs = new QuestionSet(as);
 		qs.fillSet(as.size());
-		return qs.getQuestions();
+		return new ResponseEntity<>(qs.getQuestions(),HttpStatus.OK);
 	}
 
 	@PutMapping("/addActivities")

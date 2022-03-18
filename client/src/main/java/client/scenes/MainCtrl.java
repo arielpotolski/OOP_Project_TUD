@@ -149,6 +149,8 @@ public class MainCtrl {
 	 * This method shows up the question screen in single player mode.
 	 */
 	public void showQuestionScreenSinglePlayer() {
+
+
 		// If the size of question set equals to zero, this method change to final screen.
 		if (questions.size() == 0) {
 			showSinglePlayerFinalScreen();
@@ -160,7 +162,7 @@ public class MainCtrl {
 		player = singlePlayerPreGameCtrl.getPlayer();
 
 		// This timeline will execute on another thread - run the count-down timer.
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
 			questionScreenSinglePlayerCtrl.decreaseProgress();
 		}));
 		timeLine.setCycleCount(10);

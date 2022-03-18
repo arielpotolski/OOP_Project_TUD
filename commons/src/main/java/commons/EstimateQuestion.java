@@ -2,11 +2,15 @@ package commons;
 
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
 
 
-@JsonTypeName("EstimateQuestion")
+@JsonSubTypes.Type(value = EstimateQuestion.class, name = "EstimateQuestion")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class EstimateQuestion extends Question {
+	@JsonProperty("activity")
 	private Activity activity;
 
 	/**
@@ -17,10 +21,19 @@ public class EstimateQuestion extends Question {
 		this.activity = activity;
 	}
 
+
+	/**
+	 * This constructor helps for create the Json Object
+	 */
+	public EstimateQuestion() {
+
+	}
+
 	/**
 	 * Getter for the activity's title.
 	 * @return the title of the activity in this question.
 	 */
+	@JsonProperty("activity_title")
 	public String getActivityTitle() {
 		return this.activity.getTitle();
 	}
@@ -29,6 +42,7 @@ public class EstimateQuestion extends Question {
 	 * Getter for the activity's image path.
 	 * @return the image path of the activity in this question.
 	 */
+	@JsonProperty("activity_image_path")
 	public String getActivityImagePath() {
 		return this.activity.getImagePath();
 	}

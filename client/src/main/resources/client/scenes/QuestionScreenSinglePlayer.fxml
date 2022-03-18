@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.QuestionScreenSinglePlayerCtrl">
    <children>
-      <ProgressBar fx:id="progressBarTime" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="900.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <ProgressBar fx:id="progressBarTime" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="900.0" progress="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
       <HBox prefHeight="600.0" prefWidth="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <VBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
@@ -74,7 +74,6 @@
                               <Font name="Calibri" size="30.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="textField" onAction="#answerReturn" />
                         <Button fx:id="answerButton2" mnemonicParsing="false" onAction="#answerReturn" prefHeight="74.0" prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1" HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="Calibri" size="30.0" />
@@ -99,5 +98,6 @@
             </VBox>
          </children>
       </HBox>
+      <TextField fx:id="textField" layoutX="375.0" layoutY="450.0" onAction="#answerReturn" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="376.0" />
    </children>
 </AnchorPane>
