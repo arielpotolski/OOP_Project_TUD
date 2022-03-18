@@ -1,5 +1,6 @@
 package commons;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class HighestConsumptionQuestion extends Question {
@@ -52,6 +53,15 @@ public class HighestConsumptionQuestion extends Question {
 	}
 
 	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for choice 1
+	 * @throws IOException if there is something wrong with the file
+	 */
+	public byte[] imageInByteArrayActivity1() throws IOException {
+		return this.choice1.castImageToByteArray();
+	}
+
+	/**
 	 * gets the imagePath of the second activity.
 	 * @return the imagePath of the second activity.
 	 */
@@ -60,11 +70,29 @@ public class HighestConsumptionQuestion extends Question {
 	}
 
 	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for choice 2
+	 * @throws IOException if there is something wrong with the file
+	 */
+	public byte[] imageInByteArrayActivity2() throws IOException {
+		return this.choice2.castImageToByteArray();
+	}
+
+	/**
 	 * gets the imagePath of the third activity.
 	 * @return the imagePath of the third activity.
 	 */
 	public String getActivity3ImagePath() {
 		return this.choice3.getImagePath();
+	}
+
+	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for choice 3
+	 * @throws IOException if there is something wrong with the file
+	 */
+	public byte[] imageInByteArrayActivity3() throws IOException {
+		return this.choice1.castImageToByteArray();
 	}
 
 	/**
