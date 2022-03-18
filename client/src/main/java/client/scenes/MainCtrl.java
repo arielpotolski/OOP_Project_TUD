@@ -16,6 +16,7 @@
 
 package client.scenes;
 
+import java.io.IOException;
 import java.util.List;
 
 import client.utils.ServerUtils;
@@ -148,7 +149,7 @@ public class MainCtrl {
 	/**
 	 * This method shows up the question screen in single player mode.
 	 */
-	public void showQuestionScreenSinglePlayer() {
+	public void showQuestionScreenSinglePlayer() throws IOException {
 		// If the size of question set equals to zero, this method change to final screen.
 		if (questions.size() == 0) {
 			showSinglePlayerFinalScreen();
@@ -199,15 +200,16 @@ public class MainCtrl {
 	/**
 	 * This method sets up the multiple choice question
 	 * @param question multiple choice question
+	 * @throws IOException if there is a problem with the parsing
 	 */
-	public void setUpMultipleChoice(MCQuestion question) {
+	public void setUpMultipleChoice(MCQuestion question) throws IOException {
 		hideTextFieldAndRevealButtons();
 		clearImages();
 
 		// Set up label for the question and answers.
 		String questionText = question.getActivity().getTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.getPicturePath());
+		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.imageInByteArrayQuestion());
 		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
 		questionScreenSinglePlayerCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
 		questionScreenSinglePlayerCtrl.setLabelButton2(Long.toString(question.getAnswer2()));
@@ -218,23 +220,23 @@ public class MainCtrl {
 	 * This method sets up the "instead of" question
 	 * @param question "instead of" question
 	 */
-	public void setUpInsteadQuestion(InsteadOfQuestion question) {
+	public void setUpInsteadQuestion(InsteadOfQuestion question) throws IOException {
 		hideTextFieldAndRevealButtons();
 		clearImages();
 
 		// Set up label for the question and answers
 		String questionText = question.getQuestionActivity().getTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.getImagePathQuestion());
+		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.imageInByteArrayQuestion());
 		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
 		questionScreenSinglePlayerCtrl.setLabelButton1(question.getAnswer1().getTitle());
-		questionScreenSinglePlayerCtrl.setImageFirstPath(question.getImagePathAnswer(1));
+		questionScreenSinglePlayerCtrl.setImageFirstPath(question.imageInByteArray(1));
 		questionScreenSinglePlayerCtrl.setVisibleImageFirst(true);
 		questionScreenSinglePlayerCtrl.setLabelButton2(question.getAnswer2().getTitle());
-		questionScreenSinglePlayerCtrl.setImageFirstPath(question.getImagePathAnswer(2));
+		questionScreenSinglePlayerCtrl.setImageFirstPath(question.imageInByteArray(2));
 		questionScreenSinglePlayerCtrl.setVisibleImageSecond(true);
 		questionScreenSinglePlayerCtrl.setLabelButton3(question.getAnswer3().getTitle());
-		questionScreenSinglePlayerCtrl.setImageFirstPath(question.getImagePathAnswer(3));
+		questionScreenSinglePlayerCtrl.setImageFirstPath(question.imageInByteArray(3));
 		questionScreenSinglePlayerCtrl.setVisibleImageThird(true);
 	}
 
@@ -242,7 +244,7 @@ public class MainCtrl {
 	 * This method sets up the highest consumption question
 	 * @param question highest consumption question
 	 */
-	public void setUpHighestQuestion(HighestConsumptionQuestion question) {
+	public void setUpHighestQuestion(HighestConsumptionQuestion question) throws IOException {
 		hideTextFieldAndRevealButtons();
 		clearImages();
 
@@ -250,13 +252,13 @@ public class MainCtrl {
 		String questionText = "Which one of these activities consumes the most energy?";
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
 		questionScreenSinglePlayerCtrl.setLabelButton1(question.getActivity1Title());
-		questionScreenSinglePlayerCtrl.setImageFirstPath(question.getActivity1ImagePath());
+		questionScreenSinglePlayerCtrl.setImageFirstPath(question.imageInByteArrayActivity1());
 		questionScreenSinglePlayerCtrl.setVisibleImageFirst(true);
 		questionScreenSinglePlayerCtrl.setLabelButton2(question.getActivity2Title());
-		questionScreenSinglePlayerCtrl.setImageSecondPath(question.getActivity2ImagePath());
+		questionScreenSinglePlayerCtrl.setImageSecondPath(question.imageInByteArrayActivity2());
 		questionScreenSinglePlayerCtrl.setVisibleImageSecond(true);
 		questionScreenSinglePlayerCtrl.setLabelButton3(question.getActivity3Title());
-		questionScreenSinglePlayerCtrl.setImageThirdPath(question.getActivity3ImagePath());
+		questionScreenSinglePlayerCtrl.setImageThirdPath(question.imageInByteArrayActivity3());
 		questionScreenSinglePlayerCtrl.setVisibleImageThird(true);
 	}
 
@@ -274,11 +276,11 @@ public class MainCtrl {
 	 * This method sets up the estimate question
 	 * @param question the estimate question.
 	 */
-	public void setUpEstimateQuestion(EstimateQuestion question) {
+	public void setUpEstimateQuestion(EstimateQuestion question) throws IOException {
 		clearImages();
 		String questionText = question.getActivityTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.getActivityImagePath());
+		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.imageInByteArrayQuestion());
 		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
 		questionScreenSinglePlayerCtrl.setVisibleTextField(true);
 		questionScreenSinglePlayerCtrl.setVisibleButton1(false);
@@ -324,7 +326,11 @@ public class MainCtrl {
 		timeLine.play();
 		timeLine.setOnFinished(_e -> {
 			intermediateSceneCtrl.setProgress(1); // Reset the progress bar after
-			showQuestionScreenSinglePlayer();     // the timeline finish its cycle.
+			try {
+				showQuestionScreenSinglePlayer();     // the timeline finish its cycle.
+			} catch (IOException err) {
+				err.printStackTrace();
+			}
 		});
 	}
 
