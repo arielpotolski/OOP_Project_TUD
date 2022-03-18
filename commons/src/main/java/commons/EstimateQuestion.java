@@ -1,5 +1,6 @@
 package commons;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class EstimateQuestion extends Question {
@@ -27,6 +28,15 @@ public class EstimateQuestion extends Question {
 	 */
 	public String getActivityImagePath() {
 		return this.activity.getImagePath();
+	}
+
+	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for the question
+	 * @throws IOException if there is something wrong with the file
+	 */
+	public byte[] imageInByteArrayQuestion() throws IOException {
+		return this.activity.castImageToByteArray();
 	}
 
 	/**
