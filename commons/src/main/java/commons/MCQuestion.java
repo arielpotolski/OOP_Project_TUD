@@ -1,5 +1,6 @@
 package commons;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -169,6 +170,15 @@ public class MCQuestion extends Question{
 	 */
 	public String getPicturePath() {
 		return this.activity.getImagePath();
+	}
+
+	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for the question
+	 * @throws IOException if there is something wrong with the file
+	 */
+	public byte[] imageInByteArrayQuestion() throws IOException {
+		return this.activity.castImageToByteArray();
 	}
 
 	/**
