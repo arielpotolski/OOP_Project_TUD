@@ -1,5 +1,6 @@
 package commons;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Locale;
 import java.util.Objects;
@@ -114,12 +115,39 @@ public class InsteadOfQuestion extends Question {
 	}
 
 	/**
+	 * Useful for sending the information about a picture to the user
+	 * @param numberOfAnswer the sequential number of the answer for which the picture is
+	 *                       required. It should be between 1 and 3 inclusive
+	 * @return a byte array with information about the image for choice made
+	 * @throws IOException if there is something wrong with the file
+	 */
+	public byte[] imageInByteArray(int numberOfAnswer) throws IOException {
+		return switch (numberOfAnswer) {
+			case 1 -> this.answer1.castImageToByteArray();
+			case 2 -> this.answer2.castImageToByteArray();
+			case 3 -> this.answer3.castImageToByteArray();
+			default -> throw new IllegalArgumentException("The input number should be 0 < n < 4");
+		};
+
+	}
+
+	/**
 	 * Getter for the image path of the question activity
 	 * @return the image path of the question activity
 	 */
 	public String getImagePathQuestion() {
 		return this.questionActivity.getImagePath();
 	}
+
+	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for the question
+	 * @throws IOException if there is something wrong with the file
+	 */
+	public byte[] imageInByteArrayQuestion() throws IOException {
+		return this.questionActivity.castImageToByteArray();
+	}
+
 
 	/**
 	 * Method for the Label with the question that is asked
@@ -163,20 +191,20 @@ public class InsteadOfQuestion extends Question {
 		Activity current;
 
 		switch ((int) numberOfAnswer) {
-		case 1:
-			coefficient = realCoefficient1;
-			current = answer1;
-			break;
-		case 2:
-			coefficient = realCoefficient2;
-			current = answer2;
-			break;
-		case 3:
-			coefficient = realCoefficient3;
-			current = answer3;
-			break;
-		default:
-			throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
+			case 1 -> {
+				coefficient = realCoefficient1;
+				current = answer1;
+			}
+			case 2 -> {
+				coefficient = realCoefficient2;
+				current = answer2;
+			}
+			case 3 -> {
+				coefficient = realCoefficient3;
+				current = answer3;
+			}
+			default -> throw new IllegalArgumentException(
+					"This number of answers should be 0 < n < 4");
 		}
 
 		DecimalFormat df = new DecimalFormat("0.00");
