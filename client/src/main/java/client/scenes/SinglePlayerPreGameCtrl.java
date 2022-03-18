@@ -1,5 +1,7 @@
 package client.scenes;
 
+import java.io.IOException;
+
 import client.utils.ServerUtils;
 import commons.Player;
 
@@ -39,7 +41,7 @@ public class SinglePlayerPreGameCtrl {
 	/**
 	 * the method change the single player pre-game screen to question screen.
 	 */
-	public void changeToQuestionScreen() {
+	public void changeToQuestionScreen() throws IOException {
 		this.url = this.serverURL.getText();
 		this.nickName = this.nickname.getText();
 		this.player = new Player(this.nickName,0);
