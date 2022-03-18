@@ -2,6 +2,10 @@ package commons;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -96,8 +100,10 @@ class ActivityTest {
 	@Test
 	void makeFake() {
 		assertEquals(activity1, activity2);
-		activity1.makeFake();
+		activity1.makeFake(List.of(40L, 30L));
 		assertNotEquals(activity1, activity2);
+		assertNotEquals(30L, activity1.getConsumptionInWh());
+		assertNotEquals(40L, activity1.getConsumptionInWh());
 	}
 
 	@Test

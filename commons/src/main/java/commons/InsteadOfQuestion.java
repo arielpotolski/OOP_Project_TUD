@@ -1,6 +1,8 @@
 package commons;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -33,19 +35,23 @@ public class InsteadOfQuestion extends Question {
 	) {
 		this.questionActivity = questionActivity;
 		calculateRealCoefficients(answer1, answer2, answer3);
+		List<Long> forbiddenValues = new ArrayList<>();
+		forbiddenValues.add(answer1.getConsumptionInWh());
+		forbiddenValues.add(answer2.getConsumptionInWh());
+		forbiddenValues.add(answer3.getConsumptionInWh());
 
 		// The following part generates exactly one of the answers to be correct
 		// and guarantees that all the others are wrong
 		double correctAnswer = Math.random();
 		if (correctAnswer < 1.0 / 3.0) {
-			answer2.makeFake();
-			answer3.makeFake();
+			answer2.makeFake(forbiddenValues);
+			answer3.makeFake(forbiddenValues);
 		} else if (correctAnswer < 2.0 / 3.0) {
-			answer1.makeFake();
-			answer3.makeFake();
+			answer1.makeFake(forbiddenValues);
+			answer3.makeFake(forbiddenValues);
 		} else {
-			answer1.makeFake();
-			answer2.makeFake();
+			answer1.makeFake(forbiddenValues);
+			answer2.makeFake(forbiddenValues);
 		}
 
 		// This sets the answers to their position

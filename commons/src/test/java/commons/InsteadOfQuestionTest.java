@@ -18,7 +18,7 @@ public class InsteadOfQuestionTest {
 	private final Activity answer2ActivityFaked = new Activity("00-test-answer-2",
 			"Title for the answer 2", 10, "pathToImageAnswer2", "someSource");
 	private final Activity answer3Activity = new Activity("00-test-answer-3",
-			"Title for the answer 3", 40, "pathToImageAnswer3", "someSource");
+			"Title for the answer 3", 4, "pathToImageAnswer3", "someSource");
 	private final Activity answer3ActivityFaked = new Activity("00-test-answer-3",
 			"Title for the answer 3", 4, "pathToImageAnswer3", "someSource");
 	private final Activity activity = new Activity("00-test",
