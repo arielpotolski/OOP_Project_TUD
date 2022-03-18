@@ -1,5 +1,8 @@
 package client.scenes;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -15,6 +18,9 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelWriter;
+import javafx.scene.image.WritableImage;
+import javax.imageio.ImageIO;
 
 public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	private MainCtrl mainCtrl;
@@ -128,35 +134,55 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	}
 
 	/**
-	 * Sets the image for the question from a given path
-	 * @param path the path to the image
+	 * Parses a byteArray to image
+	 * @param imageArray the byte array with information about the image
+	 * @return an image object for the imageViews
+	 * @throws IOException exception if there is a problem with the parsing
 	 */
-	public void setImageQuestionPath(String path) {
-		imageQuestion.setImage(new Image(path));
+	public Image imageParser(byte[] imageArray) throws IOException {
+		ByteArrayInputStream bis = new ByteArrayInputStream(imageArray);
+		BufferedImage bufferedImage = ImageIO.read(bis);
+		WritableImage result = new WritableImage(bufferedImage.getWidth(),
+				bufferedImage.getHeight());
+		PixelWriter pw = result.getPixelWriter();
+		for (int xAxis = 0; xAxis < bufferedImage.getWidth(); xAxis++) {
+			for (int yAxis = 0; yAxis < bufferedImage.getHeight(); yAxis++) {
+				pw.setArgb(xAxis, yAxis, bufferedImage.getRGB(xAxis, yAxis));
+			}
+		}
+		return result;
 	}
 
 	/**
-	 * Sets the image for the first of the sequence of images
-	 * @param path the path to the image
+	 * Sets the image for the question from a given path
+	 * @param imageArray the byte array with information about the image
 	 */
-	public void setImageFirstPath(String path) {
-		imageFirst.setImage(new Image(path));
+	public void setImageQuestionPath(byte[] imageArray) throws IOException {
+		imageQuestion.setImage(imageParser(imageArray));
+	}
+//  Change here
+	/**
+	 * Sets the image for the first of the sequence of images
+	 * @param imageArray the byte array with information about the image
+	 */
+	public void setImageFirstPath(byte[] imageArray) throws IOException {
+		imageFirst.setImage(imageParser(imageArray));
 	}
 
 	/**
 	 * Sets the image for the second of the sequence of images
-	 * @param path the path to the image
+	 * @param imageArray the byte array with information about the image
 	 */
-	public void setImageSecondPath(String path) {
-		imageSecond.setImage(new Image(path));
+	public void setImageSecondPath(byte[] imageArray) throws IOException {
+		imageSecond.setImage(imageParser(imageArray));
 	}
 
 	/**
 	 * Sets the image for the third of the sequence of images
-	 * @param path the path to the image
+	 * @param imageArray the byte array with information about the image
 	 */
-	public void setImageThirdPath(String path) {
-		imageThird.setImage(new Image(path));
+	public void setImageThirdPath(byte[] imageArray) throws IOException {
+		imageThird.setImage(imageParser(imageArray));
 	}
 
 	/**
