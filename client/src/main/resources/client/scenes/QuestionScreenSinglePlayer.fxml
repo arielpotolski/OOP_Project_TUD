@@ -74,7 +74,6 @@
                               <Font name="Calibri" size="30.0" />
                            </font>
                         </Button>
-                        <TextField fx:id="textField" onAction="#answerReturn" />
                         <Button fx:id="answerButton2" mnemonicParsing="false" onAction="#answerReturn" prefHeight="74.0" prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1" HBox.hgrow="ALWAYS">
                            <font>
                               <Font name="Calibri" size="30.0" />
@@ -99,5 +98,6 @@
             </VBox>
          </children>
       </HBox>
+      <TextField fx:id="textField" layoutX="375.0" layoutY="450.0" onAction="#answerReturn" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="376.0" />
    </children>
 </AnchorPane>
