@@ -1,5 +1,6 @@
 package commons;
 
+import java.util.List;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.imageio.ImageIO;
@@ -146,12 +148,13 @@ public class Activity {
 
 	/**
 	 * Makes an Activity with wrong consumption for the purpose of InsteadOfQuestions
+	 * @param forbiddenValues The values that cannot be a fake value
 	 */
-	public void makeFake() {
+	public void makeFake(List<Long> forbiddenValues) {
 		long prev = this.consumptionInWh;
 		do {
 			this.consumptionInWh = Math.round(Math.random() * 2 * this.consumptionInWh);
-		} while (this.consumptionInWh == prev);
+		} while (this.consumptionInWh == prev || forbiddenValues.contains(this.consumptionInWh));
 	}
 
 	/**
@@ -199,6 +202,20 @@ public class Activity {
 				", imagePath='" + this.imagePath + '\'' +
 				", source='" + this.source + '\'' +
 				'}';
+	}
+
+	/**
+	 * Check if `this' is a valid activity.  An activity is considered valid if none of the
+	 * fields are null and the energy consumption is a non-negative integer.
+	 * @return True if the activity is valid and false otherwise.
+	 */
+	public boolean isValid() {
+		Predicate<String> isNotNullOrEmpty = s -> s != null && !s.isEmpty();
+
+		return isNotNullOrEmpty.test(this.id)
+			&& isNotNullOrEmpty.test(this.source)
+			&& isNotNullOrEmpty.test(this.title)
+			&& this.getConsumptionInWh() >= 0;
 	}
 
 	/**
