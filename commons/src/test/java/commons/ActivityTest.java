@@ -1,10 +1,17 @@
 package commons;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import javax.imageio.ImageIO;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -111,6 +118,26 @@ class ActivityTest {
 				"consumptionInWh=230, imagePath='pathpng', " +
 				"source='some site'}";
 		assertEquals(expected, activity1.toString());
+	}
+
+	@Test
+	void getBase64Image() throws IOException {
+		BufferedImage bufferedImage = ImageIO
+				.read(Objects
+						.requireNonNull(Activity
+								.class
+								.getClassLoader()
+								.getResourceAsStream("IMGNotFound.jpg")));
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, ".jpg", bos);
+		String expected = Base64.getEncoder().encodeToString(bos.toByteArray());
+		assertEquals(expected, activity1.getBase64Image());
+	}
+
+	@Test
+	void setBase64Image() throws IOException {
+		activity1.setBase64Image("831895993c1vxvbk");
+		assertEquals("831895993c1vxvbk", activity1.getBase64Image());
 	}
 
 }
