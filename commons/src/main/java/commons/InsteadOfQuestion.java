@@ -1,7 +1,7 @@
 package commons;
 
-import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Base64;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -27,10 +27,10 @@ public class InsteadOfQuestion extends Question {
 	 * @param answer3 initial answer activity at position 3
 	 */
 	public InsteadOfQuestion(
-		Activity questionActivity,
-		Activity answer1,
-		Activity answer2,
-		Activity answer3
+			Activity questionActivity,
+			Activity answer1,
+			Activity answer2,
+			Activity answer3
 	) {
 		this.questionActivity = questionActivity;
 		calculateRealCoefficients(answer1, answer2, answer3);
@@ -66,13 +66,13 @@ public class InsteadOfQuestion extends Question {
 	 * @param c3 the custom coefficient
 	 */
 	public InsteadOfQuestion(
-		Activity questionActivity,
-		Activity answer1,
-		Activity answer2,
-		Activity answer3,
-		double c1,
-		double c2,
-		double c3
+			Activity questionActivity,
+			Activity answer1,
+			Activity answer2,
+			Activity answer3,
+			double c1,
+			double c2,
+			double c3
 	) {
 		this.questionActivity = questionActivity;
 		this.answer1 = answer1;
@@ -119,13 +119,12 @@ public class InsteadOfQuestion extends Question {
 	 * @param numberOfAnswer the sequential number of the answer for which the picture is
 	 *                       required. It should be between 1 and 3 inclusive
 	 * @return a byte array with information about the image for choice made
-	 * @throws IOException if there is something wrong with the file
 	 */
-	public byte[] imageInByteArray(int numberOfAnswer) throws IOException {
+	public byte[] imageInByteArray(int numberOfAnswer) {
 		return switch (numberOfAnswer) {
-			case 1 -> this.answer1.castImageToByteArray();
-			case 2 -> this.answer2.castImageToByteArray();
-			case 3 -> this.answer3.castImageToByteArray();
+			case 1 -> Base64.getDecoder().decode(this.answer1.getBase64Image());
+			case 2 -> Base64.getDecoder().decode(this.answer2.getBase64Image());
+			case 3 -> Base64.getDecoder().decode(this.answer3.getBase64Image());
 			default -> throw new IllegalArgumentException("The input number should be 0 < n < 4");
 		};
 
@@ -142,10 +141,9 @@ public class InsteadOfQuestion extends Question {
 	/**
 	 * Useful for sending the information about a picture to the user
 	 * @return a byte array with information about the image for the question
-	 * @throws IOException if there is something wrong with the file
 	 */
-	public byte[] imageInByteArrayQuestion() throws IOException {
-		return this.questionActivity.castImageToByteArray();
+	public byte[] imageInByteArrayQuestion() {
+		return Base64.getDecoder().decode(this.questionActivity.getBase64Image());
 	}
 
 
@@ -155,8 +153,8 @@ public class InsteadOfQuestion extends Question {
 	 */
 	public String questionString() {
 		return "Instead of "
-			+ this.questionActivity.getTitle().toLowerCase(Locale.ROOT)
-			+ " you could: ";
+				+ this.questionActivity.getTitle().toLowerCase(Locale.ROOT)
+				+ " you could: ";
 	}
 
 	/**
@@ -172,13 +170,13 @@ public class InsteadOfQuestion extends Question {
 			case 2 -> this.answer2;
 			case 3 -> this.answer3;
 			default ->
-				throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
+					throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
 		};
 
 		return current.getTitle() + " "
-			+ df.format(((double) current.getConsumptionInWh())
+				+ df.format(((double) current.getConsumptionInWh())
 				/ ((double) questionActivity.getConsumptionInWh()))
-			+ " times";
+				+ " times";
 	}
 
 	/**
@@ -216,11 +214,11 @@ public class InsteadOfQuestion extends Question {
 		double distanceFromOneOfCoefficient2 = 1 - this.realCoefficient2;
 		double distanceFromOneOfCoefficient3 = 1 - this.realCoefficient3;
 		double result = Math.min(
-			distanceFromOneOfCoefficient1,
-			Math.min(
-				distanceFromOneOfCoefficient2,
-				distanceFromOneOfCoefficient3
-			)
+				distanceFromOneOfCoefficient1,
+				Math.min(
+						distanceFromOneOfCoefficient2,
+						distanceFromOneOfCoefficient3
+				)
 		);
 
 		if (result == distanceFromOneOfCoefficient1) {

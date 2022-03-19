@@ -1,6 +1,6 @@
 package commons;
 
-import java.io.IOException;
+import java.util.Base64;
 import java.util.Objects;
 
 public class EstimateQuestion extends Question {
@@ -33,10 +33,9 @@ public class EstimateQuestion extends Question {
 	/**
 	 * Useful for sending the information about a picture to the user
 	 * @return a byte array with information about the image for the question
-	 * @throws IOException if there is something wrong with the file
 	 */
-	public byte[] imageInByteArrayQuestion() throws IOException {
-		return this.activity.castImageToByteArray();
+	public byte[] imageInByteArrayQuestion() {
+		return Base64.getDecoder().decode(activity.getBase64Image());
 	}
 
 	/**

@@ -1,6 +1,6 @@
 package commons;
 
-import java.io.IOException;
+import java.util.Base64;
 import java.util.Objects;
 
 public class HighestConsumptionQuestion extends Question {
@@ -55,11 +55,9 @@ public class HighestConsumptionQuestion extends Question {
 	/**
 	 * Useful for sending the information about a picture to the user
 	 * @return a byte array with information about the image for choice 1
-	 * @throws IOException if there is something wrong with the file
 	 */
-	public byte[] imageInByteArrayActivity1() throws IOException {
-		return this.choice1.castImageToByteArray();
-	}
+	public byte[] imageInByteArrayActivity1() {
+		return Base64.getDecoder().decode(choice1.getBase64Image());	}
 
 	/**
 	 * gets the imagePath of the second activity.
@@ -72,10 +70,9 @@ public class HighestConsumptionQuestion extends Question {
 	/**
 	 * Useful for sending the information about a picture to the user
 	 * @return a byte array with information about the image for choice 2
-	 * @throws IOException if there is something wrong with the file
 	 */
-	public byte[] imageInByteArrayActivity2() throws IOException {
-		return this.choice2.castImageToByteArray();
+	public byte[] imageInByteArrayActivity2() {
+		return Base64.getDecoder().decode(choice2.getBase64Image());
 	}
 
 	/**
@@ -89,10 +86,9 @@ public class HighestConsumptionQuestion extends Question {
 	/**
 	 * Useful for sending the information about a picture to the user
 	 * @return a byte array with information about the image for choice 3
-	 * @throws IOException if there is something wrong with the file
 	 */
-	public byte[] imageInByteArrayActivity3() throws IOException {
-		return this.choice1.castImageToByteArray();
+	public byte[] imageInByteArrayActivity3() {
+		return Base64.getDecoder().decode(choice3.getBase64Image());
 	}
 
 	/**
@@ -108,11 +104,11 @@ public class HighestConsumptionQuestion extends Question {
 		long maxConsumption;
 		int positionHighest;
 		maxConsumption = Math.max(
-			this.choice1.getConsumptionInWh(),
-			Math.max(
-				this.choice2.getConsumptionInWh(),
-				this.choice3.getConsumptionInWh()
-			)
+				this.choice1.getConsumptionInWh(),
+				Math.max(
+						this.choice2.getConsumptionInWh(),
+						this.choice3.getConsumptionInWh()
+				)
 		);
 
 		if (choice1.getConsumptionInWh() == maxConsumption) {
@@ -135,11 +131,11 @@ public class HighestConsumptionQuestion extends Question {
 	 */
 	public Activity getCorrectAnswer() {
 		long maxConsumption = Math.max(
-			this.choice1.getConsumptionInWh(),
-			Math.max(
-				this.choice2.getConsumptionInWh(),
-				this.choice3.getConsumptionInWh()
-			)
+				this.choice1.getConsumptionInWh(),
+				Math.max(
+						this.choice2.getConsumptionInWh(),
+						this.choice3.getConsumptionInWh()
+				)
 		);
 
 		if (this.choice1.getConsumptionInWh() == maxConsumption) {
