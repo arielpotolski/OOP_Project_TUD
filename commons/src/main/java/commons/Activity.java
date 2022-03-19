@@ -41,12 +41,13 @@ public class Activity {
 	 * @param imagePath the path to the image
 	 * @param source the source from where taken
 	 */
-	public Activity(String id, String title, long consumptionInWh, String imagePath, String source){
+	public Activity(String id, String title, long consumptionInWh, String imagePath, String source) throws IOException {
 		this.id = id;
 		this.title = title;
 		this.imagePath = imagePath;
 		this.consumptionInWh = consumptionInWh;
 		this.source = source;
+		calculateBase64();
 	}
 
 	/**
@@ -175,9 +176,11 @@ public class Activity {
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, extension, bos);
 			return bos.toByteArray();
-		} catch (IOException err) {
-			Scanner imageNotfoundScanner = new Scanner(new File("resources/imageNotFound.txt"));
-			return Base64.getDecoder().decode(imageNotfoundScanner.next());
+		} catch (Exception err) {
+			BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(Activity.class.getClassLoader().getResourceAsStream("IMGNotFound.jpg")));
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, ".jpg", bos);
+			return bos.toByteArray();
 		}
 	}
 
