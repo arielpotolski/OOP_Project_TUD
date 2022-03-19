@@ -1,5 +1,6 @@
 package server.api;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class QuestionSetControllerTest {
 	private QuestionSetController qsc = new QuestionSetController(new ActivityRepositoryTest());
 
 	@Test
-	void getAll() {
+	void getAll() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
@@ -50,7 +51,7 @@ public class QuestionSetControllerTest {
 	 * 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivitiesInvalidActivityId() {
+	void addActivitiesInvalidActivityId() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity(null, "42", 42, "42", "42")))
@@ -64,7 +65,7 @@ public class QuestionSetControllerTest {
 	 * 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivitiesInvalidActivityTitle() {
+	void addActivitiesInvalidActivityTitle() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity("42", null, 42, "42", "42")))
@@ -78,7 +79,7 @@ public class QuestionSetControllerTest {
 	 * 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivitiesInvalidActivitySource() {
+	void addActivitiesInvalidActivitySource() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity("42", "42", 42, "42", null)))
@@ -92,7 +93,7 @@ public class QuestionSetControllerTest {
 	 * 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivitiesInvalidActivityConsumption() {
+	void addActivitiesInvalidActivityConsumption() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity("42", "42", -1, "42", "42")))
@@ -105,7 +106,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding a list with a valid activity results in a 200 OK.
 	 */
 	@Test
-	void addActivitiesValid() {
+	void addActivitiesValid() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity("42", "42", 42, "42", "42")))
@@ -118,7 +119,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding a list with multiple valid activities results in a 200 OK.
 	 */
 	@Test
-	void addActivitiesValidMultiple() {
+	void addActivitiesValidMultiple() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(
@@ -135,7 +136,7 @@ public class QuestionSetControllerTest {
 	 * 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivitiesInvalidMultiple() {
+	void addActivitiesInvalidMultiple() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(
@@ -167,7 +168,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding an activity containing an invalid ID results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivityInvalidId() {
+	void addActivityInvalidId() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivity(new Activity(null, "42", 42, "42", "42")),
 			HttpStatus.BAD_REQUEST
@@ -178,7 +179,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding an activity containing an invalid title results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivityInvalidTitle() {
+	void addActivityInvalidTitle() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivity(new Activity("42", null, 42, "42", "42")),
 			HttpStatus.BAD_REQUEST
@@ -189,7 +190,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding an activity containing an invalid source results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivityInvalidSource() {
+	void addActivityInvalidSource() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivity(new Activity("42", "42", 42, "42", null)),
 			HttpStatus.BAD_REQUEST
@@ -201,7 +202,7 @@ public class QuestionSetControllerTest {
 	 * 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivityInvalidConsumption() {
+	void addActivityInvalidConsumption() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivity(new Activity("42", "42", -1, "42", "42")),
 			HttpStatus.BAD_REQUEST
@@ -212,7 +213,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding a valid activity results in a 200 OK.
 	 */
 	@Test
-	void addActivityValid() {
+	void addActivityValid() throws IOException {
 		assertResponseEquals(
 			this.qsc.addActivity(new Activity("42", "42", 42, "42", "42")),
 			HttpStatus.OK
@@ -227,7 +228,7 @@ public class QuestionSetControllerTest {
 	 * for `getAll()' at the top of this file.
 	 */
 	@Test
-	void deleteByIdValid() {
+	void deleteByIdValid() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
@@ -242,7 +243,7 @@ public class QuestionSetControllerTest {
 	 * 400 BAD REQUEST.
 	 */
 	@Test
-	void deleteByIdInvalid() {
+	void deleteByIdInvalid() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
@@ -256,7 +257,7 @@ public class QuestionSetControllerTest {
 	 * Assert that deleting an activity by ID when it is null results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void deleteByIdNull() {
+	void deleteByIdNull() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
@@ -270,7 +271,7 @@ public class QuestionSetControllerTest {
 	 * Assert that getting an activity by ID when it is null results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void getByIdNull() {
+	void getByIdNull() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
@@ -282,7 +283,7 @@ public class QuestionSetControllerTest {
 	 * Assert that getting an activity by ID when it doesn't exist results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void getByIdInvalid() {
+	void getByIdInvalid() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
@@ -294,7 +295,7 @@ public class QuestionSetControllerTest {
 	 * Assert that getting an activity by ID when it exists results in a 200 OK.
 	 */
 	@Test
-	void getByIdNullValid() {
+	void getByIdNullValid() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")

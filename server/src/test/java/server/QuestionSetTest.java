@@ -1,5 +1,6 @@
 package server;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class QuestionSetTest {
 	private QuestionSet qs;
 
 	@BeforeEach
-	private void setUp() {
+	private void setUp() throws IOException {
 		this.activity1 = new Activity("123", "act11", 1000,
 				"pathpng1", "first site");
 		this.activity2 = new Activity("123", "act12", 1000,
