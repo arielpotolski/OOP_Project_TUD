@@ -1,5 +1,6 @@
 package commons;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +16,7 @@ class ActivityTest {
 	private Activity activity3;
 
 	@BeforeEach
-	void setUp(){
+	void setUp() throws IOException {
 		activity1 = new Activity("123", "title", 230, "pathpng", "some site");
 		activity2 = new Activity("123", "title", 230, "pathpng", "some site");
 		activity3 = new Activity("1233", "title", 230, "pathjpg", "some site");
@@ -111,4 +112,5 @@ class ActivityTest {
 				"source='some site'}";
 		assertEquals(expected, activity1.toString());
 	}
+
 }

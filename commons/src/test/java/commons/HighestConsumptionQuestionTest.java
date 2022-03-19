@@ -2,6 +2,9 @@ package commons;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -15,7 +18,7 @@ public class HighestConsumptionQuestionTest{
 	private HighestConsumptionQuestion question;
 
 	@BeforeEach
-	void setUp(){
+	void setUp() throws IOException {
 		activity1 = new Activity("123", "act1", 100,
 				"pathpng1", "first site");
 		activity2 = new Activity("456", "act2", 230,
@@ -90,7 +93,7 @@ public class HighestConsumptionQuestionTest{
 	}
 
 	@Test
-	public void equalsTestFalse(){
+	public void equalsTestFalse() throws IOException {
 		Activity activity4 = new Activity("123", "act4", 100,
 				"pathpng4", "first site");
 		HighestConsumptionQuestion question2 =

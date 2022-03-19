@@ -4,6 +4,9 @@ package commons;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -15,7 +18,7 @@ public class EstimateQuestionTest {
 	private EstimateQuestion question;
 
 	@BeforeEach
-	void setup(){
+	void setup() throws IOException {
 		this.activity = new Activity("123", "act1", 1000,
 				"pathpng1", "first site");
 		this.question = new EstimateQuestion(this.activity);
@@ -55,7 +58,7 @@ public class EstimateQuestionTest {
 	}
 
 	@Test
-	public void equalsTestFalse(){
+	public void equalsTestFalse() throws IOException {
 		Activity activity2 = new Activity("456", "act2", 1000,
 				"pathpng2", "second site");
 		EstimateQuestion o = new EstimateQuestion(activity2);

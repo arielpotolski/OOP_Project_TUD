@@ -2,6 +2,9 @@ package commons;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -29,6 +32,9 @@ public class InsteadOfQuestionTest {
 					answer2Activity, answer3Activity);
 	private InsteadOfQuestion insteadOfQuestionFixed;
 	private InsteadOfQuestion insteadOfQuestionFixed1;
+
+	public InsteadOfQuestionTest() throws IOException {
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -198,7 +204,7 @@ public class InsteadOfQuestionTest {
 	}
 
 	@Test
-	void singleCorrectAnswer() {
+	void singleCorrectAnswer() throws IOException {
 		int points = insteadOfQuestionRandomized.pointsEarned(1000, 1, 1.0);
 		points += insteadOfQuestionRandomized.pointsEarned(1000, 2, 1.0);
 		points += insteadOfQuestionRandomized.pointsEarned(1000, 3, 1.0);

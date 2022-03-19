@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 public class MCQuestionTest {
 
 	private final Activity activity = new Activity("00-testing", "Activity X consumes",
@@ -19,6 +21,9 @@ public class MCQuestionTest {
 	private MCQuestion mcQuestion2;
 	private final MCQuestion mcQuestion3 = new MCQuestion(activity);
 	private MCQuestion mcQuestion4;
+
+	public MCQuestionTest() throws IOException {
+	}
 
 
 	@BeforeEach
