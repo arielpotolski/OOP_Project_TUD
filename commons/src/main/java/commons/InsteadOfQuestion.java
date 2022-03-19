@@ -1,8 +1,8 @@
 package commons;
 
 import java.text.DecimalFormat;
-import java.util.Base64;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -176,7 +176,8 @@ public class InsteadOfQuestion extends Question {
 			case 2 -> this.answer2;
 			case 3 -> this.answer3;
 			default ->
-					throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
+					throw new IllegalArgumentException(
+							"This number of answers should be 0 < n < 4");
 		};
 
 		return current.getTitle() + " "

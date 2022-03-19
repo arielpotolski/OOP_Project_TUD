@@ -1,13 +1,12 @@
 package commons;
 
-import java.util.List;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
 import java.util.function.Predicate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -41,7 +40,8 @@ public class Activity {
 	 * @param imagePath the path to the image
 	 * @param source the source from where taken
 	 */
-	public Activity(String id, String title, long consumptionInWh, String imagePath, String source) throws IOException {
+	public Activity(String id, String title, long consumptionInWh,
+					String imagePath, String source) throws IOException {
 		this.id = id;
 		this.title = title;
 		this.imagePath = imagePath;
@@ -177,7 +177,12 @@ public class Activity {
 			ImageIO.write(bufferedImage, extension, bos);
 			return bos.toByteArray();
 		} catch (Exception err) {
-			BufferedImage bufferedImage = ImageIO.read(Objects.requireNonNull(Activity.class.getClassLoader().getResourceAsStream("IMGNotFound.jpg")));
+			BufferedImage bufferedImage =ImageIO
+					.read(Objects
+							.requireNonNull(Activity
+									.class
+									.getClassLoader()
+									.getResourceAsStream("IMGNotFound.jpg")));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, ".jpg", bos);
 			return bos.toByteArray();
