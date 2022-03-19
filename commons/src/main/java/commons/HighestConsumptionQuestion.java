@@ -146,6 +146,11 @@ public class HighestConsumptionQuestion extends Question {
 		return this.choice3;
 	}
 
+	/**
+	 * Returns the energy consumption by a given title
+	 * @param title the title of the question
+	 * @return the energy consumption of the activity
+	 */
 	public long returnEnergyConsumption(String title) {
 		if (title.equals(this.choice1.getTitle())) {
 			return this.choice1.getConsumptionInWh();
