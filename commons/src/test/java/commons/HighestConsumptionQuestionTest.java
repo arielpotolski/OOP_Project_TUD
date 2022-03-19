@@ -100,4 +100,12 @@ public class HighestConsumptionQuestionTest{
 				new HighestConsumptionQuestion(activity2, activity3, activity4);
 		assertFalse(question.equals(question2));
 	}
+
+	@Test
+	public void returnEnergyConsumption() {
+		assertEquals(100L, question.returnEnergyConsumption("act1"));
+		assertEquals(230L, question.returnEnergyConsumption("act2"));
+		assertEquals(360L, question.returnEnergyConsumption("act3"));
+	}
+
 }
