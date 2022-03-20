@@ -18,7 +18,7 @@ public class InsteadOfQuestionTest {
 	private final Activity answer2ActivityFaked = new Activity("00-test-answer-2",
 			"Title for the answer 2", 10, "pathToImageAnswer2", "someSource");
 	private final Activity answer3Activity = new Activity("00-test-answer-3",
-			"Title for the answer 3", 40, "pathToImageAnswer3", "someSource");
+			"Title for the answer 3", 4, "pathToImageAnswer3", "someSource");
 	private final Activity answer3ActivityFaked = new Activity("00-test-answer-3",
 			"Title for the answer 3", 4, "pathToImageAnswer3", "someSource");
 	private final Activity activity = new Activity("00-test",
@@ -202,6 +202,22 @@ public class InsteadOfQuestionTest {
 		int points = insteadOfQuestionRandomized.pointsEarned(1000, 1, 1.0);
 		points += insteadOfQuestionRandomized.pointsEarned(1000, 2, 1.0);
 		points += insteadOfQuestionRandomized.pointsEarned(1000, 3, 1.0);
+		assertEquals(1000, points);
+
+		insteadOfQuestionFixed.setQuestionActivity(activityQuestion);
+		insteadOfQuestionFixed.setAnswer1(new Activity("00-test-answer-1",
+				"Title for the answer 1", 30, "pathToImageAnswer1", "someSource"));
+		insteadOfQuestionFixed.setAnswer2(new Activity("00-test-answer-1",
+				"Title for the answer 1", 7, "pathToImageAnswer1", "someSource"));
+		insteadOfQuestionFixed.setAnswer3(new Activity("00-test-answer-1",
+				"Title for the answer 1", 21, "pathToImageAnswer1", "someSource"));
+		insteadOfQuestionFixed.setRealCoefficient1(30.0 / 120.0);
+		insteadOfQuestionFixed.setRealCoefficient2(6.0 / 120.0);
+		insteadOfQuestionFixed.setRealCoefficient3(20.0 / 120.0);
+		points = 0;
+		points += insteadOfQuestionFixed.pointsEarned(1000, 1, 1.0);
+		points += insteadOfQuestionFixed.pointsEarned(1000, 2, 1.0);
+		points += insteadOfQuestionFixed.pointsEarned(1000, 3, 1.0);
 		assertEquals(1000, points);
 	}
 }
