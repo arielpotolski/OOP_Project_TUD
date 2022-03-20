@@ -171,8 +171,5 @@ public class MCQuestionTest {
 
 		assertArrayEquals(bos.toByteArray(),
 				mcQuestion2.imageInByteArrayQuestion());
-
 	}
-
-
 }

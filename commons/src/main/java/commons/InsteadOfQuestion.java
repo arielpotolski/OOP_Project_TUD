@@ -133,7 +133,6 @@ public class InsteadOfQuestion extends Question {
 			case 3 -> Base64.getDecoder().decode(this.answer3.getBase64Image());
 			default -> throw new IllegalArgumentException("The input number should be 0 < n < 4");
 		};
-
 	}
 
 	/**
@@ -151,7 +150,6 @@ public class InsteadOfQuestion extends Question {
 	public byte[] imageInByteArrayQuestion() {
 		return Base64.getDecoder().decode(this.questionActivity.getBase64Image());
 	}
-
 
 	/**
 	 * Method for the Label with the question that is asked
