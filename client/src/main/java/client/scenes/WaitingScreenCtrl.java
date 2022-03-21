@@ -1,6 +1,5 @@
 package client.scenes;
 
-import java.io.IOException;
 import java.util.Optional;
 
 import client.utils.ServerUtils;

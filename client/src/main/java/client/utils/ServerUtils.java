@@ -169,6 +169,7 @@ public class ServerUtils {
 	/**
 	 * Creates a TCP connection to the server and
 	 * sends a JOIN message.
+	 * @param port Socket port to connect to.
 	 * @throws IOException When Connection creation fails
 	 * or if the sending fails.
 	 */
