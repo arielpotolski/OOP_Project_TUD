@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
-
 @JsonSubTypes.Type(value = EstimateQuestion.class, name = "EstimateQuestion")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EstimateQuestion extends Question {
@@ -21,9 +20,8 @@ public class EstimateQuestion extends Question {
 		this.activity = activity;
 	}
 
-
 	/**
-	 * This constructor helps for create the Json Object
+	 * This empty constructor helps for create the Json Object
 	 */
 	public EstimateQuestion() {
 

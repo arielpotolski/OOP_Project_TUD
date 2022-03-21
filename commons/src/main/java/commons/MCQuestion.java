@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 
-
 @JsonSubTypes.Type(value = MCQuestion.class, name = "MCQuestion")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MCQuestion extends Question{

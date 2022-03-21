@@ -149,8 +149,6 @@ public class MainCtrl {
 	 * This method shows up the question screen in single player mode.
 	 */
 	public void showQuestionScreenSinglePlayer() {
-
-
 		// If the size of question set equals to zero, this method change to final screen.
 		if (questions.size() == 0) {
 			showSinglePlayerFinalScreen();
@@ -279,7 +277,6 @@ public class MainCtrl {
 	 * This method shows the intermediate scene.
 	 */
 	public void showIntermediateScene() {
-
 		intermediateSceneCtrl.setQuestionAnswer(numberOfQuestionAnswered);
 		intermediateSceneCtrl.setLabelPoint(player.getPoint());
 		intermediateSceneCtrl.setCurrentQuestionPointsEarned(currentPoint);

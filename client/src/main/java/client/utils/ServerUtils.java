@@ -31,7 +31,6 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 public class ServerUtils {
 	private String server;
 
-
 	/**
 	 * Constructor for the connection between client and server.
 	 *
@@ -72,7 +71,7 @@ public class ServerUtils {
 	}
 
 	/**
-	 * this method get a list of players for global leader board.
+	 * This method get a list of players for global leader board.
 	 *
 	 * @return a list of players.
 	 */
