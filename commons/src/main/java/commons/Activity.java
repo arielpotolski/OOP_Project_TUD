@@ -1,5 +1,6 @@
 package commons;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -123,12 +124,13 @@ public class Activity {
 
 	/**
 	 * Makes an Activity with wrong consumption for the purpose of InsteadOfQuestions
+	 * @param forbiddenValues The values that cannot be a fake value
 	 */
-	public void makeFake() {
+	public void makeFake(List<Long> forbiddenValues) {
 		long prev = this.consumptionInWh;
 		do {
 			this.consumptionInWh = Math.round(Math.random() * 2 * this.consumptionInWh);
-		} while (this.consumptionInWh == prev);
+		} while (this.consumptionInWh == prev || forbiddenValues.contains(this.consumptionInWh));
 	}
 
 	/**

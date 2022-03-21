@@ -142,7 +142,7 @@ public class MainCtrl {
 	 */
 	public void showMultiplePlayersPreGameScreen() {
 		primaryStage.setTitle("Multiplayer");
-		primaryStage.setScene(singlePlayerPreGameScreen);
+		primaryStage.setScene(multiplayerPreGameScreen);
 	}
 
 	/**

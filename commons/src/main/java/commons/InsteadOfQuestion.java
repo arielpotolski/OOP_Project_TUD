@@ -1,6 +1,8 @@
 package commons;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -46,19 +48,23 @@ public class InsteadOfQuestion extends Question {
 	) {
 		this.questionActivity = questionActivity;
 		calculateRealCoefficients(answer1, answer2, answer3);
+		List<Long> forbiddenValues = new ArrayList<>();
+		forbiddenValues.add(answer1.getConsumptionInWh());
+		forbiddenValues.add(answer2.getConsumptionInWh());
+		forbiddenValues.add(answer3.getConsumptionInWh());
 
 		// The following part generates exactly one of the answers to be correct
 		// and guarantees that all the others are wrong
 		double correctAnswer = Math.random();
 		if (correctAnswer < 1.0 / 3.0) {
-			answer2.makeFake();
-			answer3.makeFake();
+			answer2.makeFake(forbiddenValues);
+			answer3.makeFake(forbiddenValues);
 		} else if (correctAnswer < 2.0 / 3.0) {
-			answer1.makeFake();
-			answer3.makeFake();
+			answer1.makeFake(forbiddenValues);
+			answer3.makeFake(forbiddenValues);
 		} else {
-			answer1.makeFake();
-			answer2.makeFake();
+			answer1.makeFake(forbiddenValues);
+			answer2.makeFake(forbiddenValues);
 		}
 
 		// This sets the answers to their position
@@ -104,11 +110,11 @@ public class InsteadOfQuestion extends Question {
 	 */
 	private void calculateRealCoefficients(Activity answer1, Activity answer2, Activity answer3) {
 		this.realCoefficient1 = ((double) answer1.getConsumptionInWh())
-				/ this.questionActivity.getConsumptionInWh();
+				/ ((double) this.questionActivity.getConsumptionInWh());
 		this.realCoefficient2 = ((double) answer2.getConsumptionInWh())
-				/ this.questionActivity.getConsumptionInWh();
+				/ ((double) this.questionActivity.getConsumptionInWh());
 		this.realCoefficient3 = ((double) answer3.getConsumptionInWh())
-				/ this.questionActivity.getConsumptionInWh();
+				/ ((double) this.questionActivity.getConsumptionInWh());
 	}
 
 	/**
@@ -170,33 +176,29 @@ public class InsteadOfQuestion extends Question {
 	/**
 	 * Method used for creating a String with the activity so that it acts as if correct one
 	 * @param numberOfAnswer the number of the answer given
-	 * @return a string ready for comparison with the given answer
+	 * @return the original coefficient of the answer as if it was correct
 	 */
-	private String correctAnswerString(long numberOfAnswer) {
+	private double correctAnswerCoefficient(long numberOfAnswer) {
 		double coefficient;
-		Activity current;
 
 		switch ((int) numberOfAnswer) {
 		case 1:
 			coefficient = realCoefficient1;
-			current = answer1;
 			break;
 		case 2:
 			coefficient = realCoefficient2;
-			current = answer2;
 			break;
 		case 3:
 			coefficient = realCoefficient3;
-			current = answer3;
 			break;
 		default:
 			throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
 		}
 
-		DecimalFormat df = new DecimalFormat("0.00");
-		return current.getTitle() + " " + df.format(coefficient) + " times";
+		return coefficient;
 	}
 
+	//incorrect
 	public Activity correctAnswer() {
 		double distanceFromOneOfCoefficient1 = 1 - this.realCoefficient1;
 		double distanceFromOneOfCoefficient2 = 1 - this.realCoefficient2;
@@ -234,7 +236,16 @@ public class InsteadOfQuestion extends Question {
 	 * @return The total amount of points earned as an integer
 	 */
 	public int pointsEarned(int maxPoints, long answerGiven, double progress) {
-		if (!answerString(answerGiven).equals(correctAnswerString(answerGiven))) {
+		Activity answerActivity;
+		switch ((int) answerGiven) {
+			case 1 -> answerActivity = answer1;
+			case 2 -> answerActivity = answer2;
+			case 3 -> answerActivity = answer3;
+			default -> throw new IllegalArgumentException("Answer given can be either 1, 2 or 3");
+		}
+		double currentCoefficient = ((double) answerActivity.getConsumptionInWh())
+				/ ((double) questionActivity.getConsumptionInWh());
+		if (Double.compare(currentCoefficient, correctAnswerCoefficient(answerGiven)) != 0) {
 			return 0;
 		}
 		float pointsEarned = (float) progress * maxPoints;
