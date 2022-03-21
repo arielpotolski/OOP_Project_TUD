@@ -25,6 +25,7 @@ public class Activity {
 	private String imagePath;
 	@JsonProperty("source")
 	private String source;
+	@JsonProperty("base-64")
 	private String base64Image;
 
 	/**
