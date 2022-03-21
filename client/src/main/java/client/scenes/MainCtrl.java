@@ -204,6 +204,10 @@ public class MainCtrl {
 		this.server = server;
 	}
 
+	public ServerUtils getServer() {
+		return this.server;
+	}
+
 	/**
 	 * This method will get a list of questions
 	 */
