@@ -12,13 +12,13 @@ public class MultiplayerPreGameCtrl {
 	private final MainCtrl mainCtrl;
 
 	@FXML
-	private TextField uRLTextField;
+	private TextField serverURL;
 
 	@FXML
-	private TextField nicknameTextField;
+	private TextField nickname;
 
 	@FXML
-	private Button enterButton;
+	private Button startButton;
 
 	/**
 	 * Constructor for multiplayer pre-game controller
