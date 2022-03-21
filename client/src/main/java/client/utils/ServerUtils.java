@@ -16,29 +16,45 @@
 
 package client.utils;
 
+import java.io.IOException;
+import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
+import commons.Connection;
+import commons.LobbyResponse;
 import commons.Player;
 import commons.Question;
+import commons.messages.JoinMessage;
 
 import com.google.inject.Inject;
+import jakarta.ws.rs.WebApplicationException;
+import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
+import jakarta.ws.rs.client.ResponseProcessingException;
 import jakarta.ws.rs.core.GenericType;
-import org.glassfish.jersey.client.ClientConfig;
+import jakarta.ws.rs.core.UriBuilder;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
+	private final String host;
+	private final Client client;
 	private String server;
 
 	/**
 	 * Constructor for the connection between client and server.
 	 *
-	 * @param server the link that player types before playing the game
+	 * @param host the link that player types before playing the game
 	 */
 	@Inject
-	public ServerUtils(String server) {
-		this.server = server;
+	public ServerUtils(String host) {
+		this.host = host;
+		this.client = ClientBuilder.newClient();
+	}
+
+	private URI getServer() {
+		return UriBuilder.newInstance().scheme("http").host(this.host).port(8080).build();
 	}
 
 	/**
@@ -48,11 +64,11 @@ public class ServerUtils {
 	 * @return a player
 	 */
 	public Player addPlayer(Player player) {
-		return ClientBuilder.newClient(new ClientConfig())
-				.target(server).path("api/players/addPlayer")
-				.request(APPLICATION_JSON)
-				.accept(APPLICATION_JSON)
-				.put(Entity.entity(player, APPLICATION_JSON), Player.class);
+		return this.client
+			.target(this.getServer())
+			.path("api/players/addPlayer")
+			.request(APPLICATION_JSON)
+			.put(Entity.entity(player, APPLICATION_JSON), Player.class);
 	}
 
 	/**
@@ -61,12 +77,10 @@ public class ServerUtils {
 	 * @return A list of questions from the server
 	 */
 	public List<Question> getQuestions() {
-		return ClientBuilder
-			.newClient(new ClientConfig())
-			.target(server)
+		return this.client
+			.target(this.getServer())
 			.path("api/questions/")
 			.request(APPLICATION_JSON)
-			.accept(APPLICATION_JSON)
 			.get(new GenericType<>() {});
 	}
 
@@ -76,9 +90,12 @@ public class ServerUtils {
 	 * @return a list of players.
 	 */
 	public List<Player> getPlayers() {
-		return ClientBuilder.newClient(new ClientConfig())
-				.target(server).path("api/players")
-				.request(APPLICATION_JSON)
+		return this.client
+			.target(this.getServer()).path("api/players")
+			.request(APPLICATION_JSON)
+			.get(new GenericType<>() {});
+	}
+
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<>() {});
 	}
