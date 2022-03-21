@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package client.utils;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public class ServerUtils {
 	}
 
 	/**
-	 * The method get a list of activities from database.
+	 * Get a list of questions from the server
 	 *
 	 * @return A list of questions from the server
 	 */

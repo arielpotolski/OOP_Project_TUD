@@ -1,6 +1,8 @@
 package commons;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
@@ -12,7 +14,7 @@ public class Activity {
 	@JsonProperty("title")
 	private String title;
 	@JsonProperty("consumption_in_wh")
-	private int consumptionInWh;
+	private long consumptionInWh;
 	@JsonProperty("image_path")
 	private String imagePath;
 	@JsonProperty("source")
@@ -31,7 +33,7 @@ public class Activity {
 	 * @param imagePath the path to the image
 	 * @param source the source from where taken
 	 */
-	public Activity(String id, String title, int consumptionInWh, String imagePath, String source) {
+	public Activity(String id, String title, long consumptionInWh, String imagePath, String source){
 		this.id = id;
 		this.title = title;
 		this.imagePath = imagePath;
@@ -59,7 +61,7 @@ public class Activity {
 	 * Getter for the consumption of the activity
 	 * @return the consumption of the activity in Wh
 	 */
-	public int getConsumptionInWh() {
+	public long getConsumptionInWh() {
 		return this.consumptionInWh;
 	}
 
@@ -122,12 +124,13 @@ public class Activity {
 
 	/**
 	 * Makes an Activity with wrong consumption for the purpose of InsteadOfQuestions
+	 * @param forbiddenValues The values that cannot be a fake value
 	 */
-	public void makeFake() {
-		int prev = this.consumptionInWh;
+	public void makeFake(List<Long> forbiddenValues) {
+		long prev = this.consumptionInWh;
 		do {
-			this.consumptionInWh = (int) Math.round(Math.random() * 2 * this.consumptionInWh);
-		} while (this.consumptionInWh == prev);
+			this.consumptionInWh = Math.round(Math.random() * 2 * this.consumptionInWh);
+		} while (this.consumptionInWh == prev || forbiddenValues.contains(this.consumptionInWh));
 	}
 
 	/**
@@ -143,6 +146,20 @@ public class Activity {
 				", imagePath='" + this.imagePath + '\'' +
 				", source='" + this.source + '\'' +
 				'}';
+	}
+
+	/**
+	 * Check if `this' is a valid activity.  An activity is considered valid if none of the
+	 * fields are null and the energy consumption is a non-negative integer.
+	 * @return True if the activity is valid and false otherwise.
+	 */
+	public boolean isValid() {
+		Predicate<String> isNotNullOrEmpty = s -> s != null && !s.isEmpty();
+
+		return isNotNullOrEmpty.test(this.id)
+			&& isNotNullOrEmpty.test(this.source)
+			&& isNotNullOrEmpty.test(this.title)
+			&& this.getConsumptionInWh() >= 0;
 	}
 
 	/**

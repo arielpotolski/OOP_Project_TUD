@@ -52,7 +52,7 @@ public class MCQuestion extends Question{
 	 */
 	public MCQuestion(Activity activity) {
 		this.activity = activity;
-		HashMap<Integer, Integer> answers = generateAnswers();
+		HashMap<Integer, Long> answers = generateAnswers();
 		this.answer1 = answers.get(1);
 		this.answer2 = answers.get(2);
 		this.answer3 = answers.get(3);
@@ -73,13 +73,13 @@ public class MCQuestion extends Question{
 	 * Generates a wrong answer for the question
 	 * @return a wrong answer
 	 */
-	private int generateAnswer() {
-		int result;
+	private long generateAnswer() {
+		long result;
 		do {
 			// At random principle answer is generated and this answer is of the same magnitude
 			// At least in most of the time
 			double moreOrLess = Math.random() * 2;
-			result = (int) Math.round(this.activity.getConsumptionInWh() * moreOrLess);
+			result = Math.round(this.activity.getConsumptionInWh() * moreOrLess);
 		} while (result == this.activity.getConsumptionInWh());
 		return result;
 	}
@@ -88,9 +88,9 @@ public class MCQuestion extends Question{
 	 * Generates the answers and their sequence
 	 * @return a map containing the sequence of answers as keys and the answers themselves
 	 */
-	private HashMap<Integer, Integer> generateAnswers() {
+	private HashMap<Integer, Long> generateAnswers() {
 		generateSequence();
-		HashMap<Integer, Integer> result = new HashMap<>();
+		HashMap<Integer, Long> result = new HashMap<>();
 		for (Integer i : this.order) {
 			result.put(i, this.order.indexOf(i) == 0 ?
 				this.activity.getConsumptionInWh() : generateAnswer());
@@ -106,7 +106,7 @@ public class MCQuestion extends Question{
 	 * @param progress time left
 	 * @return the amount of points the user achieved
 	 */
-	public int pointsEarned(int maxPoints, int answerGiven, double progress) {
+	public int pointsEarned(int maxPoints, long answerGiven, double progress) {
 		if (answerGiven != this.activity.getConsumptionInWh())
 			return 0;
 		return (int) Math.round(maxPoints * progress);
@@ -156,7 +156,7 @@ public class MCQuestion extends Question{
 	 * Getter for the answer at position 1
 	 * @return the answer at position 1
 	 */
-	public int getAnswer1() {
+	public long getAnswer1() {
 		return this.answer1;
 	}
 
@@ -164,7 +164,7 @@ public class MCQuestion extends Question{
 	 * Getter for the answer at position 2
 	 * @return the answer at position 2
 	 */
-	public int getAnswer2() {
+	public long getAnswer2() {
 		return this.answer2;
 	}
 
@@ -172,7 +172,7 @@ public class MCQuestion extends Question{
 	 * Getter for the answer at position 3
 	 * @return the answer at position 3
 	 */
-	public int getAnswer3() {
+	public long getAnswer3() {
 		return this.answer3;
 	}
 
