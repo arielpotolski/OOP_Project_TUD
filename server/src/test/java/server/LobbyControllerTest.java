@@ -1,15 +1,14 @@
 package server;
 
+import java.io.IOException;
+
 import commons.Connection;
 import commons.LobbyResponse;
-
 import commons.messages.JoinMessage;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -126,13 +125,16 @@ public class LobbyControllerTest {
 		assertEquals(2, bob.playersInLobby().size());
 		Thread.sleep(LobbyController.TIMEOUT_MILLISECONDS / 2);
 		// After a while there should still be two. Bob refreshes his timer.
-		assertEquals(2, lobby.refreshPlayer("Bob", bob.playerID()).getBody().playersInLobby().size());
+		assertEquals(2, lobby.refreshPlayer("Bob", bob.playerID())
+				.getBody().playersInLobby().size());
 		Thread.sleep(LobbyController.TIMEOUT_MILLISECONDS / 2 + 10);
 		// Now, Alice should have timed out and bob should see only one player in the lobby.
-		assertEquals(1, lobby.refreshPlayer("Bob", bob.playerID()).getBody().playersInLobby().size());
+		assertEquals(1, lobby.refreshPlayer("Bob", bob.playerID())
+				.getBody().playersInLobby().size());
 		// A different Alice joins now and Bob should see two players again.
 		assertEquals(HttpStatus.ACCEPTED, lobby.registerPlayer("Alice").getStatusCode());
-		assertEquals(2, lobby.refreshPlayer("Bob", bob.playerID()).getBody().playersInLobby().size());
+		assertEquals(2, lobby.refreshPlayer("Bob", bob.playerID())
+				.getBody().playersInLobby().size());
 	}
 
 	@Test
