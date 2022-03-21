@@ -19,11 +19,11 @@ public class MCQuestion extends Question{
 	@JsonProperty("activity")
 	private Activity activity;
 	@JsonProperty("answer1")
-	private int answer1;
+	private long answer1;
 	@JsonProperty("answer2")
-	private int answer2;
+	private long answer2;
 	@JsonProperty("answer3")
-	private int answer3;
+	private long answer3;
 	@JsonProperty("order")
 	private ArrayList<Integer> order;
 
