@@ -31,4 +31,8 @@ public class MultiplayerPreGameCtrl {
 		this.mainCtrl = mainCtrl;
 		this.server = server;
 	}
+
+	public void jumpToSplashScreen() {
+		this.mainCtrl.showSplashScreen();
+	}
 }
