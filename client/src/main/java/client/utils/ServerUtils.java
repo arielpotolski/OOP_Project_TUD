@@ -40,7 +40,9 @@ import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 public class ServerUtils {
 	private final String host;
 	private final Client client;
-	private String server;
+	private String name;
+	private int id;
+	private Connection connection;
 
 	/**
 	 * Constructor for the connection between client and server.
@@ -96,8 +98,82 @@ public class ServerUtils {
 			.get(new GenericType<>() {});
 	}
 
-				.accept(APPLICATION_JSON)
+	/**
+	 * @param name Name of the player.
+	 * @return An optional LobbyResponse. If the request was successful
+	 * then the LobbyResponse is returned. Otherwise, `Optional.empty()`
+	 * is returned. This can happen if the name is already in use.
+	 */
+	public Optional<LobbyResponse> connectToLobby(String name) {
+		try {
+			LobbyResponse response = this.client
+				.target(this.getServer())
+				.path("lobby/register/")
+				.queryParam("name", name)
+				.request(APPLICATION_JSON)
 				.get(new GenericType<>() {});
+
+			this.name = name;
+			this.id = response.playerID();
+
+			return Optional.of(response);
+		} catch (WebApplicationException err) {
+			// 400 BAD REQUEST
+			// It means the name is already taken assuming
+			// that the request is well formatted (it should be).
+			return Optional.empty();
+		}
 	}
 
+
+	/**
+	 * Helper function for `refreshLobby` and `startMultiplayerGame`.
+	 * @param path API request path.
+	 * @return Optional LobbyResponse. Empty if something went wrong.
+	 * For example if the client timed out or is sending the wrong id.
+	 */
+	private Optional<LobbyResponse> lobbyRequest(String path) {
+		try {
+			LobbyResponse response = this.client
+				.target(this.getServer())
+				.path(path)
+				.queryParam("name", this.name)
+				.queryParam("id", this.id)
+				.request(APPLICATION_JSON)
+				.get(new GenericType<>() {});
+			return Optional.of(response);
+		} catch (ResponseProcessingException err) {
+			return Optional.empty();
+		}
+	}
+
+	/**
+	 * Create a request to refresh our presence in the lobby.
+	 * @return LobbyResponse if the request was successful,
+	 * otherwise empty.
+	 */
+	public Optional<LobbyResponse> refreshLobby() {
+		return lobbyRequest("lobby/refresh/");
+	}
+
+	/**
+	 * Create a request to start the multiplayer game.
+	 * @return LobbyResponse if the request was successful,
+	 * otherwise empty.
+	 */
+	public Optional<LobbyResponse> startMultiplayerGame() {
+		return lobbyRequest("lobby/start/");
+	}
+
+
+	/**
+	 * Creates a TCP connection to the server and
+	 * sends a JOIN message.
+	 * @throws IOException When Connection creation fails
+	 * or if the sending fails.
+	 */
+	public void makeConnection(int port) throws IOException {
+		this.connection = Connection.to(this.host, port);
+		this.connection.send(new JoinMessage(this.name));
+	}
 }
