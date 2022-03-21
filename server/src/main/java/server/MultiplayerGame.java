@@ -48,6 +48,7 @@ public class MultiplayerGame extends Thread {
 	@Override
 	public void run() {
 		try {
+			waitForEveryoneToJoin();
 			// TODO begin game
 			// TODO send out questions to players
 			// TODO track game progress
@@ -57,4 +58,40 @@ public class MultiplayerGame extends Thread {
 		}
 	}
 
+	/**
+	 * Waits for all players from the lobby to create
+	 * TCP connections to the server.
+	 *
+	 * @throws IOException When something goes wrong with sockets.
+	 * @throws ClassNotFoundException When receiving an unrecognized message class.
+	 */
+	private void waitForEveryoneToJoin() throws IOException, ClassNotFoundException {
+		this.logger.debug(String.format("expecting %d players", this.lobbyPlayers.size()));
+		// We wait for every player to initiate a TCP connection.
+		// Then we wait to receive their JOIN message where they identify themselves.
+		for (int i = 0; i < this.lobbyPlayers.size(); i++) {
+			// `serverSocket.accept()` blocks until a connection is made.
+			// If a player does not make a connection after the game starts
+			// the thread could just stall indefinitely.
+			// We were told we can trust our clients, so we can ignore this issue.
+			Connection connection = Connection.fromSocket(serverSocket.accept());
+
+			// Receive the first message from the client.
+			JoinMessage message = (JoinMessage) connection.receiveType(MessageType.JOIN);
+			String name = message.getName();
+			this.logger.info(name + " has joined the game");
+
+			if (!this.lobbyPlayers.containsKey(name)) {
+				// A player joined who was not in the lobby.
+				this.logger.error(name + " was not in the original lobby");
+				connection.send(new ErrorMessage("you were not in the lobby"));
+				// Do one more iteration of the loop.
+				i--;
+				continue;
+			}
+
+			// Save player.
+			this.players.add(new Player(connection, name));
+		}
+	}
 }
