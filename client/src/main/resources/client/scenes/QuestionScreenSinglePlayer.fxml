@@ -42,7 +42,7 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </ImageView>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="105.0">
+                  <HBox fx:id="hBoxImages" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="105.0">
                      <children>
                         <VBox alignment="TOP_CENTER" prefWidth="237.0">
                            <children>

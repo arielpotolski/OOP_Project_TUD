@@ -209,7 +209,8 @@ public class MainCtrl {
 		// Set up label for the question and answers.
 		String questionText = question.getActivity().getTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.imageInByteArrayQuestion());
+		questionScreenSinglePlayerCtrl.setImageQuestionImageView(
+				question.imageInByteArrayQuestion());
 		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
 		questionScreenSinglePlayerCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
 		questionScreenSinglePlayerCtrl.setLabelButton2(Long.toString(question.getAnswer2()));
@@ -227,17 +228,21 @@ public class MainCtrl {
 		// Set up label for the question and answers
 		String questionText = question.getQuestionActivity().getTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.imageInByteArrayQuestion());
+		questionScreenSinglePlayerCtrl.setImageQuestionImageView(
+				question.imageInByteArrayQuestion());
 		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
 		questionScreenSinglePlayerCtrl.setLabelButton1(question.getAnswer1().getTitle());
-		questionScreenSinglePlayerCtrl.setImageFirstPath(question.imageInByteArray(1));
-		questionScreenSinglePlayerCtrl.setVisibleImageFirst(true);
+		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(1),
+				0);
+		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 0);
 		questionScreenSinglePlayerCtrl.setLabelButton2(question.getAnswer2().getTitle());
-		questionScreenSinglePlayerCtrl.setImageFirstPath(question.imageInByteArray(2));
-		questionScreenSinglePlayerCtrl.setVisibleImageSecond(true);
+		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(2),
+				1);
+		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 1);
 		questionScreenSinglePlayerCtrl.setLabelButton3(question.getAnswer3().getTitle());
-		questionScreenSinglePlayerCtrl.setImageFirstPath(question.imageInByteArray(3));
-		questionScreenSinglePlayerCtrl.setVisibleImageThird(true);
+		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(3),
+				2);
+		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 2);
 	}
 
 	/**
@@ -252,14 +257,17 @@ public class MainCtrl {
 		String questionText = "Which one of these activities consumes the most energy?";
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
 		questionScreenSinglePlayerCtrl.setLabelButton1(question.getActivity1Title());
-		questionScreenSinglePlayerCtrl.setImageFirstPath(question.imageInByteArrayActivity1());
-		questionScreenSinglePlayerCtrl.setVisibleImageFirst(true);
+		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(
+				question.imageInByteArrayActivity1(), 0);
+		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 0);
 		questionScreenSinglePlayerCtrl.setLabelButton2(question.getActivity2Title());
-		questionScreenSinglePlayerCtrl.setImageSecondPath(question.imageInByteArrayActivity2());
-		questionScreenSinglePlayerCtrl.setVisibleImageSecond(true);
+		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(
+				question.imageInByteArrayActivity2(), 1);
+		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 1);
 		questionScreenSinglePlayerCtrl.setLabelButton3(question.getActivity3Title());
-		questionScreenSinglePlayerCtrl.setImageThirdPath(question.imageInByteArrayActivity3());
-		questionScreenSinglePlayerCtrl.setVisibleImageThird(true);
+		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(
+				question.imageInByteArrayActivity3(), 2);
+		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 2);
 	}
 
 	/**
@@ -280,7 +288,8 @@ public class MainCtrl {
 		clearImages();
 		String questionText = question.getActivityTitle();
 		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setImageQuestionPath(question.imageInByteArrayQuestion());
+		questionScreenSinglePlayerCtrl.setImageQuestionImageView(
+				question.imageInByteArrayQuestion());
 		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
 		questionScreenSinglePlayerCtrl.setVisibleTextField(true);
 		questionScreenSinglePlayerCtrl.setVisibleButton1(false);
@@ -293,9 +302,9 @@ public class MainCtrl {
 	 */
 	public void clearImages() {
 		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(false);
-		questionScreenSinglePlayerCtrl.setVisibleImageFirst(false);
-		questionScreenSinglePlayerCtrl.setVisibleImageSecond(false);
-		questionScreenSinglePlayerCtrl.setVisibleImageThird(false);
+		questionScreenSinglePlayerCtrl.setVisibilityImageView(false, 0);
+		questionScreenSinglePlayerCtrl.setVisibilityImageView(false, 1);
+		questionScreenSinglePlayerCtrl.setVisibilityImageView(false, 2);
 	}
 
 	/**

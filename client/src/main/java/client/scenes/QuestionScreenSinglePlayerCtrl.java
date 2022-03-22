@@ -20,6 +20,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javax.imageio.ImageIO;
 
 public class QuestionScreenSinglePlayerCtrl implements Initializable {
@@ -55,6 +57,9 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 
 	@FXML
 	private ProgressBar progressBarTime;
+
+	@FXML
+	private HBox hBoxImages;
 
 	double progress = 1;
 
@@ -157,32 +162,42 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 * Sets the image for the question from a given path
 	 * @param imageArray the byte array with information about the image
 	 */
-	public void setImageQuestionPath(byte[] imageArray) throws IOException {
+	public void setImageQuestionImageView(byte[] imageArray) throws IOException {
 		imageQuestion.setImage(imageParser(imageArray));
 	}
-//  Change here
+
 	/**
-	 * Sets the image for the first of the sequence of images
-	 * @param imageArray the byte array with information about the image
+	 * Sets the image for the different image views based on which picture should be loaded
+	 * @param imageArray the array containing information about the picture
+	 * @param number the number of the VBox with the imageView for the picture
+	 * @throws IOException if something is wrong with reading the file
 	 */
-	public void setImageFirstPath(byte[] imageArray) throws IOException {
-		imageFirst.setImage(imageParser(imageArray));
+	public void setImagesInImageViewsAnswers(byte[] imageArray, int number) throws IOException {
+		if (number < 0 || number > 3) throw new IllegalArgumentException("Number should be " +
+				"between 0 and 4");
+		ImageView currentImageView = getImageViewOfTheVbox(number);
+		currentImageView.setImage(imageParser(imageArray));
 	}
 
 	/**
-	 * Sets the image for the second of the sequence of images
-	 * @param imageArray the byte array with information about the image
+	 * Gets the image view related with the number of the VBox
+	 * @param number the number of the VBox
+	 * @return current image view desired
 	 */
-	public void setImageSecondPath(byte[] imageArray) throws IOException {
-		imageSecond.setImage(imageParser(imageArray));
+	private ImageView getImageViewOfTheVbox(int number) {
+		VBox current = ((VBox) (hBoxImages.getChildren().get(number)));
+		return (ImageView) current.getChildren().get(0);
 	}
 
 	/**
-	 * Sets the image for the third of the sequence of images
-	 * @param imageArray the byte array with information about the image
+	 * Method for setting visibility of the image views for the answers
+	 * @param visible the visibility of the image view
+	 * @param number the sequential number of the image view
 	 */
-	public void setImageThirdPath(byte[] imageArray) throws IOException {
-		imageThird.setImage(imageParser(imageArray));
+	public void setVisibilityImageView(boolean visible, int number) {
+		if (number < 0 || number > 3) throw new IllegalArgumentException("Number should be " +
+				"between 0 and 4");
+		getImageViewOfTheVbox(number).setVisible(visible);
 	}
 
 	/**
@@ -191,30 +206,6 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 */
 	public void setVisibleImageQuestion(boolean visible) {
 		this.imageQuestion.setVisible(visible);
-	}
-
-	/**
-	 * Setter for the visibility of the ImageView of the first one in the sequence
-	 * @param visible the visibility of the ImageView
-	 */
-	public void setVisibleImageFirst(boolean visible) {
-		this.imageFirst.setVisible(visible);
-	}
-
-	/**
-	 * Setter for the visibility of the ImageView of the second one in the sequence
-	 * @param visible the visibility of the ImageView
-	 */
-	public void setVisibleImageSecond(boolean visible) {
-		this.imageSecond.setVisible(visible);
-	}
-
-	/**
-	 * Setter for the visibility of the ImageView of the third on in the sequence
-	 * @param visible the visibility of the image view
-	 */
-	public void setVisibleImageThird(boolean visible) {
-		this.imageThird.setVisible(visible);
 	}
 
 	/**
