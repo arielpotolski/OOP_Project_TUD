@@ -2,9 +2,20 @@ package commons;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+
+
+@JsonSubTypes.Type(value = HighestConsumptionQuestion.class,
+		name = "HighestConsumptionQuestion")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class HighestConsumptionQuestion extends Question {
+	@JsonProperty("choice1")
 	private Activity choice1;
+	@JsonProperty("choice2")
 	private Activity choice2;
+	@JsonProperty("choice3")
 	private Activity choice3;
 
 	/**
@@ -20,9 +31,15 @@ public class HighestConsumptionQuestion extends Question {
 	}
 
 	/**
+	 * This constructor helps for create the Json Object
+	 */
+	public HighestConsumptionQuestion() {}
+
+	/**
 	 * gets the title of the first activity.
 	 * @return title of the first activity.
 	 */
+	@JsonProperty("title_1")
 	public String getActivity1Title() {
 		return this.choice1.getTitle();
 	}
@@ -31,6 +48,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the title of the second activity.
 	 * @return title of the second activity.
 	 */
+	@JsonProperty("title_2")
 	public String getActivity2Title() {
 		return this.choice2.getTitle();
 	}
@@ -39,6 +57,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the title of the third activity.
 	 * @return the title of the third activity.
 	 */
+	@JsonProperty("title_3")
 	public String getActivity3Title() {
 		return this.choice3.getTitle();
 	}
@@ -47,6 +66,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the imagePath of the first activity.
 	 * @return the imagePath of the first activity.
 	 */
+	@JsonProperty("image_path_1")
 	public String getActivity1ImagePath() {
 		return this.choice1.getImagePath();
 	}
@@ -55,6 +75,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the imagePath of the second activity.
 	 * @return the imagePath of the second activity.
 	 */
+	@JsonProperty("image_path_2")
 	public String getActivity2ImagePath() {
 		return this.choice2.getImagePath();
 	}
@@ -63,6 +84,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * gets the imagePath of the third activity.
 	 * @return the imagePath of the third activity.
 	 */
+	@JsonProperty("image_path_3")
 	public String getActivity3ImagePath() {
 		return this.choice3.getImagePath();
 	}
@@ -105,6 +127,7 @@ public class HighestConsumptionQuestion extends Question {
 	 *
 	 * @return the activity which has the highest consumption.
 	 */
+	@JsonProperty("correctAnswer")
 	public Activity getCorrectAnswer() {
 		long maxConsumption = Math.max(
 			this.choice1.getConsumptionInWh(),

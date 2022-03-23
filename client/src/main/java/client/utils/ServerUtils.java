@@ -73,6 +73,7 @@ public class ServerUtils {
 			.put(Entity.entity(player, APPLICATION_JSON), Player.class);
 	}
 
+
 	/**
 	 * Get a list of questions from the server
 	 *
@@ -87,7 +88,7 @@ public class ServerUtils {
 	}
 
 	/**
-	 * this method get a list of players for global leader board.
+	 * This method get a list of players for global leader board.
 	 *
 	 * @return a list of players.
 	 */

@@ -37,7 +37,7 @@
                   </Label>
                   <HBox alignment="BOTTOM_CENTER" prefHeight="100.0" prefWidth="906.0" spacing="225.0">
                      <children>
-                        <Button fx:id="playAgain" alignment="CENTER" mnemonicParsing="false" prefHeight="63.0" prefWidth="174.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="PlayAgain">
+                        <Button fx:id="playAgain" alignment="CENTER" mnemonicParsing="false" onAction="#jumpToPreGameScene" prefHeight="63.0" prefWidth="174.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="PlayAgain">
                            <font>
                               <Font name="Calibri Bold" size="24.0" />
                            </font>

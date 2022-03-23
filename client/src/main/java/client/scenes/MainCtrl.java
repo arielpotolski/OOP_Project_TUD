@@ -296,7 +296,6 @@ public class MainCtrl {
 	 * This method shows the intermediate scene.
 	 */
 	public void showIntermediateScene() {
-
 		intermediateSceneCtrl.setQuestionAnswer(numberOfQuestionAnswered);
 		intermediateSceneCtrl.setLabelPoint(player.getPoint());
 		intermediateSceneCtrl.setCurrentQuestionPointsEarned(currentPoint);

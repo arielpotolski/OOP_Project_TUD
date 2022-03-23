@@ -4,11 +4,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Activity {
 	private @Id @JsonProperty("id") String id;
 	@JsonProperty("title")

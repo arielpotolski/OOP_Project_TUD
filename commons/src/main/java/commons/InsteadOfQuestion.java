@@ -6,13 +6,26 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+
+@JsonSubTypes.Type(value = InsteadOfQuestion.class, name = "InsteadOfQuestion")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InsteadOfQuestion extends Question {
+	@JsonProperty("question_activity")
 	private Activity questionActivity;
+	@JsonProperty("answer1")
 	private Activity answer1;
+	@JsonProperty("real_coefficient_1")
 	private double realCoefficient1;
+	@JsonProperty("answer2")
 	private Activity answer2;
+	@JsonProperty("real_coefficient_2")
 	private double realCoefficient2;
+	@JsonProperty("answer3")
 	private Activity answer3;
+	@JsonProperty("real_coefficient_3")
 	private double realCoefficient3;
 
 	/**
@@ -123,6 +136,7 @@ public class InsteadOfQuestion extends Question {
 	 * Getter for the image path of the question activity
 	 * @return the image path of the question activity
 	 */
+	@JsonProperty("image_path_question")
 	public String getImagePathQuestion() {
 		return this.questionActivity.getImagePath();
 	}
