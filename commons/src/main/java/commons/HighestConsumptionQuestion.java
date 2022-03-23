@@ -1,5 +1,6 @@
 package commons;
 
+import java.util.Base64;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -72,6 +73,13 @@ public class HighestConsumptionQuestion extends Question {
 	}
 
 	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for choice 1
+	 */
+	public byte[] imageInByteArrayActivity1() {
+		return Base64.getDecoder().decode(choice1.getBase64Image());	}
+
+	/**
 	 * gets the imagePath of the second activity.
 	 * @return the imagePath of the second activity.
 	 */
@@ -81,12 +89,28 @@ public class HighestConsumptionQuestion extends Question {
 	}
 
 	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for choice 2
+	 */
+	public byte[] imageInByteArrayActivity2() {
+		return Base64.getDecoder().decode(choice2.getBase64Image());
+	}
+
+	/**
 	 * gets the imagePath of the third activity.
 	 * @return the imagePath of the third activity.
 	 */
 	@JsonProperty("image_path_3")
 	public String getActivity3ImagePath() {
 		return this.choice3.getImagePath();
+	}
+
+	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for choice 3
+	 */
+	public byte[] imageInByteArrayActivity3() {
+		return Base64.getDecoder().decode(choice3.getBase64Image());
 	}
 
 	/**
@@ -102,11 +126,11 @@ public class HighestConsumptionQuestion extends Question {
 		long maxConsumption;
 		int positionHighest;
 		maxConsumption = Math.max(
-			this.choice1.getConsumptionInWh(),
-			Math.max(
-				this.choice2.getConsumptionInWh(),
-				this.choice3.getConsumptionInWh()
-			)
+				this.choice1.getConsumptionInWh(),
+				Math.max(
+						this.choice2.getConsumptionInWh(),
+						this.choice3.getConsumptionInWh()
+				)
 		);
 
 		if (choice1.getConsumptionInWh() == maxConsumption) {
@@ -130,11 +154,11 @@ public class HighestConsumptionQuestion extends Question {
 	@JsonProperty("correctAnswer")
 	public Activity getCorrectAnswer() {
 		long maxConsumption = Math.max(
-			this.choice1.getConsumptionInWh(),
-			Math.max(
-				this.choice2.getConsumptionInWh(),
-				this.choice3.getConsumptionInWh()
-			)
+				this.choice1.getConsumptionInWh(),
+				Math.max(
+						this.choice2.getConsumptionInWh(),
+						this.choice3.getConsumptionInWh()
+				)
 		);
 
 		if (this.choice1.getConsumptionInWh() == maxConsumption) {
@@ -145,6 +169,11 @@ public class HighestConsumptionQuestion extends Question {
 		return this.choice3;
 	}
 
+	/**
+	 * Returns the energy consumption by a given title
+	 * @param title the title of the question
+	 * @return the energy consumption of the activity
+	 */
 	public long returnEnergyConsumption(String title) {
 		if (title.equals(this.choice1.getTitle())) {
 			return this.choice1.getConsumptionInWh();

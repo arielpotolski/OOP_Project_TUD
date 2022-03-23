@@ -1,11 +1,17 @@
 package commons;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.imageio.ImageIO;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -21,6 +27,8 @@ public class Activity {
 	private String imagePath;
 	@JsonProperty("source")
 	private String source;
+	@JsonProperty("base-64")
+	private String base64Image;
 
 	/**
 	 * An empty constructor
@@ -35,12 +43,14 @@ public class Activity {
 	 * @param imagePath the path to the image
 	 * @param source the source from where taken
 	 */
-	public Activity(String id, String title, long consumptionInWh, String imagePath, String source){
+	public Activity(String id, String title, long consumptionInWh,
+					String imagePath, String source) throws IOException {
 		this.id = id;
 		this.title = title;
 		this.imagePath = imagePath;
 		this.consumptionInWh = consumptionInWh;
 		this.source = source;
+		calculateBase64();
 	}
 
 	/**
@@ -81,6 +91,22 @@ public class Activity {
 	 */
 	public String getSource() {
 		return this.source;
+	}
+
+	/**
+	 * Getter for the image in Base64
+	 * @return the image in base64 encoding
+	 */
+	public String getBase64Image() {
+		return base64Image;
+	}
+
+	/**
+	 * Setter for the image in Base64
+	 * @param base64Image the new image
+	 */
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
 	}
 
 	/**
@@ -133,6 +159,45 @@ public class Activity {
 		do {
 			this.consumptionInWh = Math.round(Math.random() * 2 * this.consumptionInWh);
 		} while (this.consumptionInWh == prev || forbiddenValues.contains(this.consumptionInWh));
+	}
+
+	/**
+	 * Parses an image to byte array so that it could be more easily sent to the user
+	 * If the picture is not found automatically it is set to ImageNotFound
+	 * @return byte array containing information about the image
+	 * @throws IOException The exception if there is something wrong with the file
+	 */
+	public byte[] castImageToByteArray() throws IOException {
+		try {
+			String extension = "";
+
+			int i = imagePath.lastIndexOf('.');
+			if (i > 0) {
+				extension = imagePath.substring(i+1);
+			}
+			BufferedImage bufferedImage = ImageIO.read(new File(imagePath));
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, extension, bos);
+			return bos.toByteArray();
+		} catch (Exception err) {
+			BufferedImage bufferedImage =ImageIO
+					.read(Objects
+							.requireNonNull(Activity
+									.class
+									.getClassLoader()
+									.getResourceAsStream("IMGNotFound.jpg")));
+			ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			ImageIO.write(bufferedImage, ".jpg", bos);
+			return bos.toByteArray();
+		}
+	}
+
+	/**
+	 * Calculates and sets the image in base64
+	 * @throws IOException if there is a problem with the file
+	 */
+	private void calculateBase64() throws IOException {
+		this.base64Image = Base64.getEncoder().encodeToString(castImageToByteArray());
 	}
 
 	/**

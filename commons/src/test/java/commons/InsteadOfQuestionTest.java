@@ -1,7 +1,14 @@
 package commons;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Objects;
+
+import javax.imageio.ImageIO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -29,6 +36,9 @@ public class InsteadOfQuestionTest {
 					answer2Activity, answer3Activity);
 	private InsteadOfQuestion insteadOfQuestionFixed;
 	private InsteadOfQuestion insteadOfQuestionFixed1;
+
+	public InsteadOfQuestionTest() throws IOException {
+	}
 
 	@BeforeEach
 	void setUp() {
@@ -198,7 +208,7 @@ public class InsteadOfQuestionTest {
 	}
 
 	@Test
-	void singleCorrectAnswer() {
+	void singleCorrectAnswer() throws IOException {
 		int points = insteadOfQuestionRandomized.pointsEarned(1000, 1, 1.0);
 		points += insteadOfQuestionRandomized.pointsEarned(1000, 2, 1.0);
 		points += insteadOfQuestionRandomized.pointsEarned(1000, 3, 1.0);
@@ -219,5 +229,36 @@ public class InsteadOfQuestionTest {
 		points += insteadOfQuestionFixed.pointsEarned(1000, 2, 1.0);
 		points += insteadOfQuestionFixed.pointsEarned(1000, 3, 1.0);
 		assertEquals(1000, points);
+	}
+
+	@Test
+	void imageInByteArrayQuestion() throws IOException {
+		BufferedImage bufferedImage = ImageIO
+				.read(Objects
+						.requireNonNull(Activity
+								.class
+								.getClassLoader()
+								.getResourceAsStream("IMGNotFound.jpg")));
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, ".jpg", bos);
+
+		assertArrayEquals(bos.toByteArray(),
+				insteadOfQuestionRandomized.imageInByteArrayQuestion());
+	}
+
+	@Test
+	void imageInByteArray() throws IOException {
+		BufferedImage bufferedImage = ImageIO
+				.read(Objects
+						.requireNonNull(Activity
+								.class
+								.getClassLoader()
+								.getResourceAsStream("IMGNotFound.jpg")));
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, ".jpg", bos);
+
+		assertArrayEquals(bos.toByteArray(), insteadOfQuestionRandomized.imageInByteArray(1));
+		assertArrayEquals(bos.toByteArray(), insteadOfQuestionRandomized.imageInByteArray(2));
+		assertArrayEquals(bos.toByteArray(), insteadOfQuestionRandomized.imageInByteArray(3));
 	}
 }

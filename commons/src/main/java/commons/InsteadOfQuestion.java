@@ -2,6 +2,7 @@ package commons;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -41,10 +42,10 @@ public class InsteadOfQuestion extends Question {
 	 * @param answer3 initial answer activity at position 3
 	 */
 	public InsteadOfQuestion(
-		Activity questionActivity,
-		Activity answer1,
-		Activity answer2,
-		Activity answer3
+			Activity questionActivity,
+			Activity answer1,
+			Activity answer2,
+			Activity answer3
 	) {
 		this.questionActivity = questionActivity;
 		calculateRealCoefficients(answer1, answer2, answer3);
@@ -84,13 +85,13 @@ public class InsteadOfQuestion extends Question {
 	 * @param c3 the custom coefficient
 	 */
 	public InsteadOfQuestion(
-		Activity questionActivity,
-		Activity answer1,
-		Activity answer2,
-		Activity answer3,
-		double c1,
-		double c2,
-		double c3
+			Activity questionActivity,
+			Activity answer1,
+			Activity answer2,
+			Activity answer3,
+			double c1,
+			double c2,
+			double c3
 	) {
 		this.questionActivity = questionActivity;
 		this.answer1 = answer1;
@@ -133,6 +134,21 @@ public class InsteadOfQuestion extends Question {
 	}
 
 	/**
+	 * Useful for sending the information about a picture to the user
+	 * @param numberOfAnswer the sequential number of the answer for which the picture is
+	 *                       required. It should be between 1 and 3 inclusive
+	 * @return a byte array with information about the image for choice made
+	 */
+	public byte[] imageInByteArray(int numberOfAnswer) {
+		return switch (numberOfAnswer) {
+			case 1 -> Base64.getDecoder().decode(this.answer1.getBase64Image());
+			case 2 -> Base64.getDecoder().decode(this.answer2.getBase64Image());
+			case 3 -> Base64.getDecoder().decode(this.answer3.getBase64Image());
+			default -> throw new IllegalArgumentException("The input number should be 0 < n < 4");
+		};
+	}
+
+	/**
 	 * Getter for the image path of the question activity
 	 * @return the image path of the question activity
 	 */
@@ -142,13 +158,21 @@ public class InsteadOfQuestion extends Question {
 	}
 
 	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for the question
+	 */
+	public byte[] imageInByteArrayQuestion() {
+		return Base64.getDecoder().decode(this.questionActivity.getBase64Image());
+	}
+
+	/**
 	 * Method for the Label with the question that is asked
 	 * @return question activity in a user-friendly form as a string
 	 */
 	public String questionString() {
 		return "Instead of "
-			+ this.questionActivity.getTitle().toLowerCase(Locale.ROOT)
-			+ " you could: ";
+				+ this.questionActivity.getTitle().toLowerCase(Locale.ROOT)
+				+ " you could: ";
 	}
 
 	/**
@@ -164,13 +188,14 @@ public class InsteadOfQuestion extends Question {
 			case 2 -> this.answer2;
 			case 3 -> this.answer3;
 			default ->
-				throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
+					throw new IllegalArgumentException(
+							"This number of answers should be 0 < n < 4");
 		};
 
 		return current.getTitle() + " "
-			+ df.format(((double) current.getConsumptionInWh())
+				+ df.format(((double) current.getConsumptionInWh())
 				/ ((double) questionActivity.getConsumptionInWh()))
-			+ " times";
+				+ " times";
 	}
 
 	/**
@@ -178,24 +203,14 @@ public class InsteadOfQuestion extends Question {
 	 * @param numberOfAnswer the number of the answer given
 	 * @return the original coefficient of the answer as if it was correct
 	 */
-	private double correctAnswerCoefficient(long numberOfAnswer) {
-		double coefficient;
-
-		switch ((int) numberOfAnswer) {
-		case 1:
-			coefficient = realCoefficient1;
-			break;
-		case 2:
-			coefficient = realCoefficient2;
-			break;
-		case 3:
-			coefficient = realCoefficient3;
-			break;
-		default:
-			throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
-		}
-
-		return coefficient;
+	private double correctAnswerCoefficient(int numberOfAnswer) {
+		return switch (numberOfAnswer) {
+			case 1 -> this.realCoefficient1;
+			case 2 -> this.realCoefficient2;
+			case 3 -> this.realCoefficient3;
+			default -> throw new IllegalArgumentException(
+					"This number of answers should be 0 < n < 4");
+		};
 	}
 
 	//incorrect
@@ -204,11 +219,11 @@ public class InsteadOfQuestion extends Question {
 		double distanceFromOneOfCoefficient2 = 1 - this.realCoefficient2;
 		double distanceFromOneOfCoefficient3 = 1 - this.realCoefficient3;
 		double result = Math.min(
-			distanceFromOneOfCoefficient1,
-			Math.min(
-				distanceFromOneOfCoefficient2,
-				distanceFromOneOfCoefficient3
-			)
+				distanceFromOneOfCoefficient1,
+				Math.min(
+						distanceFromOneOfCoefficient2,
+						distanceFromOneOfCoefficient3
+				)
 		);
 
 		if (result == distanceFromOneOfCoefficient1) {
@@ -245,7 +260,7 @@ public class InsteadOfQuestion extends Question {
 		}
 		double currentCoefficient = ((double) answerActivity.getConsumptionInWh())
 				/ ((double) questionActivity.getConsumptionInWh());
-		if (Double.compare(currentCoefficient, correctAnswerCoefficient(answerGiven)) != 0) {
+		if (Double.compare(currentCoefficient, correctAnswerCoefficient((int) answerGiven)) != 0) {
 			return 0;
 		}
 		float pointsEarned = (float) progress * maxPoints;

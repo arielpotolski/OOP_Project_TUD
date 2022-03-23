@@ -1,13 +1,15 @@
-
-
-
-
-
 package commons;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Objects;
+
+import javax.imageio.ImageIO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class MCQuestionTest {
 
@@ -19,6 +21,8 @@ public class MCQuestionTest {
 	private MCQuestion mcQuestion2;
 	private final MCQuestion mcQuestion3 = new MCQuestion(activity);
 	private MCQuestion mcQuestion4;
+
+	public MCQuestionTest() throws IOException { }
 
 
 	@BeforeEach
@@ -153,5 +157,18 @@ public class MCQuestionTest {
 		Assertions.assertEquals(1000, mcQuestion4.pointsEarned(1000, 120, 1.0));
 	}
 
+	@Test
+	void imageInByteArrayQuestion() throws IOException {
+		BufferedImage bufferedImage = ImageIO
+				.read(Objects
+						.requireNonNull(MCQuestion
+								.class
+								.getClassLoader()
+								.getResourceAsStream("IMGNotFound.jpg")));
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, ".jpg", bos);
 
+		assertArrayEquals(bos.toByteArray(),
+				mcQuestion2.imageInByteArrayQuestion());
+	}
 }

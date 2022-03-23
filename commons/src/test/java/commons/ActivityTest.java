@@ -1,7 +1,13 @@
 package commons;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
+import java.util.Objects;
 
+import javax.imageio.ImageIO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +21,7 @@ class ActivityTest {
 	private Activity activity3;
 
 	@BeforeEach
-	void setUp(){
+	void setUp() throws IOException {
 		activity1 = new Activity("123", "title", 230, "pathpng", "some site");
 		activity2 = new Activity("123", "title", 230, "pathpng", "some site");
 		activity3 = new Activity("1233", "title", 230, "pathjpg", "some site");
@@ -111,4 +117,25 @@ class ActivityTest {
 				"source='some site'}";
 		assertEquals(expected, activity1.toString());
 	}
+
+	@Test
+	void getBase64Image() throws IOException {
+		BufferedImage bufferedImage = ImageIO
+				.read(Objects
+						.requireNonNull(Activity
+								.class
+								.getClassLoader()
+								.getResourceAsStream("IMGNotFound.jpg")));
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, ".jpg", bos);
+		String expected = Base64.getEncoder().encodeToString(bos.toByteArray());
+		assertEquals(expected, activity1.getBase64Image());
+	}
+
+	@Test
+	void setBase64Image() throws IOException {
+		activity1.setBase64Image("831895993c1vxvbk");
+		assertEquals("831895993c1vxvbk", activity1.getBase64Image());
+	}
+
 }

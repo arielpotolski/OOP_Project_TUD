@@ -1,5 +1,6 @@
 package commons;
 
+import java.util.Base64;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -41,6 +42,14 @@ public class EstimateQuestion extends Question {
 	@JsonProperty("activity_image_path")
 	public String getActivityImagePath() {
 		return this.activity.getImagePath();
+	}
+
+	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for the question
+	 */
+	public byte[] imageInByteArrayQuestion() {
+		return Base64.getDecoder().decode(activity.getBase64Image());
 	}
 
 	/**

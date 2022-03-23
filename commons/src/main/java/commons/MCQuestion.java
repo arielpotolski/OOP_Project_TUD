@@ -2,6 +2,7 @@ package commons;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +92,7 @@ public class MCQuestion extends Question{
 		HashMap<Integer, Long> result = new HashMap<>();
 		for (Integer i : this.order) {
 			result.put(i, this.order.indexOf(i) == 0 ?
-				this.activity.getConsumptionInWh() : generateAnswer());
+					this.activity.getConsumptionInWh() : generateAnswer());
 		}
 		return result;
 	}
@@ -184,6 +185,14 @@ public class MCQuestion extends Question{
 	}
 
 	/**
+	 * Useful for sending the information about a picture to the user
+	 * @return a byte array with information about the image for the question
+	 */
+	public byte[] imageInByteArrayQuestion() {
+		return Base64.getDecoder().decode(activity.getBase64Image());
+	}
+
+	/**
 	 * Getter for the order of the answers
 	 * @return the order of the answers
 	 */
@@ -236,9 +245,9 @@ public class MCQuestion extends Question{
 			return false;
 		MCQuestion that = (MCQuestion) o;
 		return this.answer1 == that.answer1
-			&& this.answer2 == that.answer2
-			&& this.answer3 == that.answer3
-			&& this.activity.equals(that.activity);
+				&& this.answer2 == that.answer2
+				&& this.answer3 == that.answer3
+				&& this.activity.equals(that.activity);
 	}
 
 	/**
