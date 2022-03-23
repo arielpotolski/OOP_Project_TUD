@@ -32,7 +32,12 @@ class UtilityTest {
 	@Test
 	public void contentsNotEqualSameTypeTest() {
 		var ys = (Collection) this.xs.clone();
-		ys.add(1);
+		ys.add("Foo");
+		assertFalse(contentsEqual(this.xs, ys));
+		ys.remove("Foo");
+		assertTrue(contentsEqual(this.xs, ys));
+		this.xs.add("Hello");
+		ys.add("World");
 		assertFalse(contentsEqual(this.xs, ys));
 	}
 
