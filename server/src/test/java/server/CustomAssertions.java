@@ -11,7 +11,7 @@ public class CustomAssertions {
 	 * @param re The ResponseEntity whose status code we want to assert.
 	 * @param s The status code we want to compare to.
 	 */
-	public static void assertResponseEquals(ResponseEntity re, HttpStatus s) {
+	public static void assertResponseEquals(HttpStatus s, ResponseEntity re) {
 		assertEquals(re.getStatusCode(), s);
 	}
 }

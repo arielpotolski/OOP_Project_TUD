@@ -34,7 +34,7 @@ public class QuestionSetControllerTest {
 	 */
 	@Test
 	void addActivitiesNull() {
-		assertResponseEquals(this.qsc.addActivities(null), HttpStatus.BAD_REQUEST);
+		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.addActivities(null));
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class QuestionSetControllerTest {
 	 */
 	@Test
 	void addActivitiesEmpty() {
-		assertResponseEquals(this.qsc.addActivities(new ArrayList<>()), HttpStatus.BAD_REQUEST);
+		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.addActivities(new ArrayList<>()));
 	}
 
 	/**
@@ -52,10 +52,10 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivitiesInvalidActivityId() {
 		assertResponseEquals(
+			HttpStatus.BAD_REQUEST,
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity(null, "42", 42, "42", "42")))
-			),
-			HttpStatus.BAD_REQUEST
+			)
 		);
 	}
 
@@ -66,10 +66,10 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivitiesInvalidActivityTitle() {
 		assertResponseEquals(
+			HttpStatus.BAD_REQUEST,
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity("42", null, 42, "42", "42")))
-			),
-			HttpStatus.BAD_REQUEST
+			)
 		);
 	}
 
@@ -80,10 +80,10 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivitiesInvalidActivitySource() {
 		assertResponseEquals(
+			HttpStatus.BAD_REQUEST,
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity("42", "42", 42, "42", null)))
-			),
-			HttpStatus.BAD_REQUEST
+			)
 		);
 	}
 
@@ -94,10 +94,10 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivitiesInvalidActivityConsumption() {
 		assertResponseEquals(
+			HttpStatus.BAD_REQUEST,
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity("42", "42", -1, "42", "42")))
-			),
-			HttpStatus.BAD_REQUEST
+			)
 		);
 	}
 
@@ -107,10 +107,10 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivitiesValid() {
 		assertResponseEquals(
+			HttpStatus.OK,
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(new Activity("42", "42", 42, "42", "42")))
-			),
-			HttpStatus.OK
+			)
 		);
 	}
 
@@ -120,13 +120,13 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivitiesValidMultiple() {
 		assertResponseEquals(
+			HttpStatus.OK,
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(
 					new Activity("42", "42", 42, "42", "42"),
 					new Activity("69", "69", 69, "69", "69")
 				))
-			),
-			HttpStatus.OK
+			)
 		);
 	}
 
@@ -137,13 +137,13 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivitiesInvalidMultiple() {
 		assertResponseEquals(
+			HttpStatus.BAD_REQUEST,
 			this.qsc.addActivities(
 				new ArrayList<>(List.of(
 					new Activity("42", "42", 42, "42", "42"),
 					new Activity("", "", -1, "", "")
 				))
-			),
-			HttpStatus.BAD_REQUEST
+			)
 		);
 	}
 
@@ -152,7 +152,7 @@ public class QuestionSetControllerTest {
 	 */
 	@Test
 	void addActivityNull() {
-		assertResponseEquals(this.qsc.addActivity(null), HttpStatus.BAD_REQUEST);
+		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.addActivity(null));
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class QuestionSetControllerTest {
 	 */
 	@Test
 	void addActivityInvalidZero() {
-		assertResponseEquals(this.qsc.addActivity(new Activity()), HttpStatus.BAD_REQUEST);
+		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.addActivity(new Activity()));
 	}
 
 	/**
@@ -169,8 +169,8 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivityInvalidId() {
 		assertResponseEquals(
-			this.qsc.addActivity(new Activity(null, "42", 42, "42", "42")),
-			HttpStatus.BAD_REQUEST
+			HttpStatus.BAD_REQUEST,
+			this.qsc.addActivity(new Activity(null, "42", 42, "42", "42"))
 		);
 	}
 
@@ -180,8 +180,8 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivityInvalidTitle() {
 		assertResponseEquals(
-			this.qsc.addActivity(new Activity("42", null, 42, "42", "42")),
-			HttpStatus.BAD_REQUEST
+			HttpStatus.BAD_REQUEST,
+			this.qsc.addActivity(new Activity("42", null, 42, "42", "42"))
 		);
 	}
 
@@ -191,8 +191,8 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivityInvalidSource() {
 		assertResponseEquals(
-			this.qsc.addActivity(new Activity("42", "42", 42, "42", null)),
-			HttpStatus.BAD_REQUEST
+			HttpStatus.BAD_REQUEST,
+			this.qsc.addActivity(new Activity("42", "42", 42, "42", null))
 		);
 	}
 
@@ -203,8 +203,8 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivityInvalidConsumption() {
 		assertResponseEquals(
-			this.qsc.addActivity(new Activity("42", "42", -1, "42", "42")),
-			HttpStatus.BAD_REQUEST
+			HttpStatus.BAD_REQUEST,
+			this.qsc.addActivity(new Activity("42", "42", -1, "42", "42"))
 		);
 	}
 
@@ -214,8 +214,8 @@ public class QuestionSetControllerTest {
 	@Test
 	void addActivityValid() {
 		assertResponseEquals(
-			this.qsc.addActivity(new Activity("42", "42", 42, "42", "42")),
-			HttpStatus.OK
+			HttpStatus.OK,
+			this.qsc.addActivity(new Activity("42", "42", 42, "42", "42"))
 		);
 	}
 
@@ -233,7 +233,7 @@ public class QuestionSetControllerTest {
 			new Activity("69", "69", 69, "69", "69")
 		));
 		assertEquals(this.qsc.getAll().size(), 2);
-		assertResponseEquals(this.qsc.deleteById("69"), HttpStatus.OK);
+		assertResponseEquals(HttpStatus.OK, this.qsc.deleteById("69"));
 		assertEquals(this.qsc.getAll().size(), 1);
 	}
 
@@ -248,7 +248,7 @@ public class QuestionSetControllerTest {
 			new Activity("69", "69", 69, "69", "69")
 		));
 		assertEquals(this.qsc.getAll().size(), 2);
-		assertResponseEquals(this.qsc.deleteById("1337"), HttpStatus.BAD_REQUEST);
+		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.deleteById("1337"));
 		assertEquals(this.qsc.getAll().size(), 2);
 	}
 
@@ -262,7 +262,7 @@ public class QuestionSetControllerTest {
 			new Activity("69", "69", 69, "69", "69")
 		));
 		assertEquals(this.qsc.getAll().size(), 2);
-		assertResponseEquals(this.qsc.deleteById(null), HttpStatus.BAD_REQUEST);
+		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.deleteById(null));
 		assertEquals(this.qsc.getAll().size(), 2);
 	}
 
@@ -275,7 +275,7 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertResponseEquals(this.qsc.getById(null), HttpStatus.BAD_REQUEST);
+		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.getById(null));
 	}
 
 	/**
@@ -287,7 +287,7 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertResponseEquals(this.qsc.getById("1337"), HttpStatus.BAD_REQUEST);
+		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.getById("1337"));
 	}
 
 	/**
@@ -299,6 +299,6 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertResponseEquals(this.qsc.getById("69"), HttpStatus.OK);
+		assertResponseEquals(HttpStatus.OK, this.qsc.getById("69"));
 	}
 }

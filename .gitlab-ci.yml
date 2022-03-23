@@ -11,7 +11,7 @@ build:
     # preserve coverage information in an easy-to-reach folder
     - mv build/reports/jacoco/aggregate/html ./coverage
     - mv build/reports/jacoco/aggregate/jacocoTestReport.xml ./coverage/report.xml
-    - echo `cat coverage/index.html | grep -o -E "Total[^%]+?%" | sed -E "s/<.*>//" | sed -E "s/Total/TestCoverage:/"`
+    - echo `sed -E 's/.*(Total[^%]+?%).*/\1/; s/<.*>//; s/Total/TestCoverage:/' coverage/index.html`
   artifacts:
     paths:
       - ./coverage

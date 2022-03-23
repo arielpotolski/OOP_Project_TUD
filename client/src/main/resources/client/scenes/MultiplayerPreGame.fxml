@@ -18,14 +18,14 @@
             <Font name="Calibri" size="29.0" />
          </font>
       </Label>
-      <TextField fx:id="uRLTextField" layoutX="265.0" layoutY="245.0" prefHeight="54.0" prefWidth="369.0" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="265.4" />
+      <TextField fx:id="serverURL" layoutX="265.0" layoutY="245.0" prefHeight="54.0" prefWidth="369.0" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="265.4" />
       <Label alignment="CENTER" layoutX="207.0" layoutY="317.0" text="Enter the Desired Nickname for the Game:" AnchorPane.leftAnchor="207.0" AnchorPane.rightAnchor="209.0">
          <font>
             <Font name="Calibri" size="28.0" />
          </font>
       </Label>
-      <TextField fx:id="nicknameTextField" layoutX="265.0" layoutY="369.0" prefHeight="54.0" prefWidth="369.0" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="265.4" />
-      <Button fx:id="enterButton" layoutX="322.0" layoutY="466.0" mnemonicParsing="false" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="ENTER" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="323.6">
+      <TextField fx:id="nickname" layoutX="265.0" layoutY="369.0" prefHeight="54.0" prefWidth="369.0" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="265.4" />
+      <Button fx:id="startButton" layoutX="322.0" layoutY="466.0" mnemonicParsing="false" onAction="#joinLobby" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="ENTER" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="323.6">
          <font>
             <Font name="Calibri Bold" size="42.0" />
          </font>

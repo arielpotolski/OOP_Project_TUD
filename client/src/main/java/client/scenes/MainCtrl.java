@@ -22,6 +22,7 @@ import client.utils.ServerUtils;
 import commons.EstimateQuestion;
 import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
+import commons.LobbyResponse;
 import commons.MCQuestion;
 import commons.Player;
 import commons.Question;
@@ -60,6 +61,9 @@ public class MainCtrl {
 	private SinglePlayerFinalScreenCtrl singlePlayerFinalSceneCtrl;
 	private Scene singlePlayerFinalScene;
 
+	private WaitingScreenCtrl waitingScreenCtrl;
+	private Scene waitingScreen;
+
 	private ServerUtils server;
 
 	private List<Question> questions;
@@ -83,15 +87,17 @@ public class MainCtrl {
 	 * @param globalLeaderBoard a pair of global leader board with parent
 	 * @param intermediateScene a pair of intermediate screen with parent
 	 * @param singlePlayerFinalScene a pair of final single player screen with parent.
+	 * @param waitingScreen a pair of waiting screen with parent
 	 */
 	public void initialize(Stage primaryStage,
 		Pair<SinglePlayerPreGameCtrl, Parent> singlePlayer,
 		Pair<MultiplayerPreGameCtrl, Parent> multiPlayer,
-		Pair<SplashCtrl,Parent> splash,
-		Pair<QuestionScreenSinglePlayerCtrl,Parent> questionScreenSinglePlayer,
-		Pair<GlobalLeaderboardScreenCtrl,Parent> globalLeaderBoard,
-		Pair<IntermediateSceneCtrl,Parent> intermediateScene,
-		Pair<SinglePlayerFinalScreenCtrl,Parent> singlePlayerFinalScene
+		Pair<SplashCtrl, Parent> splash,
+		Pair<QuestionScreenSinglePlayerCtrl, Parent> questionScreenSinglePlayer,
+		Pair<GlobalLeaderboardScreenCtrl, Parent> globalLeaderBoard,
+		Pair<IntermediateSceneCtrl, Parent> intermediateScene,
+		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
+		Pair<WaitingScreenCtrl, Parent> waitingScreen
 	) {
 		this.primaryStage = primaryStage;
 
@@ -115,6 +121,9 @@ public class MainCtrl {
 
 		singlePlayerFinalSceneCtrl = singlePlayerFinalScene.getKey();
 		this.singlePlayerFinalScene = new Scene(singlePlayerFinalScene.getValue());
+
+		waitingScreenCtrl = waitingScreen.getKey();
+		this.waitingScreen = new Scene(waitingScreen.getValue());
 
 		showSplashScreen();
 
@@ -143,6 +152,12 @@ public class MainCtrl {
 	public void showMultiplePlayersPreGameScreen() {
 		primaryStage.setTitle("Multiplayer");
 		primaryStage.setScene(multiplayerPreGameScreen);
+	}
+
+	public void showWaitingScreen(LobbyResponse firstResponse) {
+		primaryStage.setTitle("Waiting Lobby");
+		primaryStage.setScene(waitingScreen);
+		waitingScreenCtrl.beginActiveRefresh(firstResponse);
 	}
 
 	/**
@@ -187,6 +202,10 @@ public class MainCtrl {
 
 	public void setServer(ServerUtils server) {
 		this.server = server;
+	}
+
+	public ServerUtils getServer() {
+		return this.server;
 	}
 
 	/**
