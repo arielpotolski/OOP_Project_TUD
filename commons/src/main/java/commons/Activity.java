@@ -2,10 +2,7 @@ package commons;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
@@ -33,6 +30,9 @@ public class Activity {
 	private String source;
 	@JsonProperty("array-image") @Lob
 	private byte[] imageInArray;
+	private static final String ABSOLUTE_PATH_TO_ACTIVITIES_FOLDER = "file:\\C:\\Users\\" +
+			"dimit\\Documents\\University" +
+			"\\Year 1\\Q3\\Project\\activities\\";
 
 	/**
 	 * An empty constructor
@@ -180,10 +180,8 @@ public class Activity {
 				extension = imagePath.substring(i+1);
 			}
 			Scanner pathParts = new Scanner(imagePath).useDelimiter("/");
-			String path = "file:\\C:\\Users\\dimit\\Documents\\University" +
-					"\\Year 1\\Q3\\Project\\activities\\" + pathParts.next() + "\\" +
+			String path = ABSOLUTE_PATH_TO_ACTIVITIES_FOLDER + pathParts.next() + "\\" +
 					pathParts.next();
-			//InputStream is = new FileInputStream(new File(path));
 			URL uRLImage = new URL(path);
 			BufferedImage bufferedImage = ImageIO.read(uRLImage);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
