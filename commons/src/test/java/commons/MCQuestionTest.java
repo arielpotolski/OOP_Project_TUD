@@ -22,8 +22,7 @@ public class MCQuestionTest {
 	private final MCQuestion mcQuestion3 = new MCQuestion(activity);
 	private MCQuestion mcQuestion4;
 
-	public MCQuestionTest() throws IOException {
-	}
+	public MCQuestionTest() throws IOException { }
 
 
 	@BeforeEach
