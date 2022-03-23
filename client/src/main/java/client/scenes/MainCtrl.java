@@ -65,6 +65,9 @@ public class MainCtrl {
 	private WaitingScreenCtrl waitingScreenCtrl;
 	private Scene waitingScreen;
 
+	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
+	private Scene multiPlayerQuestionScreen;
+
 	private ServerUtils server;
 
 	private List<Question> questions;
@@ -89,6 +92,8 @@ public class MainCtrl {
 	 * @param intermediateScene a pair of intermediate screen with parent
 	 * @param singlePlayerFinalScene a pair of final single player screen with parent.
 	 * @param waitingScreen a pair of waiting screen with parent
+	 * @param multiPlayerQuestion a pair of multiplayer
+	 *          question screen with parent
 	 */
 	public void initialize(Stage primaryStage,
 		Pair<SinglePlayerPreGameCtrl, Parent> singlePlayer,
@@ -98,7 +103,8 @@ public class MainCtrl {
 		Pair<GlobalLeaderboardScreenCtrl, Parent> globalLeaderBoard,
 		Pair<IntermediateSceneCtrl, Parent> intermediateScene,
 		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
-		Pair<WaitingScreenCtrl, Parent> waitingScreen
+		Pair<WaitingScreenCtrl, Parent> waitingScreen,
+		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion
 	) {
 		this.primaryStage = primaryStage;
 
@@ -125,6 +131,9 @@ public class MainCtrl {
 
 		waitingScreenCtrl = waitingScreen.getKey();
 		this.waitingScreen = new Scene(waitingScreen.getValue());
+
+		this.multiplayerQuestionScreenCtrl = multiPlayerQuestion.getKey();
+		this.multiPlayerQuestionScreen = new Scene(multiPlayerQuestion.getValue());
 
 		showSplashScreen();
 
@@ -434,4 +443,12 @@ public class MainCtrl {
 		// Show the recent score.
 		showIntermediateScene();
 	}
+
+	public void showMultiPlayerQuestionScreen() {
+		player = multiplayerPreGameCtrl.getPlayer();
+		multiplayerQuestionScreenCtrl.setPlayer(player);
+		primaryStage.setTitle("MultiPlayerQuestion");
+		primaryStage.setScene(multiPlayerQuestionScreen);
+	}
+
 }

@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
+import commons.Player;
 
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
@@ -64,5 +65,9 @@ public class MultiplayerPreGameCtrl {
 			// TODO tell user that the name is not available or that something went wrong
 			throw new NotImplementedException();
 		}
+	}
+
+	public Player getPlayer(){
+		return new Player(nickname.getText());
 	}
 }

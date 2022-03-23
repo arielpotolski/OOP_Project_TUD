@@ -189,11 +189,9 @@ public class ServerUtils {
 		this.connection.send(new JoinMessage(this.name));
 	}
 
+	String webSocketServer = "ws://localhost:8080/websocket";
 
-
-
-
-	private StompSession session = connect("ws://localhost:8080/websocket");
+	private StompSession session = connect(webSocketServer);
 
 	private StompSession connect(String url){
 		var client = new StandardWebSocketClient();

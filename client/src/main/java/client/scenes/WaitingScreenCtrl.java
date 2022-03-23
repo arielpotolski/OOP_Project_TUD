@@ -6,6 +6,7 @@ import client.utils.ServerUtils;
 import commons.LobbyResponse;
 
 import com.google.inject.Inject;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -66,8 +67,12 @@ public class WaitingScreenCtrl {
 					return;
 				}
 			}
+
 			// Game has started.
-			gameBegins(port);
+			int finalPort = port;
+			Platform.runLater(() -> {
+				gameBegins(finalPort);
+			});
 		});
 		thread.start();
 	}
@@ -79,7 +84,8 @@ public class WaitingScreenCtrl {
 	private void gameBegins(int port) {
 		try {
 			this.serverUtils.makeConnection(port);
-			// TODO Move to game screen.
+			// Move to game screen.
+			mainCtrl.showMultiPlayerQuestionScreen();
 		} catch (Exception err) {
 			err.printStackTrace();
 		}

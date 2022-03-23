@@ -40,7 +40,7 @@ public class PlayerController {
 	}
 
 	@MessageMapping("/chat") //app/chat
-	@SendTo("/topic/receive")
+	@SendTo("/message/receive")
 	public MessageModel addMessage(MessageModel messageModel) {
 		return messageModel;
 	}

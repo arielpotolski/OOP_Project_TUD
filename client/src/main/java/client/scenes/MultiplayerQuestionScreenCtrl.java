@@ -177,7 +177,7 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		server.registerForMessages("/topic/receive", MessageModel.class, messageModel -> {
+		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
 			updateMessage(messageModel.getMessage());
 		});
 	}
