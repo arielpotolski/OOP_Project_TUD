@@ -2,13 +2,12 @@ package commons;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.function.Predicate;
+
 import static commons.Utility.nullOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -32,6 +31,9 @@ public class Activity {
 	private String source;
 	@JsonProperty("array-image") @Lob
 	private byte[] imageInArray;
+	private static final String ABSOLUTE_PATH_TO_ACTIVITIES_FOLDER = "file:\\C:\\Users\\" +
+			"dimit\\Documents\\University" +
+			"\\Year 1\\Q3\\Project\\activities\\";
 
 	/**
 	 * An empty constructor
@@ -178,7 +180,11 @@ public class Activity {
 			if (i > 0) {
 				extension = imagePath.substring(i+1);
 			}
-			BufferedImage bufferedImage = ImageIO.read(new File(imagePath));
+			Scanner pathParts = new Scanner(imagePath).useDelimiter("/");
+			String path = ABSOLUTE_PATH_TO_ACTIVITIES_FOLDER + pathParts.next() + "\\" +
+					pathParts.next();
+			URL uRLImage = new URL(path);
+			BufferedImage bufferedImage = ImageIO.read(uRLImage);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, extension, bos);
 			return bos.toByteArray();
@@ -217,11 +223,9 @@ public class Activity {
 	 * @return True if the activity is valid and false otherwise.
 	 */
 	public boolean isValid() {
-		Predicate<String> isNotNullOrEmpty = s -> s != null && !s.isEmpty();
-
-		return isNotNullOrEmpty.test(this.id)
-			&& isNotNullOrEmpty.test(this.source)
-			&& isNotNullOrEmpty.test(this.title)
+		return !nullOrEmpty(this.id)
+			&& !nullOrEmpty(this.source)
+			&& !nullOrEmpty(this.title)
 			&& this.getConsumptionInWh() >= 0;
 	}
 
@@ -251,4 +255,3 @@ public class Activity {
 		return Objects.hash(this.id, this.title, this.consumptionInWh, this.imagePath, this.source);
 	}
 }
-
