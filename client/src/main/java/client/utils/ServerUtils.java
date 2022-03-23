@@ -198,7 +198,7 @@ public class ServerUtils {
 	 * @param url the url of the server
 	 * @return the session
 	 */
-	private StompSession connect(String url){
+	private StompSession connect(String url) {
 		var client = new StandardWebSocketClient();
 		var stomp = new WebSocketStompClient(client);
 		stomp.setMessageConverter(new MappingJackson2MessageConverter());
@@ -221,7 +221,7 @@ public class ServerUtils {
 	 * @param consumer consumer of the object
 	 * @param <T> the generic type of the object that the server send to the client
 	 */
-	public <T> void registerForMessages(String dest, Class<T> type, Consumer<T> consumer){
+	public <T> void registerForMessages(String dest, Class<T> type, Consumer<T> consumer) {
 		session.subscribe(dest, new StompSessionHandlerAdapter() {
 			@Override
 			public Type getPayloadType(StompHeaders headers) {
@@ -240,7 +240,7 @@ public class ServerUtils {
 	 * @param dest the destination - server
 	 * @param o the object - client will send this object to the server.
 	 */
-	public void send(String dest, Object o){
+	public void send(String dest, Object o) {
 		session.send(dest,o);
 	}
 }

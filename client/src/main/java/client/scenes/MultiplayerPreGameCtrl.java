@@ -88,7 +88,7 @@ public class MultiplayerPreGameCtrl {
 		}
 	}
 
-	public Player getPlayer(){
+	public Player getPlayer() {
 		return new Player(nickname.getText());
 	}
 }

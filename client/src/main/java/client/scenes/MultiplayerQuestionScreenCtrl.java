@@ -138,7 +138,7 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 	 */
 	public void updateMessage(String message) {
 
-		if (Objects.equals(message, "cry")){
+		if (Objects.equals(message, "cry")) {
 			updateImage("/emojis/1f62d.png");
 			return;
 		} else if (Objects.equals(message, "wow")) {
@@ -170,7 +170,7 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 	 * sends the emojis to other clients.
 	 * @param url the path of the image
 	 */
-	public void updateImage(String url){
+	public void updateImage(String url) {
 		Image image = new Image(url);
 		ImageView imageView = new ImageView(image);
 		HBox hBox = new HBox();
