@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static commons.Utility.contentsEqual;
+import static commons.Utility.nullOrEmpty;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,5 +55,31 @@ class UtilityTest {
 	@Test
 	public void contentsEqualSameTypeTest() {
 		assertTrue(contentsEqual(this.ys, (Collection) this.ys.clone()));
+	}
+
+	@Test
+	public void nullOrEmptyStringTest() {
+		assertFalse(nullOrEmpty("Hunter2"));
+	}
+
+	@Test
+	public void nullOrEmptyEmptyStringTest() {
+		assertTrue(nullOrEmpty(""));
+	}
+
+	@Test
+	public void nullOrEmptyNullTest() {
+		assertTrue(nullOrEmpty((String) null));
+		assertTrue(nullOrEmpty((Collection) null));
+	}
+
+	@Test
+	public void nullOrEmptyEmptyCollectionTest() {
+		assertTrue(nullOrEmpty(new ArrayList()));
+	}
+
+	@Test
+	public void nullOrEmptyCollectionTest() {
+		assertFalse(nullOrEmpty(this.xs));
 	}
 }
