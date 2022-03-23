@@ -1,16 +1,17 @@
 package server.api;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+
 import commons.Player;
+import server.database.PlayerRepository;
+
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
-import server.database.PlayerRepository;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 public class PlayerRepositoryTest implements PlayerRepository {
 	Player firstPlayer = new Player("Dimitar");
@@ -157,7 +158,9 @@ public class PlayerRepositoryTest implements PlayerRepository {
 	}
 
 	@Override
-	public <S extends Player, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+	public <S extends Player, R> R findBy(Example<S> example,
+		Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+
 		return null;
 	}
 }

@@ -25,7 +25,7 @@ public class MessageModel {
 	}
 
 	public MessageModel() {}
-	
+
 	public String getMessage() {
 		return message;
 	}
