@@ -33,7 +33,7 @@ public class HighestConsumptionQuestion extends Question {
 	/**
 	 * This constructor helps for create the Json Object
 	 */
-	public HighestConsumptionQuestion(){}
+	public HighestConsumptionQuestion() {}
 
 	/**
 	 * gets the title of the first activity.

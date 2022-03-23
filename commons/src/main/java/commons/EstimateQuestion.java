@@ -23,9 +23,7 @@ public class EstimateQuestion extends Question {
 	/**
 	 * This empty constructor helps for create the Json Object
 	 */
-	public EstimateQuestion() {
-
-	}
+	public EstimateQuestion() {}
 
 	/**
 	 * Getter for the activity's title.

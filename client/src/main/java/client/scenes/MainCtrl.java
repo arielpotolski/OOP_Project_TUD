@@ -160,7 +160,7 @@ public class MainCtrl {
 		player = singlePlayerPreGameCtrl.getPlayer();
 
 		// This timeline will execute on another thread - run the count-down timer.
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
 			questionScreenSinglePlayerCtrl.decreaseProgress();
 		}));
 		timeLine.setCycleCount(10);
