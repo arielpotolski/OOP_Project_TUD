@@ -16,20 +16,24 @@
 
 package client.utils;
 
+import java.net.URI;
 import java.util.List;
 
 import commons.Player;
 import commons.Question;
 
 import com.google.inject.Inject;
+import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.UriBuilder;
 import org.glassfish.jersey.client.ClientConfig;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
 	private String server;
+	private Client client;
 
 	/**
 	 * Constructor for the connection between client and server.
@@ -39,6 +43,7 @@ public class ServerUtils {
 	@Inject
 	public ServerUtils(String server) {
 		this.server = server;
+		this.client = ClientBuilder.newClient();
 	}
 
 	/**
@@ -49,10 +54,15 @@ public class ServerUtils {
 	 */
 	public Player addPlayer(Player player) {
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(server).path("api/players/addPlayer")
+				.target(getServer()).path("api/players/addPlayer")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.put(Entity.entity(player, APPLICATION_JSON), Player.class);
+	}
+
+
+	private URI getServer() {
+		return UriBuilder.newInstance().scheme("http").host(this.server).port(8080).build();
 	}
 
 	/**
@@ -61,12 +71,10 @@ public class ServerUtils {
 	 * @return A list of questions from the server
 	 */
 	public List<Question> getQuestions() {
-		return ClientBuilder
-				.newClient(new ClientConfig())
-				.target(server)
-				.path("api/questions")
+		return this.client
+				.target(this.getServer())
+				.path("api/questions/")
 				.request(APPLICATION_JSON)
-				.accept(APPLICATION_JSON)
 				.get(new GenericType<>() {});
 	}
 
@@ -77,7 +85,7 @@ public class ServerUtils {
 	 */
 	public List<Player> getPlayers() {
 		return ClientBuilder.newClient(new ClientConfig())
-				.target(server).path("api/players")
+				.target(getServer()).path("api/players")
 				.request(APPLICATION_JSON)
 				.accept(APPLICATION_JSON)
 				.get(new GenericType<>() {});
