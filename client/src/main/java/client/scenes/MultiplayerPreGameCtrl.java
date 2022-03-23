@@ -6,10 +6,12 @@ import client.utils.ServerUtils;
 import commons.LobbyResponse;
 
 import com.google.inject.Inject;
+import jakarta.ws.rs.ProcessingException;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import org.apache.commons.lang3.NotImplementedException;
 
 public class MultiplayerPreGameCtrl {
 	private final ServerUtils server;
@@ -22,7 +24,7 @@ public class MultiplayerPreGameCtrl {
 	private TextField nickname;
 
 	@FXML
-	private Button startButton;
+	private Button enterButton;
 
 	/**
 	 * Constructor for multiplayer pre-game controller
@@ -56,7 +58,21 @@ public class MultiplayerPreGameCtrl {
 		String name = this.nickname.getText();
 
 		ServerUtils serverUtils = new ServerUtils(url);
-		Optional<LobbyResponse> maybeResponse = serverUtils.connectToLobby(name);
+
+		Optional<LobbyResponse> maybeResponse;
+		try {
+			maybeResponse = serverUtils.connectToLobby(name);
+		} catch (ProcessingException err) {
+			// Alert the user if sending the request failed.
+			Alert alert = new Alert(
+				Alert.AlertType.ERROR,
+				"Could not contact the server. Is your URL correct?",
+				ButtonType.OK
+			);
+			alert.showAndWait();
+			return;
+		}
+
 		if (maybeResponse.isPresent()) {
 			this.mainCtrl.setServer(serverUtils);
 			this.mainCtrl.showWaitingScreen(maybeResponse.get());

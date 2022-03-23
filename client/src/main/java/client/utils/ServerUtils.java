@@ -28,6 +28,7 @@ import commons.Question;
 import commons.messages.JoinMessage;
 
 import com.google.inject.Inject;
+import jakarta.ws.rs.ProcessingException;
 import jakarta.ws.rs.WebApplicationException;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -105,7 +106,7 @@ public class ServerUtils {
 	 * then the LobbyResponse is returned. Otherwise, `Optional.empty()`
 	 * is returned. This can happen if the name is already in use.
 	 */
-	public Optional<LobbyResponse> connectToLobby(String name) {
+	public Optional<LobbyResponse> connectToLobby(String name) throws ProcessingException {
 		try {
 			LobbyResponse response = this.client
 				.target(this.getServer())
