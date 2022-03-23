@@ -61,8 +61,13 @@ public class MultiplayerPreGameCtrl {
 			this.mainCtrl.setServer(serverUtils);
 			this.mainCtrl.showWaitingScreen(maybeResponse.get());
 		} else {
-			// TODO tell user that the name is not available or that something went wrong
-			throw new NotImplementedException();
+			// Tell user the name is already taken.
+			Alert alert = new Alert(
+				Alert.AlertType.INFORMATION,
+				"That name is already in use",
+				ButtonType.OK
+			);
+			alert.showAndWait();
 		}
 	}
 }
