@@ -36,6 +36,17 @@ public class MultiplayerPreGameCtrl {
 		this.server = server;
 	}
 
+	/**
+	 * This runs when the ENTER button is pressed.
+	 * Sends a GET /lobby/register/ request to the server which registers
+	 * this client's interest in the multiplayer game.
+	 *
+	 * If the client tries joining with a name that is already in the lobby it will
+	 * receive a 400 BAD REQUEST. They should be notified that the name is already in use.
+	 *
+	 * After a successful request, this method sets the server URL in the ServerUtils
+	 * of MainCtrl and moves to the waiting screen.
+	 */
 	public void joinLobby() {
 		String url = this.serverURL.getText();
 		String name = this.nickname.getText();

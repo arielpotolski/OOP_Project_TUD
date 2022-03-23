@@ -1,5 +1,8 @@
 package commons.messages;
 
+/**
+ * Sent by either the client or server when something unexpected happens.
+ */
 public class ErrorMessage extends Message {
 	@Override
 	public MessageType getType() {

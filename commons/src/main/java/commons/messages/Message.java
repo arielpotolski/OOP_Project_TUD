@@ -2,6 +2,9 @@ package commons.messages;
 
 import java.io.Serializable;
 
+/**
+ * Parent class for all TCP messages. `Connection.send()` and `Connection.receive()` use this.
+ */
 public abstract class Message implements Serializable {
 	/**
 	 * This method exists because Java does not allow you to switch on classes.
