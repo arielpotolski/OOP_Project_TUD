@@ -26,6 +26,7 @@ import client.scenes.QuestionScreenSinglePlayerCtrl;
 import client.scenes.SinglePlayerFinalScreenCtrl;
 import client.scenes.SinglePlayerPreGameCtrl;
 import client.scenes.SplashCtrl;
+import client.scenes.WaitingScreenCtrl;
 
 import com.google.inject.Injector;
 import javafx.application.Application;
@@ -56,9 +57,20 @@ public class Main extends Application {
 				"IntermediateScreen.fxml");
 		var singlePlayerFinalScene = FXML.load(SinglePlayerFinalScreenCtrl.class,"client","scenes",
 				"SinglePlayerFinalScreen.fxml");
+		var waitingScreen = FXML.load(WaitingScreenCtrl.class,
+				"client", "scenes", "WaitingScreen.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
-		mainCtrl.initialize(primaryStage, singlePlayer, multiPlayer,splashScreen,
-				singlePlayerQuestion,globalLeaderBoard,intermediateScene, singlePlayerFinalScene);
+		mainCtrl.initialize(
+			primaryStage,
+			singlePlayer,
+			multiPlayer,
+			splashScreen,
+			singlePlayerQuestion,
+			globalLeaderBoard,
+			intermediateScene,
+			singlePlayerFinalScene,
+			waitingScreen
+		);
 	}
 }
 	
