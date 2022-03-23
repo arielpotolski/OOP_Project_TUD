@@ -57,4 +57,8 @@ public class SinglePlayerPreGameCtrl {
 	public Player getPlayer() {
 		return this.player;
 	}
+
+	public void jumpToSplashScreen() {
+		this.mainCtrl.showSplashScreen();
+	}
 }
