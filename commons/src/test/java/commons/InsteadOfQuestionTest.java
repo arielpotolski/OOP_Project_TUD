@@ -269,6 +269,7 @@ public class InsteadOfQuestionTest {
 
 	@Test
 	void returnEnergyConsumption() {
-		assertEquals(30L, insteadOfQuestionFixed1.returnEnergyConsumption("Title for the answer 1"));
+		assertEquals(30L, insteadOfQuestionFixed1.returnEnergyConsumption(
+				"Title for the answer 1"));
 	}
 }
