@@ -2,6 +2,7 @@ package client.scenes;
 
 import java.util.Optional;
 
+import client.Main;
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
 
@@ -16,9 +17,6 @@ import javafx.scene.control.TextField;
 public class MultiplayerPreGameCtrl {
 	private final ServerUtils server;
 	private final MainCtrl mainCtrl;
-
-	@FXML
-	private TextField serverURL;
 
 	@FXML
 	private TextField nickname;
@@ -54,10 +52,8 @@ public class MultiplayerPreGameCtrl {
 	 * of MainCtrl and moves to the waiting screen.
 	 */
 	public void joinLobby() {
-		String url = this.serverURL.getText();
 		String name = this.nickname.getText();
-
-		ServerUtils serverUtils = new ServerUtils(url);
+		ServerUtils serverUtils = new ServerUtils(Main.serverHost);
 
 		Optional<LobbyResponse> maybeResponse;
 		try {
