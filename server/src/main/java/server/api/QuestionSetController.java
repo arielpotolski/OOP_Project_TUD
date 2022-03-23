@@ -6,6 +6,7 @@ import commons.Activity;
 import commons.Question;
 import server.QuestionSet;
 import server.database.ActivityRepository;
+import static commons.Utility.nullOrEmpty;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,8 +44,7 @@ public class QuestionSetController {
 	@PutMapping("/addActivities")
 	public ResponseEntity<List<Activity>> addActivities(@RequestBody List<Activity> activities) {
 		if (
-			activities == null
-			|| activities.isEmpty()
+			nullOrEmpty(activities)
 			|| !activities.parallelStream().allMatch(a -> a != null && a.isValid())
 		) {
 			return ResponseEntity.badRequest().build();
@@ -64,7 +64,7 @@ public class QuestionSetController {
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Activity> deleteById(@PathVariable("id") String id) {
-		if (id == null || id.isEmpty() || !this.repository.existsById(id)) {
+		if (nullOrEmpty(id) || !this.repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();
 		}
 		Activity activity = this.repository.findById(id).get();
@@ -75,7 +75,7 @@ public class QuestionSetController {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Activity> getById(@PathVariable("id") String id) {
-		if ("".equals(id) || !this.repository.existsById(id)) {
+		if (nullOrEmpty(id) || !this.repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();
 		}
 		return ResponseEntity.ok(this.repository.findById(id).get());
