@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
-import java.util.function.Predicate;
+
+import static commons.Utility.nullOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -222,11 +222,9 @@ public class Activity {
 	 * @return True if the activity is valid and false otherwise.
 	 */
 	public boolean isValid() {
-		Predicate<String> isNotNullOrEmpty = s -> s != null && !s.isEmpty();
-
-		return isNotNullOrEmpty.test(this.id)
-			&& isNotNullOrEmpty.test(this.source)
-			&& isNotNullOrEmpty.test(this.title)
+		return !nullOrEmpty(this.id)
+			&& !nullOrEmpty(this.source)
+			&& !nullOrEmpty(this.title)
 			&& this.getConsumptionInWh() >= 0;
 	}
 
@@ -256,4 +254,3 @@ public class Activity {
 		return Objects.hash(this.id, this.title, this.consumptionInWh, this.imagePath, this.source);
 	}
 }
-

@@ -4,6 +4,7 @@ import java.util.List;
 
 import commons.Player;
 import server.database.PlayerRepository;
+import static commons.Utility.nullOrEmpty;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +30,10 @@ public class PlayerController {
 
 	@PutMapping("/addPlayer")
 	public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
-		if (player == null || player.getNickName().equals("")) {
+		if (player == null || nullOrEmpty(player.getNickName())) {
 			return ResponseEntity.badRequest().build();
 		}
 		Player result = playerRepository.save(player);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-
 }

@@ -17,4 +17,22 @@ public class Utility {
 		ys.forEach(o -> yCount.put(o, yCount.getOrDefault(o, 0) + 1));
 		return xCount.equals(yCount);
 	}
+
+	/**
+	 * Check if a given collection is either null or empty.
+	 * @param xs The collection to check.
+	 * @return `true' if the collection is null or empty, `false' otherwise.
+	 */
+	public static boolean nullOrEmpty(Collection xs) {
+		return xs == null || xs.isEmpty();
+	}
+
+	/**
+	 * Check if a given string is either null or empty.
+	 * @param s The string to check.
+	 * @return `true' if the string is null or empty, `false' otherwise.
+	 */
+	public static boolean nullOrEmpty(String s) {
+		return s == null || s.isEmpty();
+	}
 }
