@@ -1,10 +1,9 @@
 package commons;
 
+import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 public class MessageModel {
 
@@ -15,15 +14,18 @@ public class MessageModel {
 	private String nickname;
 
 
+	/**
+	 * The constructor of the MessageModel
+	 * @param message the message when the client send
+	 * @param nickname the nickname of the player
+	 */
 	public MessageModel(String message, String nickname) {
 		this.message = message;
 		this.nickname = nickname;
 	}
 
-	public MessageModel(){
-
-	}
-
+	public MessageModel() {}
+	
 	public String getMessage() {
 		return message;
 	}
@@ -47,11 +49,6 @@ public class MessageModel {
 
 	@Override
 	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+		return Objects.hash(this.message,this.nickname);
 	}
 }

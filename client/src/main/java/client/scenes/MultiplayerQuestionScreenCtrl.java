@@ -131,6 +131,11 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 		server.send("/app/chat",new MessageModel("victory", player.getNickName()));
 	}
 
+	/**
+	 * This method will insert the message into the chat box after the client
+	 * sends the emojis to other clients.
+	 * @param message
+	 */
 	public void updateMessage(String message) {
 
 		if (Objects.equals(message, "cry")){
@@ -160,6 +165,11 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 		});
 	}
 
+	/**
+	 * This method will insert the emojis into the chat box after the client
+	 * sends the emojis to other clients.
+	 * @param url the path of the image
+	 */
 	public void updateImage(String url){
 		Image image = new Image(url);
 		ImageView imageView = new ImageView(image);

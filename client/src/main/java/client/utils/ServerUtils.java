@@ -193,6 +193,11 @@ public class ServerUtils {
 
 	private StompSession session = connect(webSocketServer);
 
+	/**
+	 * This method creates the connection between the client and the server
+	 * @param url the url of the server
+	 * @return the session
+	 */
 	private StompSession connect(String url){
 		var client = new StandardWebSocketClient();
 		var stomp = new WebSocketStompClient(client);
@@ -208,6 +213,14 @@ public class ServerUtils {
 		throw new IllegalArgumentException();
 	}
 
+	/**
+	 * This methods allow the server send the message to the client
+	 *
+	 * @param dest the client
+	 * @param type the type of the class
+	 * @param consumer consumer of the object
+	 * @param <T> the generic type of the object that the server send to the client
+	 */
 	public <T> void registerForMessages(String dest, Class<T> type, Consumer<T> consumer){
 		session.subscribe(dest, new StompSessionHandlerAdapter() {
 			@Override
@@ -222,6 +235,11 @@ public class ServerUtils {
 		});
 	}
 
+	/**
+	 * This method allows the client to send the message to server
+	 * @param dest the destination - server
+	 * @param o the object - client will send this object to the server.
+	 */
 	public void send(String dest, Object o){
 		session.send(dest,o);
 	}

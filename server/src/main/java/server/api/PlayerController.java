@@ -41,7 +41,11 @@ public class PlayerController {
 
 	@MessageMapping("/chat") //app/chat
 	@SendTo("/message/receive")
-	public MessageModel addMessage(MessageModel messageModel) {
+	/**
+	 * This method return the MessageModel to other clients after one client want to
+	 * send the message to other clients
+	 */
+	public MessageModel sendMessage(MessageModel messageModel) {
 		return messageModel;
 	}
 
