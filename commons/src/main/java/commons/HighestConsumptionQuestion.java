@@ -1,6 +1,5 @@
 package commons;
 
-import java.util.Base64;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -77,7 +76,8 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return a byte array with information about the image for choice 1
 	 */
 	public byte[] imageInByteArrayActivity1() {
-		return Base64.getDecoder().decode(choice1.getBase64Image());	}
+		return this.choice1.getImageInArray();
+	}
 
 	/**
 	 * gets the imagePath of the second activity.
@@ -93,7 +93,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return a byte array with information about the image for choice 2
 	 */
 	public byte[] imageInByteArrayActivity2() {
-		return Base64.getDecoder().decode(choice2.getBase64Image());
+		return this.choice2.getImageInArray();
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class HighestConsumptionQuestion extends Question {
 	 * @return a byte array with information about the image for choice 3
 	 */
 	public byte[] imageInByteArrayActivity3() {
-		return Base64.getDecoder().decode(choice3.getBase64Image());
+		return this.choice3.getImageInArray();
 	}
 
 	/**

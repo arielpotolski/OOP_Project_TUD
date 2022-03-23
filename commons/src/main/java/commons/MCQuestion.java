@@ -2,7 +2,6 @@ package commons;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -189,7 +188,7 @@ public class MCQuestion extends Question{
 	 * @return a byte array with information about the image for the question
 	 */
 	public byte[] imageInByteArrayQuestion() {
-		return Base64.getDecoder().decode(activity.getBase64Image());
+		return this.activity.getImageInArray();
 	}
 
 	/**
