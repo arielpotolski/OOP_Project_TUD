@@ -2,12 +2,14 @@ package commons;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.function.Predicate;
+import static commons.Utility.nullOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -30,9 +32,6 @@ public class Activity {
 	private String source;
 	@JsonProperty("array-image") @Lob
 	private byte[] imageInArray;
-	private static final String ABSOLUTE_PATH_TO_ACTIVITIES_FOLDER = "file:\\C:\\Users\\" +
-			"dimit\\Documents\\University" +
-			"\\Year 1\\Q3\\Project\\activities\\";
 
 	/**
 	 * An empty constructor
@@ -179,11 +178,7 @@ public class Activity {
 			if (i > 0) {
 				extension = imagePath.substring(i+1);
 			}
-			Scanner pathParts = new Scanner(imagePath).useDelimiter("/");
-			String path = ABSOLUTE_PATH_TO_ACTIVITIES_FOLDER + pathParts.next() + "\\" +
-					pathParts.next();
-			URL uRLImage = new URL(path);
-			BufferedImage bufferedImage = ImageIO.read(uRLImage);
+			BufferedImage bufferedImage = ImageIO.read(new File(imagePath));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, extension, bos);
 			return bos.toByteArray();
