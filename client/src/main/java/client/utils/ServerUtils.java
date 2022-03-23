@@ -74,10 +74,6 @@ public class ServerUtils {
 	}
 
 
-	private URI getServer() {
-		return UriBuilder.newInstance().scheme("http").host(this.server).port(8080).build();
-	}
-
 	/**
 	 * Get a list of questions from the server
 	 *
