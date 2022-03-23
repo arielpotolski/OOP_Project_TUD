@@ -121,7 +121,7 @@ public class HighestConsumptionQuestionTest{
 								.getClassLoader()
 								.getResourceAsStream("IMGNotFound.jpg")));
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, ".jpg", bos);
+		ImageIO.write(bufferedImage, "jpg", bos);
 
 		assertArrayEquals(bos.toByteArray(),
 				question.imageInByteArrayActivity1());
@@ -136,7 +136,7 @@ public class HighestConsumptionQuestionTest{
 								.getClassLoader()
 								.getResourceAsStream("IMGNotFound.jpg")));
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, ".jpg", bos);
+		ImageIO.write(bufferedImage, "jpg", bos);
 
 		assertArrayEquals(bos.toByteArray(),
 				question.imageInByteArrayActivity2());
@@ -151,7 +151,7 @@ public class HighestConsumptionQuestionTest{
 								.getClassLoader()
 								.getResourceAsStream("IMGNotFound.jpg")));
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, ".jpg", bos);
+		ImageIO.write(bufferedImage, "jpg", bos);
 
 		assertArrayEquals(bos.toByteArray(),
 				question.imageInByteArrayActivity3());

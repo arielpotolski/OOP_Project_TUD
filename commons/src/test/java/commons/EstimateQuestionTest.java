@@ -77,7 +77,7 @@ public class EstimateQuestionTest {
 								.getClassLoader()
 								.getResourceAsStream("IMGNotFound.jpg")));
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, ".jpg", bos);
+		ImageIO.write(bufferedImage, "jpg", bos);
 
 		assertArrayEquals(bos.toByteArray(),
 				question.imageInByteArrayQuestion());
