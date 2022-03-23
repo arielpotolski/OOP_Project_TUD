@@ -2,7 +2,7 @@ package commons;
 
 import java.util.Collection;
 
-public class Utilities {
+public class Utility {
 	/**
 	 * Check if two collections are equal in terms of content but not equal in terms of type.
 	 * @param xs The first collection to compare.

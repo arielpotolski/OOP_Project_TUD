@@ -5,7 +5,7 @@ import java.util.Set;
 
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
-import static commons.Utilities.contentsEqual;
+import static commons.Utility.contentsEqual;
 
 import com.google.inject.Inject;
 import javafx.application.Platform;
