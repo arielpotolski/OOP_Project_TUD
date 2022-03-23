@@ -3,9 +3,13 @@ package commons;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.function.Predicate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -175,7 +179,13 @@ public class Activity {
 			if (i > 0) {
 				extension = imagePath.substring(i+1);
 			}
-			BufferedImage bufferedImage = ImageIO.read(new File(imagePath));
+			Scanner pathParts = new Scanner(imagePath).useDelimiter("/");
+			String path = "file:\\C:\\Users\\dimit\\Documents\\University" +
+					"\\Year 1\\Q3\\Project\\activities\\" + pathParts.next() + "\\" +
+					pathParts.next();
+			//InputStream is = new FileInputStream(new File(path));
+			URL uRLImage = new URL(path);
+			BufferedImage bufferedImage = ImageIO.read(uRLImage);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, extension, bos);
 			return bos.toByteArray();
