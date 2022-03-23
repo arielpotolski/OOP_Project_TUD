@@ -1,6 +1,5 @@
 package commons;
 
-import java.util.Base64;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -49,7 +48,7 @@ public class EstimateQuestion extends Question {
 	 * @return a byte array with information about the image for the question
 	 */
 	public byte[] imageInByteArrayQuestion() {
-		return Base64.getDecoder().decode(activity.getBase64Image());
+		return activity.getImageInArray();
 	}
 
 	/**

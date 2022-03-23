@@ -4,16 +4,17 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Predicate;
+
+import static commons.Utility.nullOrEmpty;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.imageio.ImageIO;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -27,8 +28,8 @@ public class Activity {
 	private String imagePath;
 	@JsonProperty("source")
 	private String source;
-	@JsonProperty("base-64")
-	private String base64Image;
+	@JsonProperty("array-image") @Lob
+	private byte[] imageInArray;
 
 	/**
 	 * An empty constructor
@@ -50,7 +51,23 @@ public class Activity {
 		this.imagePath = imagePath;
 		this.consumptionInWh = consumptionInWh;
 		this.source = source;
-		calculateBase64();
+		this.imageInArray = castImageToByteArray();
+	}
+
+	/**
+	 * Getter for the image in a byte array
+	 * @return the image in a byte array
+	 */
+	public byte[] getImageInArray() {
+		return imageInArray;
+	}
+
+	/**
+	 * Setter for the image's byte array
+	 * @param imageInArray the new byte array for the image
+	 */
+	public void setImageInArray(byte[] imageInArray) {
+		this.imageInArray = imageInArray;
 	}
 
 	/**
@@ -91,22 +108,6 @@ public class Activity {
 	 */
 	public String getSource() {
 		return this.source;
-	}
-
-	/**
-	 * Getter for the image in Base64
-	 * @return the image in base64 encoding
-	 */
-	public String getBase64Image() {
-		return base64Image;
-	}
-
-	/**
-	 * Setter for the image in Base64
-	 * @param base64Image the new image
-	 */
-	public void setBase64Image(String base64Image) {
-		this.base64Image = base64Image;
 	}
 
 	/**
@@ -187,18 +188,11 @@ public class Activity {
 									.getClassLoader()
 									.getResourceAsStream("IMGNotFound.jpg")));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
-			ImageIO.write(bufferedImage, ".jpg", bos);
+			ImageIO.write(bufferedImage, "jpg", bos);
 			return bos.toByteArray();
 		}
 	}
 
-	/**
-	 * Calculates and sets the image in base64
-	 * @throws IOException if there is a problem with the file
-	 */
-	private void calculateBase64() throws IOException {
-		this.base64Image = Base64.getEncoder().encodeToString(castImageToByteArray());
-	}
 
 	/**
 	 * ToString method for an Activity
@@ -221,11 +215,9 @@ public class Activity {
 	 * @return True if the activity is valid and false otherwise.
 	 */
 	public boolean isValid() {
-		Predicate<String> isNotNullOrEmpty = s -> s != null && !s.isEmpty();
-
-		return isNotNullOrEmpty.test(this.id)
-			&& isNotNullOrEmpty.test(this.source)
-			&& isNotNullOrEmpty.test(this.title)
+		return !nullOrEmpty(this.id)
+			&& !nullOrEmpty(this.source)
+			&& !nullOrEmpty(this.title)
 			&& this.getConsumptionInWh() >= 0;
 	}
 
@@ -255,4 +247,3 @@ public class Activity {
 		return Objects.hash(this.id, this.title, this.consumptionInWh, this.imagePath, this.source);
 	}
 }
-

@@ -3,13 +3,13 @@ package commons;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
 import java.util.Objects;
 
 import javax.imageio.ImageIO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -119,7 +119,7 @@ class ActivityTest {
 	}
 
 	@Test
-	void getBase64Image() throws IOException {
+	void getImageInArray() throws IOException {
 		BufferedImage bufferedImage = ImageIO
 				.read(Objects
 						.requireNonNull(Activity
@@ -127,15 +127,21 @@ class ActivityTest {
 								.getClassLoader()
 								.getResourceAsStream("IMGNotFound.jpg")));
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, ".jpg", bos);
-		String expected = Base64.getEncoder().encodeToString(bos.toByteArray());
-		assertEquals(expected, activity1.getBase64Image());
+		ImageIO.write(bufferedImage, "jpg", bos);
+		assertArrayEquals(bos.toByteArray(), activity1.getImageInArray());
 	}
 
 	@Test
-	void setBase64Image() throws IOException {
-		activity1.setBase64Image("831895993c1vxvbk");
-		assertEquals("831895993c1vxvbk", activity1.getBase64Image());
+	void setImageInArray() throws IOException {
+		BufferedImage bufferedImage = ImageIO
+				.read(Objects
+						.requireNonNull(Activity
+								.class
+								.getClassLoader()
+								.getResourceAsStream("IMGNotFound.jpg")));
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, "jpg", bos);
+		activity1.setImageInArray(new byte[] {0, 1});
+		assertArrayEquals(new byte[] {0, 1}, activity1.getImageInArray());
 	}
-
 }

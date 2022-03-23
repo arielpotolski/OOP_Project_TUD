@@ -1,15 +1,19 @@
 package client.scenes;
 
 import java.util.Optional;
+import java.util.Set;
 
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
+import static commons.Utility.contentsEqual;
 
 import com.google.inject.Inject;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.AnchorPane;
 
 public class WaitingScreenCtrl {
@@ -26,11 +30,13 @@ public class WaitingScreenCtrl {
 	@FXML
 	private Label peopleInTheRoomLabel;
 
+	@FXML
+	private ListView<String> usersInLobbyView;
+
 	@Inject
 	public WaitingScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
 	}
-
 
 	/**
 	 * Start a thread that spams the server with GET /lobby/refresh/
@@ -55,7 +61,18 @@ public class WaitingScreenCtrl {
 					gameStarted = response.gameStarted();
 					port = response.tcpPort();
 
-					// TODO Update list of players in lobby with `response.playersInLobby()`.
+					/* Refresh the list of users in the lobby.  It's important to remember to clear
+					 * the list every loop as if you don't you end up with an infinitely growing
+					 * list of users.
+					 */
+					ObservableList<String> users = this.usersInLobbyView.getItems();
+					Set<String> newUsers = response.playersInLobby();
+					if (!contentsEqual(users, newUsers)) {
+						Platform.runLater(() -> {
+							users.removeAll(users);
+							users.addAll(newUsers);
+						});
+					}
 				}
 
 				// Sleep the thread for half a second to avoid a denial of service attack on the

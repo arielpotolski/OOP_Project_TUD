@@ -1,11 +1,14 @@
 package server.api;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import commons.Activity;
 import commons.Question;
 import server.QuestionSet;
 import server.database.ActivityRepository;
+import static commons.Utility.nullOrEmpty;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,30 +44,37 @@ public class QuestionSetController {
 	}
 	
 	@PutMapping("/addActivities")
-	public ResponseEntity<List<Activity>> addActivities(@RequestBody List<Activity> activities) {
+	public ResponseEntity<List<Activity>> addActivities(@RequestBody List<Activity> activities)
+			throws IOException {
 		if (
-			activities == null
-			|| activities.isEmpty()
+			nullOrEmpty(activities)
 			|| !activities.parallelStream().allMatch(a -> a != null && a.isValid())
 		) {
 			return ResponseEntity.badRequest().build();
 		}
-		List<Activity> result = this.repository.saveAll(activities);
+		List<Activity> res = new ArrayList<>();
+		for (Activity activity : activities) {
+			res.add(new Activity(activity.getId(), activity.getTitle(),
+					activity.getConsumptionInWh(), activity.getImagePath(), activity.getSource()));
+		}
+		List<Activity> result = this.repository.saveAll(res);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@PutMapping("/addActivity")
-	public ResponseEntity<Activity> addActivity(@RequestBody Activity activity) {
+	public ResponseEntity<Activity> addActivity(@RequestBody Activity activity) throws IOException {
 		if (activity == null || !activity.isValid()) {
 			return ResponseEntity.badRequest().build();
 		}
-		Activity result = this.repository.save(activity);
+		Activity res = new Activity(activity.getId(), activity.getTitle(),
+				activity.getConsumptionInWh(), activity.getImagePath(), activity.getSource());
+		Activity result = this.repository.save(res);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Activity> deleteById(@PathVariable("id") String id) {
-		if (id == null || id.isEmpty() || !this.repository.existsById(id)) {
+		if (nullOrEmpty(id) || !this.repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();
 		}
 		Activity activity = this.repository.findById(id).get();
@@ -75,7 +85,7 @@ public class QuestionSetController {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Activity> getById(@PathVariable("id") String id) {
-		if ("".equals(id) || !this.repository.existsById(id)) {
+		if (nullOrEmpty(id) || !this.repository.existsById(id)) {
 			return ResponseEntity.badRequest().build();
 		}
 		return ResponseEntity.ok(this.repository.findById(id).get());
