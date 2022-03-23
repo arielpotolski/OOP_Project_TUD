@@ -34,7 +34,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding a null list of activities results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivitiesNull() {
+	void addActivitiesNull() throws IOException {
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.addActivities(null));
 	}
 
@@ -42,7 +42,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding an empty list of activities results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivitiesEmpty() {
+	void addActivitiesEmpty() throws IOException {
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.addActivities(new ArrayList<>()));
 	}
 
@@ -152,7 +152,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding a null results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivityNull() {
+	void addActivityNull() throws IOException {
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.addActivity(null));
 	}
 
@@ -160,7 +160,7 @@ public class QuestionSetControllerTest {
 	 * Assert that adding a zeroed activity results in a 400 BAD REQUEST.
 	 */
 	@Test
-	void addActivityInvalidZero() {
+	void addActivityInvalidZero() throws IOException {
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.addActivity(new Activity()));
 	}
 

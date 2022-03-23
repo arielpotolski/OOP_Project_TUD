@@ -240,7 +240,7 @@ public class InsteadOfQuestionTest {
 								.getClassLoader()
 								.getResourceAsStream("IMGNotFound.jpg")));
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, ".jpg", bos);
+		ImageIO.write(bufferedImage, "jpg", bos);
 
 		assertArrayEquals(bos.toByteArray(),
 				insteadOfQuestionRandomized.imageInByteArrayQuestion());
@@ -255,7 +255,7 @@ public class InsteadOfQuestionTest {
 								.getClassLoader()
 								.getResourceAsStream("IMGNotFound.jpg")));
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();
-		ImageIO.write(bufferedImage, ".jpg", bos);
+		ImageIO.write(bufferedImage, "jpg", bos);
 
 		assertArrayEquals(bos.toByteArray(), insteadOfQuestionRandomized.imageInByteArray(1));
 		assertArrayEquals(bos.toByteArray(), insteadOfQuestionRandomized.imageInByteArray(2));

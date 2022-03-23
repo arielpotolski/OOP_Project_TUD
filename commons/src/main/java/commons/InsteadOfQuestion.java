@@ -2,7 +2,6 @@ package commons;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -141,9 +140,9 @@ public class InsteadOfQuestion extends Question {
 	 */
 	public byte[] imageInByteArray(int numberOfAnswer) {
 		return switch (numberOfAnswer) {
-			case 1 -> Base64.getDecoder().decode(this.answer1.getBase64Image());
-			case 2 -> Base64.getDecoder().decode(this.answer2.getBase64Image());
-			case 3 -> Base64.getDecoder().decode(this.answer3.getBase64Image());
+			case 1 -> this.answer1.getImageInArray();
+			case 2 -> this.answer2.getImageInArray();
+			case 3 -> this.answer3.getImageInArray();
 			default -> throw new IllegalArgumentException("The input number should be 0 < n < 4");
 		};
 	}
@@ -162,7 +161,7 @@ public class InsteadOfQuestion extends Question {
 	 * @return a byte array with information about the image for the question
 	 */
 	public byte[] imageInByteArrayQuestion() {
-		return Base64.getDecoder().decode(this.questionActivity.getBase64Image());
+		return this.questionActivity.getImageInArray();
 	}
 
 	/**
