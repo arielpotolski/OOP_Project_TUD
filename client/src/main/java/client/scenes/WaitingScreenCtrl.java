@@ -14,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 public class WaitingScreenCtrl {
 	private MainCtrl mainCtrl;
 	private ServerUtils serverUtils;
+	private static final long REFRESH_DELAY = 500;
 
 	@FXML
 	private AnchorPane peopleInTheLeaderBoardPane;
@@ -54,6 +55,15 @@ public class WaitingScreenCtrl {
 					port = response.tcpPort();
 
 					// TODO Update list of players in lobby with `response.playersInLobby()`.
+				}
+
+				// Sleep the thread for half a second to avoid a denial of service attack on the
+				// server.
+				try {
+					Thread.sleep(REFRESH_DELAY);
+				} catch (InterruptedException err) {
+					err.printStackTrace();
+					return;
 				}
 			}
 			// Game has started.
