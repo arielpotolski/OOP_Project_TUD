@@ -25,7 +25,7 @@ public class InsteadOfQuestionTest {
 	private final Activity answer2ActivityFaked = new Activity("00-test-answer-2",
 			"Title for the answer 2", 10, "pathToImageAnswer2", "someSource");
 	private final Activity answer3Activity = new Activity("00-test-answer-3",
-			"Title for the answer 3", 4, "pathToImageAnswer3", "someSource");
+			"Title for the answer 3", 30, "pathToImageAnswer3", "someSource");
 	private final Activity answer3ActivityFaked = new Activity("00-test-answer-3",
 			"Title for the answer 3", 4, "pathToImageAnswer3", "someSource");
 	private final Activity activity = new Activity("00-test",
@@ -260,5 +260,15 @@ public class InsteadOfQuestionTest {
 		assertArrayEquals(bos.toByteArray(), insteadOfQuestionRandomized.imageInByteArray(1));
 		assertArrayEquals(bos.toByteArray(), insteadOfQuestionRandomized.imageInByteArray(2));
 		assertArrayEquals(bos.toByteArray(), insteadOfQuestionRandomized.imageInByteArray(3));
+	}
+
+	@Test
+	void correctAnswer() {
+		assertEquals(answer1ActivityFaked, insteadOfQuestionFixed1.correctAnswer());
+	}
+
+	@Test
+	void returnEnergyConsumption() {
+		assertEquals(30L, insteadOfQuestionFixed1.returnEnergyConsumption("Title for the answer 1"));
 	}
 }
