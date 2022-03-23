@@ -189,24 +189,14 @@ public class InsteadOfQuestion extends Question {
 	 * @param numberOfAnswer the number of the answer given
 	 * @return the original coefficient of the answer as if it was correct
 	 */
-	private double correctAnswerCoefficient(long numberOfAnswer) {
-		double coefficient;
-
-		switch ((int) numberOfAnswer) {
-		case 1:
-			coefficient = realCoefficient1;
-			break;
-		case 2:
-			coefficient = realCoefficient2;
-			break;
-		case 3:
-			coefficient = realCoefficient3;
-			break;
-		default:
-			throw new IllegalArgumentException("This number of answers should be 0 < n < 4");
-		}
-
-		return coefficient;
+	private double correctAnswerCoefficient(int numberOfAnswer) {
+		return switch (numberOfAnswer) {
+			case 1 -> this.realCoefficient1;
+			case 2 -> this.realCoefficient2;
+			case 3 -> this.realCoefficient3;
+			default -> throw new IllegalArgumentException(
+					"This number of answers should be 0 < n < 4");
+		};
 	}
 
 	//incorrect
@@ -256,7 +246,7 @@ public class InsteadOfQuestion extends Question {
 		}
 		double currentCoefficient = ((double) answerActivity.getConsumptionInWh())
 				/ ((double) questionActivity.getConsumptionInWh());
-		if (Double.compare(currentCoefficient, correctAnswerCoefficient(answerGiven)) != 0) {
+		if (Double.compare(currentCoefficient, correctAnswerCoefficient((int) answerGiven)) != 0) {
 			return 0;
 		}
 		float pointsEarned = (float) progress * maxPoints;
