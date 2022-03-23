@@ -2,11 +2,14 @@ package server.api;
 
 import java.util.List;
 
+import commons.MessageModel;
 import commons.Player;
 import server.database.PlayerRepository;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +37,12 @@ public class PlayerController {
 		}
 		Player result = playerRepository.save(player);
 		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+
+	@MessageMapping("/chat") //app/chat
+	@SendTo("/topic/receive")
+	public MessageModel addMessage(MessageModel messageModel) {
+		return messageModel;
 	}
 
 }
