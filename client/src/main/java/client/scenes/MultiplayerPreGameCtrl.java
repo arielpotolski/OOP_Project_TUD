@@ -36,6 +36,10 @@ public class MultiplayerPreGameCtrl {
 		this.server = server;
 	}
 
+	public void jumpToSplashScreen() {
+		this.mainCtrl.showSplashScreen();
+	}
+
 	/**
 	 * This runs when the ENTER button is pressed.
 	 * Sends a GET /lobby/register/ request to the server which registers

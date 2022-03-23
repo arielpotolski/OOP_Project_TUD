@@ -4,31 +4,62 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.SinglePlayerPreGameCtrl">
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="185.0" layoutY="82.0" prefHeight="85.0" prefWidth="530.0" text="Welcome to Single Player Mode" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="185.0" AnchorPane.rightAnchor="184.60000000000002">
-         <font>
-            <Font name="Calibri Bold" size="40.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" layoutX="184.0" layoutY="183.0" prefHeight="54.0" prefWidth="530.0" text="Enter the URL for the Server with Questions:" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font name="Calibri" size="29.0" />
-         </font>
-      </Label>
-      <TextField fx:id="serverURL" layoutX="265.0" layoutY="245.0" prefHeight="54.0" prefWidth="369.0" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="265.4" />
-      <Label alignment="CENTER" layoutX="211.0" layoutY="317.0" text="Enter the Desired Nickname for the Game" AnchorPane.leftAnchor="211.0" AnchorPane.rightAnchor="212.2">
-         <font>
-            <Font name="Calibri" size="28.0" />
-         </font>
-      </Label>
-      <TextField fx:id="nickname" layoutX="265.0" layoutY="369.0" prefHeight="54.0" prefWidth="369.0" AnchorPane.leftAnchor="265.0" AnchorPane.rightAnchor="265.4" />
-      <Button fx:id="startButton" layoutX="322.0" layoutY="466.0" mnemonicParsing="false" onAction="#changeToQuestionScreen" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="START" AnchorPane.leftAnchor="322.0" AnchorPane.rightAnchor="323.6">
-         <font>
-            <Font name="Calibri Bold" size="42.0" />
-         </font>
-      </Button>
+      <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="691.0" spacing="35.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="691.0">
+                     <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="85.0" prefWidth="558.0" text="Welcome to Single Player Mode" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="Calibri Bold" size="40.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <Label alignment="CENTER" prefHeight="54.0" prefWidth="530.0" text="Enter the URL for the Server with Questions:" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Calibri" size="29.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="serverURL" prefHeight="54.0" prefWidth="369.0" />
+                  <Label alignment="CENTER" text="Enter the Desired Nickname for the Game">
+                     <font>
+                        <Font name="Calibri" size="28.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="nickname" prefHeight="54.0" prefWidth="369.0" />
+                  <Button fx:id="startButton" mnemonicParsing="false" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="START">
+                     <font>
+                        <Font name="Calibri Bold" size="42.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="602.0" prefWidth="110.0">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-194.0" layoutY="-12.0" onMouseClicked="#jumpToSplashScreen" points="240.800048828125, 152.79998779296875, 220.1999969482422, 167.0, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label alignment="CENTER" layoutX="25.0" layoutY="151.0" onMouseClicked="#jumpToSplashScreen" text="back">
+                           <font>
+                              <Font name="Calibri Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

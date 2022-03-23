@@ -51,12 +51,12 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox alignment="BOTTOM_CENTER" prefHeight="602.0" prefWidth="110.0">
+            <VBox alignment="BOTTOM_RIGHT" prefHeight="602.0" prefWidth="110.0">
                <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
+                  <Pane prefHeight="200.0" prefWidth="110.0">
                      <children>
-                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-195.0" layoutY="-75.0" onMouseClicked="#jumpToSplashScreen" points="240.800048828125, 152.79998779296875, 220.1999969482422, 167.0, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Label alignment="CENTER" layoutX="24.0" layoutY="88.0" onMouseClicked="#jumpToSplashScreen" text="back">
+                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-194.0" layoutY="-12.0" points="240.800048828125, 152.79998779296875, 220.1999969482422, 167.0, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label alignment="CENTER" layoutX="25.0" layoutY="151.0" onMouseClicked="#jumpToSplashScreen" text="back">
                            <font>
                               <Font name="Calibri Bold" size="18.0" />
                            </font>
