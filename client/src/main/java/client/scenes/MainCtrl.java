@@ -596,7 +596,7 @@ public class MainCtrl {
 			questionScreenSinglePlayerCtrl.setEstimateAnswerLabel(
 					message +
 					" The correct answer is: " +
-					estimateQuestion.getActivity().getConsumptionInWh());
+					String.valueOf(estimateQuestion.getActivity().getConsumptionInWh()));
 
 			if(textField != null)
 				textField.clear();
