@@ -58,11 +58,21 @@ public class IntermediateSceneCtrl implements Initializable {
 		this.timeUntilNextQuestion.setStyle("-fx-accent: #00FF00");
 	}
 
-	public void decreaseProgress() {
-		this.progress -= 0.1;
+	/**
+	 * 	Decreases the progess in the progress bar by a certain, given, amount
+	 *
+	 * @param amount The amount of progress that the bar loses
+	 */
+	public void decreaseProgress(double amount) {
+		this.progress -= amount;
 		this.timeUntilNextQuestion.setProgress(this.progress);
 	}
 
+	/**
+	 * 	Getter method for progress of the progress bar
+	 *
+	 * @return the progress
+	 */
 	public double getProgress() {
 		return this.progress;
 	}

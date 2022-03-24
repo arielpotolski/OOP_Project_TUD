@@ -20,13 +20,7 @@ import java.io.IOException;
 import java.util.List;
 
 import client.utils.ServerUtils;
-import commons.EstimateQuestion;
-import commons.HighestConsumptionQuestion;
-import commons.InsteadOfQuestion;
-import commons.LobbyResponse;
-import commons.MCQuestion;
-import commons.Player;
-import commons.Question;
+import commons.*;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -171,15 +165,23 @@ public class MainCtrl {
 			return;
 		}
 
+		clearButtons();	// change back the color of the buttons
+		questionScreenSinglePlayerCtrl.setInputButton(null);
+		questionScreenSinglePlayerCtrl.setInputText(null);
+
 		// Assign the player variable that got from
 		// SinglePlayerPreGame to player variable in MainCtrl
 		player = singlePlayerPreGameCtrl.getPlayer();
 
 		// This timeline will execute on another thread - run the count-down timer.
 		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			questionScreenSinglePlayerCtrl.decreaseProgress();
+			questionScreenSinglePlayerCtrl.decreaseProgress(0.1f);
 		}));
 		timeLine.setCycleCount(10);
+		timeLine.setOnFinished(_e -> {
+			updatePoints(questionScreenSinglePlayerCtrl.getInputButton(),
+						questionScreenSinglePlayerCtrl.getInputText());
+		});
 		timeLine.play();
 
 		primaryStage.setTitle("Question");
@@ -198,6 +200,7 @@ public class MainCtrl {
 		} else if (question instanceof InsteadOfQuestion) {
 			setUpInsteadQuestion((InsteadOfQuestion) question);
 		}
+
 		primaryStage.setScene(questionScreenSinglePlayer);
 	}
 
@@ -234,6 +237,7 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
 		questionScreenSinglePlayerCtrl.setLabelButton2(Long.toString(question.getAnswer2()));
 		questionScreenSinglePlayerCtrl.setLabelButton3(Long.toString(question.getAnswer3()));
+		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
 	}
 
 	/**
@@ -262,6 +266,7 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(3),
 				2);
 		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 2);
+		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
 	}
 
 	/**
@@ -287,6 +292,7 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(
 				question.imageInByteArrayActivity3(), 2);
 		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 2);
+		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
 	}
 
 	/**
@@ -314,6 +320,7 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setVisibleButton1(false);
 		questionScreenSinglePlayerCtrl.setVisibleButton2(false);
 		questionScreenSinglePlayerCtrl.setVisibleButton3(false);
+		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
 	}
 
 	/**
@@ -346,13 +353,15 @@ public class MainCtrl {
 		primaryStage.setScene(intermediateScene);
 
 		// This timeline will execute on another thread - run the count-down timer.
+		intermediateSceneCtrl.setProgress(1f);
+
 		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			intermediateSceneCtrl.decreaseProgress();
+			intermediateSceneCtrl.decreaseProgress(0.25);
 		}));
-		timeLine.setCycleCount(10);
+		timeLine.setCycleCount(4);
 		timeLine.play();
 		timeLine.setOnFinished(_e -> {
-			intermediateSceneCtrl.setProgress(1); // Reset the progress bar after
+			questionScreenSinglePlayerCtrl.setProgress(1); // Reset the progress bar after
 			try {
 				showQuestionScreenSinglePlayer();     // the timeline finish its cycle.
 			} catch (IOException err) {
@@ -371,6 +380,7 @@ public class MainCtrl {
 		singlePlayerFinalSceneCtrl.addPlayer(player);
 		primaryStage.setTitle("Final Score");
 		primaryStage.setScene(singlePlayerFinalScene);
+		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
 	}
 
 
@@ -379,12 +389,22 @@ public class MainCtrl {
 	 * @param button the button
 	 * @param textField the text field.
 	 */
-	public void showAnswer(Button button, TextField textField) {
-		timeLine.stop(); // Stop the count-down timer.
+	public void updatePoints(Button button, TextField textField) {
+		// in case the player doesn't provide an answer in time
+		if(button == null && textField == null) {
+			currentPoint = 0;
+			questionScreenSinglePlayerCtrl.setProgress(1);
+
+			showAnswer();
+
+			return;
+		}
 
 		// Get the time the player used for guessing the answer
-		double timePassed = questionScreenSinglePlayerCtrl.getProgress();
+		double timePassed = questionScreenSinglePlayerCtrl.getTimeStamp();
+
 		if (question instanceof MCQuestion) {
+			System.out.println(1);
 			MCQuestion multipleChoiceQuestion = (MCQuestion) question;
 
 			// The point which the player will receive after answered the question
@@ -401,17 +421,22 @@ public class MainCtrl {
 				numberOfCorrectAnswered++;
 			}
 		} else if (question instanceof HighestConsumptionQuestion) {
+			System.out.println(2);
+
 			HighestConsumptionQuestion highConsumptionQuestion
 					= (HighestConsumptionQuestion) question;
 			currentPoint = highConsumptionQuestion.pointsEarned(1000,
 					highConsumptionQuestion.returnEnergyConsumption(button.getText()),timePassed);
 			player.setPoint(player.getPoint() + currentPoint);
+
 			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
 					== highConsumptionQuestion.returnEnergyConsumption(button.getText())){
 				numberOfCorrectAnswered++;
 			}
 
 		} else if (question instanceof InsteadOfQuestion) {
+			System.out.println(3);
+
 			InsteadOfQuestion insteadQuestion = (InsteadOfQuestion) question;
 			currentPoint = insteadQuestion.pointsEarned(1000,
 					Integer.parseInt(String.valueOf(button.getId().charAt(12))), timePassed);
@@ -421,17 +446,135 @@ public class MainCtrl {
 				numberOfCorrectAnswered++;
 			}
 		} else if (question instanceof EstimateQuestion) {
+			System.out.println(4);
+
 			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
 			currentPoint = estimateQuestion.pointsEarned(1000,
 					Integer.parseInt(textField.getText()),timePassed);
 			player.setPoint(player.getPoint() + currentPoint);
-			textField.clear();
 		}
 
-		// Reset the count-down timer
-		questionScreenSinglePlayerCtrl.setProgress(1);
-
 		// Show the recent score.
-		showIntermediateScene();
+		showAnswer();
+	}
+
+	/**
+	 *  The methods resets the answer buttons to their initial state
+	 */
+	public void clearButtons() {
+		String color = "-fx-background-color: #5b9ad5; -fx-background-radius: 15;";
+
+		questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
+		questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
+		questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
+	}
+
+	private void showAnswer() {
+		Button button = questionScreenSinglePlayerCtrl.getInputButton();
+		TextField textField = questionScreenSinglePlayerCtrl.getInputText();
+
+		questionScreenSinglePlayerCtrl.setProgress(1f);
+
+		// This timeline will execute on another thread - run the count-down timer.
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
+			questionScreenSinglePlayerCtrl.decreaseProgress(1/3f);
+		}));
+		timeLine.setCycleCount(3);
+		timeLine.setOnFinished(_e -> {
+			showIntermediateScene();
+		});
+		timeLine.play();
+
+		if(button != null) {
+			String color = "-fx-background-color: #E37474; -fx-background-radius: 15;";
+
+			button.setStyle(color);
+		}
+
+		String color = "-fx-background-color: #4BA85D; -fx-background-radius: 15;";
+
+		if (question instanceof MCQuestion) {
+			MCQuestion multipleChoiceQuestion = (MCQuestion) question;
+			long button1 = multipleChoiceQuestion.getAnswer1();
+			long button2 = multipleChoiceQuestion.getAnswer2();
+			long button3 = multipleChoiceQuestion.getAnswer3();
+
+
+			if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
+					== button1) {
+				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
+			} else if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
+					== button2) {
+				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
+			} else if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
+					== button3) {
+				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
+			}
+		} else if (question instanceof HighestConsumptionQuestion) {
+			HighestConsumptionQuestion highConsumptionQuestion
+					= (HighestConsumptionQuestion) question;
+
+			Activity activity1 = highConsumptionQuestion.getActivity1();
+			Activity activity2 = highConsumptionQuestion.getActivity2();
+			Activity activity3 = highConsumptionQuestion.getActivity3();
+
+			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
+					== activity1.getConsumptionInWh()){
+				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
+			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
+					== activity2.getConsumptionInWh()){
+				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
+			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
+					== activity3.getConsumptionInWh()){
+				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
+			}
+
+		} else if (question instanceof InsteadOfQuestion) {
+			InsteadOfQuestion insteadQuestion = (InsteadOfQuestion) question;
+
+			Activity answer1 = insteadQuestion.getAnswer1();
+			Activity answer2 = insteadQuestion.getAnswer2();
+			Activity answer3 = insteadQuestion.getAnswer3();
+
+			if (insteadQuestion.correctAnswer().getConsumptionInWh()
+					== answer1.getConsumptionInWh()) {
+				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
+			} else if (insteadQuestion.correctAnswer().getConsumptionInWh()
+					== answer2.getConsumptionInWh()) {
+				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
+			} else if (insteadQuestion.correctAnswer().getConsumptionInWh()
+					== answer3.getConsumptionInWh()) {
+				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
+			}
+		} else if (question instanceof EstimateQuestion) {
+			String message;
+
+			questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(true);
+
+			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
+			currentPoint = estimateQuestion.pointsEarned(1000,
+					Integer.parseInt(textField.getText()),
+					questionScreenSinglePlayerCtrl.getTimeStamp());
+
+			if(currentPoint < 800) {
+				if(currentPoint > 500) {
+					color = "-fx-background-color: #E37474; -fx-background-radius: 15;";
+					message = "Well done!";
+				} else {
+					color = "-fx-background-color: #DF795B; -fx-background-radius: 15;";
+					message = "Oh!";
+				}
+			} else {
+				message = "Bullseye!";
+			}
+
+			questionScreenSinglePlayerCtrl.setEstimateAnswerStyle(color);
+			questionScreenSinglePlayerCtrl.setEstimateAnswerLabel(
+					message +
+					" The correct answer is: " +
+					estimateQuestion.getActivity().getConsumptionInWh());
+
+			textField.clear();
+		}
 	}
 }

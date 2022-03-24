@@ -208,4 +208,31 @@ public class HighestConsumptionQuestion extends Question {
 	public int hashCode() {
 		return Objects.hash(this.choice1, this.choice2, this.choice3);
 	}
+
+	/**
+	 * 	Getter for the first displayed activity
+	 *
+	 * @return The first activity
+	 */
+	public Activity getActivity1() {
+		return choice1;
+	}
+
+	/**
+	 * 	Getter for the second displayed activity
+	 *
+	 * @return The second activity
+	 */
+	public Activity getActivity2() {
+		return choice2;
+	}
+
+	/**
+	 * 	Getter for the third displayed activity
+	 *
+	 * @return The third activity
+	 */
+	public Activity getActivity3() {
+		return choice3;
+	}
 }

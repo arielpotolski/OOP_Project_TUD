@@ -93,6 +93,15 @@ public class EstimateQuestion extends Question {
 	public int hashCode() {
 		return Objects.hash(this.activity);
 	}
+
+	/**
+	 *	Getter method for activity
+	 *
+	 * @return the activity that is enquired about
+	 */
+	public Activity getActivity() {
+		return activity;
+	}
 }
 
 
