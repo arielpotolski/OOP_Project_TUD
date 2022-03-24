@@ -23,13 +23,13 @@ class PlayerControllerTest {
 		player = new Player("Dimitar");
 		listPlayers = new ArrayList<>();
 		listPlayers.add(player);
-		playerController = new PlayerController(new PlayerRepositoryTest());
+		playerController = new PlayerController(new DummyPlayerRepository());
 		messageModel = new MessageModel("Hello World", "Viet Luong");
 	}
 
 	@Test
 	void getAll() {
-		assertEquals(listPlayers,playerController.getAll());
+		assertEquals(listPlayers, playerController.getAll());
 	}
 
 	@Test

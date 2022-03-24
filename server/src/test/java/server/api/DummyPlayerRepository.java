@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 
-public class PlayerRepositoryTest implements PlayerRepository {
+public class DummyPlayerRepository implements PlayerRepository {
 	Player firstPlayer = new Player("Dimitar");
 	List<Player> playerList = List.of(firstPlayer);
 

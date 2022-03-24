@@ -49,6 +49,6 @@ public class MessageModel {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(this.message,this.nickname);
+		return Objects.hash(this.message, this.nickname);
 	}
 }

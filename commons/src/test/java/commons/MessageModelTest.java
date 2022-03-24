@@ -26,13 +26,13 @@ class MessageModelTest {
 
 	@Test
 	void getMessage() {
-		assertEquals("Hello",firstMessageModel.getMessage());
+		assertEquals("Hello", firstMessageModel.getMessage());
 	}
 
 	@Test
 	void setMessage() {
 		firstMessageModel.setMessage("GG");
-		assertEquals("GG",firstMessageModel.getMessage());
+		assertEquals("GG", firstMessageModel.getMessage());
 	}
 
 	@Test
@@ -63,6 +63,6 @@ class MessageModelTest {
 
 	@Test
 	void testHashCode() {
-		assertEquals(firstMessageModel.hashCode(),thirdMessageModel.hashCode());
+		assertEquals(firstMessageModel.hashCode(), thirdMessageModel.hashCode());
 	}
 }
