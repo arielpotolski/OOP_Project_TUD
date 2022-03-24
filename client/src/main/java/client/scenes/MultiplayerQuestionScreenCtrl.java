@@ -101,12 +101,12 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 	private Player player;
 
 	@Inject
-	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl, ServerUtils server){
+	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
 		this.server = server;
 		this.mainCtrl = mainCtrl;
 	}
 
-	public void setPlayer(Player player){
+	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
@@ -116,19 +116,23 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 	}
 
 	public void sendFirstEmoji() {
-		server.send("/app/chat",new MessageModel("cry", player.getNickName()));
+		this.sendEmoji(Emoji.CRY);
 	}
 
 	public void sendSecondEmoji() {
-		server.send("/app/chat",new MessageModel("wow", player.getNickName()));
+		this.sendEmoji(Emoji.WOW);
 	}
 
 	public void sendThirdEmoji() {
-		server.send("/app/chat",new MessageModel("angry", player.getNickName()));
+		this.sendEmoji(Emoji.ANGRY);
 	}
 
 	public void sendFourthEmoji() {
-		server.send("/app/chat",new MessageModel("victory", player.getNickName()));
+		this.sendEmoji(Emoji.VICTORY);
+	}
+
+	public void sendEmoji(Emoji emoji) {
+		server.send("/app/chat", new MessageModel(emoji.name(), player.getNickName()));
 	}
 
 	/**
@@ -138,28 +142,36 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 	 */
 	public void updateMessage(String message) {
 
-		if (Objects.equals(message, "cry")) {
-			updateImage("/emojis/1f62d.png");
+		if (Objects.equals(message, "CRY")) {
+			updateImage("/emojis/CRY.png");
 			return;
-		} else if (Objects.equals(message, "wow")) {
-			updateImage("/emojis/1f631.png");
+		} else if (Objects.equals(message, "WOW")) {
+			updateImage("/emojis/WOW.png");
 			return;
-		} else if (Objects.equals(message, "angry")) {
-			updateImage("/emojis/1f621.png");
+		} else if (Objects.equals(message, "ANGRY")) {
+			updateImage("/emojis/ANGRY.png");
 			return;
-		} else if (Objects.equals(message, "victory")) {
-			updateImage("/emojis/1f596-1f3fb.png");
+		} else if (Objects.equals(message, "VICTORY")) {
+			updateImage("/emojis/VICTORY.png");
 			return;
 		}
+
 		HBox hBox = new HBox();
+
 		Text text = new Text(message);
+
 		TextFlow textFlow = new TextFlow(text);
-		textFlow.setStyle("-fx-color: rgb(239,242,255)" +
-				";-fx-background-color: rgb(15,125,242)" +
-				";-fx-background-radius: 20px");
+
+		textFlow.setStyle("-fx-color: rgb(239,242,255);"
+				+ "-fx-background-color: rgb(15,125,242);"
+				+ "-fx-background-radius: 20px");
+
 		text.setFill(Color.color(0.934,0.945,0.996));
+
 		hBox.getChildren().add(textFlow);
+
 		textField.clear();
+
 		Platform.runLater(() -> {
 			vBox.getChildren().add(hBox);
 		});

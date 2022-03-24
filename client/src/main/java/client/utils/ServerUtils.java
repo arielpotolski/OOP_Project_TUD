@@ -227,7 +227,6 @@ public class ServerUtils {
 			public Type getPayloadType(StompHeaders headers) {
 				return type;
 			}
-
 			@Override
 			public void handleFrame(StompHeaders headers, Object payload) {
 				consumer.accept((T) payload);

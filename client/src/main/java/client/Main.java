@@ -54,13 +54,13 @@ public class Main extends Application {
 				"QuestionScreenSinglePlayer.fxml");
 		var globalLeaderBoard = FXML.load(GlobalLeaderboardScreenCtrl.class,"client","scenes",
 				"GlobalLeaderBoardScreen.fxml");
-		var intermediateScene = FXML.load(IntermediateSceneCtrl.class,"client","scenes",
+		var intermediateScene = FXML.load(IntermediateSceneCtrl.class, "client","scenes",
 				"IntermediateScreen.fxml");
-		var singlePlayerFinalScene = FXML.load(SinglePlayerFinalScreenCtrl.class,"client","scenes",
+		var singlePlayerFinalScene = FXML.load(SinglePlayerFinalScreenCtrl.class, "client","scenes",
 				"SinglePlayerFinalScreen.fxml");
 		var waitingScreen = FXML.load(WaitingScreenCtrl.class,
 				"client", "scenes", "WaitingScreen.fxml");
-		var multiPlayerQuestion = FXML.load(MultiplayerQuestionScreenCtrl.class,"client","scenes",
+		var multiPlayerQuestion = FXML.load(MultiplayerQuestionScreenCtrl.class, "client", "scenes",
 				"MultiplayerQuestionScreen.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
