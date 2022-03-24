@@ -124,7 +124,7 @@ public class HighestConsumptionQuestion extends Question {
 	 */
 	public int pointsEarned(int maxPoints, long answerGivenConsumption, double progress) {
 		long maxConsumption;
-
+		int positionHighest;
 		maxConsumption = Math.max(
 				this.choice1.getConsumptionInWh(),
 				Math.max(
@@ -133,10 +133,19 @@ public class HighestConsumptionQuestion extends Question {
 				)
 		);
 
-		if (answerGivenConsumption != maxConsumption)
+		if (choice1.getConsumptionInWh() == maxConsumption) {
+			positionHighest = 1;
+		} else if (choice2.getConsumptionInWh() == maxConsumption) {
+			positionHighest = 2;
+		} else {
+			positionHighest = 3;
+		}
+
+		if (answerGivenConsumption != positionHighest)
 			return 0;
 		return (int) Math.round(maxPoints * progress);
 	}
+
 
 	/**
 	 * Getter for the correct answer.
