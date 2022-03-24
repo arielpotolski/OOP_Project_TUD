@@ -8,6 +8,7 @@ import commons.LobbyResponse;
 import static commons.Utility.contentsEqual;
 
 import com.google.inject.Inject;
+import commons.MessageModel;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

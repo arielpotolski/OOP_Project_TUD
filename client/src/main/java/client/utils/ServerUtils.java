@@ -24,10 +24,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
-import commons.Connection;
-import commons.LobbyResponse;
-import commons.Player;
-import commons.Question;
+import commons.*;
 import commons.messages.JoinMessage;
 
 import com.google.inject.Inject;
@@ -53,6 +50,7 @@ public class ServerUtils {
 	private String name;
 	private int id;
 	private Connection connection;
+	private StompSession session;
 
 	/**
 	 * Constructor for the connection between client and server.
@@ -189,22 +187,28 @@ public class ServerUtils {
 		this.connection.send(new JoinMessage(this.name));
 	}
 
-	String webSocketServer = "ws://localhost:8080/websocket";
-
-	private StompSession session = connect(webSocketServer);
+	private URI getWebSocketServer() {
+		return UriBuilder
+				.newInstance()
+				.scheme("ws")
+				.host(this.host)
+				.port(8080)
+				.path("/websocket")
+				.build();
+	}
 
 	/**
 	 * This method creates the connection between the client and the server
-	 * @param url the url of the server
 	 * @return the session
 	 */
-	private StompSession connect(String url) {
+	public StompSession connect() {
 		var client = new StandardWebSocketClient();
 		var stomp = new WebSocketStompClient(client);
 		stomp.setMessageConverter(new MappingJackson2MessageConverter());
 
 		try{
-			return stomp.connect(url, new StompSessionHandlerAdapter() {}).get();
+			return stomp.connect(getWebSocketServer().toString(),
+					new StompSessionHandlerAdapter() {}).get();
 		} catch(InterruptedException err) {
 			Thread.currentThread().interrupt();
 		} catch (ExecutionException err) {
@@ -240,6 +244,10 @@ public class ServerUtils {
 	 * @param o the object - client will send this object to the server.
 	 */
 	public void send(String dest, Object o) {
-		session.send(dest,o);
+		this.session.send(dest, o);
+	}
+
+	public void setSession(StompSession session) {
+		this.session = session;
 	}
 }

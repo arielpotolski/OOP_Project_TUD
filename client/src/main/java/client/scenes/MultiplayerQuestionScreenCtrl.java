@@ -27,7 +27,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class MultiplayerQuestionScreenCtrl implements Initializable {
+public class MultiplayerQuestionScreenCtrl {
 
 	private MainCtrl mainCtrl;
 	private ServerUtils server;
@@ -166,7 +166,7 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 				+ "-fx-background-color: rgb(15,125,242);"
 				+ "-fx-background-radius: 20px");
 
-		text.setFill(Color.color(0.934,0.945,0.996));
+		text.setFill(Color.color(0.934, 0.945, 0.996));
 
 		hBox.getChildren().add(textFlow);
 
@@ -197,11 +197,8 @@ public class MultiplayerQuestionScreenCtrl implements Initializable {
 		});
 	}
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
-			updateMessage(messageModel.getMessage());
-		});
+	public void setServer(ServerUtils server) {
+		this.server = server;
 	}
 	
 }

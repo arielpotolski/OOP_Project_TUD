@@ -25,6 +25,7 @@ import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
 import commons.LobbyResponse;
 import commons.MCQuestion;
+import commons.MessageModel;
 import commons.Player;
 import commons.Question;
 
@@ -447,6 +448,10 @@ public class MainCtrl {
 	public void showMultiPlayerQuestionScreen() {
 		player = multiplayerPreGameCtrl.getPlayer();
 		multiplayerQuestionScreenCtrl.setPlayer(player);
+		multiplayerQuestionScreenCtrl.setServer(server);
+		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
+			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
+		});
 		primaryStage.setTitle("MultiPlayerQuestion");
 		primaryStage.setScene(multiPlayerQuestionScreen);
 	}

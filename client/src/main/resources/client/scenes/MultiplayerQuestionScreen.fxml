@@ -43,23 +43,11 @@
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
-                           <children>
-                              <ImageView fx:id="firstEmoji" fitHeight="57.0" fitWidth="42.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" onMouseClicked ="#sendFirstEmoji">
-                                 <image>
-                                    <Image url="/emojis/CRY.png" />
-                                 </image></ImageView>
-                           </children>
                         </Pane>
                         <Pane prefHeight="66.0" prefWidth="48.0">
                            <HBox.margin>
                               <Insets left="3.0" />
                            </HBox.margin>
-                           <children>
-                              <ImageView fx:id="secondEmoji" fitHeight="57.0" fitWidth="48.0" layoutX="1.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" onMouseClicked="#sendSecondEmoji">
-                                 <image>
-                                    <Image url="/emojis/WOW.png" />
-                                 </image></ImageView>
-                           </children>
                         </Pane>
                      </children>
                      <opaqueInsets>
@@ -75,12 +63,6 @@
                            <HBox.margin>
                               <Insets left="20.0" />
                            </HBox.margin>
-                           <children>
-                              <ImageView fx:id="thirdEmoji" fitHeight="57.0" fitWidth="42.0" layoutX="1.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" onMouseClicked = "#sendThirdEmoji">
-                                 <image>
-                                    <Image url="/emojis/ANGRY.png" />
-                                 </image></ImageView>
-                           </children>
                         </Pane>
                         <Pane prefHeight="66.0" prefWidth="48.0">
                            <opaqueInsets>
@@ -89,12 +71,6 @@
                            <HBox.margin>
                               <Insets left="3.0" />
                            </HBox.margin>
-                           <children>
-                              <ImageView fx:id="fourthEmoji" fitHeight="57.0" fitWidth="48.0" layoutX="1.0" layoutY="2.0" pickOnBounds="true" preserveRatio="true" onMouseClicked = "#sendFourthEmoji">
-                                 <image>
-                                    <Image url="/emojis/VICTORY.png"/>
-                                 </image></ImageView>
-                           </children>
                         </Pane>
                      </children>
                   </HBox>

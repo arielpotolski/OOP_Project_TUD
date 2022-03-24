@@ -60,6 +60,8 @@ public class MultiplayerPreGameCtrl {
 
 		ServerUtils serverUtils = new ServerUtils(url);
 
+		serverUtils.setSession(serverUtils.connect());
+
 		Optional<LobbyResponse> maybeResponse;
 		try {
 			maybeResponse = serverUtils.connectToLobby(name);
