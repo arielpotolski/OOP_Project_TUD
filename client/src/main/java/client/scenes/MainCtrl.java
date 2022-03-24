@@ -20,7 +20,14 @@ import java.io.IOException;
 import java.util.List;
 
 import client.utils.ServerUtils;
-import commons.*;
+import commons.Activity;
+import commons.EstimateQuestion;
+import commons.HighestConsumptionQuestion;
+import commons.InsteadOfQuestion;
+import commons.LobbyResponse;
+import commons.MCQuestion;
+import commons.Player;
+import commons.Question;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -404,7 +411,6 @@ public class MainCtrl {
 		double timePassed = questionScreenSinglePlayerCtrl.getTimeStamp();
 
 		if (question instanceof MCQuestion) {
-			System.out.println(1);
 			MCQuestion multipleChoiceQuestion = (MCQuestion) question;
 
 			// The point which the player will receive after answered the question
@@ -421,12 +427,12 @@ public class MainCtrl {
 				numberOfCorrectAnswered++;
 			}
 		} else if (question instanceof HighestConsumptionQuestion) {
-			System.out.println(2);
-
 			HighestConsumptionQuestion highConsumptionQuestion
 					= (HighestConsumptionQuestion) question;
+
 			currentPoint = highConsumptionQuestion.pointsEarned(1000,
 					highConsumptionQuestion.returnEnergyConsumption(button.getText()),timePassed);
+
 			player.setPoint(player.getPoint() + currentPoint);
 
 			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
@@ -435,8 +441,6 @@ public class MainCtrl {
 			}
 
 		} else if (question instanceof InsteadOfQuestion) {
-			System.out.println(3);
-
 			InsteadOfQuestion insteadQuestion = (InsteadOfQuestion) question;
 			currentPoint = insteadQuestion.pointsEarned(1000,
 					Integer.parseInt(String.valueOf(button.getId().charAt(12))), timePassed);
@@ -446,8 +450,6 @@ public class MainCtrl {
 				numberOfCorrectAnswered++;
 			}
 		} else if (question instanceof EstimateQuestion) {
-			System.out.println(4);
-
 			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
 			currentPoint = estimateQuestion.pointsEarned(1000,
 					Integer.parseInt(textField.getText()),timePassed);
@@ -519,16 +521,15 @@ public class MainCtrl {
 			Activity activity3 = highConsumptionQuestion.getActivity3();
 
 			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity1.getConsumptionInWh()){
+					== activity1.getConsumptionInWh()) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
 			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity2.getConsumptionInWh()){
+					== activity2.getConsumptionInWh()) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
 			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity3.getConsumptionInWh()){
+					== activity3.getConsumptionInWh()) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
 			}
-
 		} else if (question instanceof InsteadOfQuestion) {
 			InsteadOfQuestion insteadQuestion = (InsteadOfQuestion) question;
 
@@ -552,16 +553,20 @@ public class MainCtrl {
 			questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(true);
 
 			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
-			currentPoint = estimateQuestion.pointsEarned(1000,
-					Integer.parseInt(textField.getText()),
-					questionScreenSinglePlayerCtrl.getTimeStamp());
+			if(textField != null) {
+				currentPoint = estimateQuestion.pointsEarned(1000,
+						Integer.parseInt(textField.getText()),
+						questionScreenSinglePlayerCtrl.getTimeStamp());
+			} else {
+				currentPoint = 0;
+			}
 
-			if(currentPoint < 800) {
-				if(currentPoint > 500) {
-					color = "-fx-background-color: #E37474; -fx-background-radius: 15;";
+			if(currentPoint < 500) {
+				if(currentPoint > 300) {
+					color = "-fx-background-color: #f0de8d; -fx-background-radius: 15;";
 					message = "Well done!";
 				} else {
-					color = "-fx-background-color: #DF795B; -fx-background-radius: 15;";
+					color = "-fx-background-color: #E37474; -fx-background-radius: 15;";
 					message = "Oh!";
 				}
 			} else {
@@ -574,7 +579,8 @@ public class MainCtrl {
 					" The correct answer is: " +
 					estimateQuestion.getActivity().getConsumptionInWh());
 
-			textField.clear();
+			if(textField != null)
+				textField.clear();
 		}
 	}
 }
