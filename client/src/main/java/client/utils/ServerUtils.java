@@ -24,7 +24,10 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
-import commons.*;
+import commons.Connection;
+import commons.LobbyResponse;
+import commons.Player;
+import commons.Question;
 import commons.messages.JoinMessage;
 
 import com.google.inject.Inject;
