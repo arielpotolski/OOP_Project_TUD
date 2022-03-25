@@ -5,6 +5,7 @@ import java.util.Optional;
 import client.Main;
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
+import commons.Player;
 
 import com.google.inject.Inject;
 import jakarta.ws.rs.ProcessingException;
@@ -55,6 +56,8 @@ public class MultiplayerPreGameCtrl {
 		String name = this.nickname.getText();
 		ServerUtils serverUtils = new ServerUtils(Main.serverHost);
 
+		serverUtils.setSession(serverUtils.connect());
+
 		Optional<LobbyResponse> maybeResponse;
 		try {
 			maybeResponse = serverUtils.connectToLobby(name);
@@ -81,5 +84,9 @@ public class MultiplayerPreGameCtrl {
 			);
 			alert.showAndWait();
 		}
+	}
+
+	public Player getPlayer() {
+		return new Player(nickname.getText());
 	}
 }
