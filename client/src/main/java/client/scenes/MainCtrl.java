@@ -65,6 +65,9 @@ public class MainCtrl {
 	private WaitingScreenCtrl waitingScreenCtrl;
 	private Scene waitingScreen;
 
+	private AdminInterfaceScreenCtrl adminInterfaceScreenCtrl;
+	private Scene adminInterfaceScreen;
+
 	private ServerUtils server;
 
 	private List<Question> questions;
@@ -89,6 +92,7 @@ public class MainCtrl {
 	 * @param intermediateScene a pair of intermediate screen with parent
 	 * @param singlePlayerFinalScene a pair of final single player screen with parent.
 	 * @param waitingScreen a pair of waiting screen with parent
+	 * @param adminInterfaceScreen a pair of admin interface screen with parent
 	 */
 	public void initialize(Stage primaryStage,
 		Pair<SinglePlayerPreGameCtrl, Parent> singlePlayer,
@@ -98,7 +102,8 @@ public class MainCtrl {
 		Pair<GlobalLeaderboardScreenCtrl, Parent> globalLeaderBoard,
 		Pair<IntermediateSceneCtrl, Parent> intermediateScene,
 		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
-		Pair<WaitingScreenCtrl, Parent> waitingScreen
+		Pair<WaitingScreenCtrl, Parent> waitingScreen,
+		Pair<AdminInterfaceScreenCtrl, Parent> adminInterfaceScreen
 	) {
 		this.primaryStage = primaryStage;
 
@@ -125,6 +130,9 @@ public class MainCtrl {
 
 		waitingScreenCtrl = waitingScreen.getKey();
 		this.waitingScreen = new Scene(waitingScreen.getValue());
+
+		this.adminInterfaceScreenCtrl = adminInterfaceScreen.getKey();
+		this.adminInterfaceScreen = new Scene(adminInterfaceScreen.getValue());
 
 		showSplashScreen();
 
@@ -324,6 +332,14 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setVisibilityImageView(false, 0);
 		questionScreenSinglePlayerCtrl.setVisibilityImageView(false, 1);
 		questionScreenSinglePlayerCtrl.setVisibilityImageView(false, 2);
+	}
+
+	/**
+	 * Take the user to the admin interface screen.
+	 */
+	public void showAdminInterfaceScreen() {
+		this.primaryStage.setTitle("Admin Interface");
+		this.primaryStage.setScene(this.adminInterfaceScreen);
 	}
 
 	/**

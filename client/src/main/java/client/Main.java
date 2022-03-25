@@ -18,6 +18,7 @@ package client;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import client.scenes.AdminInterfaceScreenCtrl;
 import client.scenes.GlobalLeaderboardScreenCtrl;
 import client.scenes.IntermediateSceneCtrl;
 import client.scenes.MainCtrl;
@@ -59,6 +60,12 @@ public class Main extends Application {
 				"SinglePlayerFinalScreen.fxml");
 		var waitingScreen = FXML.load(WaitingScreenCtrl.class,
 				"client", "scenes", "WaitingScreen.fxml");
+		var adminInterfaceScreen = FXML.load(
+			AdminInterfaceScreenCtrl.class,
+			"client",
+			"scenes",
+			"AdminInterfaceScreen.fxml"
+		);
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
 			primaryStage,
@@ -69,8 +76,8 @@ public class Main extends Application {
 			globalLeaderBoard,
 			intermediateScene,
 			singlePlayerFinalScene,
-			waitingScreen
+			waitingScreen,
+			adminInterfaceScreen
 		);
 	}
 }
-	

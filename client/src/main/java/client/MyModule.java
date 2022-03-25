@@ -15,6 +15,7 @@
  */
 package client;
 
+import client.scenes.AdminInterfaceScreenCtrl;
 import client.scenes.GlobalLeaderboardScreenCtrl;
 import client.scenes.IntermediateSceneCtrl;
 import client.scenes.MainCtrl;
@@ -39,5 +40,6 @@ public class MyModule implements Module {
 		binder.bind(MultiplayerPreGameCtrl.class).in(Scopes.SINGLETON);
 		binder.bind(IntermediateSceneCtrl.class).in(Scopes.SINGLETON);
 		binder.bind(SinglePlayerFinalScreenCtrl.class).in(Scopes.SINGLETON);
+		binder.bind(AdminInterfaceScreenCtrl.class).in(Scopes.SINGLETON);
 	}
 }

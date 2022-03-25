@@ -87,6 +87,11 @@
                             <Font name="Calibri" size="25.0" />
                         </font>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#changeToAdminInterface" prefHeight="93.0" prefWidth="219.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Admin Interface" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font name="Calibri" size="25.0" />
+                     </font>
+                  </Button>
                </children>
             </VBox>
             <VBox alignment="BOTTOM_CENTER" prefHeight="602.0" prefWidth="110.0">
