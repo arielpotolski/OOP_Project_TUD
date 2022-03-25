@@ -26,18 +26,34 @@ public class MessageModel {
 
 	public MessageModel() {}
 
+	/**
+	 * Getter for the message that client sends to other clients
+	 * @return the message
+	 */
 	public String getMessage() {
 		return message;
 	}
 
+	/**
+	 * Setter for the message that client sends to other clients
+	 * @param message the message
+	 */
 	public void setMessage(String message) {
 		this.message = message;
 	}
 
+	/**
+	 * Getter for the nickname of the client
+	 * @return the nickname of the client
+	 */
 	public String getNickname() {
 		return nickname;
 	}
 
+	/**
+	 * Setter for the nickname of the client
+	 * @param nickname the nickname of the client
+	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
