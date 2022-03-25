@@ -1,7 +1,6 @@
 package client.scenes;
 
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
@@ -130,16 +129,16 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 	 */
 	public void updateMessage(String message) {
 
-		if (Objects.equals(message, "CRY")) {
+		if ("CRY".equals(message)) {
 			updateImage("/emojis/CRY.png");
 			return;
-		} else if (Objects.equals(message, "WOW")) {
+		} else if ("WOW".equals(message)) {
 			updateImage("/emojis/WOW.png");
 			return;
-		} else if (Objects.equals(message, "ANGRY")) {
+		} else if ("ANGRY".equals(message)) {
 			updateImage("/emojis/ANGRY.png");
 			return;
-		} else if (Objects.equals(message, "VICTORY")) {
+		} else if ("VICTORY".equals(message)) {
 			updateImage("/emojis/VICTORY.png");
 			return;
 		}
