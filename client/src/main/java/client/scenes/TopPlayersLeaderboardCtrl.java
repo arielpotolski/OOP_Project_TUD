@@ -1,6 +1,7 @@
 package client.scenes;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Polygon;
 
@@ -19,4 +20,7 @@ public class TopPlayersLeaderboardCtrl {
 
 	@FXML
 	private Polygon crown;
+
+	@FXML
+	private Button playAgain;
 }
