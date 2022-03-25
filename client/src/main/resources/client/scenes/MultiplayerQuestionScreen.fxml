@@ -43,7 +43,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                            <children>
-                              <Button layoutX="-8.0" mnemonicParsing="false" text="Button" />
+                              <Button fx:id="firstEmoji" layoutX="-8.0" mnemonicParsing="false" onAction="#sendEmoji" userData="ANGRY"/>
                            </children>
                         </Pane>
                         <Pane prefHeight="66.0" prefWidth="48.0">
@@ -51,7 +51,7 @@
                               <Insets left="3.0" />
                            </HBox.margin>
                            <children>
-                              <Button layoutX="23.0" mnemonicParsing="false" text="Button" />
+                              <Button fx:id="secondEmoji" layoutX="23.0" mnemonicParsing="false" onAction="#sendEmoji" userData="VICTORY" />
                            </children>
                         </Pane>
                      </children>
@@ -69,7 +69,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                            <children>
-                              <Button layoutX="-10.0" mnemonicParsing="false" text="Button" />
+                              <Button fx:id="thirdEmoji" layoutX="-10.0" mnemonicParsing="false" onAction="#sendEmoji" userData="CRY"/>
                            </children>
                         </Pane>
                         <Pane prefHeight="66.0" prefWidth="48.0">
@@ -80,7 +80,7 @@
                               <Insets left="3.0" />
                            </HBox.margin>
                            <children>
-                              <Button layoutX="23.0" mnemonicParsing="false" text="Button" />
+                              <Button fx:id="fourthEmoji" layoutX="23.0" mnemonicParsing="false" onAction="#sendEmoji" userData="WOW"/>
                            </children>
                         </Pane>
                      </children>

@@ -10,8 +10,10 @@ import commons.Player;
 
 import com.google.inject.Inject;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
@@ -27,7 +29,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class MultiplayerQuestionScreenCtrl {
+public class MultiplayerQuestionScreenCtrl implements Initializable{
 
 	private MainCtrl mainCtrl;
 	private ServerUtils server;
@@ -75,16 +77,16 @@ public class MultiplayerQuestionScreenCtrl {
 	private Pane reactionPane;
 
 	@FXML
-	ImageView firstEmoji;
+	Button firstEmoji;
 
 	@FXML
-	ImageView secondEmoji;
+	Button secondEmoji;
 
 	@FXML
-	ImageView thirdEmoji;
+	Button thirdEmoji;
 
 	@FXML
-	ImageView fourthEmoji;
+	Button fourthEmoji;
 
 	@FXML
 	Button sendButton;
@@ -115,24 +117,10 @@ public class MultiplayerQuestionScreenCtrl {
 		server.send("/app/chat",new MessageModel(message, player.getNickName()));
 	}
 
-	public void sendFirstEmoji() {
-		this.sendEmoji(Emoji.CRY);
-	}
-
-	public void sendSecondEmoji() {
-		this.sendEmoji(Emoji.WOW);
-	}
-
-	public void sendThirdEmoji() {
-		this.sendEmoji(Emoji.ANGRY);
-	}
-
-	public void sendFourthEmoji() {
-		this.sendEmoji(Emoji.VICTORY);
-	}
-
-	public void sendEmoji(Emoji emoji) {
-		server.send("/app/chat", new MessageModel(emoji.name(), player.getNickName()));
+	public void sendEmoji(ActionEvent event) {
+		Node node = (Node) event.getSource();
+		String emoji = (String) node.getUserData();
+		server.send("/app/chat", new MessageModel(emoji, player.getNickName()));
 	}
 
 	/**
@@ -183,7 +171,7 @@ public class MultiplayerQuestionScreenCtrl {
 	 * @param url the path of the image
 	 */
 	public void updateImage(String url) {
-		Image image = new Image(url);
+		Image image = new Image(url, 20, 20, false, true);
 		ImageView imageView = new ImageView(image);
 		HBox hBox = new HBox();
 		TextFlow textFlow = new TextFlow(imageView);
@@ -200,5 +188,36 @@ public class MultiplayerQuestionScreenCtrl {
 	public void setServer(ServerUtils server) {
 		this.server = server;
 	}
-	
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		Image angryImage = new Image("emojis/ANGRY.png",
+				20,
+				20,
+				false,
+				true);
+		ImageView angry = new ImageView(angryImage);
+		Image cryImage = new Image("emojis/CRY.png",
+				20,
+				20,
+				false,
+				true);
+		ImageView cry = new ImageView(cryImage);
+		Image victoryImage = new Image("emojis/VICTORY.png",
+				20,
+				20,
+				false,
+				true);
+		ImageView victory = new ImageView(victoryImage);
+		Image wowImage = new Image("emojis/WOW.png",
+				20,
+				20,
+				false,
+				true);
+		ImageView wow = new ImageView(wowImage);
+		firstEmoji.setGraphic(angry);
+		secondEmoji.setGraphic(victory);
+		thirdEmoji.setGraphic(cry);
+		fourthEmoji.setGraphic(wow);
+	}
 }
