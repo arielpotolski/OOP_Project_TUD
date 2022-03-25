@@ -26,12 +26,6 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Label alignment="CENTER" prefHeight="54.0" prefWidth="530.0" text="Enter the URL for the Server with Questions:" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font name="Calibri" size="29.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="serverURL" prefHeight="54.0" prefWidth="369.0" />
                   <Label alignment="CENTER" text="Enter the Desired Nickname for the Game">
                      <font>
                         <Font name="Calibri" size="28.0" />

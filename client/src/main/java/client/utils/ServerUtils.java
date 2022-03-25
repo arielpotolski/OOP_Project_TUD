@@ -95,7 +95,8 @@ public class ServerUtils {
 	 */
 	public List<Player> getPlayers() {
 		return this.client
-			.target(this.getServer()).path("api/players")
+			.target(this.getServer())
+			.path("api/players/")
 			.request(APPLICATION_JSON)
 			.get(new GenericType<>() {});
 	}
