@@ -50,7 +50,7 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="691.0">
                      <children>
-                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUIZ" wrappingWidth="262.6700134277344">
+                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUIZ" wrappingWidth="307.6700134277344">
                               <font>
                                   <Font name="Calibri" size="128.0" />
                               </font>
