@@ -50,4 +50,11 @@ public class MultiplayerQuestionScreenCtrl {
 
 	@FXML
 	private Pane reactionPane;
+
+	/**
+	 *  Decreases the progress of progress bar (aka the timer)
+	 */
+	public void decreaseProgress() {
+		// TODO
+	}
 }

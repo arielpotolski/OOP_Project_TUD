@@ -24,6 +24,7 @@ import client.scenes.GlobalLeaderboardScreenCtrl;
 import client.scenes.IntermediateSceneCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.MultiplayerPreGameCtrl;
+import client.scenes.MultiplayerQuestionScreenCtrl;
 import client.scenes.QuestionScreenSinglePlayerCtrl;
 import client.scenes.SinglePlayerFinalScreenCtrl;
 import client.scenes.SinglePlayerPreGameCtrl;
@@ -35,6 +36,7 @@ import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import static com.google.inject.Guice.createInjector;
+
 
 public class Main extends Application {
 	private static final Injector INJECTOR = createInjector(new MyModule());
@@ -76,6 +78,8 @@ public class Main extends Application {
 				"SinglePlayerFinalScreen.fxml");
 		var waitingScreen = FXML.load(WaitingScreenCtrl.class,
 				"client", "scenes", "WaitingScreen.fxml");
+		var questionScreenMultiplayer = FXML.load(MultiplayerQuestionScreenCtrl.class,
+					"client", "scenes", "MultiplayerQuestionScreen.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
 			primaryStage,
@@ -86,7 +90,8 @@ public class Main extends Application {
 			globalLeaderBoard,
 			intermediateScene,
 			singlePlayerFinalScene,
-			waitingScreen
+			waitingScreen,
+			questionScreenMultiplayer
 		);
 	}
 }

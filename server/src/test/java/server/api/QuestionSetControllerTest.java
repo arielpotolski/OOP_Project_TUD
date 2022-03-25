@@ -27,7 +27,7 @@ public class QuestionSetControllerTest {
 		 * annoying to properly test this method.  Since this method is so simple, I don't think it
 		 * deserves to be tested that extensively.
 		 */
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 	}
 
 	/**
@@ -233,9 +233,9 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 		assertResponseEquals(HttpStatus.OK, this.qsc.deleteById("69"));
-		assertEquals(this.qsc.getAll().size(), 1);
+		assertEquals(this.qsc.getAll(0).size(), 1);
 	}
 
 	/**
@@ -248,9 +248,9 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.deleteById("1337"));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 	}
 
 	/**
@@ -262,9 +262,9 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.deleteById(null));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 	}
 
 	/**
