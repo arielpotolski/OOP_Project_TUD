@@ -2,8 +2,10 @@ package client.scenes;
 
 import java.util.Optional;
 
+import client.Main;
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
+import commons.Player;
 
 import com.google.inject.Inject;
 import jakarta.ws.rs.ProcessingException;
@@ -16,9 +18,6 @@ import javafx.scene.control.TextField;
 public class MultiplayerPreGameCtrl {
 	private final ServerUtils server;
 	private final MainCtrl mainCtrl;
-
-	@FXML
-	private TextField serverURL;
 
 	@FXML
 	private TextField nickname;
@@ -54,10 +53,10 @@ public class MultiplayerPreGameCtrl {
 	 * of MainCtrl and moves to the waiting screen.
 	 */
 	public void joinLobby() {
-		String url = this.serverURL.getText();
 		String name = this.nickname.getText();
+		ServerUtils serverUtils = new ServerUtils(Main.serverHost);
 
-		ServerUtils serverUtils = new ServerUtils(url);
+		serverUtils.setSession(serverUtils.connect());
 
 		Optional<LobbyResponse> maybeResponse;
 		try {
@@ -85,5 +84,9 @@ public class MultiplayerPreGameCtrl {
 			);
 			alert.showAndWait();
 		}
+	}
+
+	public Player getPlayer() {
+		return new Player(nickname.getText());
 	}
 }

@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class QuestionSetControllerTest {
-	private QuestionSetController qsc = new QuestionSetController(new ActivityRepositoryTest());
+	private QuestionSetController qsc = new QuestionSetController(new DummyActivityRepository());
 
 	@Test
 	void getAll() throws IOException {
