@@ -22,6 +22,7 @@ import java.nio.file.Path;
 
 import client.scenes.AdminAddActivityScreenCtrl;
 import client.scenes.AdminInterfaceScreenCtrl;
+import client.scenes.AdminRemoveActivityScreenCtrl;
 import client.scenes.GlobalLeaderboardScreenCtrl;
 import client.scenes.IntermediateSceneCtrl;
 import client.scenes.MainCtrl;
@@ -90,6 +91,12 @@ public class Main extends Application {
 			"scenes",
 			"AdminAddActivityScreen.fxml"
 		);
+		var adminRemoveActivityScreen = FXML.load(
+			AdminRemoveActivityScreenCtrl.class,
+			"client",
+			"scenes",
+			"AdminRemoveActivityScreen.fxml"
+		);
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
 			primaryStage,
@@ -102,7 +109,8 @@ public class Main extends Application {
 			singlePlayerFinalScene,
 			waitingScreen,
 			adminInterfaceScreen,
-			adminAddActivityScreen
+			adminAddActivityScreen,
+			adminRemoveActivityScreen
 		);
 	}
 }

@@ -35,7 +35,7 @@
                         <Font name="Calibri Bold" size="42.0" />
                      </font>
                   </Button>
-                  <Button fx:id="startButton2" mnemonicParsing="false" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="Remove">
+                  <Button fx:id="startButton2" mnemonicParsing="false" onAction="#jumpToRemoveActivityScreen" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="Remove">
                      <font>
                         <Font name="Calibri Bold" size="42.0" />
                      </font>

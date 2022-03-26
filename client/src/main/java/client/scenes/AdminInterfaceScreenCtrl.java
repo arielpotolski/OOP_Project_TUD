@@ -31,4 +31,12 @@ public class AdminInterfaceScreenCtrl {
 	private void jumpToAddActivityScreen() {
 		this.mainCtrl.showAdminAddActivityScreen();
 	}
+
+	/**
+	 * Take the user to the remove activity screen.
+	 */
+	@FXML
+	private void jumpToRemoveActivityScreen() {
+		this.mainCtrl.showAdminRemoveActivityScreen();
+	}
 }
