@@ -20,6 +20,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import client.scenes.AdminAddActivityScreenCtrl;
 import client.scenes.AdminInterfaceScreenCtrl;
 import client.scenes.GlobalLeaderboardScreenCtrl;
 import client.scenes.IntermediateSceneCtrl;
@@ -83,6 +84,12 @@ public class Main extends Application {
 			"scenes",
 			"AdminInterfaceScreen.fxml"
 		);
+		var adminAddActivityScreen = FXML.load(
+			AdminAddActivityScreenCtrl.class,
+			"client",
+			"scenes",
+			"AdminAddActivityScreen.fxml"
+		);
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
 			primaryStage,
@@ -94,7 +101,8 @@ public class Main extends Application {
 			intermediateScene,
 			singlePlayerFinalScene,
 			waitingScreen,
-			adminInterfaceScreen
+			adminInterfaceScreen,
+			adminAddActivityScreen
 		);
 	}
 }

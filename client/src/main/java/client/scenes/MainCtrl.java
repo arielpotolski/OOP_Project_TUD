@@ -68,6 +68,9 @@ public class MainCtrl {
 	private AdminInterfaceScreenCtrl adminInterfaceScreenCtrl;
 	private Scene adminInterfaceScreen;
 
+	private AdminAddActivityScreenCtrl adminAddActivityScreenCtrl;
+	private Scene adminAddActivityScreen;
+
 	private ServerUtils server;
 
 	private List<Question> questions;
@@ -103,7 +106,8 @@ public class MainCtrl {
 		Pair<IntermediateSceneCtrl, Parent> intermediateScene,
 		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
-		Pair<AdminInterfaceScreenCtrl, Parent> adminInterfaceScreen
+		Pair<AdminInterfaceScreenCtrl, Parent> adminInterfaceScreen,
+		Pair<AdminAddActivityScreenCtrl, Parent> adminAddActivityScreen
 	) {
 		this.primaryStage = primaryStage;
 
@@ -133,6 +137,9 @@ public class MainCtrl {
 
 		this.adminInterfaceScreenCtrl = adminInterfaceScreen.getKey();
 		this.adminInterfaceScreen = new Scene(adminInterfaceScreen.getValue());
+
+		this.adminAddActivityScreenCtrl = adminAddActivityScreen.getKey();
+		this.adminAddActivityScreen = new Scene(adminAddActivityScreen.getValue());
 
 		showSplashScreen();
 
@@ -340,6 +347,14 @@ public class MainCtrl {
 	public void showAdminInterfaceScreen() {
 		this.primaryStage.setTitle("Admin Interface");
 		this.primaryStage.setScene(this.adminInterfaceScreen);
+	}
+
+	/**
+	 * Take the user to the admin add activity screen.
+	 */
+	public void showAdminAddActivityScreen() {
+		this.primaryStage.setTitle("Add Activity");
+		this.primaryStage.setScene(this.adminAddActivityScreen);
 	}
 
 	/**

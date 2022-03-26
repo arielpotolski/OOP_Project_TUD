@@ -1,5 +1,7 @@
 package client.scenes;
 
+import javafx.fxml.FXML;
+
 import javax.inject.Inject;
 
 public class AdminInterfaceScreenCtrl {
@@ -17,7 +19,16 @@ public class AdminInterfaceScreenCtrl {
 	/**
 	 * Take the user to the splash screen.
 	 */
-	public void jumpToSplashScreen() {
+	@FXML
+	private void jumpToSplashScreen() {
 		this.mainCtrl.showSplashScreen();
+	}
+
+	/**
+	 * Take the user to the add activity screen.
+	 */
+	@FXML
+	private void jumpToAddActivityScreen() {
+		this.mainCtrl.showAdminAddActivityScreen();
 	}
 }

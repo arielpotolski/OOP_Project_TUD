@@ -21,10 +21,7 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import commons.Connection;
-import commons.LobbyResponse;
-import commons.Player;
-import commons.Question;
+import commons.*;
 import commons.messages.JoinMessage;
 
 import com.google.inject.Inject;
@@ -179,5 +176,18 @@ public class ServerUtils {
 	public void makeConnection(int port) throws IOException {
 		this.connection = Connection.to(this.host, port);
 		this.connection.send(new JoinMessage(this.name));
+	}
+
+	/**
+	 * Add the given activity to the severs database and return the added activity.
+	 * @param a The activity to add to the database.
+	 * @return The activity that was added.
+	 */
+	public Activity addActivity(Activity a) {
+		return this.client
+			.target(this.getServer())
+			.path("api/questions/addActivity")
+			.request(APPLICATION_JSON)
+			.put(Entity.entity(a, APPLICATION_JSON), Activity.class);
 	}
 }

@@ -25,7 +25,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Button fx:id="startButton" mnemonicParsing="false" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="Add">
+                  <Button fx:id="startButton" mnemonicParsing="false" onAction="#jumpToAddActivityScreen" prefHeight="78.0" prefWidth="254.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="Add">
                      <font>
                         <Font name="Calibri Bold" size="42.0" />
                      </font>
