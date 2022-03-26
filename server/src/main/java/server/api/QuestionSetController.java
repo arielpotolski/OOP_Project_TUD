@@ -42,6 +42,15 @@ public class QuestionSetController {
 		qs.fillSet(as.size());
 		return qs.getQuestions();
 	}
+
+	/**
+	 * Get a list of all the activities on the server.
+	 * @return A list of all the servers activities.
+	 */
+	@GetMapping("/getActivities")
+	public List<Activity> getActivities() {
+		return this.repository.findAll();
+	}
 	
 	@PutMapping("/addActivities")
 	public ResponseEntity<List<Activity>> addActivities(@RequestBody List<Activity> activities)

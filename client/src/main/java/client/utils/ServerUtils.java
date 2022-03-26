@@ -90,6 +90,18 @@ public class ServerUtils {
 	}
 
 	/**
+	 * Get a list of activities from the server.
+	 * @return A list of activities.
+	 */
+	public List<Activity> getActivities() {
+		return this.client
+			.target(this.getServer())
+			.path("api/questions/getActivities")
+			.request(APPLICATION_JSON)
+			.get(new GenericType<>() {});
+	}
+
+	/**
 	 * This method get a list of players for global leader board.
 	 *
 	 * @return a list of players.
