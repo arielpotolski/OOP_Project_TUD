@@ -183,8 +183,8 @@ public class Activity {
 			Scanner pathParts = new Scanner(imagePath).useDelimiter("/");
 			String path = ABSOLUTE_PATH_TO_ACTIVITIES_FOLDER + pathParts.next() + "\\" +
 					pathParts.next();
-			URL uRLImage = new URL(path);
-			BufferedImage bufferedImage = ImageIO.read(uRLImage);
+			URL imageURL = new URL(path);
+			BufferedImage bufferedImage = ImageIO.read(imageURL);
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, extension, bos);
 			return bos.toByteArray();
