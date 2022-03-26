@@ -222,9 +222,9 @@ public class InsteadOfQuestion extends Question {
 		double distanceFromOneOfCoefficient2 = (double) this.answer2.getConsumptionInWh() /
 				this.questionActivity.getConsumptionInWh();
 
-		if (realCoefficient1 == distanceFromOneOfCoefficient1) {
+		if (Utility.doubleEquals(realCoefficient1, distanceFromOneOfCoefficient1)) {
 			return this.answer1;
-		} else if (realCoefficient2 == distanceFromOneOfCoefficient2) {
+		} else if (Utility.doubleEquals(realCoefficient2, distanceFromOneOfCoefficient2)) {
 			return this.answer2;
 		}
 		return this.answer3;
