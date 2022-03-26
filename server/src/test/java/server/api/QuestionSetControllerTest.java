@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import commons.Activity;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static server.CustomAssertions.assertResponseEquals;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class QuestionSetControllerTest {
 	private QuestionSetController qsc = new QuestionSetController(new ActivityRepositoryTest());
@@ -21,13 +22,39 @@ public class QuestionSetControllerTest {
 			new Activity("69", "69", 69, "69", "69")
 		));
 
-		/* As far as I am aware, this is the only real kind of test you can perform.  Ideally the
-		 * question types will be random every time, and because each question type has its own
-		 * unique fields and behaviors (some even have multiple activities) it becomes incredibly
-		 * annoying to properly test this method.  Since this method is so simple, I don't think it
-		 * deserves to be tested that extensively.
-		 */
 		assertEquals(this.qsc.getAll(0).size(), 2);
+	}
+
+	/**
+	 * 	Tests whether two identical seeds give the same result
+	 *
+	 * @throws IOException
+	 */
+	@Test
+	void getAll2() throws IOException {
+		this.qsc.addActivities(List.of(
+				new Activity("42", "42", 42, "42", "42"),
+				new Activity("69", "69", 69, "69", "69")
+		));
+
+		assertEquals(this.qsc.getAll(404), this.qsc.getAll(404));
+	}
+
+	/**
+	 * 	Tests whether two different seeds give different results
+	 *
+	 * @throws IOException
+	 */
+	@Test
+	void getAll3() throws IOException {
+		this.qsc.addActivities(List.of(
+				new Activity("42", "42", 42, "42", "42"),
+				new Activity("69", "69", 69, "69", "69"),
+				new Activity("420", "420", 420, "420", "420"),
+				new Activity("701034", "701034", 701034, "701034", "701034")
+		));
+
+		assertNotEquals(this.qsc.getAll(404), this.qsc.getAll(1));
 	}
 
 	/**

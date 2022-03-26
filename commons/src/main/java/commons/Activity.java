@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import static commons.Utility.nullOrEmpty;
 
@@ -157,8 +158,9 @@ public class Activity {
 	 */
 	public void makeFake(List<Long> forbiddenValues) {
 		long prev = this.consumptionInWh;
+		Random random = new Random(prev);
 		do {
-			this.consumptionInWh = Math.round(Math.random() * 2 * this.consumptionInWh);
+			this.consumptionInWh = Math.round(random.nextDouble() * 2 * this.consumptionInWh);
 		} while (this.consumptionInWh == prev || forbiddenValues.contains(this.consumptionInWh));
 	}
 

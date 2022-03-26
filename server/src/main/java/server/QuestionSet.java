@@ -87,7 +87,7 @@ public class QuestionSet {
 		this.activityNumbers.add(randNumber);
 
 		Activity activity = this.activities.get(randNumber);
-		this.questions.add(new MCQuestion(activity));
+		this.questions.add(new MCQuestion(activity, this.random.nextInt()));
 	}
 
 	/**

@@ -165,6 +165,11 @@ public class MainCtrl {
 		primaryStage.setScene(multiplayerPreGameScreen);
 	}
 
+	/**
+	 * 	Method that shows the question screen for the multiplayer game mode
+	 *
+	 * @throws IOException
+	 */
 	public void showMultiplayerQuestionScreen() throws IOException{
 		// Switch to final screen if the aren't any questions
 		if (questions.size() == 0) {
