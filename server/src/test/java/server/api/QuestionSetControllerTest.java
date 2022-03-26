@@ -41,12 +41,29 @@ public class QuestionSetControllerTest {
 	}
 
 	/**
-	 * 	Tests whether two different seeds give different results
+	 * 	Tests whether two different seeds give the same results
 	 *
 	 * @throws IOException
 	 */
 	@Test
 	void getAll3() throws IOException {
+		this.qsc.addActivities(List.of(
+				new Activity("42", "42", 42, "42", "42"),
+				new Activity("69", "69", 69, "69", "69"),
+				new Activity("420", "420", 420, "420", "420"),
+				new Activity("701034", "701034", 701034, "701034", "701034")
+		));
+
+		assertNotEquals(this.qsc.getAll(404), this.qsc.getAll(404));
+	}
+
+	/**
+	 * 	Tests whether two different seeds give different results
+	 *
+	 * @throws IOException
+	 */
+	@Test
+	void getAll4() throws IOException {
 		this.qsc.addActivities(List.of(
 				new Activity("42", "42", 42, "42", "42"),
 				new Activity("69", "69", 69, "69", "69"),
