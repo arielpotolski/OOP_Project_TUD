@@ -6,7 +6,8 @@ import java.util.List;
 
 import commons.Activity;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static server.CustomAssertions.assertResponseEquals;
 
 import org.junit.jupiter.api.Test;
