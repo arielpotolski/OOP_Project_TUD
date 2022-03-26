@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import commons.Activity;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static server.CustomAssertions.assertResponseEquals;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class QuestionSetControllerTest {
 	private QuestionSetController qsc = new QuestionSetController(new ActivityRepositoryTest());
