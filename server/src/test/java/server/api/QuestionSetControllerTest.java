@@ -5,11 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import commons.Activity;
-
-import static server.CustomAssertions.assertResponseEquals;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static server.CustomAssertions.assertResponseEquals;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
