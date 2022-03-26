@@ -3,7 +3,6 @@ package commons;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
@@ -31,9 +30,6 @@ public class Activity {
 	private String source;
 	@JsonProperty("array-image") @Lob
 	private byte[] imageInArray;
-	private static final String ABSOLUTE_PATH_TO_ACTIVITIES_FOLDER = "file:\\C:\\Users\\" +
-			"dimit\\Documents\\University" +
-			"\\Year 1\\Q3\\Project\\activities\\";
 
 	/**
 	 * An empty constructor
@@ -169,6 +165,11 @@ public class Activity {
 	/**
 	 * Parses an image to byte array so that it could be more easily sent to the user
 	 * If the picture is not found automatically it is set to ImageNotFound
+	 *
+	 * !! If someone wants to import pictures they need to put the folder with Activities under the
+	 * name 'activities' in commons/src/main/resources/
+	 * This folder is added to the gitignore file and therefore will not be pushed in gitlab
+	 *
 	 * @return byte array containing information about the image
 	 * @throws IOException The exception if there is something wrong with the file
 	 */
@@ -180,11 +181,12 @@ public class Activity {
 			if (i > 0) {
 				extension = imagePath.substring(i+1);
 			}
-			Scanner pathParts = new Scanner(imagePath).useDelimiter("/");
-			String path = ABSOLUTE_PATH_TO_ACTIVITIES_FOLDER + pathParts.next() + "\\" +
-					pathParts.next();
-			URL imageURL = new URL(path);
-			BufferedImage bufferedImage = ImageIO.read(imageURL);
+			BufferedImage bufferedImage =ImageIO
+					.read(Objects
+							.requireNonNull(Activity
+									.class
+									.getClassLoader()
+									.getResourceAsStream("activities/" + imagePath)));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, extension, bos);
 			return bos.toByteArray();
