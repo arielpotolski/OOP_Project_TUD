@@ -28,6 +28,7 @@ import client.scenes.QuestionScreenSinglePlayerCtrl;
 import client.scenes.SinglePlayerFinalScreenCtrl;
 import client.scenes.SinglePlayerPreGameCtrl;
 import client.scenes.SplashCtrl;
+import client.scenes.TopPlayersLeaderboardCtrl;
 import client.scenes.WaitingScreenCtrl;
 import static commons.Utility.nullOrEmpty;
 
@@ -76,6 +77,8 @@ public class Main extends Application {
 				"SinglePlayerFinalScreen.fxml");
 		var waitingScreen = FXML.load(WaitingScreenCtrl.class,
 				"client", "scenes", "WaitingScreen.fxml");
+		var topPlayersLeaderboard = FXML.load(TopPlayersLeaderboardCtrl.class,
+				"client", "scenes", "TopPlayersLeaderboard.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
 			primaryStage,
@@ -86,7 +89,8 @@ public class Main extends Application {
 			globalLeaderBoard,
 			intermediateScene,
 			singlePlayerFinalScene,
-			waitingScreen
+			waitingScreen,
+			topPlayersLeaderboard
 		);
 	}
 }
