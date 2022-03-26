@@ -217,14 +217,14 @@ public class InsteadOfQuestion extends Question {
 	 * @return the correct answer activity
 	 */
 	public Activity correctAnswer() {
-		double distanceFromOneOfCoefficient1 = (double) this.answer1.getConsumptionInWh() /
+		double calculatedCoefficient1 = (double) this.answer1.getConsumptionInWh() /
 				this.questionActivity.getConsumptionInWh();
-		double distanceFromOneOfCoefficient2 = (double) this.answer2.getConsumptionInWh() /
+		double calculatedCoefficient2 = (double) this.answer2.getConsumptionInWh() /
 				this.questionActivity.getConsumptionInWh();
 
-		if (Utility.doubleEquals(realCoefficient1, distanceFromOneOfCoefficient1)) {
+		if (Utility.doubleEquals(realCoefficient1, calculatedCoefficient1)) {
 			return this.answer1;
-		} else if (Utility.doubleEquals(realCoefficient2, distanceFromOneOfCoefficient2)) {
+		} else if (Utility.doubleEquals(realCoefficient2, calculatedCoefficient2)) {
 			return this.answer2;
 		}
 		return this.answer3;
