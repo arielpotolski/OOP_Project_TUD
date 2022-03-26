@@ -1,11 +1,7 @@
 package client.scenes;
 
-import java.io.IOException;
-import java.util.Optional;
-
 import client.Main;
 import client.utils.ServerUtils;
-import commons.Activity;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
