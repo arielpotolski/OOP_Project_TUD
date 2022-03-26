@@ -21,7 +21,11 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
-import commons.*;
+import commons.Activity;
+import commons.Connection;
+import commons.LobbyResponse;
+import commons.Player;
+import commons.Question;
 import commons.messages.JoinMessage;
 
 import com.google.inject.Inject;
