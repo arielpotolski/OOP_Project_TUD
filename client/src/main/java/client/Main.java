@@ -95,8 +95,8 @@ public class Main extends Application {
 			intermediateScene,
 			singlePlayerFinalScene,
 			waitingScreen,
-			multiPlayerQuestion,
-			topPlayersLeaderboard
+			topPlayersLeaderboard,
+			multiPlayerQuestion
 		);
 	}
 }
