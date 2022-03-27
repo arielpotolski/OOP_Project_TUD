@@ -91,8 +91,7 @@ public class MultiplayerPreGameCtrl {
 	 * After that, it joins the lobby.
 	 */
 	public void setNickname() {
-		mainCtrl.setNickname(this.nickname.getText());
-		joinLobby();
+		this.mainCtrl.setNickname(this.nickname.getText());
 	}
 
 	public Player getPlayer() {
