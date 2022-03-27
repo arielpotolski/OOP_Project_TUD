@@ -19,6 +19,7 @@ import javax.inject.Inject;
 public class AdminRemoveActivityScreenCtrl implements Initializable {
 	private final MainCtrl mainCtrl;
 	private final ServerUtils server;
+	private List<Activity> activities;
 
 	@FXML
 	private TextArea activityData;
@@ -34,31 +35,26 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 	public AdminRemoveActivityScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
 		this.server = new ServerUtils(Main.serverHost);
+		this.refreshActivities();
 	}
 
 	/**
-	 * Initialize the dropdown box of activities and handle user selection events.  The first thing
-	 * this method does is retrieve a list of activities from the server and sort them based on
-	 * their IDs.  The dropdown menu is then populated with the contents of this list and the
-	 * default selected item is get to the first element of the list.  The text area is then made to
-	 * display the contents of the selected activity, if there is no activity then a dummy empty one
-	 * is created.  Finally an event listener is setup to update the contents of the text area every
-	 * time a new activity is selected.  If somehow the user manages to select an activity that
-	 * doesn't exist an IndexOutOfBoundsException exception is thrown.
+	 * Initialize the dropdown box of activities and handle user selection events.  The dropdown
+	 * menu is populated with the contents of this list and the default selected item is get to the
+	 * first element of the list.  The text area is then made to display the contents of the
+	 * selected activity, if there is no activity then a dummy empty one is created.  Finally, an
+	 * event listener is setup to update the contents of the text area every time a new activity is
+	 * selected.  If somehow the user manages to select an activity that doesn't exist an
+	 * IndexOutOfBoundsException exception is thrown.
 	 * @param _location Unused.
 	 * @param _resources Unused.
 	 */
 	@Override
 	public void initialize(URL _location, ResourceBundle _resources) {
-		List<Activity> activities = this.server
-			.getActivities()
-			.stream()
-			.sorted(Comparator.comparing(Activity::getId))
-			.toList();
 		this.activityDropdown
 			.getItems()
 			.addAll(
-				activities
+				this.activities
 					.stream()
 					.map(Activity::getId)
 					.toList()
@@ -69,8 +65,8 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 		this.activityData
 			.setWrapText(true);
 		this.activityData
-			.appendText(
-				activities
+			.setText(
+				this.activities
 					.stream()
 					.findFirst()
 					.orElse(new Activity())
@@ -85,7 +81,7 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 				String newString
 			) -> this.activityData
 				.setText(
-					activities
+					this.activities
 						.stream()
 						.filter(a -> a.getId().equals(newString))
 						.findFirst()
@@ -103,6 +99,43 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 		this.mainCtrl.showAdminInterfaceScreen();
 	}
 
+	/**
+	 * Remove the currently selected activity from the database.  This method first attempts to find
+	 * an activity with the matching ID in the activities list.  If there is no such activity then
+	 * an IndexOutOfBoundsException is thrown, although this should in theory never happen.  The
+	 * activity is then removed from the server and the activity list is refreshed. Finally, we set
+	 * the new selected activity to the first in the list.  We don't need to update the text area as
+	 * this is handled by the event listener.
+	 */
 	@FXML
-	private void removeActivity() {}
+	private void removeActivity() {
+		String id = this.activityDropdown
+			.getSelectionModel()
+			.getSelectedItem();
+		Activity activity = this.activities
+			.stream()
+			.filter(a -> a.getId().equals(id))
+			.findFirst()
+			.orElseThrow(IndexOutOfBoundsException::new);
+		this.server
+			.removeActivity(activity);
+		this.refreshActivities();
+		this.activityDropdown
+			.getItems()
+			.remove(activity.getId());
+		this.activityDropdown
+			.getSelectionModel()
+			.selectFirst();
+	}
+
+	/**
+	 * Refresh the list of activities.
+	 */
+	private void refreshActivities() {
+		this.activities = this.server
+			.getActivities()
+			.stream()
+			.sorted(Comparator.comparing(Activity::getId))
+			.toList();
+	}
 }

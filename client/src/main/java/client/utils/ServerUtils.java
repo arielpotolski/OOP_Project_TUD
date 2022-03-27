@@ -36,6 +36,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.ResponseProcessingException;
 import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
@@ -205,5 +206,18 @@ public class ServerUtils {
 			.path("api/questions/addActivity")
 			.request(APPLICATION_JSON)
 			.put(Entity.entity(a, APPLICATION_JSON), Activity.class);
+	}
+
+	/**
+	 * Remove an activity from the server.
+	 * @param a The activity to remove.
+	 * @return The servers response after the DELETE request.
+	 */
+	public Response removeActivity(Activity a) {
+		return this.client
+			.target(this.getServer())
+			.path("api/questions/" + a.getId())
+			.request(APPLICATION_JSON)
+			.delete();
 	}
 }
