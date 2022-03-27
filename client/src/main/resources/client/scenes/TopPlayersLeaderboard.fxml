@@ -63,7 +63,7 @@
                               <Font name="Calibri" size="17.0" />
                            </font>
                         </Label>
-                        <Button fx:id="playAgain" alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="391.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="131.0" style="-fx-background-color: #78afe1;" text="PLAY AGAIN">
+                        <Button fx:id="playAgain" alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="391.0" mnemonicParsing="false" onMouseClicked="#jumpToLobby" prefHeight="58.0" prefWidth="131.0" style="-fx-background-color: #78afe1;" text="PLAY AGAIN">
                            <font>
                               <Font name="Calibri Bold" size="14.0" />
                            </font>
@@ -76,7 +76,7 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-199.0" layoutY="-12.0" points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-199.0" layoutY="-12.0" onMouseClicked="#jumpToSplashScreen" points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
                         <Label layoutX="21.0" layoutY="150.0" text="back">
                            <font>
                               <Font name="Calibri" size="22.0" />
