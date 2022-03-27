@@ -1,7 +1,9 @@
 package client.scenes;
 
+import java.net.URL;
 import java.util.Comparator;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import client.Main;
 import client.utils.ServerUtils;
@@ -13,8 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javax.inject.Inject;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class AdminRemoveActivityScreenCtrl implements Initializable {
 	private final MainCtrl mainCtrl;
