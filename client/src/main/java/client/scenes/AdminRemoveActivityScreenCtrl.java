@@ -102,10 +102,10 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 	/**
 	 * Remove the currently selected activity from the database.  This method first attempts to find
 	 * an activity with the matching ID in the activities list.  If there is no such activity then
-	 * an IndexOutOfBoundsException is thrown, although this should in theory never happen.  The
-	 * activity is then removed from the server and the activity list is refreshed. Finally, we set
-	 * the new selected activity to the first in the list.  We don't need to update the text area as
-	 * this is handled by the event listener.
+	 * an IndexOutOfBoundsException is thrown, although this should in theory never happen unless
+	 * there are no activities left to remove.  The activity is then removed from the server and the
+	 * activity list is refreshed. Finally, we set the new selected activity to the first in the
+	 * list.  We don't need to update the text area as this is handled by the event listener.
 	 */
 	@FXML
 	private void removeActivity() {
