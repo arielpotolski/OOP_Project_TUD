@@ -53,14 +53,14 @@ public class MultiplayerPreGameCtrl {
 	 * of MainCtrl and moves to the waiting screen.
 	 */
 	public void joinLobby() {
-		String name = this.nickname.getText();
+		setNickname();
 		ServerUtils serverUtils = new ServerUtils(Main.serverHost);
 
 		serverUtils.setSession(serverUtils.connect());
 
 		Optional<LobbyResponse> maybeResponse;
 		try {
-			maybeResponse = serverUtils.connectToLobby(name);
+			maybeResponse = serverUtils.connectToLobby(this.mainCtrl.getNickname());
 		} catch (ProcessingException err) {
 			// Alert the user if sending the request failed.
 			Alert alert = new Alert(
@@ -96,6 +96,6 @@ public class MultiplayerPreGameCtrl {
 	}
 
 	public Player getPlayer() {
-		return new Player(nickname.getText());
+		return new Player(this.nickname.getText());
 	}
 }
