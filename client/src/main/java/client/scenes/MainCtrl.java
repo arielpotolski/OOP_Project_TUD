@@ -25,6 +25,7 @@ import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
 import commons.LobbyResponse;
 import commons.MCQuestion;
+import commons.MessageModel;
 import commons.Player;
 import commons.Question;
 
@@ -68,6 +69,9 @@ public class MainCtrl {
 	private TopPlayersLeaderboardCtrl topPlayersLeaderboardCtrl;
 	private Scene topPlayersLeaderboard;
 
+	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
+	private Scene multiPlayerQuestionScreen;
+
 	private ServerUtils server;
 
 	private List<Question> questions;
@@ -97,6 +101,8 @@ public class MainCtrl {
 	 * @param singlePlayerFinalScene a pair of final single player screen with parent.
 	 * @param waitingScreen a pair of waiting screen with parent
 	 * @param topPlayersLeaderboard a pair of top players leaderboard scene with parent.
+	 * @param multiPlayerQuestion a pair of multiplayer
+	 *          question screen with parent
 	 */
 	public void initialize(Stage primaryStage,
 		Pair<SinglePlayerPreGameCtrl, Parent> singlePlayer,
@@ -107,7 +113,8 @@ public class MainCtrl {
 		Pair<IntermediateSceneCtrl, Parent> intermediateScene,
 		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
-		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard
+		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard,
+		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion
 	) {
 		this.primaryStage = primaryStage;
 
@@ -137,6 +144,9 @@ public class MainCtrl {
 
 		this.topPlayersLeaderboardCtrl = topPlayersLeaderboard.getKey();
 		this.topPlayersLeaderboard = new Scene(topPlayersLeaderboard.getValue());
+
+		this.multiplayerQuestionScreenCtrl = multiPlayerQuestion.getKey();
+		this.multiPlayerQuestionScreen = new Scene(multiPlayerQuestion.getValue());
 
 		showSplashScreen();
 
@@ -470,4 +480,16 @@ public class MainCtrl {
 	public void joinLobby() {
 		this.multiplayerPreGameCtrl.joinLobby();
 	}
+
+	public void showMultiPlayerQuestionScreen() {
+		player = multiplayerPreGameCtrl.getPlayer();
+		multiplayerQuestionScreenCtrl.setPlayer(player);
+		multiplayerQuestionScreenCtrl.setServer(server);
+		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
+			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
+		});
+		primaryStage.setTitle("MultiPlayerQuestion");
+		primaryStage.setScene(multiPlayerQuestionScreen);
+	}
+
 }
