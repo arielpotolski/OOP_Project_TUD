@@ -459,6 +459,8 @@ public class MainCtrl {
 
 	/**
 	 * Shows the final leaderboard scene of the multiplayer game mode.
+	 * This method needs to be changed in the future to allow displaying the names
+	 * of the top 3 players.
 	 */
 	public void showTopPlayersLeaderboard() {
 		primaryStage.setTitle("Final Leaderboard");
@@ -473,10 +475,18 @@ public class MainCtrl {
 		this.nickname = nickName;
 	}
 
+	/**
+	 * getter for the player's nickname
+	 * @return the player's nickname as a String.
+	 */
 	public String getNickname() {
 		return this.nickname;
 	}
 
+	/**
+	 * this method calls the method joinLobby from the multiplayerPreGameCtrl class,
+	 * which handles the player joining a lobby feature.
+	 */
 	public void joinLobby() {
 		this.multiplayerPreGameCtrl.joinLobby();
 	}

@@ -59,6 +59,9 @@ public class SinglePlayerPreGameCtrl {
 		this.mainCtrl.showSplashScreen();
 	}
 
+	/**
+	 * setter for the player's nickname from the MainCtrl nickname's field.
+	 */
 	public void setNickname() {
 		this.mainCtrl.setNickname(this.nickname.getText());
 	}
