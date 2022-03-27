@@ -80,8 +80,8 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 			.getSelectionModel()
 			.selectedItemProperty()
 			.addListener((
-				ObservableValue<? extends String> observable,
-				String oldString,
+				ObservableValue<? extends String> _observable,
+				String _oldString,
 				String newString
 			) -> this.activityData
 				.setText(
