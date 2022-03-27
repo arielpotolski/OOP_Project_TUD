@@ -27,7 +27,7 @@ public class MultiplayerPreGameCtrl {
 	/**
 	 * Constructor for multiplayer pre-game controller
 	 *
-	 * @param server the injected server.
+	 * @param server   the injected server.
 	 * @param mainCtrl the injected main controller.
 	 */
 	@Inject
@@ -44,10 +44,10 @@ public class MultiplayerPreGameCtrl {
 	 * This runs when the ENTER button is pressed.
 	 * Sends a GET /lobby/register/ request to the server which registers
 	 * this client's interest in the multiplayer game.
-	 *
+	 * <p>
 	 * If the client tries joining with a name that is already in the lobby it will
 	 * receive a 400 BAD REQUEST. They should be notified that the name is already in use.
-	 *
+	 * <p>
 	 * After a successful request, this method sets the server URL in the ServerUtils
 	 * of MainCtrl and moves to the waiting screen.
 	 */
@@ -61,9 +61,9 @@ public class MultiplayerPreGameCtrl {
 		} catch (ProcessingException err) {
 			// Alert the user if sending the request failed.
 			Alert alert = new Alert(
-				Alert.AlertType.ERROR,
-				"Could not contact the server. Is your URL correct?",
-				ButtonType.OK
+					Alert.AlertType.ERROR,
+					"Could not contact the server. Is your URL correct?",
+					ButtonType.OK
 			);
 			alert.showAndWait();
 			return;
@@ -75,11 +75,21 @@ public class MultiplayerPreGameCtrl {
 		} else {
 			// Tell user the name is already taken.
 			Alert alert = new Alert(
-				Alert.AlertType.INFORMATION,
-				"That name is already in use",
-				ButtonType.OK
+					Alert.AlertType.INFORMATION,
+					"That name is already in use",
+					ButtonType.OK
 			);
 			alert.showAndWait();
 		}
 	}
+
+	/**
+	 * Set the nickname field of the main ctrl to this nickname.
+	 * After that, it joins the lobby.
+	 */
+	public void setNickname() {
+		mainCtrl.setNickname(this.nickname.getText());
+		joinLobby();
+	}
 }
+
