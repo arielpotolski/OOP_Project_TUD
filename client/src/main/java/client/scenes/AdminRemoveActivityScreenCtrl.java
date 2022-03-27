@@ -27,8 +27,7 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 	private ChoiceBox<String> activityDropdown;
 
 	/**
-	 * The AdminRemoveActivityScreenCtrl constructor.  It initializes the main controller and server
-	 * but also initializes the values of the activity dropdown list.
+	 * The AdminRemoveActivityScreenCtrl constructor.
 	 * @param mainCtrl The main controller.
 	 */
 	@Inject
