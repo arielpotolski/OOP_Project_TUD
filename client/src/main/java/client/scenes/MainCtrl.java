@@ -76,10 +76,13 @@ public class MainCtrl {
 
 	private Timeline timeLine;
 	private Player player;
-	private String nickName;
+	private String nickname;
 	private int currentPoint;
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
+
+	public MainCtrl() {
+	}
 
 	/**
 	 * Initialize all the screens
@@ -456,7 +459,15 @@ public class MainCtrl {
 	 * setter for the player nickname.
 	 * @param nickName the nickname selected by the player.
 	 */
-	public void setNickName(String nickName) {
-		this.nickName = nickName;
+	public void setNickname(String nickName) {
+		this.nickname = nickName;
+	}
+
+	public String getNickname() {
+		return this.nickname;
+	}
+
+	public void joinLobby() {
+		this.multiplayerPreGameCtrl.joinLobby();
 	}
 }
