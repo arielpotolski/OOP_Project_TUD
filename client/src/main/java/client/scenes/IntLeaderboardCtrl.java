@@ -8,6 +8,4 @@ public class IntLeaderboardCtrl {
 	@FXML
 	private ProgressBar timeUntilNextQuestion;
 
-	@FXML
-	private ScrollPane leaderBoard;
 }
