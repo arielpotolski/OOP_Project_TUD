@@ -1,39 +1,61 @@
 package client.scenes;
 
-import java.util.Comparator;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.ResourceBundle;
 
-import commons.Player;
-
+import com.google.inject.Inject;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ProgressBar;
 
-public class IntLeaderboardCtrl {
+public class IntLeaderboardCtrl implements Initializable {
+
+	private MainCtrl mainCtrl;
+	private HashMap<String, Integer> players;
+
 	@FXML
 	private ProgressBar timeUntilNextQuestion;
 
 	@FXML
 	private BarChart barChart;
 
+	@Inject
+	public IntLeaderboardCtrl(MainCtrl mainCtrl) {
+		this.mainCtrl = mainCtrl;
+	}
+
+	public void setPlayers(HashMap<String, Integer> players) {
+		this.players = players;
+	}
+
 	/**
 	 * Displays the scores of the players in a barchart
-	 * @param playersInTheGame A list with all the players in the game
 	 */
-	public void displayScores(List<Player> playersInTheGame) {
-		playersInTheGame.sort(new Comparator<Player>() {
-			@Override
-			public int compare(Player o1, Player o2) {
-				return o2.getPoint() - o1.getPoint();
-			}
-		});
+	public void displayScores() {
+		List<Map.Entry<String, Integer>> playersInTheGame = this.players
+				.entrySet()
+				.stream()
+				.sorted(Map.Entry.comparingByValue())
+				.toList();
 		this.barChart.setTitle("Player Scores");
-		XYChart.Series series = new XYChart.Series();
-		series.setName("Score");
-		for (Player player : playersInTheGame) {
-			series.getData().add(new XYChart.Data(player.getNickName(), player.getPoint()));
+		if (playersInTheGame.size() < 6) {
+			this.barChart.setMaxWidth(playersInTheGame.size() * 100);
 		}
-		this.barChart.getData().add(series);
+		for (Map.Entry<String, Integer> player : playersInTheGame) {
+			XYChart.Series series = new XYChart.Series();
+			series.getData().add(new XYChart.Data("", player.getValue()));
+			series.setName(player.getKey());
+			this.barChart.getData().add(series);
+		}
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.timeUntilNextQuestion.setStyle("-fx-accent: #00FF00");
 	}
 }
