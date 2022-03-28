@@ -126,8 +126,7 @@ public class MainCtrl {
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
 		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion,
 		Pair<IntLeaderboardCtrl, Parent> intLeaderboard,
-		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard,
-		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion
+		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard
 	) {
 		this.logger = LoggerFactory.getLogger(MainCtrl.class);;
 
