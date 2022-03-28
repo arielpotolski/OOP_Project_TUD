@@ -98,11 +98,12 @@ public class WaitingScreenCtrl {
 		try {
 			this.serverUtils.makeConnection(this.port);
 
-			// set the same unique seed to all players inside the lobby
+			// Set the same unique seed to all players inside the lobby.
 			this.mainCtrl.setSeed(this.port);
 			this.mainCtrl.getQuestions();
-			
-			this.mainCtrl.showMultiplayerQuestionScreen();
+
+			// Move to game screen.
+			this.mainCtrl.showMultiPlayerQuestionScreen();
 		} catch (Exception err) {
 			err.printStackTrace();
 		}

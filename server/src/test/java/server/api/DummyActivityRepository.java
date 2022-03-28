@@ -15,7 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 
-class ActivityRepositoryTest implements ActivityRepository {
+class DummyActivityRepository implements ActivityRepository {
 	public final List<Activity> activities = new ArrayList<>();
 	public final List<String> calledMethods = new ArrayList<>();
 

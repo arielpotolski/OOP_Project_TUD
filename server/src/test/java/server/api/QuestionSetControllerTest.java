@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class QuestionSetControllerTest {
-	private QuestionSetController qsc = new QuestionSetController(new ActivityRepositoryTest());
+	private QuestionSetController qsc = new QuestionSetController(new DummyActivityRepository());
 
 	@Test
 	void getAll() throws IOException {
