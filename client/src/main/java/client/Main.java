@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import client.scenes.GlobalLeaderboardScreenCtrl;
+import client.scenes.IntLeaderboardCtrl;
 import client.scenes.IntermediateSceneCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.MultiplayerPreGameCtrl;
@@ -81,6 +82,8 @@ public class Main extends Application {
 				"client", "scenes", "WaitingScreen.fxml");
 		var multiPlayerQuestion = FXML.load(MultiplayerQuestionScreenCtrl.class, "client", "scenes",
 				"MultiplayerQuestionScreen.fxml");
+		var intermediateLeaderboard = FXML.load(IntLeaderboardCtrl.class, "client", "scenes",
+				"IntermediateLeaderboard.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
 			primaryStage,
@@ -92,7 +95,8 @@ public class Main extends Application {
 			intermediateScene,
 			singlePlayerFinalScene,
 			waitingScreen,
-			multiPlayerQuestion
+			multiPlayerQuestion,
+			intermediateLeaderboard
 		);
 	}
 }
