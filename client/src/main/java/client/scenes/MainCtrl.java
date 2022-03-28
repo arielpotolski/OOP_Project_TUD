@@ -260,6 +260,7 @@ public class MainCtrl {
 					}
 				} catch (Exception err) {
 					err.printStackTrace();
+					return;
 				}
 			}
 		});
