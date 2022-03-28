@@ -32,7 +32,7 @@ public class QuestionSetTest {
 				"pathpng1", "first site");
 		this.activities = new ArrayList<>();
 		this.activities.add(this.activity1);
-		this.qs = new QuestionSet(activities);
+		this.qs = new QuestionSet(activities, 1);
 	}
 
 	@Test

@@ -89,11 +89,13 @@ public class ServerUtils {
 	 * Get a list of questions from the server
 	 *
 	 * @return A list of questions from the server
+	 * @param seed The seed that dictates the order of the questions
 	 */
-	public List<Question> getQuestions() {
+	public List<Question> getQuestions(long seed) {
 		return this.client
 			.target(this.getServer())
 			.path("api/questions/")
+			.queryParam("seed", seed)
 			.request(APPLICATION_JSON)
 			.get(new GenericType<>() {});
 	}

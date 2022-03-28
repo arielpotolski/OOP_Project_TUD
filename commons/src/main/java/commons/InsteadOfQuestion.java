@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -55,7 +56,7 @@ public class InsteadOfQuestion extends Question {
 
 		// The following part generates exactly one of the answers to be correct
 		// and guarantees that all the others are wrong
-		double correctAnswer = Math.random();
+		double correctAnswer = (new Random(answer1.getConsumptionInWh()).nextDouble());
 		if (correctAnswer < 1.0 / 3.0) {
 			answer2.makeFake(forbiddenValues);
 			answer3.makeFake(forbiddenValues);
