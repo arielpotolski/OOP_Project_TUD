@@ -23,46 +23,51 @@
                   </Label>
                   <Pane prefHeight="463.0" prefWidth="700.0">
                      <children>
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#78afe1" height="189.0" layoutX="405.0" layoutY="186.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="110.0" />
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#78afe1" height="263.0" layoutX="295.0" layoutY="112.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="110.0" />
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#78afe1" height="133.0" layoutX="185.0" layoutY="242.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="110.0" />
-                        <Polygon fx:id="crown" fill="#ffed1f" layoutX="350.0" layoutY="45.0" points="-50.0, 40.0, 50.0, 40.0, 49.999961853027344, -8.00003433227539, 24.750022888183594, 12.80001449584961, 0.24997711181640625, -25.60000991821289, -24.24999237060547, 12.80001449584961, -49.99999237060547, -8.000015258789062" scaleX="0.8" scaleY="0.75" stroke="BLACK" strokeType="INSIDE" />
-                        <Polygon fill="#ffa821" layoutX="285.0" layoutY="204.0" points="119.99996948242188, -18.0, 177.39999389648438, 51.600006103515625, 229.99996948242188, -18.0, 214.19998168945312, -18.0, 177.39999389648438, 30.800018310546875, 136.60000610351562, -18.0" stroke="#f21212" strokeType="INSIDE" strokeWidth="4.0" />
-                        <Polygon fill="#ffa821" layoutX="175.0" layoutY="130.0" points="119.99996948242188, -18.0, 177.39999389648438, 51.600006103515625, 229.99996948242188, -18.0, 214.19998168945312, -18.0, 177.39999389648438, 30.800018310546875, 136.60000610351562, -18.0" stroke="#f21212" strokeType="INSIDE" strokeWidth="4.0" />
-                        <Polygon fill="#ffa821" layoutX="65.0" layoutY="261.0" points="119.99996948242188, -18.0, 177.39999389648438, 51.600006103515625, 229.99996948242188, -18.0, 214.19998168945312, -18.0, 177.39999389648438, 30.800018310546875, 136.60000610351562, -18.0" stroke="#f21212" strokeType="INSIDE" strokeWidth="4.0" />
-                        <Circle fill="#d1d4d7" layoutX="462.0" layoutY="247.0" radius="14.0" stroke="#817e7e" strokeType="INSIDE" strokeWidth="3.0" />
-                        <Circle fill="#ffcb21" layoutX="352.0" layoutY="173.0" radius="14.0" stroke="#dc9912" strokeType="INSIDE" strokeWidth="3.0" />
-                        <Circle fill="#ff960c" layoutX="240.0" layoutY="303.0" radius="14.0" stroke="#b76a05" strokeType="INSIDE" strokeWidth="3.0" />
-                        <Label layoutX="454.0" layoutY="238.0" text="#2">
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#78afe1" height="189.0" layoutX="405.0" layoutY="158.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="110.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#78afe1" height="263.0" layoutX="295.0" layoutY="84.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="110.0" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#78afe1" height="133.0" layoutX="185.0" layoutY="214.0" stroke="TRANSPARENT" strokeType="INSIDE" strokeWidth="0.0" width="110.0" />
+                        <Polygon fx:id="crown" fill="#ffed1f" layoutX="350.0" layoutY="17.0" points="-50.0, 40.0, 50.0, 40.0, 49.999961853027344, -8.00003433227539, 24.750022888183594, 12.80001449584961, 0.24997711181640625, -25.60000991821289, -24.24999237060547, 12.80001449584961, -49.99999237060547, -8.000015258789062" scaleX="0.8" scaleY="0.75" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fill="#ffa821" layoutX="285.0" layoutY="176.0" points="119.99996948242188, -18.0, 177.39999389648438, 51.600006103515625, 229.99996948242188, -18.0, 214.19998168945312, -18.0, 177.39999389648438, 30.800018310546875, 136.60000610351562, -18.0" stroke="#f21212" strokeType="INSIDE" strokeWidth="4.0" />
+                        <Polygon fill="#ffa821" layoutX="175.0" layoutY="102.0" points="119.99996948242188, -18.0, 177.39999389648438, 51.600006103515625, 229.99996948242188, -18.0, 214.19998168945312, -18.0, 177.39999389648438, 30.800018310546875, 136.60000610351562, -18.0" stroke="#f21212" strokeType="INSIDE" strokeWidth="4.0" />
+                        <Polygon fill="#ffa821" layoutX="65.0" layoutY="233.0" points="119.99996948242188, -18.0, 177.39999389648438, 51.600006103515625, 229.99996948242188, -18.0, 214.19998168945312, -18.0, 177.39999389648438, 30.800018310546875, 136.60000610351562, -18.0" stroke="#f21212" strokeType="INSIDE" strokeWidth="4.0" />
+                        <Circle fill="#d1d4d7" layoutX="462.0" layoutY="219.0" radius="14.0" stroke="#817e7e" strokeType="INSIDE" strokeWidth="3.0" />
+                        <Circle fill="#ffcb21" layoutX="352.0" layoutY="145.0" radius="14.0" stroke="#dc9912" strokeType="INSIDE" strokeWidth="3.0" />
+                        <Circle fill="#ff960c" layoutX="240.0" layoutY="275.0" radius="14.0" stroke="#b76a05" strokeType="INSIDE" strokeWidth="3.0" />
+                        <Label layoutX="454.0" layoutY="210.0" text="#2">
                            <font>
                               <Font name="Calibri Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="232.0" layoutY="294.0" text="#3">
+                        <Label layoutX="232.0" layoutY="266.0" text="#3">
                            <font>
                               <Font name="Calibri Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label layoutX="344.0" layoutY="164.0" text="#1">
+                        <Label layoutX="344.0" layoutY="136.0" text="#1">
                            <font>
                               <Font name="Calibri Bold" size="15.0" />
                            </font>
                         </Label>
-                        <Label fx:id="nicknameSecond" layoutX="404.0" layoutY="151.0" prefHeight="35.0" prefWidth="112.0" text="PlayerNickname" wrapText="true">
+                        <Label fx:id="nicknameSecond" layoutX="404.0" layoutY="123.0" prefHeight="35.0" prefWidth="112.0" text="PlayerNickname" wrapText="true">
                            <font>
                               <Font name="Calibri" size="17.0" />
                            </font>
                         </Label>
-                        <Label fx:id="nicknameFirst" layoutX="294.0" layoutY="77.0" prefHeight="35.0" prefWidth="112.0" text="PlayerNickname" wrapText="true">
+                        <Label fx:id="nicknameFirst" layoutX="294.0" layoutY="49.0" prefHeight="35.0" prefWidth="112.0" text="PlayerNickname" wrapText="true">
                            <font>
                               <Font name="Calibri" size="17.0" />
                            </font>
                         </Label>
-                        <Label fx:id="nicknameThird" layoutX="184.0" layoutY="209.0" prefHeight="35.0" prefWidth="112.0" text="PlayerNickname" wrapText="true">
+                        <Label fx:id="nicknameThird" layoutX="184.0" layoutY="181.0" prefHeight="35.0" prefWidth="112.0" text="PlayerNickname" wrapText="true">
                            <font>
                               <Font name="Calibri" size="17.0" />
                            </font>
                         </Label>
+                        <Button fx:id="playAgain" alignment="CENTER" contentDisplay="CENTER" layoutX="287.0" layoutY="391.0" mnemonicParsing="false" onMouseClicked="#jumpToLobby" prefHeight="58.0" prefWidth="131.0" style="-fx-background-color: #78afe1;" text="PLAY AGAIN">
+                           <font>
+                              <Font name="Calibri Bold" size="14.0" />
+                           </font>
+                        </Button>
                      </children>
                   </Pane>
                </children>
@@ -71,7 +76,7 @@
                <children>
                   <Pane prefHeight="200.0" prefWidth="200.0">
                      <children>
-                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-199.0" layoutY="-12.0" points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-199.0" layoutY="-12.0" onMouseClicked="#jumpToSplashScreen" points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
                         <Label layoutX="21.0" layoutY="150.0" text="back">
                            <font>
                               <Font name="Calibri" size="22.0" />

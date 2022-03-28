@@ -66,6 +66,9 @@ public class MainCtrl {
 	private WaitingScreenCtrl waitingScreenCtrl;
 	private Scene waitingScreen;
 
+	private TopPlayersLeaderboardCtrl topPlayersLeaderboardCtrl;
+	private Scene topPlayersLeaderboard;
+
 	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
 	private Scene multiPlayerQuestionScreen;
 
@@ -77,9 +80,12 @@ public class MainCtrl {
 
 	private Timeline timeLine;
 	private Player player;
+	private String nickname;
 	private int currentPoint;
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
+
+	public MainCtrl() { }
 
 	/**
 	 * Initialize all the screens
@@ -93,6 +99,7 @@ public class MainCtrl {
 	 * @param intermediateScene a pair of intermediate screen with parent
 	 * @param singlePlayerFinalScene a pair of final single player screen with parent.
 	 * @param waitingScreen a pair of waiting screen with parent
+	 * @param topPlayersLeaderboard a pair of top players leaderboard scene with parent.
 	 * @param multiPlayerQuestion a pair of multiplayer
 	 *          question screen with parent
 	 */
@@ -105,33 +112,37 @@ public class MainCtrl {
 		Pair<IntermediateSceneCtrl, Parent> intermediateScene,
 		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
+		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard,
 		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion
 	) {
 		this.primaryStage = primaryStage;
 
-		multiplayerPreGameCtrl = multiPlayer.getKey();
-		multiplayerPreGameScreen = new Scene(multiPlayer.getValue());
+		this.multiplayerPreGameCtrl = multiPlayer.getKey();
+		this.multiplayerPreGameScreen = new Scene(multiPlayer.getValue());
 
-		singlePlayerPreGameCtrl = singlePlayer.getKey();
-		singlePlayerPreGameScreen = new Scene(singlePlayer.getValue());
+		this.singlePlayerPreGameCtrl = singlePlayer.getKey();
+		this.singlePlayerPreGameScreen = new Scene(singlePlayer.getValue());
 
-		splashCtrl = splash.getKey();
-		splashScreen = new Scene(splash.getValue());
+		this.splashCtrl = splash.getKey();
+		this.splashScreen = new Scene(splash.getValue());
 
-		questionScreenSinglePlayerCtrl = questionScreenSinglePlayer.getKey();
+		this.questionScreenSinglePlayerCtrl = questionScreenSinglePlayer.getKey();
 		this.questionScreenSinglePlayer = new Scene(questionScreenSinglePlayer.getValue());
 
-		globalLeaderboardScreenCtrl = globalLeaderBoard.getKey();
+		this.globalLeaderboardScreenCtrl = globalLeaderBoard.getKey();
 		this.globalLeaderBoard = new Scene(globalLeaderBoard.getValue());
 
-		intermediateSceneCtrl = intermediateScene.getKey();
+		this.intermediateSceneCtrl = intermediateScene.getKey();
 		this.intermediateScene = new Scene(intermediateScene.getValue());
 
-		singlePlayerFinalSceneCtrl = singlePlayerFinalScene.getKey();
+		this.singlePlayerFinalSceneCtrl = singlePlayerFinalScene.getKey();
 		this.singlePlayerFinalScene = new Scene(singlePlayerFinalScene.getValue());
 
-		waitingScreenCtrl = waitingScreen.getKey();
+		this.waitingScreenCtrl = waitingScreen.getKey();
 		this.waitingScreen = new Scene(waitingScreen.getValue());
+
+		this.topPlayersLeaderboardCtrl = topPlayersLeaderboard.getKey();
+		this.topPlayersLeaderboard = new Scene(topPlayersLeaderboard.getValue());
 
 		this.multiplayerQuestionScreenCtrl = multiPlayerQuestion.getKey();
 		this.multiPlayerQuestionScreen = new Scene(multiPlayerQuestion.getValue());
@@ -443,6 +454,40 @@ public class MainCtrl {
 
 		// Show the recent score.
 		showIntermediateScene();
+	}
+
+	/**
+	 * Shows the final leaderboard scene of the multiplayer game mode.
+	 * This method needs to be changed in the future to allow displaying the names
+	 * of the top 3 players.
+	 */
+	public void showTopPlayersLeaderboard() {
+		primaryStage.setTitle("Final Leaderboard");
+		primaryStage.setScene(this.topPlayersLeaderboard);
+	}
+
+	/**
+	 * setter for the player nickname.
+	 * @param nickName the nickname selected by the player.
+	 */
+	public void setNickname(String nickName) {
+		this.nickname = nickName;
+	}
+
+	/**
+	 * getter for the player's nickname
+	 * @return the player's nickname as a String.
+	 */
+	public String getNickname() {
+		return this.nickname;
+	}
+
+	/**
+	 * this method calls the method joinLobby from the multiplayerPreGameCtrl class,
+	 * which handles the player joining a lobby feature.
+	 */
+	public void joinLobby() {
+		this.multiplayerPreGameCtrl.joinLobby();
 	}
 
 	public void showMultiPlayerQuestionScreen() {
