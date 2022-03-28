@@ -46,52 +46,60 @@
       <HBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="600.0" prefWidth="900.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0" />
-            <VBox alignment="TOP_CENTER" prefHeight="600.0" prefWidth="691.0" spacing="35.0">
+            <VBox alignment="CENTER" prefHeight="600.0" prefWidth="691.0" spacing="35.0">
                <children>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="691.0">
                      <children>
-                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="QUIZ" wrappingWidth="307.6700134277344">
-                              <font>
-                                  <Font name="Calibri" size="128.0" />
-                              </font>
-                          </Text>
-                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Z">
-                              <font>
-                                  <Font name="Calibri" size="64.0" />
-                              </font>
-                          </Text>
-                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Z">
-                              <font>
-                                  <Font name="Calibri" size="32.0" />
-                              </font>
-                          </Text>
-                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Z">
+                        <Pane prefHeight="100.0" prefWidth="690.0">
+                           <children>
+                                <Text layoutX="191.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="QUIZ" wrappingWidth="307.6700134277344">
+                                    <font>
+                                        <Font name="Calibri" size="128.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="441.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z">
+                                    <font>
+                                        <Font name="Calibri" size="64.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="463.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z">
+                                    <font>
+                                        <Font name="Calibri" size="32.0" />
+                                    </font>
+                                </Text>
+                                <Text layoutX="478.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Z">
+                                    <font>
+                                        <Font name="Calibri" size="24.0" />
+                                    </font>
+                                </Text>
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+                  <Pane prefHeight="334.0" prefWidth="691.0">
+                     <children>
+                          <Button layoutX="110.0" layoutY="25.0" mnemonicParsing="false" onAction="#changeToSinglePlayer" prefHeight="94.0" prefWidth="219.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Singleplayer">
                               <font>
                                   <Font name="Calibri" size="24.0" />
                               </font>
-                          </Text>
+                        </Button>
+                          <Button layoutX="386.0" layoutY="25.0" mnemonicParsing="false" onAction="#changeToMultiplayer" prefHeight="94.0" prefWidth="219.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Multiplayer">
+                              <font>
+                                  <Font name="Calibri" size="24.0" />
+                              </font>
+                        </Button>
+                          <Button layoutX="110.0" layoutY="174.0" mnemonicParsing="false" onAction="#changeToLeaderboard" prefHeight="94.0" prefWidth="219.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Global Leaderboard" textAlignment="CENTER" wrapText="true">
+                              <font>
+                                  <Font name="Calibri" size="25.0" />
+                              </font>
+                        </Button>
+                        <Button layoutX="386.0" layoutY="174.0" mnemonicParsing="false" onAction="#changeToAdminInterface" prefHeight="94.0" prefWidth="219.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Admin Interface" textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font name="Calibri" size="25.0" />
+                           </font>
+                        </Button>
                      </children>
-                  </HBox>
-                    <Button mnemonicParsing="false" onAction="#changeToSinglePlayer" prefHeight="94.0" prefWidth="219.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Singleplayer">
-                        <font>
-                            <Font name="Calibri" size="24.0" />
-                        </font>
-                  </Button>
-                    <Button mnemonicParsing="false" onAction="#changeToMultiplayer" prefHeight="94.0" prefWidth="219.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Multiplayer">
-                        <font>
-                            <Font name="Calibri" size="24.0" />
-                        </font>
-                  </Button>
-                    <Button mnemonicParsing="false" onAction="#changeToLeaderboard" prefHeight="93.0" prefWidth="219.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Global Leaderboard" textAlignment="CENTER" wrapText="true">
-                        <font>
-                            <Font name="Calibri" size="25.0" />
-                        </font>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#changeToAdminInterface" prefHeight="93.0" prefWidth="219.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Admin Interface" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font name="Calibri" size="25.0" />
-                     </font>
-                  </Button>
+                  </Pane>
                </children>
             </VBox>
             <VBox alignment="BOTTOM_CENTER" prefHeight="602.0" prefWidth="110.0">
