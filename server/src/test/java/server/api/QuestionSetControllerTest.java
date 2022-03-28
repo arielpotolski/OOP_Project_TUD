@@ -10,6 +10,7 @@ import static server.CustomAssertions.assertResponseEquals;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class QuestionSetControllerTest {
 	private QuestionSetController qsc = new QuestionSetController(new DummyActivityRepository());
@@ -21,13 +22,56 @@ public class QuestionSetControllerTest {
 			new Activity("69", "69", 69, "69", "69")
 		));
 
-		/* As far as I am aware, this is the only real kind of test you can perform.  Ideally the
-		 * question types will be random every time, and because each question type has its own
-		 * unique fields and behaviors (some even have multiple activities) it becomes incredibly
-		 * annoying to properly test this method.  Since this method is so simple, I don't think it
-		 * deserves to be tested that extensively.
-		 */
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
+	}
+
+	/**
+	 * 	Tests whether two identical seeds give the same result
+	 *
+	 * @throws IOException
+	 */
+	@Test
+	void getAll2() throws IOException {
+		this.qsc.addActivities(List.of(
+				new Activity("42", "42", 42, "42", "42"),
+				new Activity("69", "69", 69, "69", "69")
+		));
+
+		assertEquals(this.qsc.getAll(404), this.qsc.getAll(404));
+	}
+
+	/**
+	 * 	Tests whether two different seeds give the same results
+	 *
+	 * @throws IOException
+	 */
+	@Test
+	void getAll3() throws IOException {
+		this.qsc.addActivities(List.of(
+				new Activity("42", "42", 42, "42", "42"),
+				new Activity("69", "69", 69, "69", "69"),
+				new Activity("420", "420", 420, "420", "420"),
+				new Activity("701034", "701034", 701034, "701034", "701034")
+		));
+
+		assertNotEquals(this.qsc.getAll(404), this.qsc.getAll(404));
+	}
+
+	/**
+	 * 	Tests whether two different seeds give different results
+	 *
+	 * @throws IOException
+	 */
+	@Test
+	void getAll4() throws IOException {
+		this.qsc.addActivities(List.of(
+				new Activity("42", "42", 42, "42", "42"),
+				new Activity("69", "69", 69, "69", "69"),
+				new Activity("420", "420", 420, "420", "420"),
+				new Activity("701034", "701034", 701034, "701034", "701034")
+		));
+
+		assertNotEquals(this.qsc.getAll(404), this.qsc.getAll(1));
 	}
 
 	/**
@@ -233,9 +277,9 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 		assertResponseEquals(HttpStatus.OK, this.qsc.deleteById("69"));
-		assertEquals(this.qsc.getAll().size(), 1);
+		assertEquals(this.qsc.getAll(0).size(), 1);
 	}
 
 	/**
@@ -248,9 +292,9 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.deleteById("1337"));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 	}
 
 	/**
@@ -262,9 +306,9 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.deleteById(null));
-		assertEquals(this.qsc.getAll().size(), 2);
+		assertEquals(this.qsc.getAll(0).size(), 2);
 	}
 
 	/**

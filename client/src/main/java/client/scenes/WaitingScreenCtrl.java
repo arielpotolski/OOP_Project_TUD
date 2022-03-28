@@ -20,6 +20,7 @@ public class WaitingScreenCtrl {
 	private MainCtrl mainCtrl;
 	private ServerUtils serverUtils;
 	private static final long REFRESH_DELAY = 500;
+	private int port;
 
 	@FXML
 	private AnchorPane peopleInTheLeaderBoardPane;
@@ -52,7 +53,7 @@ public class WaitingScreenCtrl {
 
 		Thread thread = new Thread(() -> {
 			boolean gameStarted = false;
-			int port = -1;
+			port = -1;
 			while (!gameStarted) {
 				// Keep refreshing our interest in the lobby.
 				Optional<LobbyResponse> maybeLobbyResponse = this.serverUtils.refreshLobby();
@@ -84,26 +85,26 @@ public class WaitingScreenCtrl {
 					return;
 				}
 			}
-
 			// Game has started.
-			int finalPort = port;
-			Platform.runLater(() -> {
-				gameBegins(finalPort);
-			});
+			Platform.runLater(this::gameBegins);
 		});
 		thread.start();
 	}
 
 	/**
 	 * Create a TCP connection to the server and move to the question screen.
-	 * @param port The port which the client should connect to for the game.
 	 */
-	private void gameBegins(int port) {
+	private void gameBegins() {
 		try {
-			this.serverUtils.makeConnection(port);
+			this.serverUtils.makeConnection(this.port);
+
+			// Set the same unique seed to all players inside the lobby.
+			this.mainCtrl.setSeed(this.port);
+			this.mainCtrl.getQuestions();
+
 			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.
-			mainCtrl.showMultiPlayerQuestionScreen();
+			this.mainCtrl.showMultiPlayerQuestionScreen();
 		} catch (Exception err) {
 			err.printStackTrace();
 		}

@@ -219,4 +219,11 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 		thirdEmoji.setGraphic(cry);
 		fourthEmoji.setGraphic(wow);
 	}
+
+	/**
+	 *  Decreases the progress of progress bar (aka the timer)
+	 */
+	public void decreaseProgress() {
+		// TODO
+	}
 }
