@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
+import commons.Player;
 
 import com.google.inject.Inject;
 import jakarta.ws.rs.ProcessingException;
@@ -16,6 +17,7 @@ import javafx.scene.control.TextField;
 public class MultiplayerPreGameCtrl {
 	private final ServerUtils server;
 	private final MainCtrl mainCtrl;
+	private Player player;
 
 	@FXML
 	private TextField serverURL;
@@ -56,6 +58,7 @@ public class MultiplayerPreGameCtrl {
 	public void joinLobby() {
 		String url = this.serverURL.getText();
 		String name = this.nickname.getText();
+		this.player = new Player(name,0);
 
 		ServerUtils serverUtils = new ServerUtils(url);
 
@@ -85,5 +88,14 @@ public class MultiplayerPreGameCtrl {
 			);
 			alert.showAndWait();
 		}
+	}
+
+	/**
+	 *  Getter method for the player
+	 *
+	 * @return the player.
+	 */
+	public Player getPlayer() {
+		return player;
 	}
 }
