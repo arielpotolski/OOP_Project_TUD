@@ -42,8 +42,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MainCtrl {
 	private Stage primaryStage;
@@ -237,7 +237,9 @@ public class MainCtrl {
 		return this.server;
 	}
 
-
+	/**
+	 * Set up a thread which listens to the connection from the server for messages
+	 */
 	public void startMessageReceiverThread() {
 		Thread thread = new Thread(() -> {
 			Connection conn = this.server.getConnection();
@@ -246,11 +248,13 @@ public class MainCtrl {
 					Message message = conn.receive();
 					switch (message.getType()) {
 						case LEADERBOARD:
-							this.intLeaderboardCtrl.setPlayers(((LeaderboardMessage) message).getPlayers());
+							this.intLeaderboardCtrl.setPlayers(
+									((LeaderboardMessage) message).getPlayers());
 							break;
 						case JOIN:
 						case ERROR:
-							this.logger.error("Received error message: " + ((ErrorMessage) message).getError());
+							this.logger.error("Received error message: " +
+									((ErrorMessage) message).getError());
 							break;
 							// TODO EndGame Message to stop this thread
 					}
