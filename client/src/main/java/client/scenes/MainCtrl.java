@@ -85,8 +85,7 @@ public class MainCtrl {
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
 
-	public MainCtrl() {
-	}
+	public MainCtrl() { }
 
 	/**
 	 * Initialize all the screens

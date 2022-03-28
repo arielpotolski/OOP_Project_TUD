@@ -81,8 +81,12 @@ public class Main extends Application {
 		var waitingScreen = FXML.load(WaitingScreenCtrl.class,
 				"client", "scenes", "WaitingScreen.fxml");
 		var topPlayersLeaderboard = FXML.load(TopPlayersLeaderboardCtrl.class,
-				"client", "scenes", "TopPlayersLeaderboard.fxml");
-		var multiPlayerQuestion = FXML.load(MultiplayerQuestionScreenCtrl.class, "client", "scenes",
+				"client",
+				"scenes",
+				"TopPlayersLeaderboard.fxml");
+		var multiPlayerQuestion = FXML.load(MultiplayerQuestionScreenCtrl.class,
+				"client",
+				"scenes",
 				"MultiplayerQuestionScreen.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
