@@ -35,5 +35,6 @@ public class IntermediateLeaderboardCtrl implements Initializable {
 	 */
 	public void setProgress(double amount) {
 		this.progress = amount;
+		this.timeUntilNextQuestion.setProgress(this.progress);
 	}
 }

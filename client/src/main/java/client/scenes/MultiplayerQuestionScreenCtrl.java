@@ -60,6 +60,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 				this.mainCtrl.getIntermediateLeaderboardCtrl();
 		Stage primaryStage = this.mainCtrl.getPrimaryStage();
 
+		intermediateLeaderboardCtrl.setProgress(1f);
 		Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
 			intermediateLeaderboardCtrl.decreaseProgress(0.25);
 		}));
