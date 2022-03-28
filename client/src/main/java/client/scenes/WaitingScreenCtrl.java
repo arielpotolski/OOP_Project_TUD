@@ -101,6 +101,7 @@ public class WaitingScreenCtrl {
 	private void gameBegins(int port) {
 		try {
 			this.serverUtils.makeConnection(port);
+			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.
 			mainCtrl.showMultiPlayerQuestionScreen();
 		} catch (Exception err) {
