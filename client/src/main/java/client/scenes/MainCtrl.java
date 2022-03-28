@@ -72,9 +72,6 @@ public class MainCtrl {
 	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
 	private Scene multiPlayerQuestionScreen;
 
-	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
-	private Scene multiplayerQuestionScreen;
-
 	private ServerUtils server;
 
 	private List<Question> questions;
@@ -194,7 +191,7 @@ public class MainCtrl {
 		}
 
 		primaryStage.setTitle("Question");
-		primaryStage.setScene(multiplayerQuestionScreen);
+		primaryStage.setScene(multiPlayerQuestionScreen);
 
 		question = questions.get(0); // get the element at the top
 		questions.remove(0); // pop the element at the top
@@ -217,7 +214,7 @@ public class MainCtrl {
 		} else if (question instanceof InsteadOfQuestion) {
 			setUpInsteadQuestionMultiplayer((InsteadOfQuestion) question);
 		}
-		primaryStage.setScene(multiplayerQuestionScreen);
+		primaryStage.setScene(multiPlayerQuestionScreen);
 	}
 
 	public void showWaitingScreen(LobbyResponse firstResponse) {
