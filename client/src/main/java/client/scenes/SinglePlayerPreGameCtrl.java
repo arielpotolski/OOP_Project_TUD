@@ -14,7 +14,6 @@ import javafx.scene.control.TextField;
 public class SinglePlayerPreGameCtrl {
 	public ServerUtils server;
 	private MainCtrl mainCtrl;
-	private String nickName;
 	private Player player;
 
 	@FXML
@@ -39,8 +38,8 @@ public class SinglePlayerPreGameCtrl {
 	 * the method change the single player pre-game screen to question screen.
 	 */
 	public void changeToQuestionScreen() throws IOException {
-		this.nickName = this.nickname.getText();
-		this.player = new Player(this.nickName,0);
+		setNickname();
+		this.player = new Player(this.mainCtrl.getNickname(),0);
 		this.server = new ServerUtils(Main.serverHost);
 		this.mainCtrl.setServer(this.server);
 		this.mainCtrl.getQuestions();
@@ -58,5 +57,12 @@ public class SinglePlayerPreGameCtrl {
 
 	public void jumpToSplashScreen() {
 		this.mainCtrl.showSplashScreen();
+	}
+
+	/**
+	 * setter for the player's nickname from the MainCtrl nickname's field.
+	 */
+	public void setNickname() {
+		this.mainCtrl.setNickname(this.nickname.getText());
 	}
 }

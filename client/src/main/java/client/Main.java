@@ -30,6 +30,7 @@ import client.scenes.QuestionScreenSinglePlayerCtrl;
 import client.scenes.SinglePlayerFinalScreenCtrl;
 import client.scenes.SinglePlayerPreGameCtrl;
 import client.scenes.SplashCtrl;
+import client.scenes.TopPlayersLeaderboardCtrl;
 import client.scenes.WaitingScreenCtrl;
 import static commons.Utility.nullOrEmpty;
 
@@ -80,7 +81,13 @@ public class Main extends Application {
 				"SinglePlayerFinalScreen.fxml");
 		var waitingScreen = FXML.load(WaitingScreenCtrl.class,
 				"client", "scenes", "WaitingScreen.fxml");
-		var multiPlayerQuestion = FXML.load(MultiplayerQuestionScreenCtrl.class, "client", "scenes",
+		var topPlayersLeaderboard = FXML.load(TopPlayersLeaderboardCtrl.class,
+				"client",
+				"scenes",
+				"TopPlayersLeaderboard.fxml");
+		var multiPlayerQuestion = FXML.load(MultiplayerQuestionScreenCtrl.class,
+				"client",
+				"scenes",
 				"MultiplayerQuestionScreen.fxml");
 		var intermediateLeaderboard = FXML.load(IntLeaderboardCtrl.class, "client", "scenes",
 				"IntermediateLeaderboard.fxml");
@@ -95,6 +102,8 @@ public class Main extends Application {
 			intermediateScene,
 			singlePlayerFinalScene,
 			waitingScreen,
+			topPlayersLeaderboard,
+			multiPlayerQuestion,
 			multiPlayerQuestion,
 			intermediateLeaderboard
 		);
