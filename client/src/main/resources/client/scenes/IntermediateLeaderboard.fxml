@@ -18,7 +18,7 @@
                         <Font name="Calibri" size="48.0" />
                      </font>
                   </Label>
-                  <BarChart fx:id="barChart">
+                  <BarChart fx:id="barChart" prefWidth="488.0" BorderPane.alignment="CENTER">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
