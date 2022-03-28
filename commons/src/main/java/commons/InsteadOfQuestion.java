@@ -212,27 +212,29 @@ public class InsteadOfQuestion extends Question {
 		};
 	}
 
-	//incorrect
+	/**
+	 * Returns the activity with the correct answer
+	 * @return the correct answer activity
+	 */
 	public Activity correctAnswer() {
-		double distanceFromOneOfCoefficient1 = 1 - this.realCoefficient1;
-		double distanceFromOneOfCoefficient2 = 1 - this.realCoefficient2;
-		double distanceFromOneOfCoefficient3 = 1 - this.realCoefficient3;
-		double result = Math.min(
-				distanceFromOneOfCoefficient1,
-				Math.min(
-						distanceFromOneOfCoefficient2,
-						distanceFromOneOfCoefficient3
-				)
-		);
+		double calculatedCoefficient1 = (double) this.answer1.getConsumptionInWh() /
+				this.questionActivity.getConsumptionInWh();
+		double calculatedCoefficient2 = (double) this.answer2.getConsumptionInWh() /
+				this.questionActivity.getConsumptionInWh();
 
-		if (result == distanceFromOneOfCoefficient1) {
+		if (Utility.doubleEquals(realCoefficient1, calculatedCoefficient1)) {
 			return this.answer1;
-		} else if (result == distanceFromOneOfCoefficient2) {
+		} else if (Utility.doubleEquals(realCoefficient2, calculatedCoefficient2)) {
 			return this.answer2;
 		}
 		return this.answer3;
 	}
 
+	/**
+	 * Finds the consumption of an activity based on title
+	 * @param title the title of the activity
+	 * @return the condumption of the activity
+	 */
 	public long returnEnergyConsumption(String title) {
 		if (title.equals(this.answer1.getTitle())) {
 			return this.answer1.getConsumptionInWh();
