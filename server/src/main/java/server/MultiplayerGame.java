@@ -11,6 +11,7 @@ import commons.Connection;
 import commons.messages.ErrorMessage;
 import commons.messages.JoinMessage;
 import commons.messages.JokerMessage;
+import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
 import commons.messages.MessageType;
 
@@ -21,7 +22,7 @@ public class MultiplayerGame extends Thread {
 	/**
 	 * A record for storing the information for each player in the game.
 	 */
-	private record Player(Connection connection, String name) {}
+	private record Player(Connection connection, String name, int points) {}
 
 	/**
 	 * Information about the players in the lobby.
@@ -52,15 +53,41 @@ public class MultiplayerGame extends Thread {
 	public void run() {
 		try {
 			waitForEveryoneToJoin();
-			// TODO begin game
-			// TODO send out questions to players
-			// TODO track game progress
-			// TODO send leaderboard
 			for(Player player : players) {
 				receiveMessageFromThePlayer(player);
 			}
+			// TODO begin game
+			// TODO send out questions to players
+			// TODO track game progress
+			sendMessageToAllPlayers(new LeaderboardMessage(generateLeaderboard()));
+			// TODO send leaderboard
 		} catch (Exception err) {
 			err.printStackTrace();
+		}
+	}
+
+	/**
+	 * Generates the leaderboard of all the players
+	 * @return A hash map with name and result of the players
+	 */
+	private HashMap<String, Integer> generateLeaderboard(){
+		HashMap<String, Integer> result = new HashMap<>();
+		for (Player player : this.players) {
+			result.put(player.name(), player.points());
+		}
+		return result;
+	}
+
+	/**
+	 * Sends a message to all players
+	 * @param message the message for the players
+	 * @throws IOException It would happen if there is an issue with the socket
+	 */
+	private void sendMessageToAllPlayers(Message message) throws IOException {
+		// TODO Handle Exception here if player disconnects bcs if a player
+		//  disconnects then exception
+		for (Player player : this.players) {
+			player.connection().send(message);
 		}
 	}
 
@@ -97,7 +124,7 @@ public class MultiplayerGame extends Thread {
 			}
 
 			// Save player.
-			this.players.add(new Player(connection, name));
+			this.players.add(new Player(connection, name, 0));
 		}
 	}
 

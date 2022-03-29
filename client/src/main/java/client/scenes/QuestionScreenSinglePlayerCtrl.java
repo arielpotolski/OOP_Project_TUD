@@ -27,9 +27,16 @@ import javax.imageio.ImageIO;
 public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	private MainCtrl mainCtrl;
 	private ServerUtils server;
+	private double timeStamp;
 
 	@FXML
 	private TextField textField;
+
+	@FXML
+	private TextField inputText;
+
+	@FXML
+	private Button inputButton;
 
 	@FXML
 	private Button answerButton1;
@@ -39,6 +46,9 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 
 	@FXML
 	private Button answerButton3;
+
+	@FXML
+	private Label estimateAnswer;
 
 	@FXML
 	public Label labelQuestion;
@@ -139,6 +149,15 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	}
 
 	/**
+	 * 	The method sets up the visibility of the estimateAnswer Label
+	 *
+	 * @param visible the visibility of a button
+	 */
+	public void setVisibleEstimateAnswer(boolean visible) {
+		this.estimateAnswer.setVisible(visible);
+	}
+
+	/**
 	 * Parses a byteArray to image
 	 * @param imageArray the byte array with information about the image
 	 * @return an image object for the imageViews
@@ -224,15 +243,25 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 */
 	public void answerReturn(ActionEvent event) {
 		Object source = event.getSource();
+		timeStamp = getProgress();
+
+		mainCtrl.clearButtons();
+
 		if (answerButton1.equals(source)) {
-			mainCtrl.showAnswer(answerButton1, null);
+			inputButton = answerButton1;
+			inputText = null;
 		} else if (answerButton2.equals(source)) {
-			mainCtrl.showAnswer(answerButton2, null);
+			inputButton = answerButton2;
+			inputText = null;
 		} else if (answerButton3.equals(source)) {
-			mainCtrl.showAnswer(answerButton3, null);
+			inputButton = answerButton3;
+			inputText = null;
 		} else if (textField.equals(source)) {
-			mainCtrl.showAnswer(null, textField);
+			inputButton = null;
+			inputText = textField;
 		}
+
+		this.mainCtrl.updatePoints(inputButton, inputText);
 	}
 
 	/**
@@ -244,10 +273,12 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	}
 
 	/**
-	 * This method decrease the progress
+	 * 	Decreases the progress bar by a certain, given, amount
+	 *
+	 * @param amount the amount to be decreased
 	 */
-	public void decreaseProgress() {
-		this.progress -= 0.1;
+	public void decreaseProgress(double amount) {
+		this.progress -= amount;
 		this.progressBarTime.setProgress(this.progress);
 	}
 
@@ -269,5 +300,95 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	public void setProgress(double progress) {
 		this.progress = progress;
 		this.progressBarTime.setProgress(progress);
+	}
+
+	/**
+	 *  The method sets the CSS style of the first Answer Button
+	 *
+	 * @param style the CSS style that is to be applied
+	 */
+	public void setStyleAnswerButton1(String style) {
+		answerButton1.setStyle(style);
+	}
+
+	/**
+	 *  The method sets the CSS style of the second Answer Button
+	 *
+	 * @param style the CSS style that is to be applied
+	 */
+	public void setStyleAnswerButton2(String style) {
+		answerButton2.setStyle(style);
+	}
+
+	/**
+	 *  The method sets the CSS style of the third Answer Button
+	 *
+	 * @param style the CSS style that is to be applied
+	 */
+	public void setStyleAnswerButton3(String style) {
+		answerButton3.setStyle(style);
+	}
+
+	/**
+	 * 	Getter method for timeStamp
+	 *
+	 * @return The last time when the user clicked on an answer
+	 */
+	public double getTimeStamp() {
+		return timeStamp;
+	}
+
+	/**
+	 * 	Getter method for inputButton
+	 *
+	 * @return the button that was last clicked by the Player
+	 */
+	public Button getInputButton() {
+		return inputButton;
+	}
+
+	/**
+	 * 	Getter method for inputText
+	 *
+	 * @return the text that was last entered by the player
+	 */
+	public TextField getInputText() {
+		return inputText;
+	}
+
+	/**
+	 * 	Setter method for inputText
+	 *
+	 * @param text The value that is to be assigned to inputText
+	 */
+	public void setInputText(TextField text) {
+		inputText = text;
+	}
+
+	/**
+	 * 	Setter method for inputButton
+	 *
+	 * @param button The button that is to be assigned to inputButton
+	 */
+	public void setInputButton(Button button) {
+		inputButton = button;
+	}
+
+	/**
+	 * 	The method sets the CSS style of the answer Label in the estimate game mode
+	 *
+	 * @param style the CSS style that is to be applied
+	 */
+	public void setEstimateAnswerStyle(String style) {
+		estimateAnswer.setStyle(style);
+	}
+
+	/**
+	 * 	Writes a certain string to the Label estimateAnswer
+	 *
+	 * @param text The text that is to be written to the label
+	 */
+	public void setEstimateAnswerLabel(String text) {
+		estimateAnswer.setText(text);
 	}
 }

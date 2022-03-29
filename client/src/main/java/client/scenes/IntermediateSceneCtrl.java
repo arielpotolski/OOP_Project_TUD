@@ -1,5 +1,6 @@
 package client.scenes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -58,11 +59,21 @@ public class IntermediateSceneCtrl implements Initializable {
 		this.timeUntilNextQuestion.setStyle("-fx-accent: #00FF00");
 	}
 
-	public void decreaseProgress() {
-		this.progress -= 0.1;
+	/**
+	 * 	Decreases the progess in the progress bar by a certain, given, amount
+	 *
+	 * @param amount The amount of progress that the bar loses
+	 */
+	public void decreaseProgress(double amount) {
+		this.progress -= amount;
 		this.timeUntilNextQuestion.setProgress(this.progress);
 	}
 
+	/**
+	 * 	Getter method for progress of the progress bar
+	 *
+	 * @return the progress
+	 */
 	public double getProgress() {
 		return this.progress;
 	}
@@ -70,5 +81,14 @@ public class IntermediateSceneCtrl implements Initializable {
 	public void setProgress(double progress) {
 		this.progress = progress;
 		this.timeUntilNextQuestion.setProgress(progress);
+	}
+
+	/**
+	 * Changes the screen to leaderboard
+	 * @throws IOException if something goes wrong with the socket
+	 * @throws ClassNotFoundException if the class is not found
+	 */
+	public void changeToIntLeaderboard() throws IOException, ClassNotFoundException {
+		this.mainCtrl.changeToLeaderboard();
 	}
 }
