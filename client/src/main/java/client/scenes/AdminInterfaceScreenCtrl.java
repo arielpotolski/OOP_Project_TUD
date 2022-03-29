@@ -38,4 +38,17 @@ public class AdminInterfaceScreenCtrl {
 	private void jumpToRemoveActivityScreen() {
 		this.mainCtrl.showAdminRemoveActivityScreen();
 	}
+
+	/**
+	 * Take the user to the edit activity screen.
+	 */
+	@FXML
+	private void jumpToEditActivityScreen() {
+		this.mainCtrl.showAdminEditActivityScreen();
+	}
+
+	@FXML
+	private void refreshActivities() {
+
+	}
 }
