@@ -5,6 +5,7 @@ import java.util.Set;
 
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
+import commons.MessageModel;
 import static commons.Utility.contentsEqual;
 
 import com.google.inject.Inject;
@@ -20,6 +21,7 @@ public class WaitingScreenCtrl {
 	private MainCtrl mainCtrl;
 	private ServerUtils serverUtils;
 	private static final long REFRESH_DELAY = 500;
+	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
 	private int port;
 
 	@FXML
@@ -33,6 +35,8 @@ public class WaitingScreenCtrl {
 
 	@FXML
 	private ListView<String> usersInLobbyView;
+
+	LobbyResponse lobbyResponse;
 
 	@Inject
 	public WaitingScreenCtrl(MainCtrl mainCtrl) {
@@ -118,6 +122,13 @@ public class WaitingScreenCtrl {
 	 * (See `beginActiveRefresh()`)
 	 */
 	public void startGame() {
-		this.serverUtils.startMultiplayerGame();
+		this.serverUtils.startMultiplayerGame().get();
+		serverUtils.registerForMessages(
+				"/message/receive/" + port,
+				MessageModel.class,
+				messageModel -> {
+			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
+		});
+		mainCtrl.setPortInMultiplayerQuestionScreen(port);
 	}
 }

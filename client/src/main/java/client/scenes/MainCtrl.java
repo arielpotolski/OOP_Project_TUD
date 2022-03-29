@@ -795,9 +795,7 @@ public class MainCtrl {
 		player = multiplayerPreGameCtrl.getPlayer();
 		multiplayerQuestionScreenCtrl.setPlayer(player);
 		multiplayerQuestionScreenCtrl.setServer(server);
-		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
-			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
-		});
+
 		primaryStage.setTitle("MultiPlayerQuestion");
 		primaryStage.setScene(multiPlayerQuestionScreen);
 	}
@@ -813,4 +811,7 @@ public class MainCtrl {
 		this.intLeaderboardCtrl.displayScores();
 	}
 
+	public void setPortInMultiplayerQuestionScreen(int port) {
+		multiplayerQuestionScreenCtrl.setPort(port);
+	}
 }

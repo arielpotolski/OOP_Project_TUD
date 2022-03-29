@@ -4,6 +4,7 @@ import java.util.List;
 
 import commons.MessageModel;
 import commons.Player;
+import org.springframework.web.bind.annotation.*;
 import server.database.PlayerRepository;
 import static commons.Utility.nullOrEmpty;
 
@@ -11,11 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/players")
@@ -40,13 +36,13 @@ public class PlayerController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@MessageMapping("/chat") //app/chat
-	@SendTo("/message/receive")
+	@MessageMapping("/chat/{id}") //app/chat
+	@SendTo("/message/receive/{id}")
 	/**
 	 * This method return the MessageModel to other clients after one client want to
 	 * send the message to other clients
 	 */
-	public MessageModel sendMessage(MessageModel messageModel) {
+	public MessageModel sendMessage(@PathVariable(value = "id") int id, MessageModel messageModel) {
 		return messageModel;
 	}
 
