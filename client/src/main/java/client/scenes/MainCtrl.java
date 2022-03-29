@@ -550,7 +550,7 @@ public class MainCtrl {
 	 */
 	public void updatePoints(Button button, TextField textField) {
 		// in case the player doesn't provide an answer in time
-		if(button == null && textField == null) {
+		if (button == null && textField == null) {
 			currentPoint = 0;
 			questionScreenSinglePlayerCtrl.setProgress(1);
 
@@ -598,16 +598,13 @@ public class MainCtrl {
 				buttonId = 3;
 			}
 
-
 			currentPoint = highConsumptionQuestion.pointsEarned(1000,
 					buttonId, timePassed);
-
-
 
 			player.setPoint(player.getPoint() + currentPoint);
 
 			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== highConsumptionQuestion.returnEnergyConsumption(button.getText())){
+					== highConsumptionQuestion.returnEnergyConsumption(button.getText())) {
 				numberOfCorrectAnswered++;
 			}
 
@@ -623,7 +620,7 @@ public class MainCtrl {
 		} else if (question instanceof EstimateQuestion) {
 			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
 			currentPoint = estimateQuestion.pointsEarned(1000,
-					Integer.parseInt(textField.getText()),timePassed);
+					Integer.parseInt(textField.getText()), timePassed);
 			player.setPoint(player.getPoint() + currentPoint);
 		}
 
