@@ -66,6 +66,14 @@ public class ServerUtils {
 		this.client = ClientBuilder.newClient();
 	}
 
+	/**
+	 * Getter for the connection
+	 * @return the connection of this server
+	 */
+	public Connection getConnection() {
+		return connection;
+	}
+
 	private URI getServer() {
 		return UriBuilder.newInstance().scheme("http").host(this.host).port(8080).build();
 	}

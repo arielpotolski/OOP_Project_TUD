@@ -1,5 +1,6 @@
 package client.scenes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -8,6 +9,8 @@ import commons.MessageModel;
 import commons.Player;
 
 import com.google.inject.Inject;
+import commons.messages.JokerMessage;
+import commons.messages.JokerType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -100,6 +103,8 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 	private VBox vBox;
 
 	private Player player;
+
+	private double progress = 1;
 
 	@Inject
 	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
@@ -218,5 +223,14 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 		secondEmoji.setGraphic(victory);
 		thirdEmoji.setGraphic(cry);
 		fourthEmoji.setGraphic(wow);
+	}
+
+	public void decreaseProgress(double progress) {
+		this.progress -= progress;
+		progressBarTime.setProgress(progress);
+	}
+
+	public void decreaseOtherPlayersTime() throws IOException {
+		server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 	}
 }

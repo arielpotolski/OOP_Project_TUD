@@ -5,11 +5,10 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import commons.Connection;
-import commons.messages.ErrorMessage;
-import commons.messages.JoinMessage;
-import commons.messages.MessageType;
+import commons.messages.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +52,9 @@ public class MultiplayerGame extends Thread {
 			// TODO send out questions to players
 			// TODO track game progress
 			// TODO send leaderboard
+			for(Player player : players) {
+				receiveMessageFromThePlayer(player);
+			}
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
@@ -92,6 +94,44 @@ public class MultiplayerGame extends Thread {
 
 			// Save player.
 			this.players.add(new Player(connection, name));
+		}
+	}
+
+	private void receiveMessageFromThePlayer(Player player) {
+		Thread thread = new Thread(() -> {
+			while (true) {
+				Message message = null;
+				try {
+					message = player.connection().receive();
+				} catch (IOException | ClassNotFoundException err) {
+					err.printStackTrace();
+				}
+				switch (message.getType()) {
+					case JOKER -> {
+						try {
+							handleJokerMessage(player, (JokerMessage) message);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		thread.start();
+	}
+
+	private void handleJokerMessage(Player player, JokerMessage message) throws IOException {
+		this.logger.debug(player.toString() + "sent a joker message");
+		// TODO track if player used joker
+		// TODO handle other stuff
+		replyMessageToClient(message, Optional.of(player));
+	}
+
+	private void replyMessageToClient(JokerMessage message, Optional<Player> exclude) throws IOException {
+		for (Player player: this.players) {
+			if (exclude.isEmpty() || exclude.get() != player) {
+				player.connection.send(message);;
+			}
 		}
 	}
 }

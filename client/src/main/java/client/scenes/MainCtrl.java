@@ -20,15 +20,12 @@ import java.io.IOException;
 import java.util.List;
 
 import client.utils.ServerUtils;
-import commons.EstimateQuestion;
-import commons.HighestConsumptionQuestion;
-import commons.InsteadOfQuestion;
-import commons.LobbyResponse;
-import commons.MCQuestion;
-import commons.MessageModel;
-import commons.Player;
-import commons.Question;
+import commons.*;
 
+import commons.messages.ErrorMessage;
+import commons.messages.JokerMessage;
+import commons.messages.JokerType;
+import commons.messages.Message;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -38,6 +35,10 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import static commons.messages.MessageType.*;
 
 public class MainCtrl {
 	private Stage primaryStage;
@@ -80,6 +81,9 @@ public class MainCtrl {
 	private int currentPoint;
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
+
+	private Logger logger;
+
 
 	/**
 	 * Initialize all the screens
@@ -454,6 +458,35 @@ public class MainCtrl {
 		});
 		primaryStage.setTitle("MultiPlayerQuestion");
 		primaryStage.setScene(multiPlayerQuestionScreen);
+	}
+
+	public void startMessageReceiverThread() {
+		Thread thread = new Thread(() -> {
+			Connection conn = this.server.getConnection();
+			while (true) {
+				try {
+					Message message = conn.receive();
+					switch (message.getType()) {
+						case JOKER:
+							JokerMessage jokerMessage = (JokerMessage) message;
+							if (jokerMessage.getJokerType() == JokerType.DECREASE) {
+								multiplayerQuestionScreenCtrl.decreaseProgress(0.5);
+							}
+							break;
+						case JOIN:
+						case ERROR:
+							this.logger.error("Received error message: " +
+									((ErrorMessage) message).getError());
+							break;
+						// TODO EndGame Message to stop this thread
+					}
+				} catch (Exception err) {
+					err.printStackTrace();
+					return;
+				}
+			}
+		});
+		thread.start();
 	}
 
 }

@@ -103,6 +103,7 @@ public class WaitingScreenCtrl {
 			this.serverUtils.makeConnection(port);
 			// Move to game screen.
 			mainCtrl.showMultiPlayerQuestionScreen();
+			this.mainCtrl.startMessageReceiverThread();
 		} catch (Exception err) {
 			err.printStackTrace();
 		}

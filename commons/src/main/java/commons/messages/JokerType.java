@@ -1,2 +1,3 @@
-package commons.messages;public enum JokerTyoe {
-}
+package commons.messages;
+
+public enum JokerType { DECREASE, DOUBLE }
