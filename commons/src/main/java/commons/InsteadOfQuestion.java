@@ -400,7 +400,8 @@ public class InsteadOfQuestion extends Question {
 				&& Double.compare(that.realCoefficient2, this.realCoefficient2) == 0
 				&& Double.compare(that.realCoefficient3, this.realCoefficient3) == 0
 				&& this.questionActivity.equals(that.questionActivity)
-				&& this.answer1.equals(that.answer1) && this.answer2.equals(that.answer2)
+				&& this.answer1.equals(that.answer1)
+				&& this.answer2.equals(that.answer2)
 				&& this.answer3.equals(that.answer3);
 	}
 

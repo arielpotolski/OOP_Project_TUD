@@ -259,9 +259,11 @@ public class Activity {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Activity activity = (Activity) o;
-		return this.consumptionInWh == activity.consumptionInWh && this.id.equals(activity.id) &&
-				this.title.equals(activity.title) && imagePath.equals(activity.imagePath) &&
-				this.source.equals(activity.source);
+		return this.consumptionInWh == activity.consumptionInWh
+				&& this.id.equals(activity.id)
+				&& this.title.equals(activity.title)
+				&& imagePath.equals(activity.imagePath)
+				&& this.source.equals(activity.source);
 	}
 
 	/**
