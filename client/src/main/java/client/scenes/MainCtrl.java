@@ -18,6 +18,7 @@ package client.scenes;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import client.utils.ServerUtils;
 import commons.Activity;
@@ -100,7 +101,7 @@ public class MainCtrl {
 	private Logger logger;
 
 	public MainCtrl() {
-		seed = (long) (Math.random() * (long)(1e9 + 7));
+		seed = new Random().nextInt();
 	}
 
 	/**
@@ -670,16 +671,13 @@ public class MainCtrl {
 			long button1 = multipleChoiceQuestion.getAnswer1();
 			long button2 = multipleChoiceQuestion.getAnswer2();
 			long button3 = multipleChoiceQuestion.getAnswer3();
+			long correctAnswer = multipleChoiceQuestion.getActivity().getConsumptionInWh();
 
-
-			if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
-					== button1) {
+			if (correctAnswer == button1) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
-			} else if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
-					== button2) {
+			} else if (correctAnswer == button2) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
-			} else if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
-					== button3) {
+			} else if (correctAnswer == button3) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
 			}
 		} else if (question instanceof HighestConsumptionQuestion) {
@@ -689,15 +687,13 @@ public class MainCtrl {
 			Activity activity1 = highConsumptionQuestion.getActivity1();
 			Activity activity2 = highConsumptionQuestion.getActivity2();
 			Activity activity3 = highConsumptionQuestion.getActivity3();
+			long correctAnswer = highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh();
 
-			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity1.getConsumptionInWh()) {
+			if (correctAnswer == activity1.getConsumptionInWh()) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
-			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity2.getConsumptionInWh()) {
+			} else if (correctAnswer == activity2.getConsumptionInWh()) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
-			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity3.getConsumptionInWh()) {
+			} else if (correctAnswer == activity3.getConsumptionInWh()) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
 			}
 		} else if (question instanceof InsteadOfQuestion) {
@@ -706,15 +702,13 @@ public class MainCtrl {
 			Activity answer1 = insteadQuestion.getAnswer1();
 			Activity answer2 = insteadQuestion.getAnswer2();
 			Activity answer3 = insteadQuestion.getAnswer3();
+			long correctAnswer = insteadQuestion.correctAnswer().getConsumptionInWh();
 
-			if (insteadQuestion.correctAnswer().getConsumptionInWh()
-					== answer1.getConsumptionInWh()) {
+			if (correctAnswer == answer1.getConsumptionInWh()) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
-			} else if (insteadQuestion.correctAnswer().getConsumptionInWh()
-					== answer2.getConsumptionInWh()) {
+			} else if (correctAnswer == answer2.getConsumptionInWh()) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
-			} else if (insteadQuestion.correctAnswer().getConsumptionInWh()
-					== answer3.getConsumptionInWh()) {
+			} else if (correctAnswer == answer3.getConsumptionInWh()) {
 				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
 			}
 		} else if (question instanceof EstimateQuestion) {
