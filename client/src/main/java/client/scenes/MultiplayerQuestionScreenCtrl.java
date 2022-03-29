@@ -7,10 +7,10 @@ import java.util.ResourceBundle;
 import client.utils.ServerUtils;
 import commons.MessageModel;
 import commons.Player;
-
-import com.google.inject.Inject;
 import commons.messages.JokerMessage;
 import commons.messages.JokerType;
+
+import com.google.inject.Inject;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

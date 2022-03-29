@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Optional;
 
 import commons.Connection;
-import commons.messages.Message;
-import commons.messages.JokerMessage;
 import commons.messages.ErrorMessage;
 import commons.messages.JoinMessage;
+import commons.messages.JokerMessage;
+import commons.messages.Message;
 import commons.messages.MessageType;
 
 import org.slf4j.Logger;
@@ -114,8 +114,8 @@ public class MultiplayerGame extends Thread {
 					case JOKER -> {
 						try {
 							handleJokerMessage(player, (JokerMessage) message);
-						} catch (IOException e) {
-							e.printStackTrace();
+						} catch (IOException err) {
+							err.printStackTrace();
 						}
 					}
 				}
@@ -131,7 +131,8 @@ public class MultiplayerGame extends Thread {
 		replyMessageToClient(message, Optional.of(player));
 	}
 
-	private void replyMessageToClient(JokerMessage message, Optional<Player> exclude) throws IOException {
+	private void replyMessageToClient(JokerMessage message, Optional<Player> exclude)
+			throws IOException {
 		for (Player player: this.players) {
 			if (exclude.isEmpty() || exclude.get() != player) {
 				player.connection.send(message);;

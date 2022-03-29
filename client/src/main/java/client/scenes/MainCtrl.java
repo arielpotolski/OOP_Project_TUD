@@ -29,11 +29,11 @@ import commons.MCQuestion;
 import commons.MessageModel;
 import commons.Player;
 import commons.Question;
-
 import commons.messages.ErrorMessage;
 import commons.messages.JokerMessage;
 import commons.messages.JokerType;
 import commons.messages.Message;
+
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Parent;
@@ -44,9 +44,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static commons.messages.MessageType.*;
 
 public class MainCtrl {
 	private Stage primaryStage;
@@ -487,7 +484,8 @@ public class MainCtrl {
 						case JOKER:
 							JokerMessage jokerMessage = (JokerMessage) message;
 							if (jokerMessage.getJokerType() == JokerType.DECREASE) {
-								multiplayerQuestionScreenCtrl.decreaseProgress(JOKER_DECREASE_TIME_AMOUNT);
+								multiplayerQuestionScreenCtrl.
+										decreaseProgress(JOKER_DECREASE_TIME_AMOUNT);
 							}
 							break;
 						case JOIN:
