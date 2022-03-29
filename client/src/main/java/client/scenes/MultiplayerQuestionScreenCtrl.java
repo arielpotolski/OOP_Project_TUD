@@ -225,9 +225,14 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 		fourthEmoji.setGraphic(wow);
 	}
 
+	public void decreaseProgress() {
+		this.progress -= 0.1;
+		progressBarTime.setProgress(this.progress);
+	}
+
 	public void decreaseProgress(double progress) {
 		this.progress -= progress;
-		progressBarTime.setProgress(progress);
+		progressBarTime.setProgress(this.progress);
 	}
 
 	public void decreaseOtherPlayersTime() throws IOException {

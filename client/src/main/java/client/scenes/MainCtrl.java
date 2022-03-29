@@ -84,6 +84,8 @@ public class MainCtrl {
 
 	private Logger logger;
 
+	private static final double JOKER_DECREASE_TIME_AMOUNT = 0.3;
+
 
 	/**
 	 * Initialize all the screens
@@ -453,6 +455,13 @@ public class MainCtrl {
 		player = multiplayerPreGameCtrl.getPlayer();
 		multiplayerQuestionScreenCtrl.setPlayer(player);
 		multiplayerQuestionScreenCtrl.setServer(server);
+
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
+			multiplayerQuestionScreenCtrl.decreaseProgress();
+		}));
+		timeLine.setCycleCount(10);
+		timeLine.play();
+
 		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
 			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
 		});
@@ -470,7 +479,7 @@ public class MainCtrl {
 						case JOKER:
 							JokerMessage jokerMessage = (JokerMessage) message;
 							if (jokerMessage.getJokerType() == JokerType.DECREASE) {
-								multiplayerQuestionScreenCtrl.decreaseProgress(0.5);
+								multiplayerQuestionScreenCtrl.decreaseProgress(JOKER_DECREASE_TIME_AMOUNT);
 							}
 							break;
 						case JOIN:
