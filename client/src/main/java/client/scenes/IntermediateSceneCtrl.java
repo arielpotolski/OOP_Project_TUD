@@ -1,5 +1,6 @@
 package client.scenes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -80,5 +81,14 @@ public class IntermediateSceneCtrl implements Initializable {
 	public void setProgress(double progress) {
 		this.progress = progress;
 		this.timeUntilNextQuestion.setProgress(progress);
+	}
+
+	/**
+	 * Changes the screen to leaderboard
+	 * @throws IOException if something goes wrong with the socket
+	 * @throws ClassNotFoundException if the class is not found
+	 */
+	public void changeToIntLeaderboard() throws IOException, ClassNotFoundException {
+		this.mainCtrl.changeToLeaderboard();
 	}
 }

@@ -21,6 +21,7 @@ import java.util.List;
 
 import client.utils.ServerUtils;
 import commons.Activity;
+import commons.Connection;
 import commons.EstimateQuestion;
 import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
@@ -29,6 +30,9 @@ import commons.MCQuestion;
 import commons.MessageModel;
 import commons.Player;
 import commons.Question;
+import commons.messages.ErrorMessage;
+import commons.messages.LeaderboardMessage;
+import commons.messages.Message;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -39,6 +43,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.Pair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MainCtrl {
 	private Stage primaryStage;
@@ -73,6 +79,9 @@ public class MainCtrl {
 	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
 	private Scene multiPlayerQuestionScreen;
 
+	private IntLeaderboardCtrl intLeaderboardCtrl;
+	private Scene intermediateLeaderboardScreen;
+
 	private ServerUtils server;
 
 	private List<Question> questions;
@@ -87,6 +96,8 @@ public class MainCtrl {
 	private int numberOfCorrectAnswered = 0;
 
 	private long seed = 0;
+
+	private Logger logger;
 
 	public MainCtrl() { }
 
@@ -104,6 +115,7 @@ public class MainCtrl {
 	 * @param waitingScreen a pair of waiting screen with parent
 	 * @param topPlayersLeaderboard a pair of top players leaderboard scene with parent.
 	 * @param multiPlayerQuestion a pair of multiplayer
+	 * @param intLeaderboard a pair of intermediate leaderboard
 	 *          question screen with parent
 	 */
 	public void initialize(Stage primaryStage,
@@ -115,9 +127,12 @@ public class MainCtrl {
 		Pair<IntermediateSceneCtrl, Parent> intermediateScene,
 		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
-		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard,
-		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion
+		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion,
+		Pair<IntLeaderboardCtrl, Parent> intLeaderboard,
+		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard
 	) {
+		this.logger = LoggerFactory.getLogger(MainCtrl.class);;
+
 		this.primaryStage = primaryStage;
 
 		this.multiplayerPreGameCtrl = multiPlayer.getKey();
@@ -149,6 +164,9 @@ public class MainCtrl {
 
 		this.multiplayerQuestionScreenCtrl = multiPlayerQuestion.getKey();
 		this.multiPlayerQuestionScreen = new Scene(multiPlayerQuestion.getValue());
+
+		this.intLeaderboardCtrl = intLeaderboard.getKey();
+		this.intermediateLeaderboardScreen = new Scene(intLeaderboard.getValue());
 
 		showSplashScreen();
 
@@ -286,6 +304,36 @@ public class MainCtrl {
 
 	public ServerUtils getServer() {
 		return this.server;
+	}
+
+	/**
+	 * Set up a thread which listens to the connection from the server for messages
+	 */
+	public void startMessageReceiverThread() {
+		Thread thread = new Thread(() -> {
+			Connection conn = this.server.getConnection();
+			while (true) {
+				try {
+					Message message = conn.receive();
+					switch (message.getType()) {
+					case LEADERBOARD:
+						this.intLeaderboardCtrl.setPlayers(
+								((LeaderboardMessage) message).getPlayers());
+						break;
+					case JOIN:
+					case ERROR:
+						this.logger.error("Received error message: " +
+								((ErrorMessage) message).getError());
+						break;
+						// TODO EndGame Message to stop this thread
+					}
+				} catch (Exception err) {
+					err.printStackTrace();
+					return;
+				}
+			}
+		});
+		thread.start();
 	}
 
 	/**
@@ -759,6 +807,17 @@ public class MainCtrl {
 		});
 		primaryStage.setTitle("MultiPlayerQuestion");
 		primaryStage.setScene(multiPlayerQuestionScreen);
+	}
+
+	/**
+	 * Changes the scene to intermediate leaderboard
+	 * @throws IOException if something goes wrong with the socket
+	 * @throws ClassNotFoundException if Class is not found
+	 */
+	public void changeToLeaderboard() throws IOException, ClassNotFoundException {
+		this.primaryStage.setScene(this.intermediateLeaderboardScreen);
+		this.primaryStage.setTitle("Leaderboard");
+		this.intLeaderboardCtrl.displayScores();
 	}
 
 }
