@@ -24,13 +24,16 @@ import client.scenes.AdminAddActivityScreenCtrl;
 import client.scenes.AdminInterfaceScreenCtrl;
 import client.scenes.AdminRemoveActivityScreenCtrl;
 import client.scenes.GlobalLeaderboardScreenCtrl;
+import client.scenes.IntLeaderboardCtrl;
 import client.scenes.IntermediateSceneCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.MultiplayerPreGameCtrl;
+import client.scenes.MultiplayerQuestionScreenCtrl;
 import client.scenes.QuestionScreenSinglePlayerCtrl;
 import client.scenes.SinglePlayerFinalScreenCtrl;
 import client.scenes.SinglePlayerPreGameCtrl;
 import client.scenes.SplashCtrl;
+import client.scenes.TopPlayersLeaderboardCtrl;
 import client.scenes.WaitingScreenCtrl;
 import static commons.Utility.nullOrEmpty;
 
@@ -63,19 +66,21 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws IOException {
-		var singlePlayer = FXML.load(SinglePlayerPreGameCtrl.class,"client","scenes",
+		var singlePlayer = FXML.load(SinglePlayerPreGameCtrl.class, "client", "scenes",
 				"SinglePlayerPreGame.fxml");
-		var multiPlayer = FXML.load(MultiplayerPreGameCtrl.class,"client","scenes",
+		var multiPlayer = FXML.load(MultiplayerPreGameCtrl.class, "client", "scenes",
 				"MultiplayerPreGame.fxml");
-		var splashScreen = FXML.load(SplashCtrl.class,"client","scenes",
+		var splashScreen = FXML.load(SplashCtrl.class, "client", "scenes",
 				"SplashScreen.fxml");
-		var singlePlayerQuestion = FXML.load(QuestionScreenSinglePlayerCtrl.class,"client","scenes",
+		var singlePlayerQuestion = FXML.load(QuestionScreenSinglePlayerCtrl.class, "client",
+				"scenes",
 				"QuestionScreenSinglePlayer.fxml");
-		var globalLeaderBoard = FXML.load(GlobalLeaderboardScreenCtrl.class,"client","scenes",
+		var globalLeaderBoard = FXML.load(GlobalLeaderboardScreenCtrl.class, "client", "scenes",
 				"GlobalLeaderBoardScreen.fxml");
-		var intermediateScene = FXML.load(IntermediateSceneCtrl.class,"client","scenes",
+		var intermediateScene = FXML.load(IntermediateSceneCtrl.class, "client", "scenes",
 				"IntermediateScreen.fxml");
-		var singlePlayerFinalScene = FXML.load(SinglePlayerFinalScreenCtrl.class,"client","scenes",
+		var singlePlayerFinalScene = FXML.load(SinglePlayerFinalScreenCtrl.class, "client",
+				"scenes",
 				"SinglePlayerFinalScreen.fxml");
 		var waitingScreen = FXML.load(WaitingScreenCtrl.class,
 				"client", "scenes", "WaitingScreen.fxml");
@@ -97,6 +102,16 @@ public class Main extends Application {
 			"scenes",
 			"AdminRemoveActivityScreen.fxml"
 		);
+		var topPlayersLeaderboard = FXML.load(TopPlayersLeaderboardCtrl.class,
+				"client",
+				"scenes",
+				"TopPlayersLeaderboard.fxml");
+		var multiPlayerQuestion = FXML.load(MultiplayerQuestionScreenCtrl.class,
+				"client",
+				"scenes",
+				"MultiplayerQuestionScreen.fxml");
+		var intermediateLeaderboard = FXML.load(IntLeaderboardCtrl.class, "client", "scenes",
+				"IntermediateLeaderboard.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
 			primaryStage,
@@ -111,6 +126,9 @@ public class Main extends Application {
 			adminInterfaceScreen,
 			adminAddActivityScreen,
 			adminRemoveActivityScreen
+			multiPlayerQuestion,
+			intermediateLeaderboard,
+			topPlayersLeaderboard
 		);
 	}
 }

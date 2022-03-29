@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,16 +37,19 @@ public class InsteadOfQuestion extends Question {
 	/**
 	 * Constructor for InsteadOfQuestion
 	 * @param questionActivity the activity for the question
-	 * @param answer1 initial answer activity at position 1
-	 * @param answer2 initial answer activity at position 2
-	 * @param answer3 initial answer activity at position 3
+	 * @param answer1Real initial answer activity at position 1
+	 * @param answer2Real initial answer activity at position 2
+	 * @param answer3Real initial answer activity at position 3
 	 */
 	public InsteadOfQuestion(
 			Activity questionActivity,
-			Activity answer1,
-			Activity answer2,
-			Activity answer3
+			Activity answer1Real,
+			Activity answer2Real,
+			Activity answer3Real
 	) {
+		Activity answer1 = answer1Real.deepCopy();
+		Activity answer2 = answer2Real.deepCopy();
+		Activity answer3 = answer3Real.deepCopy();
 		this.questionActivity = questionActivity;
 		calculateRealCoefficients(answer1, answer2, answer3);
 		List<Long> forbiddenValues = new ArrayList<>();
@@ -55,7 +59,7 @@ public class InsteadOfQuestion extends Question {
 
 		// The following part generates exactly one of the answers to be correct
 		// and guarantees that all the others are wrong
-		double correctAnswer = Math.random();
+		double correctAnswer = (new Random(answer1.getConsumptionInWh()).nextDouble());
 		if (correctAnswer < 1.0 / 3.0) {
 			answer2.makeFake(forbiddenValues);
 			answer3.makeFake(forbiddenValues);
@@ -192,8 +196,8 @@ public class InsteadOfQuestion extends Question {
 		};
 
 		return current.getTitle() + " "
-				+ df.format(((double) current.getConsumptionInWh())
-				/ ((double) questionActivity.getConsumptionInWh()))
+				+ df.format(((double) questionActivity.getConsumptionInWh())
+				/ ((double) current.getConsumptionInWh()))
 				+ " times";
 	}
 
@@ -212,27 +216,29 @@ public class InsteadOfQuestion extends Question {
 		};
 	}
 
-	//incorrect
+	/**
+	 * Returns the activity with the correct answer
+	 * @return the correct answer activity
+	 */
 	public Activity correctAnswer() {
-		double distanceFromOneOfCoefficient1 = 1 - this.realCoefficient1;
-		double distanceFromOneOfCoefficient2 = 1 - this.realCoefficient2;
-		double distanceFromOneOfCoefficient3 = 1 - this.realCoefficient3;
-		double result = Math.min(
-				distanceFromOneOfCoefficient1,
-				Math.min(
-						distanceFromOneOfCoefficient2,
-						distanceFromOneOfCoefficient3
-				)
-		);
+		double calculatedCoefficient1 = (double) this.answer1.getConsumptionInWh() /
+				this.questionActivity.getConsumptionInWh();
+		double calculatedCoefficient2 = (double) this.answer2.getConsumptionInWh() /
+				this.questionActivity.getConsumptionInWh();
 
-		if (result == distanceFromOneOfCoefficient1) {
+		if (Utility.doubleEquals(realCoefficient1, calculatedCoefficient1)) {
 			return this.answer1;
-		} else if (result == distanceFromOneOfCoefficient2) {
+		} else if (Utility.doubleEquals(realCoefficient2, calculatedCoefficient2)) {
 			return this.answer2;
 		}
 		return this.answer3;
 	}
 
+	/**
+	 * Finds the consumption of an activity based on title
+	 * @param title the title of the activity
+	 * @return the condumption of the activity
+	 */
 	public long returnEnergyConsumption(String title) {
 		if (title.equals(this.answer1.getTitle())) {
 			return this.answer1.getConsumptionInWh();
@@ -394,7 +400,8 @@ public class InsteadOfQuestion extends Question {
 				&& Double.compare(that.realCoefficient2, this.realCoefficient2) == 0
 				&& Double.compare(that.realCoefficient3, this.realCoefficient3) == 0
 				&& this.questionActivity.equals(that.questionActivity)
-				&& this.answer1.equals(that.answer1) && this.answer2.equals(that.answer2)
+				&& this.answer1.equals(that.answer1)
+				&& this.answer2.equals(that.answer2)
 				&& this.answer3.equals(that.answer3);
 	}
 
