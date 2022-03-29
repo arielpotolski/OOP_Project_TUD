@@ -64,6 +64,7 @@ public class Activity {
 		result.setId(this.id);
 		result.setTitle(this.title);
 		result.setSource(this.source);
+		result.setImagePath(this.imagePath);
 		result.setImageInArray(this.imageInArray);
 		return result;
 	}

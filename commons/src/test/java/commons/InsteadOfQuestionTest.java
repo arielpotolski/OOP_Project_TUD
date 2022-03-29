@@ -186,9 +186,9 @@ public class InsteadOfQuestionTest {
 
 	@Test
 	void answerString() {
-		String expected1 = "Title for the answer 1 0.25 times";
-		String expected2 = "Title for the answer 2 0.08 times";
-		String expected3 = "Title for the answer 3 0.03 times";
+		String expected1 = "Title for the answer 1 4.00 times";
+		String expected2 = "Title for the answer 2 12.00 times";
+		String expected3 = "Title for the answer 3 30.00 times";
 		assertEquals(expected1, insteadOfQuestionFixed1.answerString(1));
 		assertEquals(expected2, insteadOfQuestionFixed1.answerString(2));
 		assertEquals(expected3, insteadOfQuestionFixed1.answerString(3));
