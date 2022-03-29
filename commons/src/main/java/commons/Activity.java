@@ -55,6 +55,21 @@ public class Activity {
 	}
 
 	/**
+	 * Makes a deep copy of this instance
+	 * @return a new instance of this class with the same parameters
+	 */
+	public Activity deepCopy() {
+		Activity result = new Activity();
+		result.setConsumptionInWh(this.consumptionInWh);
+		result.setId(this.id);
+		result.setTitle(this.title);
+		result.setSource(this.source);
+		result.setImagePath(this.imagePath);
+		result.setImageInArray(this.imageInArray);
+		return result;
+	}
+
+	/**
 	 * Getter for the image in a byte array
 	 * @return the image in a byte array
 	 */
@@ -130,7 +145,7 @@ public class Activity {
 	 * Setter for the consumption of the activity
 	 * @param consumptionInWh the new consumption in wH
 	 */
-	public void setConsumptionInWh(int consumptionInWh) {
+	public void setConsumptionInWh(long consumptionInWh) {
 		this.consumptionInWh = consumptionInWh;
 	}
 
@@ -244,9 +259,11 @@ public class Activity {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		Activity activity = (Activity) o;
-		return this.consumptionInWh == activity.consumptionInWh && this.id.equals(activity.id) &&
-				this.title.equals(activity.title) && imagePath.equals(activity.imagePath) &&
-				this.source.equals(activity.source);
+		return this.consumptionInWh == activity.consumptionInWh
+				&& this.id.equals(activity.id)
+				&& this.title.equals(activity.title)
+				&& imagePath.equals(activity.imagePath)
+				&& this.source.equals(activity.source);
 	}
 
 	/**

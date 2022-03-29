@@ -54,7 +54,7 @@ public class QuestionSetControllerTest {
 				new Activity("701034", "701034", 701034, "701034", "701034")
 		));
 
-		assertNotEquals(this.qsc.getAll(404), this.qsc.getAll(404));
+		assertEquals(this.qsc.getAll(404), this.qsc.getAll(404));
 	}
 
 	/**

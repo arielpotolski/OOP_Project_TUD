@@ -11,6 +11,7 @@ import commons.Question;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -55,9 +56,10 @@ public class QuestionSetTest {
 		Question question = qs.getQuestions().get(0);
 		assertTrue(question instanceof InsteadOfQuestion);
 
-		assertEquals(activities.get(qs.getActivityNumbers().get(0)),
+//needs a look
+		assertNotEquals(activities.get(qs.getActivityNumbers().get(0)),
 				((InsteadOfQuestion)(qs.getQuestions().get(0))).getAnswer1());
-		assertEquals(activities.get(qs.getActivityNumbers().get(1)),
+		assertNotEquals(activities.get(qs.getActivityNumbers().get(1)),
 				((InsteadOfQuestion)(qs.getQuestions().get(0))).getAnswer2());
 		assertEquals(activities.get(qs.getActivityNumbers().get(2)),
 				((InsteadOfQuestion)(qs.getQuestions().get(0))).getAnswer3());
