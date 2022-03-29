@@ -17,9 +17,11 @@
 package client.scenes;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 
 import client.utils.ServerUtils;
+import commons.Activity;
 import commons.EstimateQuestion;
 import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
@@ -74,6 +76,9 @@ public class MainCtrl {
 	private AdminRemoveActivityScreenCtrl adminRemoveActivityScreenCtrl;
 	private Scene adminRemoveActivityScreen;
 
+	private AdminEditActivityScreenCtrl adminEditActivityScreenCtrl;
+	private Scene adminEditActivityScreen;
+
 	private ServerUtils server;
 
 	private List<Question> questions;
@@ -101,6 +106,7 @@ public class MainCtrl {
 	 * @param adminInterfaceScreen A pair of admin interface screen with parent.
 	 * @param adminAddActivityScreen A pair of admin add activity screen with parent.
 	 * @param adminRemoveActivityScreen A pair of admin remove activity screen with parent.
+	 * @param adminEditActivityScreen A pair of admin edit activity screen with parent.
 	 */
 	public void initialize(Stage primaryStage,
 		Pair<SinglePlayerPreGameCtrl, Parent> singlePlayer,
@@ -113,7 +119,8 @@ public class MainCtrl {
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
 		Pair<AdminInterfaceScreenCtrl, Parent> adminInterfaceScreen,
 		Pair<AdminAddActivityScreenCtrl, Parent> adminAddActivityScreen,
-		Pair<AdminRemoveActivityScreenCtrl, Parent> adminRemoveActivityScreen
+		Pair<AdminRemoveActivityScreenCtrl, Parent> adminRemoveActivityScreen,
+		Pair<AdminEditActivityScreenCtrl, Parent> adminEditActivityScreen
 	) {
 		this.primaryStage = primaryStage;
 
@@ -149,6 +156,9 @@ public class MainCtrl {
 
 		this.adminRemoveActivityScreenCtrl = adminRemoveActivityScreen.getKey();
 		this.adminRemoveActivityScreen = new Scene(adminRemoveActivityScreen.getValue());
+
+		this.adminEditActivityScreenCtrl = adminEditActivityScreen.getKey();
+		this.adminEditActivityScreen = new Scene(adminEditActivityScreen.getValue());
 
 		showSplashScreen();
 
@@ -372,6 +382,14 @@ public class MainCtrl {
 	public void showAdminRemoveActivityScreen() {
 		this.primaryStage.setTitle("Remove Activity");
 		this.primaryStage.setScene(this.adminRemoveActivityScreen);
+	}
+
+	/**
+	 * Take the user to the admin remove activity screen.
+	 */
+	public void showAdminEditActivityScreen() {
+		this.primaryStage.setTitle("Edit Activity");
+		this.primaryStage.setScene(this.adminEditActivityScreen);
 	}
 
 	/**
