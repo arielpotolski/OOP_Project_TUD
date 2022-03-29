@@ -2,10 +2,10 @@ package commons;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import static commons.Utility.nullOrEmpty;
 
@@ -171,14 +171,20 @@ public class Activity {
 	 */
 	public void makeFake(List<Long> forbiddenValues) {
 		long prev = this.consumptionInWh;
+		Random random = new Random(prev);
 		do {
-			this.consumptionInWh = Math.round(Math.random() * 2 * this.consumptionInWh);
+			this.consumptionInWh = Math.round(random.nextDouble() * 2 * this.consumptionInWh);
 		} while (this.consumptionInWh == prev || forbiddenValues.contains(this.consumptionInWh));
 	}
 
 	/**
 	 * Parses an image to byte array so that it could be more easily sent to the user
 	 * If the picture is not found automatically it is set to ImageNotFound
+	 *
+	 * !! If someone wants to import pictures they need to put the folder with Activities under the
+	 * name 'activities' in commons/src/main/resources/
+	 * This folder is added to the gitignore file and therefore will not be pushed in gitlab
+	 *
 	 * @return byte array containing information about the image
 	 * @throws IOException The exception if there is something wrong with the file
 	 */
@@ -190,7 +196,12 @@ public class Activity {
 			if (i > 0) {
 				extension = imagePath.substring(i+1);
 			}
-			BufferedImage bufferedImage = ImageIO.read(new File(imagePath));
+			BufferedImage bufferedImage =ImageIO
+					.read(Objects
+							.requireNonNull(Activity
+									.class
+									.getClassLoader()
+									.getResourceAsStream("activities/" + imagePath)));
 			ByteArrayOutputStream bos = new ByteArrayOutputStream();
 			ImageIO.write(bufferedImage, extension, bos);
 			return bos.toByteArray();

@@ -35,4 +35,14 @@ public class Utility {
 	public static boolean nullOrEmpty(String s) {
 		return s == null || s.isEmpty();
 	}
+
+	/**
+	 * Compares two doubles and returns true if they are equal
+	 * @param a the first number
+	 * @param b the second number
+	 * @return true if they are equal and false otherwise
+	 */
+	public static boolean doubleEquals(double a, double b) {
+		return Math.abs(a - b) < 1e-9;
+	}
 }
