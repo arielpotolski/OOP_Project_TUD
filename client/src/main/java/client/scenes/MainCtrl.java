@@ -261,15 +261,15 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setImageQuestionImageView(
 				question.imageInByteArrayQuestion());
 		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
-		questionScreenSinglePlayerCtrl.setLabelButton1(question.getAnswer1().getTitle());
+		questionScreenSinglePlayerCtrl.setLabelButton1(question.answerString(1));
 		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(1),
 				0);
 		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 0);
-		questionScreenSinglePlayerCtrl.setLabelButton2(question.getAnswer2().getTitle());
+		questionScreenSinglePlayerCtrl.setLabelButton2(question.answerString(2));
 		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(2),
 				1);
 		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 1);
-		questionScreenSinglePlayerCtrl.setLabelButton3(question.getAnswer3().getTitle());
+		questionScreenSinglePlayerCtrl.setLabelButton3(question.answerString(3));
 		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(3),
 				2);
 		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 2);

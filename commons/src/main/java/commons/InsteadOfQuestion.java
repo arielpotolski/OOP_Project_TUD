@@ -36,16 +36,19 @@ public class InsteadOfQuestion extends Question {
 	/**
 	 * Constructor for InsteadOfQuestion
 	 * @param questionActivity the activity for the question
-	 * @param answer1 initial answer activity at position 1
-	 * @param answer2 initial answer activity at position 2
-	 * @param answer3 initial answer activity at position 3
+	 * @param answer1Real initial answer activity at position 1
+	 * @param answer2Real initial answer activity at position 2
+	 * @param answer3Real initial answer activity at position 3
 	 */
 	public InsteadOfQuestion(
 			Activity questionActivity,
-			Activity answer1,
-			Activity answer2,
-			Activity answer3
+			Activity answer1Real,
+			Activity answer2Real,
+			Activity answer3Real
 	) {
+		Activity answer1 = answer1Real.deepCopy();
+		Activity answer2 = answer2Real.deepCopy();
+		Activity answer3 = answer3Real.deepCopy();
 		this.questionActivity = questionActivity;
 		calculateRealCoefficients(answer1, answer2, answer3);
 		List<Long> forbiddenValues = new ArrayList<>();
@@ -192,8 +195,8 @@ public class InsteadOfQuestion extends Question {
 		};
 
 		return current.getTitle() + " "
-				+ df.format(((double) current.getConsumptionInWh())
-				/ ((double) questionActivity.getConsumptionInWh()))
+				+ df.format(((double) questionActivity.getConsumptionInWh())
+				/ ((double) current.getConsumptionInWh()))
 				+ " times";
 	}
 
