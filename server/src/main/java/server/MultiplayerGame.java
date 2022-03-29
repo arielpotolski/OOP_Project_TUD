@@ -15,6 +15,7 @@ import commons.messages.KillerMessage;
 import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
 import commons.messages.MessageType;
+import commons.messages.PointMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +24,17 @@ public class MultiplayerGame extends Thread {
 	/**
 	 * A record for storing the information for each player in the game.
 	 */
-	private record Player(Connection connection, String name, int points) {}
+	private record Player(Connection connection, String name) {}
 
 	/**
 	 * Information about the players in the lobby.
 	 * This is only used when waiting for the initial TCP connections.
 	 */
 	private final HashMap<String, LobbyPlayer> lobbyPlayers;
+	/**
+	 *
+	 */
+	private final HashMap<String, Integer> scores;
 	/**
 	 * A list of players in the multiplayer game.
 	 */
@@ -48,6 +53,7 @@ public class MultiplayerGame extends Thread {
 		this.lobbyPlayers = players;
 		this.players = new ArrayList<>();
 		this.logger = LoggerFactory.getLogger(MultiplayerGame.class);
+		this.scores = new HashMap<>();
 	}
 
 	@Override
@@ -72,11 +78,17 @@ public class MultiplayerGame extends Thread {
 	 * @return A hash map with name and result of the players
 	 */
 	private HashMap<String, Integer> generateLeaderboard(){
-		HashMap<String, Integer> result = new HashMap<>();
-		for (Player player : this.players) {
-			result.put(player.name(), player.points());
-		}
-		return result;
+		return this.scores;
+	}
+
+	/**
+	 * Sets the new points of the player
+	 * @param message the message containing the name of the player and their score
+	 */
+	private void setNewPointForPlayer(PointMessage message) {
+		if (!this.scores.containsKey(message.getName()))
+			throw new IllegalArgumentException("Name of the player not found");
+		this.scores.put(message.getName(), message.getPoints());
 	}
 
 	/**
@@ -125,7 +137,17 @@ public class MultiplayerGame extends Thread {
 			}
 
 			// Save player.
-			this.players.add(new Player(connection, name, 0));
+			this.players.add(new Player(connection, name));
+		}
+		initializeScore();
+	}
+
+	/**
+	 * Initializes everybody's score to 0
+	 */
+	private void initializeScore() {
+		for (Player player : this.players) {
+			this.scores.put(player.name(), 0);
 		}
 	}
 
