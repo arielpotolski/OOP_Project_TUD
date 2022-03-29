@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -17,24 +18,14 @@
                         <Font name="Calibri" size="48.0" />
                      </font>
                   </Label>
-                  <ScrollPane fx:id="leaderBoard" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="296.0" prefWidth="423.0">
-                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="400.0" style="-fx-border-radius: 30;">
-                           <children>
-                              <Label alignment="CENTER" layoutX="39.0" layoutY="14.0" prefHeight="29.0" prefWidth="75.0" style="-fx-underline: 10;" text="Player" textAlignment="CENTER">
-                                 <font>
-                                    <Font name="Calibri Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="CENTER" layoutX="285.0" layoutY="11.0" prefHeight="35.0" prefWidth="76.0" style="-fx-underline: 10;" text="Score">
-                                 <font>
-                                    <Font name="Calibri Bold" size="18.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </AnchorPane>
-                     </content>
-                  </ScrollPane>
+                  <BarChart fx:id="barChart" prefWidth="488.0" BorderPane.alignment="CENTER">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
                </children>
             </VBox>
             <VBox prefHeight="200.0" prefWidth="100.0" />

@@ -102,6 +102,7 @@ public class WaitingScreenCtrl {
 			this.mainCtrl.setSeed(this.port);
 			this.mainCtrl.getQuestions();
 
+			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.
 			this.mainCtrl.showMultiPlayerQuestionScreen();
 		} catch (Exception err) {
