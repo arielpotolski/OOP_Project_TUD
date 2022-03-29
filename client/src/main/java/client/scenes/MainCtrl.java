@@ -17,11 +17,9 @@
 package client.scenes;
 
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.List;
 
 import client.utils.ServerUtils;
-import commons.Activity;
 import commons.EstimateQuestion;
 import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
