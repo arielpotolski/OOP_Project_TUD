@@ -99,7 +99,9 @@ public class MainCtrl {
 
 	private Logger logger;
 
-	public MainCtrl() { }
+	public MainCtrl() {
+		seed = (long) (Math.random() * (long)(1e9 + 7));
+	}
 
 	/**
 	 * Initialize all the screens
@@ -598,7 +600,7 @@ public class MainCtrl {
 
 
 			currentPoint = highConsumptionQuestion.pointsEarned(1000,
-					buttonId,timePassed);
+					buttonId, timePassed);
 
 
 
