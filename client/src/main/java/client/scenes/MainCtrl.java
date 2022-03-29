@@ -599,6 +599,8 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
+		timeLine.stop();
+
 		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
 			questionScreenSinglePlayerCtrl.decreaseProgress(1/3f);
 		}));

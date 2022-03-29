@@ -243,31 +243,25 @@ public class QuestionScreenSinglePlayerCtrl implements Initializable {
 	 */
 	public void answerReturn(ActionEvent event) {
 		Object source = event.getSource();
-		String color = "-fx-background-color: #EEE8A9; -fx-background-radius: 15;";
-
 		timeStamp = getProgress();
 
 		mainCtrl.clearButtons();
 
 		if (answerButton1.equals(source)) {
-			setStyleAnswerButton1(color);
-
 			inputButton = answerButton1;
 			inputText = null;
 		} else if (answerButton2.equals(source)) {
-			setStyleAnswerButton2(color);
-
 			inputButton = answerButton2;
 			inputText = null;
 		} else if (answerButton3.equals(source)) {
-			setStyleAnswerButton3(color);
-
 			inputButton = answerButton3;
 			inputText = null;
 		} else if (textField.equals(source)) {
 			inputButton = null;
 			inputText = textField;
 		}
+
+		this.mainCtrl.updatePoints(inputButton, inputText);
 	}
 
 	/**
