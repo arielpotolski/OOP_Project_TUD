@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ProgressBar;
 
-public class IntermediateLeaderboardCtrl implements Initializable {
+public class IntLeaderboardCtrl implements Initializable {
 	@FXML
 	private ProgressBar timeUntilNextQuestion;
 

@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import client.scenes.GlobalLeaderboardScreenCtrl;
-import client.scenes.IntermediateLeaderboardCtrl;
+import client.scenes.IntLeaderboardCtrl;
 import client.scenes.IntermediateSceneCtrl;
 import client.scenes.MainCtrl;
 import client.scenes.MultiplayerPreGameCtrl;
@@ -63,7 +63,7 @@ public class Main extends Application {
 				"client", "scenes", "WaitingScreen.fxml");
 		var questionScreenMultiplayer = FXML.load(MultiplayerQuestionScreenCtrl.class,
 				"client", "scenes", "MultiplayerQuestionScreen.fxml");
-		var intermediateLeaderboard = FXML.load(IntermediateLeaderboardCtrl.class,
+		var intermediateLeaderboard = FXML.load(IntLeaderboardCtrl.class,
 				"client", "scenes", "IntermediateLeaderboard.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(

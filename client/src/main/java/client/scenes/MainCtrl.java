@@ -69,8 +69,8 @@ public class MainCtrl {
 	private WaitingScreenCtrl waitingScreenCtrl;
 	private Scene waitingScreen;
 
-	private IntermediateLeaderboardCtrl intermediateLeaderboardCtrl;
-	private Scene intermediateLeaderboardScene;
+	private IntLeaderboardCtrl intLeaderboardCtrl;
+	private Scene intermediateLeaderboardScreen;
 
 	private ServerUtils server;
 
@@ -110,7 +110,7 @@ public class MainCtrl {
 		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
 		Pair<MultiplayerQuestionScreenCtrl, Parent> questionScreenMultiPlayer,
-		Pair<IntermediateLeaderboardCtrl, Parent> intermediateLeaderboard
+		Pair<IntLeaderboardCtrl, Parent> intermediateLeaderboard
 	) {
 		this.primaryStage = primaryStage;
 
@@ -142,8 +142,8 @@ public class MainCtrl {
 		waitingScreenCtrl = waitingScreen.getKey();
 		this.waitingScreen = new Scene(waitingScreen.getValue());
 
-		this.intermediateLeaderboardCtrl = intermediateLeaderboard.getKey();
-		this.intermediateLeaderboardScene = new Scene(intermediateLeaderboard.getValue());
+		this.intLeaderboardCtrl = intermediateLeaderboard.getKey();
+		this.intermediateLeaderboardScreen = new Scene(intermediateLeaderboard.getValue());
 
 		showSplashScreen();
 
@@ -722,15 +722,15 @@ public class MainCtrl {
 	 * Getter method for the intermediate leaderboard scene.
 	 * @return The intermediate leaderboard scene.
 	 */
-	public Scene getIntermediateLeaderboardScene() {
-		return intermediateLeaderboardScene;
+	public Scene getIntermediateLeaderboardScreen() {
+		return intermediateLeaderboardScreen;
 	}
 
 	/**
 	 * Getter method for the intermediate leaderboard controller.
 	 * @return The intermediate leaderboard controller.
 	 */
-	public IntermediateLeaderboardCtrl getIntermediateLeaderboardCtrl() {
-		return intermediateLeaderboardCtrl;
+	public IntLeaderboardCtrl getIntermediateLeaderboardCtrl() {
+		return intLeaderboardCtrl;
 	}
 }

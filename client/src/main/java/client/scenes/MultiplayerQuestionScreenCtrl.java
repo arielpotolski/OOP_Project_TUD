@@ -56,20 +56,20 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 	 */
 	@Override
 	public void showIntermediateScene() {
-		IntermediateLeaderboardCtrl intermediateLeaderboardCtrl =
+		IntLeaderboardCtrl intLeaderboardCtrl =
 				this.mainCtrl.getIntermediateLeaderboardCtrl();
 		Stage primaryStage = this.mainCtrl.getPrimaryStage();
 
-		intermediateLeaderboardCtrl.setProgress(1f);
+		intLeaderboardCtrl.setProgress(1f);
 		Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			intermediateLeaderboardCtrl.decreaseProgress(0.25);
+			intLeaderboardCtrl.decreaseProgress(0.25);
 		}));
 
 		primaryStage.setTitle("IntermediateScene");
-		primaryStage.setScene(this.mainCtrl.getIntermediateLeaderboardScene());
+		primaryStage.setScene(this.mainCtrl.getIntermediateLeaderboardScreen());
 
 		// This timeline will execute on another thread - run the count-down timer.
-		intermediateLeaderboardCtrl.setProgress(1f);
+		intLeaderboardCtrl.setProgress(1f);
 		timeLine.setCycleCount(4);
 		timeLine.play();
 		timeLine.setOnFinished(_e -> {
