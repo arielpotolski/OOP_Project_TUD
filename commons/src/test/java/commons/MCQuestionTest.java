@@ -19,7 +19,7 @@ public class MCQuestionTest {
 			121,"somePath1", "someSource1");
 	private MCQuestion mcQuestion1;
 	private MCQuestion mcQuestion2;
-	private final MCQuestion mcQuestion3 = new MCQuestion(activity);
+	private final MCQuestion mcQuestion3 = new MCQuestion(activity, 1);
 	private MCQuestion mcQuestion4;
 
 	public MCQuestionTest() throws IOException { }
@@ -28,7 +28,7 @@ public class MCQuestionTest {
 	@BeforeEach
 	void setUpQuestion() {
 		mcQuestion1 = new MCQuestion();
-		mcQuestion2 = new MCQuestion(activity);
+		mcQuestion2 = new MCQuestion(activity, 1);
 		mcQuestion4 = new MCQuestion(activity, 120, 123, 117);
 	}
 

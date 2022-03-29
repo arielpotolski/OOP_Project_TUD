@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -47,10 +48,11 @@ public class MCQuestion extends Question{
 	/**
 	 * Constructor for the Multiple Choice Question
 	 * @param activity the activity on which the generation is based
+	 * @param seed Seed that dictates the random shuffle order
 	 */
-	public MCQuestion(Activity activity) {
+	public MCQuestion(Activity activity, long seed) {
 		this.activity = activity;
-		HashMap<Integer, Long> answers = generateAnswers();
+		HashMap<Integer, Long> answers = generateAnswers(seed);
 		this.answer1 = answers.get(1);
 		this.answer2 = answers.get(2);
 		this.answer3 = answers.get(3);
@@ -59,10 +61,12 @@ public class MCQuestion extends Question{
 	/**
 	 * Generates a random sequence for the order of answers which consists of the numbers
 	 * 1, 2 and 3
+	 *
+	 * @param seed Seed that dictates the order
 	 */
-	private void generateSequence() {
+	private void generateSequence(long seed) {
 		ArrayList<Integer> result = new ArrayList<>(Arrays.asList(1, 2, 3));
-		Collections.shuffle(result);
+		Collections.shuffle(result, new Random(seed));
 		// Sets the order so that the other methods could be tested
 		this.order = result;
 	}
@@ -70,13 +74,16 @@ public class MCQuestion extends Question{
 	/**
 	 * Generates a wrong answer for the question
 	 * @return a wrong answer
+	 *
+	 * @param seed Seed that magnitude of the answer
 	 */
-	private long generateAnswer() {
+	private long generateAnswer(long seed) {
 		long result;
+		Random random = new Random(seed);
 		do {
 			// At random principle answer is generated and this answer is of the same magnitude
 			// At least in most of the time
-			double moreOrLess = Math.random() * 2;
+			double moreOrLess = random.nextDouble() * 2;
 			result = Math.round(this.activity.getConsumptionInWh() * moreOrLess);
 		} while (result == this.activity.getConsumptionInWh());
 		return result;
@@ -85,13 +92,15 @@ public class MCQuestion extends Question{
 	/**
 	 * Generates the answers and their sequence
 	 * @return a map containing the sequence of answers as keys and the answers themselves
+	 *
+	 * @param seed Seed that dictates the order of the answers
 	 */
-	private HashMap<Integer, Long> generateAnswers() {
-		generateSequence();
+	private HashMap<Integer, Long> generateAnswers(long seed) {
+		generateSequence(seed);
 		HashMap<Integer, Long> result = new HashMap<>();
 		for (Integer i : this.order) {
 			result.put(i, this.order.indexOf(i) == 0 ?
-					this.activity.getConsumptionInWh() : generateAnswer());
+					this.activity.getConsumptionInWh() : generateAnswer(seed));
 		}
 		return result;
 	}

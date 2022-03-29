@@ -72,6 +72,9 @@ public class MainCtrl {
 	private WaitingScreenCtrl waitingScreenCtrl;
 	private Scene waitingScreen;
 
+	private TopPlayersLeaderboardCtrl topPlayersLeaderboardCtrl;
+	private Scene topPlayersLeaderboard;
+
 	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
 	private Scene multiPlayerQuestionScreen;
 
@@ -83,6 +86,7 @@ public class MainCtrl {
 
 	private Timeline timeLine;
 	private Player player;
+	private String nickname;
 	private int currentPoint;
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
@@ -91,6 +95,10 @@ public class MainCtrl {
 
 	private static final double JOKER_DECREASE_TIME_AMOUNT = 0.3;
 
+
+	private long seed = 0;
+
+	public MainCtrl() { }
 
 	/**
 	 * Initialize all the screens
@@ -104,6 +112,7 @@ public class MainCtrl {
 	 * @param intermediateScene a pair of intermediate screen with parent
 	 * @param singlePlayerFinalScene a pair of final single player screen with parent.
 	 * @param waitingScreen a pair of waiting screen with parent
+	 * @param topPlayersLeaderboard a pair of top players leaderboard scene with parent.
 	 * @param multiPlayerQuestion a pair of multiplayer
 	 *          question screen with parent
 	 */
@@ -116,33 +125,37 @@ public class MainCtrl {
 		Pair<IntermediateSceneCtrl, Parent> intermediateScene,
 		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
+		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard,
 		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion
 	) {
 		this.primaryStage = primaryStage;
 
-		multiplayerPreGameCtrl = multiPlayer.getKey();
-		multiplayerPreGameScreen = new Scene(multiPlayer.getValue());
+		this.multiplayerPreGameCtrl = multiPlayer.getKey();
+		this.multiplayerPreGameScreen = new Scene(multiPlayer.getValue());
 
-		singlePlayerPreGameCtrl = singlePlayer.getKey();
-		singlePlayerPreGameScreen = new Scene(singlePlayer.getValue());
+		this.singlePlayerPreGameCtrl = singlePlayer.getKey();
+		this.singlePlayerPreGameScreen = new Scene(singlePlayer.getValue());
 
-		splashCtrl = splash.getKey();
-		splashScreen = new Scene(splash.getValue());
+		this.splashCtrl = splash.getKey();
+		this.splashScreen = new Scene(splash.getValue());
 
-		questionScreenSinglePlayerCtrl = questionScreenSinglePlayer.getKey();
+		this.questionScreenSinglePlayerCtrl = questionScreenSinglePlayer.getKey();
 		this.questionScreenSinglePlayer = new Scene(questionScreenSinglePlayer.getValue());
 
-		globalLeaderboardScreenCtrl = globalLeaderBoard.getKey();
+		this.globalLeaderboardScreenCtrl = globalLeaderBoard.getKey();
 		this.globalLeaderBoard = new Scene(globalLeaderBoard.getValue());
 
-		intermediateSceneCtrl = intermediateScene.getKey();
+		this.intermediateSceneCtrl = intermediateScene.getKey();
 		this.intermediateScene = new Scene(intermediateScene.getValue());
 
-		singlePlayerFinalSceneCtrl = singlePlayerFinalScene.getKey();
+		this.singlePlayerFinalSceneCtrl = singlePlayerFinalScene.getKey();
 		this.singlePlayerFinalScene = new Scene(singlePlayerFinalScene.getValue());
 
-		waitingScreenCtrl = waitingScreen.getKey();
+		this.waitingScreenCtrl = waitingScreen.getKey();
 		this.waitingScreen = new Scene(waitingScreen.getValue());
+
+		this.topPlayersLeaderboardCtrl = topPlayersLeaderboard.getKey();
+		this.topPlayersLeaderboard = new Scene(topPlayersLeaderboard.getValue());
 
 		this.multiplayerQuestionScreenCtrl = multiPlayerQuestion.getKey();
 		this.multiPlayerQuestionScreen = new Scene(multiPlayerQuestion.getValue());
@@ -174,6 +187,45 @@ public class MainCtrl {
 	public void showMultiplePlayersPreGameScreen() {
 		primaryStage.setTitle("Multiplayer");
 		primaryStage.setScene(multiplayerPreGameScreen);
+	}
+
+	/**
+	 * 	Method that shows the question screen for the multiplayer game mode
+	 *
+	 * @throws IOException
+	 */
+	public void showMultiplayerQuestionScreen() throws IOException{
+		// Switch to final screen if the aren't any questions
+		if (questions.size() == 0) {
+			showMultiPlayerFinalScreen();
+			return;
+		}
+
+		primaryStage.setTitle("Question");
+		primaryStage.setScene(multiPlayerQuestionScreen);
+
+		question = questions.get(0); // get the element at the top
+		questions.remove(0); // pop the element at the top
+
+		// This timeline will execute on another thread - run the count-down timer.
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
+			multiplayerQuestionScreenCtrl.decreaseProgress();
+		}));
+		timeLine.setCycleCount(10);
+		timeLine.play();
+
+		numberOfQuestionAnswered++;
+
+		if (question instanceof EstimateQuestion) {
+			setUpEstimateQuestionMultiplayer((EstimateQuestion) question);
+		} else if (question instanceof HighestConsumptionQuestion) {
+			setUpHighestQuestionMultiplayer((HighestConsumptionQuestion) question);
+		} else if (question instanceof MCQuestion) {
+			setUpMultipleChoiceMultiplayer((MCQuestion) question);
+		} else if (question instanceof InsteadOfQuestion) {
+			setUpInsteadQuestionMultiplayer((InsteadOfQuestion) question);
+		}
+		primaryStage.setScene(multiPlayerQuestionScreen);
 	}
 
 	public void showWaitingScreen(LobbyResponse firstResponse) {
@@ -222,6 +274,13 @@ public class MainCtrl {
 		primaryStage.setScene(questionScreenSinglePlayer);
 	}
 
+	/**
+	 *  Method that switches to multiplayer final screen
+	 */
+	public void showMultiPlayerFinalScreen() {
+		//TODO implement this
+	}
+
 	public void setServer(ServerUtils server) {
 		this.server = server;
 	}
@@ -234,7 +293,7 @@ public class MainCtrl {
 	 * This method will get a list of questions
 	 */
 	public void getQuestions() {
-		this.questions = server.getQuestions();
+		this.questions = server.getQuestions(this.seed);
 	}
 
 	/**
@@ -255,6 +314,15 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
 		questionScreenSinglePlayerCtrl.setLabelButton2(Long.toString(question.getAnswer2()));
 		questionScreenSinglePlayerCtrl.setLabelButton3(Long.toString(question.getAnswer3()));
+	}
+
+	/**
+	 * This method sets up the multiple choice question for the multiplayer game mode
+	 * @param question multiple choice question
+	 * @throws IOException if there is a problem with the parsing
+	 */
+	public void setUpMultipleChoiceMultiplayer(MCQuestion question) throws IOException {
+		//TODO implement this
 	}
 
 	/**
@@ -286,6 +354,14 @@ public class MainCtrl {
 	}
 
 	/**
+	 * This method sets up the "instead of" question for the multiplayer game mode
+	 * @param question "instead of" question
+	 */
+	public void setUpInsteadQuestionMultiplayer(InsteadOfQuestion question) throws IOException {
+		//TODO implement this
+	}
+
+	/**
 	 * This method sets up the highest consumption question
 	 * @param question highest consumption question
 	 */
@@ -308,6 +384,15 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(
 				question.imageInByteArrayActivity3(), 2);
 		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 2);
+	}
+
+	/**
+	 * This method sets up the highest consumption question for the multiplayer game mode
+	 * @param question highest consumption question
+	 */
+	public void setUpHighestQuestionMultiplayer(HighestConsumptionQuestion question)
+			throws IOException {
+		//TODO implement this
 	}
 
 	/**
@@ -335,6 +420,13 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setVisibleButton1(false);
 		questionScreenSinglePlayerCtrl.setVisibleButton2(false);
 		questionScreenSinglePlayerCtrl.setVisibleButton3(false);
+	}
+	/**
+	 * This method sets up the estimate question for the multiplayer game mode
+	 * @param question the estimate question.
+	 */
+	public void setUpEstimateQuestionMultiplayer(EstimateQuestion question) throws IOException {
+
 	}
 
 	/**
@@ -454,6 +546,49 @@ public class MainCtrl {
 
 		// Show the recent score.
 		showIntermediateScene();
+	}
+
+	/**
+	 * 	Setter method for seed
+	 *
+	 * @param seed The seed that is set
+	 */
+	public void setSeed(long seed) {
+		this.seed = seed;
+	}
+
+	/**
+	 * Shows the final leaderboard scene of the multiplayer game mode.
+	 * This method needs to be changed in the future to allow displaying the names
+	 * of the top 3 players.
+	 */
+	public void showTopPlayersLeaderboard() {
+		primaryStage.setTitle("Final Leaderboard");
+		primaryStage.setScene(this.topPlayersLeaderboard);
+	}
+
+	/**
+	 * setter for the player nickname.
+	 * @param nickName the nickname selected by the player.
+	 */
+	public void setNickname(String nickName) {
+		this.nickname = nickName;
+	}
+
+	/**
+	 * getter for the player's nickname
+	 * @return the player's nickname as a String.
+	 */
+	public String getNickname() {
+		return this.nickname;
+	}
+
+	/**
+	 * this method calls the method joinLobby from the multiplayerPreGameCtrl class,
+	 * which handles the player joining a lobby feature.
+	 */
+	public void joinLobby() {
+		this.multiplayerPreGameCtrl.joinLobby();
 	}
 
 	public void showMultiPlayerQuestionScreen() {

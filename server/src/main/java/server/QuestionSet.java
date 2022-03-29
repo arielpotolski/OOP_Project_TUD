@@ -25,10 +25,11 @@ public class QuestionSet {
 	 * Constructor for the QuestionsSet
 	 *
 	 * @param activities list of activities
+	 * @param seed the seed with whom we generate the random order
 	 */
-	public QuestionSet(List<Activity> activities) {
+	public QuestionSet(List<Activity> activities, long seed) {
 		this.questions = new ArrayList<>();
-		this.random = new Random();
+		this.random = new Random(seed);
 		this.activities = activities;
 		this.size = activities.size();
 		this.activityNumbers = new ArrayList<>();
@@ -64,7 +65,7 @@ public class QuestionSet {
 	 */
 	public void fillSet(int numberOfQuestions) {
 		ArrayList<Character> seq = new ArrayList<>(generateSequence(numberOfQuestions));
-		Collections.shuffle(seq);
+		Collections.shuffle(seq, random);
 
 		seq.forEach(c -> {
 			switch (c) {
@@ -86,7 +87,7 @@ public class QuestionSet {
 		this.activityNumbers.add(randNumber);
 
 		Activity activity = this.activities.get(randNumber);
-		this.questions.add(new MCQuestion(activity));
+		this.questions.add(new MCQuestion(activity, this.random.nextInt()));
 	}
 
 	/**
