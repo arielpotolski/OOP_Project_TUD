@@ -31,9 +31,8 @@ public class IntermediateSceneCtrl implements Initializable {
 
 	/**
 	 * Constructor for intermediate scene controller.
-	 *
-	 * @param mainCtrl the injected main controller.
-	 * @param server the injected server.
+	 * @param mainCtrl The injected main controller.
+	 * @param server The injected server.
 	 */
 	@Inject
 	public IntermediateSceneCtrl(MainCtrl mainCtrl, ServerUtils server) {
@@ -59,9 +58,8 @@ public class IntermediateSceneCtrl implements Initializable {
 	}
 
 	/**
-	 * 	Decreases the progess in the progress bar by a certain, given, amount
-	 *
-	 * @param amount The amount of progress that the bar loses
+	 * Decreases the progess in the progress bar by a certain, given, amount.
+	 * @param amount The amount of progress that the bar loses.
 	 */
 	public void decreaseProgress(double amount) {
 		this.progress -= amount;
@@ -69,9 +67,8 @@ public class IntermediateSceneCtrl implements Initializable {
 	}
 
 	/**
-	 * 	Getter method for progress of the progress bar
-	 *
-	 * @return the progress
+	 * Getter method for progress of the progress bar.
+	 * @return The progress.
 	 */
 	public double getProgress() {
 		return this.progress;

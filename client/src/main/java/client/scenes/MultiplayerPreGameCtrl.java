@@ -91,11 +91,10 @@ public class MultiplayerPreGameCtrl {
 	}
 
 	/**
-	 *  Getter method for the player
-	 *
+	 * Getter method for the player.
 	 * @return the player.
 	 */
 	public Player getPlayer() {
-		return player;
+		return this.player;
 	}
 }

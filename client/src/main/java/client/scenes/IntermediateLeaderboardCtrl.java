@@ -14,14 +14,11 @@ public class IntermediateLeaderboardCtrl implements Initializable {
 	double progress = 1f;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-
-	}
+	public void initialize(URL location, ResourceBundle resources) {}
 
 	/**
-	 * 	Decreases the progess in the progress bar by a certain, given, amount
-	 *
-	 * @param amount The amount of progress that the bar loses
+	 * Decreases the progess in the progress bar by a certain, given, amount.
+	 * @param amount The amount of progress that the bar loses.
 	 */
 	public void decreaseProgress(double amount) {
 		this.progress -= amount;
@@ -29,9 +26,8 @@ public class IntermediateLeaderboardCtrl implements Initializable {
 	}
 
 	/**
-	 * 	Setter method for the progress
-	 *
-	 * @param amount the ammount set to progress
+	 * Setter method for the progress.
+	 * @param amount The amount set to progress.
 	 */
 	public void setProgress(double amount) {
 		this.progress = amount;

@@ -96,9 +96,9 @@ public class MainCtrl {
 	 * @param intermediateScene a pair of intermediate screen with parent
 	 * @param singlePlayerFinalScene a pair of final single player screen with parent.
 	 * @param waitingScreen a pair of waiting screen with parent
-	 * @param questionScreenMultiPlayer a pair of question screen for multiplayer with parent
-	 * @param intermediateLeaderboard a pair of intermediate leaderboard
-	 *                                screen for multiplayer with parent
+	 * @param questionScreenMultiPlayer A pair of question screen for multiplayer with parent.
+	 * @param intermediateLeaderboard A pair of intermediate leaderboard screen for multiplayer with
+	 *                                parent.
 	 */
 	public void initialize(Stage primaryStage,
 		Pair<SinglePlayerPreGameCtrl, Parent> singlePlayer,
@@ -182,9 +182,7 @@ public class MainCtrl {
 
 	/**
 	 * This method shows up the question screen in single player mode.
-	 *
-	 * @param isSingleplayer whether the current game mode is single player
-	 *                       or not
+	 * @param isSingleplayer Whether the current game mode is single player or not.
 	 */
 	public void showQuestionScreen(boolean isSingleplayer) throws IOException {
 		QuestionClass screenCtrl;
@@ -215,11 +213,9 @@ public class MainCtrl {
 			screenCtrl.decreaseProgress(0.1f);
 		}));
 		timeLine.setCycleCount(10);
-		timeLine.setOnFinished(_e -> {
-			updatePoints(screenCtrl.getInputButton(),
-						screenCtrl.getInputText(),
-						screenCtrl);
-		});
+		timeLine.setOnFinished(_e ->
+			updatePoints(screenCtrl.getInputButton(), screenCtrl.getInputText(), screenCtrl)
+		);
 		timeLine.play();
 
 		primaryStage.setTitle("Question");
@@ -264,8 +260,8 @@ public class MainCtrl {
 	 * @throws IOException if there is a problem with the parsing
 	 */
 	public void setUpMultipleChoice(
-			MCQuestion question,
-			QuestionClass screenCtrl
+		MCQuestion question,
+		QuestionClass screenCtrl
 	) throws IOException {
 		hideTextFieldAndRevealButtons(screenCtrl);
 
@@ -275,9 +271,7 @@ public class MainCtrl {
 		screenCtrl.setUpLabel(questionText);
 		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
 			clearImages();
-
-			screenCtrl.setImageQuestionImageView(
-					question.imageInByteArrayQuestion());
+			screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
 			screenCtrl.setVisibleImageQuestion(true);
 		}
 		screenCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
@@ -309,16 +303,12 @@ public class MainCtrl {
 		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
 			clearImages();
 
-			screenCtrl.setImageQuestionImageView(
-					question.imageInByteArrayQuestion());
+			screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
 			screenCtrl.setVisibleImageQuestion(true);
-			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(1),
-					0);
-			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(2),
-					1);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(1), 0);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(2), 1);
 			screenCtrl.setVisibilityImageView(true, 1);
-			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(3),
-					2);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(3), 2);
 			screenCtrl.setVisibilityImageView(true, 2);
 			screenCtrl.setVisibilityImageView(true, 0);
 			screenCtrl.setVisibleTextField(false);
@@ -326,15 +316,15 @@ public class MainCtrl {
 	}
 
 	/**
-	 * This method sets up the highest consumption question
-	 * @param question highest consumption question
+	 * This method sets up the highest consumption question.
+	 * @param question Highest consumption question.
 	 * @param screenCtrl The screen controller which handles the task.
-	 * @throws IOException if there is a problem with the parsing
+	 * @throws IOException If there is a problem with the parsing.
 	 */
 	public void setUpHighestQuestion(
-			HighestConsumptionQuestion question,
-			QuestionClass screenCtrl
-		) throws IOException {
+		HighestConsumptionQuestion question,
+		QuestionClass screenCtrl
+	) throws IOException {
 		hideTextFieldAndRevealButtons(screenCtrl);
 
 		// Set up label for the question and answers.
@@ -348,14 +338,11 @@ public class MainCtrl {
 		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
 			clearImages();
 
-			screenCtrl.setImagesInImageViewsAnswers(
-					question.imageInByteArrayActivity3(), 2);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity3(), 2);
 			screenCtrl.setVisibilityImageView(true, 2);
-			screenCtrl.setImagesInImageViewsAnswers(
-					question.imageInByteArrayActivity2(), 1);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity2(), 1);
 			screenCtrl.setVisibilityImageView(true, 1);
-			screenCtrl.setImagesInImageViewsAnswers(
-					question.imageInByteArrayActivity1(), 0);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity1(), 0);
 			screenCtrl.setVisibilityImageView(true, 0);
 			screenCtrl.setVisibleTextField(false);
 		}
@@ -363,9 +350,8 @@ public class MainCtrl {
 
 	/**
 	 * This method hide the text field and reveal the buttons.
-	 *
-	 * @param screenCtrl controller which dictates whether the singleplayer
-	 *            	     or the multiplayer screen changes
+	 * @param screenCtrl Controller which dictates whether the singleplayer or the multiplayer
+	 *                   screen changes.
 	 */
 	public void hideTextFieldAndRevealButtons(QuestionClass screenCtrl) {
 		screenCtrl.setVisibleButton1(true);
@@ -375,21 +361,20 @@ public class MainCtrl {
 	}
 
 	/**
-	 * This method sets up the estimate question
-	 * @param question the estimate question.
+	 * This method sets up the estimate question.
+	 * @param question The estimate question.
 	 * @param screenCtrl The screen controller which handles the task.
 	 */
 	public void setUpEstimateQuestion(
-			EstimateQuestion question,
-			QuestionClass screenCtrl
+		EstimateQuestion question,
+		QuestionClass screenCtrl
 	) throws IOException {
 		String questionText = question.getActivityTitle();
 		screenCtrl.setUpLabel(questionText);
 
 		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
 			clearImages();
-			screenCtrl.setImageQuestionImageView(
-					question.imageInByteArrayQuestion());
+			screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
 			screenCtrl.setVisibleImageQuestion(true);
 		}
 		screenCtrl.setVisibleTextField(true);
@@ -447,24 +432,25 @@ public class MainCtrl {
 	 */
 	public void updatePoints(Button button, TextField textField, QuestionClass screenCtrl) {
 		// in case the player doesn't provide an answer in time
-		if(button == null && textField == null) {
-			currentPoint = 0;
+		if (button == null && textField == null) {
+			this.currentPoint = 0;
 			screenCtrl.setProgress(1);
-
-			showAnswer(screenCtrl);
-
+			this.showAnswer(screenCtrl);
 			return;
 		}
 
 		// Get the time the player used for guessing the answer
 		double timePassed = screenCtrl.getTimeStamp();
 
-		if (question instanceof MCQuestion) {
-			MCQuestion multipleChoiceQuestion = (MCQuestion) question;
+		if (this.question instanceof MCQuestion) {
+			MCQuestion multipleChoiceQuestion = (MCQuestion) this.question;
 
 			// The point which the player will receive after answered the question
-			currentPoint = multipleChoiceQuestion.pointsEarned(1000,
-					Integer.parseInt(button.getText()),timePassed);
+			currentPoint = multipleChoiceQuestion.pointsEarned(
+				1000,
+				Integer.parseInt(button.getText()),
+				timePassed
+			);
 
 			// Set the point for the player
 			player.setPoint(player.getPoint() + currentPoint);
@@ -494,8 +480,7 @@ public class MainCtrl {
 					== activity3.getConsumptionInWh()) {
 				buttonId = 3;
 			}
-			currentPoint = highConsumptionQuestion.pointsEarned(1000,
-					buttonId,timePassed);
+			currentPoint = highConsumptionQuestion.pointsEarned(1000, buttonId, timePassed);
 
 			player.setPoint(player.getPoint() + currentPoint);
 
@@ -525,10 +510,8 @@ public class MainCtrl {
 	}
 
 	/**
-	 *  The methods resets the answer buttons to their initial state
-	 *
-	 * @param screenCtrl screen controller which can be either for singleplayer or
-	 * 	 *                   for multiplayer
+	 * The methods resets the answer buttons to their initial state.
+	 * @param screenCtrl Screen controller which can be either for singleplayer or for multiplayer.
 	 */
 	public void clearButtons(QuestionClass screenCtrl) {
 		String color = "-fx-background-color: #5b9ad5; -fx-background-radius: 15;";
@@ -539,11 +522,10 @@ public class MainCtrl {
 	}
 
 	/**
-	 * 	Method that shows the correct answer after the timer is finished
-	 * 	The correct answer will be colored with green
-	 * 	If the player choses the wrong answer, his choice will be colored with red
-	 * @param screenCtrl screen controller which can be either for singleplayer or
-	 *                   for multiplayer
+	 * Method that shows the correct answer after the timer is finished.  The correct answer will be
+	 * colored with green.  If the player choses the wrong answer, his choice will be colored with
+	 * red.
+	 * @param screenCtrl Screen controller which can be either for singleplayer or for multiplayer.
 	 */
 	private void showAnswer(QuestionClass screenCtrl) {
 		Button button = screenCtrl.getInputButton();
@@ -552,18 +534,15 @@ public class MainCtrl {
 		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			screenCtrl.decreaseProgress(1/3f);
-		}));
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e ->
+			screenCtrl.decreaseProgress(1 / 3f)
+		));
 		timeLine.setCycleCount(3);
-		timeLine.setOnFinished(_e -> {
-			screenCtrl.showIntermediateScene();
-		});
+		timeLine.setOnFinished(_e -> screenCtrl.showIntermediateScene());
 		timeLine.play();
 
-		if(button != null) {
+		if (button != null) {
 			String color = "-fx-background-color: #E37474; -fx-background-radius: 15;";
-
 			button.setStyle(color);
 		}
 
@@ -574,7 +553,6 @@ public class MainCtrl {
 			long button1 = multipleChoiceQuestion.getAnswer1();
 			long button2 = multipleChoiceQuestion.getAnswer2();
 			long button3 = multipleChoiceQuestion.getAnswer3();
-
 
 			if (multipleChoiceQuestion.getActivity().getConsumptionInWh()
 					== button1) {
@@ -627,7 +605,7 @@ public class MainCtrl {
 			screenCtrl.setVisibleEstimateAnswer(true);
 
 			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
-			if(textField != null) {
+			if (textField != null) {
 				currentPoint = estimateQuestion.pointsEarned(1000,
 						Integer.parseInt(textField.getText()),
 						screenCtrl.getTimeStamp());
@@ -635,8 +613,8 @@ public class MainCtrl {
 				currentPoint = 0;
 			}
 
-			if(currentPoint < 500) {
-				if(currentPoint > 300) {
+			if (currentPoint < 500) {
+				if (currentPoint > 300) {
 					color = "-fx-background-color: #f0de8d; -fx-background-radius: 15;";
 					message = "Well done!";
 				} else {
@@ -649,119 +627,108 @@ public class MainCtrl {
 
 			screenCtrl.setEstimateAnswerStyle(color);
 			screenCtrl.setEstimateAnswerLabel(
-					message +
-					" The correct answer is: " +
-					String.valueOf(estimateQuestion.getActivity().getConsumptionInWh()));
+					message
+					+ " The correct answer is: "
+					+ estimateQuestion.getActivity().getConsumptionInWh()
+			);
 
-			if(textField != null)
+			if (textField != null) {
 				textField.clear();
+			}
 		}
 	}
 
 	/**
-	 *  Getter method for the singleplayer pre game controller controller
-	 *
-	 * @return The singleplayer pre game controller
+	 * Getter method for the singleplayer pre game controller controller.
+	 * @return The singleplayer pre game controller.
 	 */
 	public SinglePlayerPreGameCtrl getSinglePlayerPreGameCtrl() {
 		return singlePlayerPreGameCtrl;
 	}
 
 	/**
-	 *  Getter method for the singleplayer pre game controller screen
-	 *
-	 * @return The singleplayer pre game screen
+	 * Getter method for the singleplayer pre game controller screen.
+	 * @return The singleplayer pre game screen.
 	 */
 	public Scene getSinglePlayerPreGameScreen() {
 		return questionScreenSinglePlayer;
 	}
 
 	/**
-	 * 	Getter method for multiplayer pre game controller.
-	 *
-	 * @return multiplayer pre game controller.
+	 * Getter method for multiplayer pre game controller.
+	 * @return Multiplayer pre game controller.
 	 */
 	public MultiplayerPreGameCtrl getMultiplayerPreGameCtrl() {
 		return multiplayerPreGameCtrl;
 	}
 
 	/**
-	 * 	Getter method for the multiplayer question screen.
-	 *
-	 * @return the multiplayer question screen.
+	 * Getter method for the multiplayer question screen.
+	 * @return The multiplayer question screen.
 	 */
 	public Scene getMultiplayerQuestionScreen() {
 		return multiplayerQuestionScreen;
 	}
 
 	/**
-	 * 	Getter method for intermediate screen controller
-	 *
-	 * @return intermediate screen controller
+	 * Getter method for intermediate screen controller.
+	 * @return Intermediate screen controller.
 	 */
 	public IntermediateSceneCtrl getIntermediateSceneCtrl() {
 		return intermediateSceneCtrl;
 	}
 
 	/**
-	 *	Getter method for the number of questions answerd this far
-	 *
-	 * @return the number of questions answerd this far
+	 * Getter method for the number of questions answerd this far.
+	 * @return The number of questions answerd this far.
 	 */
 	public int getNumberOfQuestionAnswered() {
 		return numberOfQuestionAnswered;
 	}
 
 	/**
-	 *	Getter method for the player
-	 *
-	 * @return the player
+	 * Getter method for the player.
+	 * @return The player.
 	 */
 	public Player getPlayer() {
 		return player;
 	}
 
 	/**
-	 *	Getter method for the number of points
-	 *
-	 * @return the number of points received at the last
-	 * 		   question answered
+	 * Getter method for the number of points.
+	 * @return The number of points received at the last question answered.
 	 */
 	public int getCurrentPoint() {
 		return currentPoint;
 	}
 
 	/**
-	 *	Getter method for the primary stage
-	 *
-	 * @return the primary stage
+	 * Getter method for the primary stage.
+	 * @return The primary stage.
 	 */
 	public Stage getPrimaryStage() {
 		return primaryStage;
 	}
 
 	/**
-	 * 	Getter method for the intermediate scene
-	 *
-	 * @return the intermediate scene
+	 * Getter method for the intermediate scene.
+	 * @return The intermediate scene.
 	 */
 	public Scene getIntermediateScene() {
 		return intermediateScene;
 	}
 
 	/**
-	 * 	Getter method for the intermediate leaderboard scene
-	 *
-	 * @return the intermediate leaderboard scene
+	 * Getter method for the intermediate leaderboard scene.
+	 * @return The intermediate leaderboard scene.
 	 */
 	public Scene getIntermediateLeaderboardScene() {
 		return intermediateLeaderboardScene;
 	}
 
 	/**
-	 * 	Getter method for the intermediate leaderboard controller
-	 *
-	 * @return the intermediate leaderboard controller
+	 * Getter method for the intermediate leaderboard controller.
+	 * @return The intermediate leaderboard controller.
 	 */
 	public IntermediateLeaderboardCtrl getIntermediateLeaderboardCtrl() {
 		return intermediateLeaderboardCtrl;

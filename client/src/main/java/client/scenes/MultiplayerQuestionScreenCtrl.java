@@ -83,13 +83,11 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 
 	/**
 	 * This method shows answer when player click on one of the three buttons.
-	 *
-	 * @param event the player click on the button.
+	 * @param event The player click on the button.
 	 */
 	@Override
 	public void answerReturn(ActionEvent event) {
-		mainCtrl.clearButtons(this);
-
+		this.mainCtrl.clearButtons(this);
 		super.answerReturn(event);
 	}
 }

@@ -76,80 +76,71 @@ public abstract class QuestionClass {
 	protected double progress = 1;
 
 	/**
-	 * 	Setter method for inputButton
-	 *
-	 * @param button The button that is to be assigned to inputButton
+	 * Setter method for inputButton.
+	 * @param button The button that is to be assigned to inputButton.
 	 */
 	public void setInputButton(Button button) {
-		inputButton = button;
+		this.inputButton = button;
 	}
 
 	/**
 	 * This method shows answer when player click on one of the three buttons.
-	 *
-	 * @param event the player click on the button.
+	 * @param event The player click on the button.
 	 */
 	public void answerReturn(ActionEvent event) {
 		Object source = event.getSource();
 		String color = "-fx-background-color: #EEE8A9; -fx-background-radius: 15;";
 
-		timeStamp = getProgress();
+		this.timeStamp = getProgress();
 
-		if (answerButton1.equals(source)) {
+		if (this.answerButton1.equals(source)) {
 			setStyleAnswerButton1(color);
-
-			inputButton = answerButton1;
-			inputText = null;
-		} else if (answerButton2.equals(source)) {
+			this.inputButton = this.answerButton1;
+			this.inputText = null;
+		} else if (this.answerButton2.equals(source)) {
 			setStyleAnswerButton2(color);
-
-			inputButton = answerButton2;
-			inputText = null;
-		} else if (answerButton3.equals(source)) {
+			this.inputButton = this.answerButton2;
+			this.inputText = null;
+		} else if (this.answerButton3.equals(source)) {
 			setStyleAnswerButton3(color);
-
-			inputButton = answerButton3;
-			inputText = null;
-		} else if (textField.equals(source)) {
-			inputButton = null;
-			inputText = textField;
+			this.inputButton = this.answerButton3;
+			this.inputText = null;
+		} else if (this.textField.equals(source)) {
+			this.inputButton = null;
+			this.inputText = this.textField;
 		}
 	}
 
 	/**
-	 * This method returns the progress
-	 *
-	 * @return the progress.
+	 * This method returns the progress.
+	 * @return The progress.
 	 */
 	public double getProgress() {
 		return this.progress;
 	}
 
 	/**
-	 *  The method sets the CSS style of the first Answer Button
-	 *
-	 * @param style the CSS style that is to be applied
+	 * The method sets the CSS style of the first Answer Button.
+	 * @param style The CSS style that is to be applied.
 	 */
 	public void setStyleAnswerButton1(String style) {
-		answerButton1.setStyle(style);
+		this.answerButton1.setStyle(style);
 	}
 
 	/**
-	 *  The method sets the CSS style of the second Answer Button
-	 *
-	 * @param style the CSS style that is to be applied
+	 * The method sets the CSS style of the second Answer Button.
+	 * @param style The CSS style that is to be applied.
 	 */
 	public void setStyleAnswerButton2(String style) {
-		answerButton2.setStyle(style);
+		this.answerButton2.setStyle(style);
 	}
 
 	/**
-	 *  The method sets the CSS style of the third Answer Button
-	 *
-	 * @param style the CSS style that is to be applied
+	 * The method sets the CSS style of the third Answer Button.
+	 * @param style The CSS style that is to be applied.
 	 */
 	public void setStyleAnswerButton3(String style) {
-		answerButton3.setStyle(style);
+		this.answerButton3.setStyle(style);
 	}
 
 	/**
