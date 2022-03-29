@@ -38,10 +38,10 @@ public class IntLeaderboardCtrl implements Initializable {
 	 */
 	public void displayScores() {
 		List<Map.Entry<String, Integer>> playersInTheGame = this.players
-				.entrySet()
-				.stream()
-				.sorted(Map.Entry.comparingByValue())
-				.toList();
+			.entrySet()
+			.stream()
+			.sorted(Map.Entry.comparingByValue())
+			.toList();
 		this.barChart.setTitle("Player Scores");
 		if (playersInTheGame.size() < 6) {
 			this.barChart.setMaxWidth(playersInTheGame.size() * 100);

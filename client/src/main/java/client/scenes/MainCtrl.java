@@ -306,16 +306,16 @@ public class MainCtrl {
 				try {
 					Message message = conn.receive();
 					switch (message.getType()) {
-						case LEADERBOARD:
-							this.intLeaderboardCtrl.setPlayers(
-									((LeaderboardMessage) message).getPlayers());
-							break;
-						case JOIN:
-						case ERROR:
-							this.logger.error("Received error message: " +
-									((ErrorMessage) message).getError());
-							break;
-							// TODO EndGame Message to stop this thread
+					case LEADERBOARD:
+						this.intLeaderboardCtrl.setPlayers(
+								((LeaderboardMessage) message).getPlayers());
+						break;
+					case JOIN:
+					case ERROR:
+						this.logger.error("Received error message: " +
+								((ErrorMessage) message).getError());
+						break;
+						// TODO EndGame Message to stop this thread
 					}
 				} catch (Exception err) {
 					err.printStackTrace();
