@@ -131,20 +131,13 @@ public class MultiplayerGame extends Thread {
 	private void receiveMessageFromThePlayer(Player player) {
 		Thread thread = new Thread(() -> {
 			while (true) {
-				Message message = null;
 				try {
-					message = player.connection().receive();
+					Message message = player.connection().receive();
+					switch (message.getType()) {
+						case JOKER -> handleJokerMessage(player, (JokerMessage) message);
+					}
 				} catch (IOException | ClassNotFoundException err) {
 					err.printStackTrace();
-				}
-				switch (message.getType()) {
-					case JOKER -> {
-						try {
-							handleJokerMessage(player, (JokerMessage) message);
-						} catch (IOException err) {
-							err.printStackTrace();
-						}
-					}
 				}
 			}
 		});
@@ -155,10 +148,10 @@ public class MultiplayerGame extends Thread {
 		this.logger.debug(player.toString() + "sent a joker message");
 		// TODO track if player used joker
 		// TODO handle other stuff
-		replyMessageToClient(message, Optional.of(player));
+		sendMessageToAllClients(message, Optional.of(player));
 	}
 
-	private void replyMessageToClient(JokerMessage message, Optional<Player> exclude)
+	private void sendMessageToAllClients(Message message, Optional<Player> exclude)
 			throws IOException {
 		for (Player player: this.players) {
 			if (exclude.isEmpty() || exclude.get() != player) {

@@ -102,7 +102,6 @@ public class MainCtrl {
 
 	private static final double JOKER_DECREASE_TIME_AMOUNT = 0.3;
 
-
 	private long seed = 0;
 
 	public MainCtrl() {

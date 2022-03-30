@@ -229,8 +229,7 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 	 *  Decreases the progress of progress bar (aka the timer)
 	 */
 	public void decreaseProgress() {
-		this.progress -= 0.1;
-		progressBarTime.setProgress(this.progress);
+		this.decreaseProgress(0.1);
 	}
 
 	/**
