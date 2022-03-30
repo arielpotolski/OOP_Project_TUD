@@ -29,7 +29,6 @@ import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
 import commons.LobbyResponse;
 import commons.MCQuestion;
-import commons.MessageModel;
 import commons.Player;
 import commons.Question;
 import commons.messages.ErrorMessage;

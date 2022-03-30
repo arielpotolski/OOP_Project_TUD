@@ -9,7 +9,6 @@ import static server.CustomAssertions.assertResponseEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.core.SpringVersion;
 import org.springframework.http.HttpStatus;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -40,6 +39,6 @@ class PlayerControllerTest {
 
 	@Test
 	void sendMessage() {
-		assertEquals(messageModel, playerController.sendMessage("0", "0", messageModel));
+		assertEquals(messageModel, playerController.sendMessage("0", messageModel));
 	}
 }
