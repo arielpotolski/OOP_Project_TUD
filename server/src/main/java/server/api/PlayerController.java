@@ -52,10 +52,10 @@ public class PlayerController {
 	 * @return return the message which is sent by the client
 	 */
 	@MessageMapping("/chat/{idFromClient}")
-	@SendTo("/message/receive/{idFromServer}")
-	public void sendMessage(@DestinationVariable String idFromClient,
+	@SendTo("/message/receive/{idFromClient}")
+	public MessageModel sendMessage(@DestinationVariable String idFromClient,
 									MessageModel messageModel) {
-		simpMessagingTemplate.convertAndSend("/message/receive/" + idFromClient, messageModel);
+		return messageModel;
 	}
 
 }

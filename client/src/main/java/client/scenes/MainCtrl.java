@@ -323,6 +323,7 @@ public class MainCtrl {
 						this.intLeaderboardCtrl.setPlayers(
 								((LeaderboardMessage) message).getPlayers());
 						break;
+
 					case JOIN:
 					case ERROR:
 						this.logger.error("Received error message: " +
