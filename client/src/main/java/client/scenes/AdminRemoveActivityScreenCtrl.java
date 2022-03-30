@@ -131,7 +131,7 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 	/**
 	 * Refresh the list of activities.
 	 */
-	private void refreshActivities() {
+	protected void refreshActivities() {
 		this.activities = this.server
 			.getActivities()
 			.stream()

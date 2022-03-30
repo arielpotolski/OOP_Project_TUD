@@ -46,9 +46,4 @@ public class AdminInterfaceScreenCtrl {
 	private void jumpToEditActivityScreen() {
 		this.mainCtrl.showAdminEditActivityScreen();
 	}
-
-	@FXML
-	private void refreshActivities() {
-
-	}
 }

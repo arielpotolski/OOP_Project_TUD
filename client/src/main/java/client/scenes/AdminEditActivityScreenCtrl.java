@@ -168,7 +168,7 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 	/**
 	 * Refresh the list of activities.
 	 */
-	private void refreshActivities() {
+	protected void refreshActivities() {
 		this.activities = this.server
 			.getActivities()
 			.stream()

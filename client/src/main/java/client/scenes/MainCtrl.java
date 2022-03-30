@@ -364,6 +364,7 @@ public class MainCtrl {
 	public void showAdminInterfaceScreen() {
 		this.primaryStage.setTitle("Admin Interface");
 		this.primaryStage.setScene(this.adminInterfaceScreen);
+		refreshActivities();
 	}
 
 	/**
@@ -372,6 +373,7 @@ public class MainCtrl {
 	public void showAdminAddActivityScreen() {
 		this.primaryStage.setTitle("Add Activity");
 		this.primaryStage.setScene(this.adminAddActivityScreen);
+		refreshActivities();
 	}
 
 	/**
@@ -380,6 +382,7 @@ public class MainCtrl {
 	public void showAdminRemoveActivityScreen() {
 		this.primaryStage.setTitle("Remove Activity");
 		this.primaryStage.setScene(this.adminRemoveActivityScreen);
+		refreshActivities();
 	}
 
 	/**
@@ -388,6 +391,17 @@ public class MainCtrl {
 	public void showAdminEditActivityScreen() {
 		this.primaryStage.setTitle("Edit Activity");
 		this.primaryStage.setScene(this.adminEditActivityScreen);
+		refreshActivities();
+	}
+
+	/**
+	 * Calls the refresh activities method from the AdminEditActivitiesCtrl class, which refresh
+	 * the activities shown in the admin interface screens according to the current status
+	 * of the database.
+	 */
+	private void refreshActivities() {
+		this.adminRemoveActivityScreenCtrl.refreshActivities();
+		this.adminEditActivityScreenCtrl.refreshActivities();
 	}
 
 	/**
@@ -436,7 +450,6 @@ public class MainCtrl {
 		primaryStage.setTitle("Final Score");
 		primaryStage.setScene(singlePlayerFinalScene);
 	}
-
 
 	/**
 	 * This method reveals the answer after the player clicked on the button
