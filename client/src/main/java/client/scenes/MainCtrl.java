@@ -33,6 +33,8 @@ import commons.MessageModel;
 import commons.Player;
 import commons.Question;
 import commons.messages.ErrorMessage;
+import commons.messages.JokerMessage;
+import commons.messages.JokerType;
 import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
 
@@ -104,9 +106,11 @@ public class MainCtrl {
 
 	private EventHandler<WindowEvent> confirmCloseEventHandler;
 
-	private long seed = 0;
-
 	private Logger logger;
+
+	private static final double JOKER_DECREASE_TIME_AMOUNT = 0.3;
+
+	private long seed = 0;
 
 	public MainCtrl() {
 		seed = new Random().nextInt();
@@ -369,6 +373,13 @@ public class MainCtrl {
 					case LEADERBOARD:
 						this.intLeaderboardCtrl.setPlayers(
 								((LeaderboardMessage) message).getPlayers());
+						break;
+					case JOKER:
+						JokerMessage jokerMessage = (JokerMessage) message;
+						if (jokerMessage.getJokerType() == JokerType.DECREASE) {
+							multiplayerQuestionScreenCtrl.
+									decreaseProgress(JOKER_DECREASE_TIME_AMOUNT);
+							}
 						break;
 					case JOIN:
 					case ERROR:
@@ -842,6 +853,13 @@ public class MainCtrl {
 		player = multiplayerPreGameCtrl.getPlayer();
 		multiplayerQuestionScreenCtrl.setPlayer(player);
 		multiplayerQuestionScreenCtrl.setServer(server);
+
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
+			multiplayerQuestionScreenCtrl.decreaseProgress();
+		}));
+		timeLine.setCycleCount(10);
+		timeLine.play();
+
 		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
 			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
 		});
@@ -859,5 +877,4 @@ public class MainCtrl {
 		this.primaryStage.setTitle("Leaderboard");
 		this.intLeaderboardCtrl.displayScores();
 	}
-
 }

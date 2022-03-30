@@ -43,7 +43,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                            <children>
-                              <Button fx:id="firstEmoji" layoutX="-8.0" mnemonicParsing="false" onAction="#sendEmoji" userData="ANGRY"/>
+                              <Button fx:id="firstEmoji" layoutX="-8.0" mnemonicParsing="false" onAction="#sendEmoji" userData="ANGRY" />
                            </children>
                         </Pane>
                         <Pane prefHeight="66.0" prefWidth="48.0">
@@ -69,7 +69,7 @@
                               <Insets left="20.0" />
                            </HBox.margin>
                            <children>
-                              <Button fx:id="thirdEmoji" layoutX="-10.0" mnemonicParsing="false" onAction="#sendEmoji" userData="CRY"/>
+                              <Button fx:id="thirdEmoji" layoutX="-10.0" mnemonicParsing="false" onAction="#sendEmoji" userData="CRY" />
                            </children>
                         </Pane>
                         <Pane prefHeight="66.0" prefWidth="48.0">
@@ -80,7 +80,7 @@
                               <Insets left="3.0" />
                            </HBox.margin>
                            <children>
-                              <Button fx:id="fourthEmoji" layoutX="23.0" mnemonicParsing="false" onAction="#sendEmoji" userData="WOW"/>
+                              <Button fx:id="fourthEmoji" layoutX="23.0" mnemonicParsing="false" onAction="#sendEmoji" userData="WOW" />
                            </children>
                         </Pane>
                      </children>
@@ -162,22 +162,22 @@
                         <Insets top="110.0" />
                      </VBox.margin>
                      <children>
-                        <Ellipse fx:id="lessTimeJoker" fill="#c3e2ff" layoutX="47.0" layoutY="50.0" radiusX="33.0" radiusY="21.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fill="#ff371f" layoutX="47.0" layoutY="50.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Circle fill="#e7ebef" layoutX="47.0" layoutY="50.0" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Arc fill="#f4b030" layoutX="59.0" layoutY="39.0" length="180.0" radiusX="5.0" radiusY="5.0" scaleX="-1.0" startAngle="42.4" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                        <Arc fill="#f4b030" layoutX="38.0" layoutY="38.0" length="180.0" radiusX="5.0" radiusY="5.0" startAngle="42.4" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
-                        <Circle layoutX="47.0" layoutY="50.0" radius="1.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="5.0" layoutX="48.5" layoutY="50.0" rotate="-45.0" stroke="BLACK" strokeType="INSIDE" width="1.0" />
-                        <Line endX="100.0" layoutX="-42.0" layoutY="62.0" rotate="30.0" startX="94.79998779296875" />
-                        <Line endX="100.0" layoutX="-45.0" layoutY="50.0" startX="97.20002746582031" />
-                        <Line endX="98.00001525878906" endY="-7.62939453125E-6" layoutX="-57.0" layoutY="39.0" rotate="40.0" startX="94.79998779296875" />
-                        <Line endX="100.0" layoutX="-57.0" layoutY="50.0" startX="97.20002746582031" />
-                        <Line endX="100.0" layoutX="-51.5" layoutY="56.5" rotate="90.0" startX="97.20002746582031" />
-                        <Line endX="100.0" layoutX="-51.5" layoutY="43.5" rotate="90.0" startX="97.20002746582031" />
-                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="5.0" layoutX="46.5" layoutY="45.0" stroke="BLACK" strokeType="INSIDE" width="1.0" />
-                        <Line endX="98.00001525878906" endY="-7.62939453125E-6" layoutX="-40.0" layoutY="40.0" rotate="-40.0" startX="94.79998779296875" />
-                        <Line endX="100.0" layoutX="-60.0" layoutY="61.0" rotate="-30.0" startX="94.79998779296875" />
+                        <Ellipse fx:id="lessTimeJoker" fill="#c3e2ff" layoutX="47.0" layoutY="50.0" onMouseClicked="#decreaseOtherPlayersTime" radiusX="33.0" radiusY="21.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#ff371f" layoutX="47.0" layoutY="50.0" onMouseClicked="#decreaseOtherPlayersTime" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fill="#e7ebef" layoutX="47.0" layoutY="50.0" onMouseClicked="#decreaseOtherPlayersTime" radius="10.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Arc fill="#f4b030" layoutX="59.0" layoutY="39.0" length="180.0" onMouseClicked="#decreaseOtherPlayersTime" radiusX="5.0" radiusY="5.0" scaleX="-1.0" startAngle="42.4" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fill="#f4b030" layoutX="38.0" layoutY="38.0" length="180.0" onMouseClicked="#decreaseOtherPlayersTime" radiusX="5.0" radiusY="5.0" startAngle="42.4" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Circle layoutX="47.0" layoutY="50.0" onMouseClicked="#decreaseOtherPlayersTime" radius="1.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="5.0" layoutX="48.5" layoutY="50.0" onMouseClicked="#decreaseOtherPlayersTime" rotate="-45.0" stroke="BLACK" strokeType="INSIDE" width="1.0" />
+                        <Line endX="100.0" layoutX="-42.0" layoutY="62.0" onMouseClicked="#decreaseOtherPlayersTime" rotate="30.0" startX="94.79998779296875" />
+                        <Line endX="100.0" layoutX="-45.0" layoutY="50.0" onMouseClicked="#decreaseOtherPlayersTime" startX="97.20002746582031" />
+                        <Line endX="98.00001525878906" endY="-7.62939453125E-6" layoutX="-57.0" layoutY="39.0" onMouseClicked="#decreaseOtherPlayersTime" rotate="40.0" startX="94.79998779296875" />
+                        <Line endX="100.0" layoutX="-57.0" layoutY="50.0" onMouseClicked="#decreaseOtherPlayersTime" startX="97.20002746582031" />
+                        <Line endX="100.0" layoutX="-51.5" layoutY="56.5" onMouseClicked="#decreaseOtherPlayersTime" rotate="90.0" startX="97.20002746582031" />
+                        <Line endX="100.0" layoutX="-51.5" layoutY="43.5" onMouseClicked="#decreaseOtherPlayersTime" rotate="90.0" startX="97.20002746582031" />
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="5.0" layoutX="46.5" layoutY="45.0" onMouseClicked="#decreaseOtherPlayersTime" stroke="BLACK" strokeType="INSIDE" width="1.0" />
+                        <Line endX="98.00001525878906" endY="-7.62939453125E-6" layoutX="-40.0" layoutY="40.0" onMouseClicked="#decreaseOtherPlayersTime" rotate="-40.0" startX="94.79998779296875" />
+                        <Line endX="100.0" layoutX="-60.0" layoutY="61.0" onMouseClicked="#decreaseOtherPlayersTime" rotate="-30.0" startX="94.79998779296875" />
                      </children></Pane>
                   <Pane prefHeight="100.0" prefWidth="300.0">
                      <children>

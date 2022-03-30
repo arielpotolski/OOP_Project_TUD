@@ -1,11 +1,14 @@
 package client.scenes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import commons.MessageModel;
 import commons.Player;
+import commons.messages.JokerMessage;
+import commons.messages.JokerType;
 
 import com.google.inject.Inject;
 import javafx.application.Platform;
@@ -100,6 +103,8 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 	private VBox vBox;
 
 	private Player player;
+
+	private double progress = 1;
 
 	@Inject
 	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
@@ -224,6 +229,19 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 	 *  Decreases the progress of progress bar (aka the timer)
 	 */
 	public void decreaseProgress() {
-		// TODO
+		this.decreaseProgress(0.1);
+	}
+
+	/**
+	 *  Decreases the progress of progress bar (aka the timer)
+	 * @param progress the amount of time the player want to subtract from other players 
+	 */
+	public void decreaseProgress(double progress) {
+		this.progress -= progress;
+		progressBarTime.setProgress(this.progress);
+	}
+
+	public void decreaseOtherPlayersTime() throws IOException {
+		server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 	}
 }
