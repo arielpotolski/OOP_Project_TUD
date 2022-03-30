@@ -88,23 +88,15 @@ public class MultiplayerPreGameCtrl {
 	}
 
 	/**
-	 * Getter method for the player.
-	 * @return the player.
-	 */
-	public Player getPlayer() {
-		return this.player;
-	}
-
-	/**
 	 * Set the nickname field of the main ctrl to this nickname.
 	 * After that, it joins the lobby.
 	 */
 	public void setNickname() {
+		this.player = new Player(this.nickname.getText(), 0);
 		this.mainCtrl.setNickname(this.nickname.getText());
 	}
 
 	public Player getPlayer() {
-		this.player = new Player(name, 0);
 		return new Player(this.nickname.getText());
 	}
 }

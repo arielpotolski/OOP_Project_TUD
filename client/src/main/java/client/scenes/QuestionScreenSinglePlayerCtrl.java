@@ -1,7 +1,5 @@
 package client.scenes;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -15,6 +13,8 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -29,14 +29,6 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 	public QuestionScreenSinglePlayerCtrl(MainCtrl mainCtrl,ServerUtils server) {
 		this.mainCtrl = mainCtrl;
 		this.server = server;
-	}
-
-	/**
-	 *	Initialisation method.
-	 */
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		super.initialize();
 	}
 
 	/**
@@ -117,7 +109,7 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 			inputText = textField;
 		}
 
-		this.mainCtrl.updatePoints(inputButton, inputText);
+		this.mainCtrl.updatePoints(inputButton, inputText, this);
 
 		super.answerReturn(event); //TODO CHECK THIS
 	}
@@ -128,6 +120,7 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.progressBarTime.setStyle("-fx-accent: #00FF00");
+		super.initialize();
 	}
 
 	/**

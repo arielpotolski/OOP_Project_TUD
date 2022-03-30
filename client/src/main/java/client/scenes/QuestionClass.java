@@ -89,20 +89,16 @@ public abstract class QuestionClass {
 	 */
 	public void answerReturn(ActionEvent event) {
 		Object source = event.getSource();
-		String color = "-fx-background-color: #EEE8A9; -fx-background-radius: 15;";
 
 		this.timeStamp = getProgress();
 
 		if (this.answerButton1.equals(source)) {
-			setStyleAnswerButton1(color);
 			this.inputButton = this.answerButton1;
 			this.inputText = null;
 		} else if (this.answerButton2.equals(source)) {
-			setStyleAnswerButton2(color);
 			this.inputButton = this.answerButton2;
 			this.inputText = null;
 		} else if (this.answerButton3.equals(source)) {
-			setStyleAnswerButton3(color);
 			this.inputButton = this.answerButton3;
 			this.inputText = null;
 		} else if (this.textField.equals(source)) {

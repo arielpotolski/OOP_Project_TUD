@@ -1,13 +1,6 @@
 package client.scenes;
 
 import java.io.IOException;
-
-import commons.Player;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -17,13 +10,14 @@ import commons.Player;
 import commons.messages.JokerMessage;
 import commons.messages.JokerType;
 
-import com.google.inject.Inject;
+
+import com.google.inject.Inject;import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
@@ -187,7 +181,6 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass {
 		this.server = server;
 	}
 
-	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Image angryImage = new Image("emojis/ANGRY.png",
 				20,

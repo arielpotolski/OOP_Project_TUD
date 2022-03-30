@@ -541,7 +541,7 @@ public class MainCtrl {
 		timeLine.setOnFinished(_e -> {
 			questionScreenSinglePlayerCtrl.setProgress(1); // Reset the progress bar after
 			try {
-				showQuestionScreenSinglePlayer();     // the timeline finish its cycle.
+				showQuestionScreen(true);     // the timeline finish its cycle.
 			} catch (IOException err) {
 				err.printStackTrace();
 			}
@@ -808,7 +808,7 @@ public class MainCtrl {
 	 * @return The multiplayer question screen.
 	 */
 	public Scene getMultiplayerQuestionScreen() {
-		return multiplayerQuestionScreen;
+		return multiPlayerQuestionScreen;
 	}
 
 	/**
