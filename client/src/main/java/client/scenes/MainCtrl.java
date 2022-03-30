@@ -22,7 +22,16 @@ import java.util.Optional;
 import java.util.Random;
 
 import client.utils.ServerUtils;
-import commons.*;
+import commons.Activity;
+import commons.Connection;
+import commons.EstimateQuestion;
+import commons.HighestConsumptionQuestion;
+import commons.InsteadOfQuestion;
+import commons.LobbyResponse;
+import commons.MCQuestion;
+import commons.MessageModel;
+import commons.Player;
+import commons.Question;
 import commons.messages.ErrorMessage;
 import commons.messages.JokerMessage;
 import commons.messages.JokerType;
@@ -640,9 +649,9 @@ public class MainCtrl {
 		Button button = screenCtrl.getInputButton();
 		TextField textField = screenCtrl.getInputText();
 
-		screenCtrl.setProgress(1f);
-
 		timeLine.stop();
+
+		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
 		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e ->

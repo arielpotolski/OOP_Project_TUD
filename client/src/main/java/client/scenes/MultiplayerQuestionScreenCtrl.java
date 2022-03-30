@@ -1,11 +1,17 @@
 package client.scenes;
 
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
 import client.utils.ServerUtils;
-import com.google.inject.Inject;
 import commons.MessageModel;
 import commons.Player;
 import commons.messages.JokerMessage;
 import commons.messages.JokerType;
+
+import com.google.inject.Inject;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -15,25 +21,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Initializable {
 	private MainCtrl mainCtrl;
@@ -182,22 +179,6 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		secondEmoji.setGraphic(victory);
 		thirdEmoji.setGraphic(cry);
 		fourthEmoji.setGraphic(wow);
-	}
-
-	/**
-	 *  Decreases the progress of progress bar (aka the timer)
-	 */
-	public void decreaseProgress() {
-		this.decreaseProgress(0.1);
-	}
-
-	/**
-	 *  Decreases the progress of progress bar (aka the timer)
-	 * @param progress the amount of time the player want to subtract from other players
-	 */
-	public void decreaseProgress(double progress) {
-		this.progress -= progress;
-		progressBarTime.setProgress(this.progress);
 	}
 
 	public void decreaseOtherPlayersTime() throws IOException {

@@ -88,6 +88,7 @@ public abstract class QuestionClass {
 	 * @param event The player click on the button.
 	 */
 	public void answerReturn(ActionEvent event) {
+		String color = "-fx-background-color: #f0dca5; -fx-background-radius: 15;";
 		Object source = event.getSource();
 		this.mainCtrl.clearButtons(this);
 
@@ -96,18 +97,25 @@ public abstract class QuestionClass {
 		if (this.answerButton1.equals(source)) {
 			this.inputButton = this.answerButton1;
 			this.inputText = null;
+			setStyleAnswerButton1(color);
 		} else if (this.answerButton2.equals(source)) {
 			this.inputButton = this.answerButton2;
 			this.inputText = null;
+			setStyleAnswerButton2(color);
 		} else if (this.answerButton3.equals(source)) {
 			this.inputButton = this.answerButton3;
 			this.inputText = null;
+			setStyleAnswerButton3(color);
 		} else if (this.textField.equals(source)) {
 			this.inputButton = null;
 			this.inputText = this.textField;
 		}
 
-		this.mainCtrl.updatePoints(inputButton, inputText, this);
+		this.textField.setText("");
+
+		if(this instanceof QuestionScreenSinglePlayerCtrl) {
+			this.mainCtrl.updatePoints(inputButton, inputText, this);
+		}
 	}
 
 	/**

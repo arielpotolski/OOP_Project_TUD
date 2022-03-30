@@ -103,16 +103,6 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 	}
 
 	/**
-	 * 	Decreases the progress bar by a certain, given, amount
-	 *
-	 * @param amount the amount to be decreased
-	 */
-	public void decreaseProgress(double amount) {
-		this.progress -= amount;
-		this.progressBarTime.setProgress(this.progress);
-	}
-
-	/**
 	 * This method returns the progress
 	 *
 	 * @return the progress.
