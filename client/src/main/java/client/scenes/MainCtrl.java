@@ -878,7 +878,7 @@ public class MainCtrl {
 		multiplayerQuestionScreenCtrl.updateMessage(message);
 	}
 
-	public void setPortInMultiplayerQuestionScreen(int port) {
-		multiplayerQuestionScreenCtrl.setPort(port);
+	public void setGameIdInMultiplayerQuestionScreen(int gameId) {
+		multiplayerQuestionScreenCtrl.setGameId(gameId);
 	}
 }

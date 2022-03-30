@@ -106,7 +106,7 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 
 	private double progress = 1;
 
-	private int port;
+	private int gameId;
 
 	@Inject
 	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
@@ -120,14 +120,14 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 
 	public void sendMessage(){
 		String message = textField.getText();
-		server.send(this.createWebSocketURL(port),
+		server.send(this.createWebSocketURL(gameId),
 				new MessageModel(message, player.getNickName()));
 	}
 
 	public void sendEmoji(ActionEvent event) {
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
-		server.send(this.createWebSocketURL(port),
+		server.send(this.createWebSocketURL(gameId),
 				new MessageModel(emoji, player.getNickName()));
 	}
 
@@ -249,16 +249,16 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 		server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 	}
 
-	private String createWebSocketURL(Integer port) {
-		return "/app/chat/" + port.toString();
+	private String createWebSocketURL(Integer gameId) {
+		return "/app/chat/" + gameId.toString();
 	}
 
 
 	/**
-	 * Setter for the port
-	 * @param port the port 
+	 * Setter for the gameId
+	 * @param gameId the gameId
 	 */
-	public void setPort(int port) {
-		this.port = port;
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
 	}
 }
