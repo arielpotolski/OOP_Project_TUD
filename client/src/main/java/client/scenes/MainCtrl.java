@@ -218,6 +218,12 @@ public class MainCtrl {
 			screenCtrl = questionScreenSinglePlayerCtrl;
 		} else {
 			screenCtrl = multiplayerQuestionScreenCtrl;
+			player = multiplayerPreGameCtrl.getPlayer();
+			multiplayerQuestionScreenCtrl.setPlayer(player);
+			multiplayerQuestionScreenCtrl.setServer(server);
+			server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
+				multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
+			});
 		}
 
 		// If the size of question set equals to zero, this method change to final screen.
@@ -269,7 +275,8 @@ public class MainCtrl {
 	 *  Method that switches to multiplayer final screen
 	 */
 	public void showMultiPlayerFinalScreen() {
-		//TODO implement this
+		primaryStage.setTitle("Final Score");
+		primaryStage.setScene(topPlayersLeaderboard);
 	}
 
 	public void setServer(ServerUtils server) {
