@@ -225,6 +225,8 @@ public class MainCtrl {
 				multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
 			});
 		}
+		// Enable all buttons to make sure the player can answer
+		screenCtrl.disableButtons(false);
 
 		// If the size of question set equals to zero, this method change to final screen.
 		if (questions.size() == 0) {
@@ -246,9 +248,6 @@ public class MainCtrl {
 			screenCtrl.decreaseProgress(0.1f);
 		}));
 		timeLine.setCycleCount(10);
-		timeLine.setOnFinished(_e ->
-			updatePoints(screenCtrl.getInputButton(), screenCtrl.getInputText(), screenCtrl)
-		);
 		timeLine.play();
 
 		primaryStage.setTitle("Question");
@@ -523,6 +522,8 @@ public class MainCtrl {
 	 *                   for multiplayer
 	 */
 	public void updatePoints(Button button, TextField textField, QuestionClass screenCtrl) {
+		timeLine.stop();
+
 		// in case the player doesn't provide an answer in time
 		if (button == null && textField == null) {
 			this.currentPoint = 0;
