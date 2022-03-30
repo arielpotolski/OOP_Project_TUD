@@ -125,7 +125,7 @@ public class Main extends Application {
 			waitingScreen,
 			adminInterfaceScreen,
 			adminAddActivityScreen,
-			adminRemoveActivityScreen
+			adminRemoveActivityScreen,
 			multiPlayerQuestion,
 			intermediateLeaderboard,
 			topPlayersLeaderboard

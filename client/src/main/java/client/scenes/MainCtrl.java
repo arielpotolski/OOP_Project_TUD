@@ -144,7 +144,7 @@ public class MainCtrl {
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
 		Pair<AdminInterfaceScreenCtrl, Parent> adminInterfaceScreen,
 		Pair<AdminAddActivityScreenCtrl, Parent> adminAddActivityScreen,
-		Pair<AdminRemoveActivityScreenCtrl, Parent> adminRemoveActivityScreen
+		Pair<AdminRemoveActivityScreenCtrl, Parent> adminRemoveActivityScreen,
 		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion,
 		Pair<IntLeaderboardCtrl, Parent> intLeaderboard,
 		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard
