@@ -106,7 +106,7 @@ public abstract class QuestionClass {
 			this.inputButton = this.answerButton3;
 			this.inputText = null;
 			setStyleAnswerButton3(color);
-		} else if (this.textField.equals(source)) {
+		} else if (this.textField.equals(source) && isNumeric(this.textField.getText())) {
 			this.inputButton = null;
 			this.inputText = this.textField;
 		}
@@ -386,6 +386,29 @@ public abstract class QuestionClass {
 
 	public void setMainCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
+	}
+
+	/**
+	 *	Tests whether or not a given string is numeric
+	 *
+	 * @param string the string which we test if
+	 *               its numeric or not
+	 * @return a boolean value telling us if the
+	 * 	       string is numeric
+	 */
+	public static boolean isNumeric(String string) {
+		if (string == null) {
+			return false;
+		}
+
+		try {
+			Integer number = Integer.parseInt(string);
+			number = number + 1;// avoid checkstyle telling
+								// that variable isn't used
+		} catch (NumberFormatException err) {
+			return false;
+		}
+		return true;
 	}
 
 	// abstract classes
