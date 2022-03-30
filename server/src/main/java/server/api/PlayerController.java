@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 @RequestMapping("/api/players")
 public class PlayerController {
@@ -42,7 +41,6 @@ public class PlayerController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-
 	/**
 	 * This method return the MessageModel to other clients after one client want to
 	 * send the message to other clients
@@ -52,8 +50,7 @@ public class PlayerController {
 	 */
 	@MessageMapping("/chat/{idFromClient}")
 	@SendTo("/message/receive/{idFromClient}")
-	public MessageModel sendMessage(@DestinationVariable String idFromClient,
-									MessageModel messageModel) {
+	public MessageModel sendMessage(@DestinationVariable String idFromClient, MessageModel messageModel) {
 		return messageModel;
 	}
 

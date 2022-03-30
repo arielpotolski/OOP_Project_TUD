@@ -369,7 +369,6 @@ public class MainCtrl {
 						this.intLeaderboardCtrl.setPlayers(
 								((LeaderboardMessage) message).getPlayers());
 						break;
-
 					case JOIN:
 					case ERROR:
 						this.logger.error("Received error message: " +
@@ -842,7 +841,6 @@ public class MainCtrl {
 		player = multiplayerPreGameCtrl.getPlayer();
 		multiplayerQuestionScreenCtrl.setPlayer(player);
 		multiplayerQuestionScreenCtrl.setServer(server);
-
 		primaryStage.setTitle("MultiPlayerQuestion");
 		primaryStage.setScene(multiPlayerQuestionScreen);
 	}

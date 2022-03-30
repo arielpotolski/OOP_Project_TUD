@@ -35,8 +35,6 @@ public class WaitingScreenCtrl {
 	@FXML
 	private ListView<String> usersInLobbyView;
 
-	LobbyResponse lobbyResponse;
-
 	@Inject
 	public WaitingScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
