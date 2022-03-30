@@ -99,10 +99,10 @@ public class Main extends Application {
 			"AdminRemoveActivityScreen.fxml"
 		);
 		var adminEditActivityScreen = FXML.load(
-				AdminEditActivityScreenCtrl.class,
-				"client",
-				"scenes",
-				"AdminEditActivityScreen.fxml"
+			AdminEditActivityScreenCtrl.class,
+			"client",
+			"scenes",
+			"AdminEditActivityScreen.fxml"
 		);
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(

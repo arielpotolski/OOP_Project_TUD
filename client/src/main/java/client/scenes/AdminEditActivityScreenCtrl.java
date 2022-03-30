@@ -155,8 +155,8 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 			if (a.isValid()) {
 				this.refreshActivities();
 				this.activityDropdown
-						.getSelectionModel()
-						.selectFirst();
+					.getSelectionModel()
+					.selectFirst();
 				return Optional.of(this.server.addActivity(a));
 			}
 		} catch (IOException err) {
@@ -170,9 +170,9 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 	 */
 	private void refreshActivities() {
 		this.activities = this.server
-				.getActivities()
-				.stream()
-				.sorted(Comparator.comparing(Activity::getId))
-				.toList();
+			.getActivities()
+			.stream()
+			.sorted(Comparator.comparing(Activity::getId))
+			.toList();
 	}
 }
