@@ -21,7 +21,6 @@ public class WaitingScreenCtrl {
 	private MainCtrl mainCtrl;
 	private ServerUtils serverUtils;
 	private static final long REFRESH_DELAY = 500;
-	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
 	private int port;
 
 	@FXML
@@ -66,14 +65,6 @@ public class WaitingScreenCtrl {
 					gameStarted = response.gameStarted();
 					port = response.tcpPort();
 
-					serverUtils.registerForMessages(
-							"/message/receive/" + Integer.toString(port),
-							MessageModel.class,
-							messageModel -> {
-								multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
-							});
-					mainCtrl.setPortInMultiplayerQuestionScreen(port);
-
 					/* Refresh the list of users in the lobby.  It's important to remember to clear
 					 * the list every loop as if you don't you end up with an infinitely growing
 					 * list of users.
@@ -113,6 +104,14 @@ public class WaitingScreenCtrl {
 			// Set the same unique seed to all players inside the lobby.
 			this.mainCtrl.setSeed(this.port);
 			this.mainCtrl.getQuestions();
+
+			this.serverUtils.registerForMessages(
+					"/message/receive/" + Integer.toString(port),
+					MessageModel.class,
+					messageModel -> {
+						mainCtrl.renderTheMessageInTheChatBox(messageModel.getMessage());
+					});
+			this.mainCtrl.setPortInMultiplayerQuestionScreen(port);
 
 			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.

@@ -859,6 +859,10 @@ public class MainCtrl {
 		this.intLeaderboardCtrl.displayScores();
 	}
 
+	public void renderTheMessageInTheChatBox(String message) {
+		multiplayerQuestionScreenCtrl.updateMessage(message);
+	}
+
 	public void setPortInMultiplayerQuestionScreen(int port) {
 		multiplayerQuestionScreenCtrl.setPort(port);
 	}
