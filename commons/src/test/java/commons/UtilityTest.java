@@ -82,4 +82,13 @@ class UtilityTest {
 	public void nullOrEmptyCollectionTest() {
 		assertFalse(nullOrEmpty(this.xs));
 	}
+
+	@Test
+	public void doubleEquals() {
+		double a = 1.0 / 3.0;
+		double b = 1.0 / 3.0;
+		double c = 1.0 / 4.0;
+		assertFalse(Utility.doubleEquals(a, c));
+		assertTrue(Utility.doubleEquals(a, b));
+	}
 }

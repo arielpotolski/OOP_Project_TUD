@@ -5,6 +5,7 @@ import java.util.Optional;
 import client.Main;
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
+import commons.Player;
 
 import com.google.inject.Inject;
 import jakarta.ws.rs.ProcessingException;
@@ -27,7 +28,7 @@ public class MultiplayerPreGameCtrl {
 	/**
 	 * Constructor for multiplayer pre-game controller
 	 *
-	 * @param server the injected server.
+	 * @param server   the injected server.
 	 * @param mainCtrl the injected main controller.
 	 */
 	@Inject
@@ -52,12 +53,14 @@ public class MultiplayerPreGameCtrl {
 	 * of MainCtrl and moves to the waiting screen.
 	 */
 	public void joinLobby() {
-		String name = this.nickname.getText();
+		setNickname();
 		ServerUtils serverUtils = new ServerUtils(Main.serverHost);
+
+		serverUtils.setSession(serverUtils.connect());
 
 		Optional<LobbyResponse> maybeResponse;
 		try {
-			maybeResponse = serverUtils.connectToLobby(name);
+			maybeResponse = serverUtils.connectToLobby(this.mainCtrl.getNickname());
 		} catch (ProcessingException err) {
 			// Alert the user if sending the request failed.
 			Alert alert = new Alert(
@@ -81,5 +84,17 @@ public class MultiplayerPreGameCtrl {
 			);
 			alert.showAndWait();
 		}
+	}
+
+	/**
+	 * Set the nickname field of the main ctrl to this nickname.
+	 * After that, it joins the lobby.
+	 */
+	public void setNickname() {
+		this.mainCtrl.setNickname(this.nickname.getText());
+	}
+
+	public Player getPlayer() {
+		return new Player(this.nickname.getText());
 	}
 }

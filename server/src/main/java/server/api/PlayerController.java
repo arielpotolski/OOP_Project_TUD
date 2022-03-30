@@ -2,12 +2,15 @@ package server.api;
 
 import java.util.List;
 
+import commons.MessageModel;
 import commons.Player;
 import server.database.PlayerRepository;
 import static commons.Utility.nullOrEmpty;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,4 +39,15 @@ public class PlayerController {
 		Player result = playerRepository.save(player);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
+
+	@MessageMapping("/chat") //app/chat
+	@SendTo("/message/receive")
+	/**
+	 * This method return the MessageModel to other clients after one client want to
+	 * send the message to other clients
+	 */
+	public MessageModel sendMessage(MessageModel messageModel) {
+		return messageModel;
+	}
+
 }

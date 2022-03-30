@@ -17,9 +17,12 @@
 package client.utils;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutionException;
+import java.util.function.Consumer;
 
 import commons.Activity;
 import commons.Connection;
@@ -38,6 +41,12 @@ import jakarta.ws.rs.client.ResponseProcessingException;
 import jakarta.ws.rs.core.GenericType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
 import static jakarta.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class ServerUtils {
@@ -46,6 +55,7 @@ public class ServerUtils {
 	private String name;
 	private int id;
 	private Connection connection;
+	private StompSession session;
 
 	/**
 	 * Constructor for the connection between client and server.
@@ -56,6 +66,14 @@ public class ServerUtils {
 	public ServerUtils(String host) {
 		this.host = host;
 		this.client = ClientBuilder.newClient();
+	}
+
+	/**
+	 * Getter for the connection
+	 * @return the connection of this server
+	 */
+	public Connection getConnection() {
+		return connection;
 	}
 
 	private URI getServer() {
@@ -81,11 +99,13 @@ public class ServerUtils {
 	 * Get a list of questions from the server
 	 *
 	 * @return A list of questions from the server
+	 * @param seed The seed that dictates the order of the questions
 	 */
-	public List<Question> getQuestions() {
+	public List<Question> getQuestions(long seed) {
 		return this.client
 			.target(this.getServer())
 			.path("api/questions/")
+			.queryParam("seed", seed)
 			.request(APPLICATION_JSON)
 			.get(new GenericType<>() {});
 	}
@@ -219,5 +239,69 @@ public class ServerUtils {
 			.path("api/questions/" + a.getId())
 			.request(APPLICATION_JSON)
 			.delete();
+	}
+
+	private URI getWebSocketServer() {
+		return UriBuilder
+				.newInstance()
+				.scheme("ws")
+				.host(this.host)
+				.port(8080)
+				.path("/websocket")
+				.build();
+	}
+
+	/**
+	 * This method creates the connection between the client and the server
+	 * @return the session
+	 */
+	public StompSession connect() {
+		var client = new StandardWebSocketClient();
+		var stomp = new WebSocketStompClient(client);
+		stomp.setMessageConverter(new MappingJackson2MessageConverter());
+
+		try{
+			return stomp.connect(getWebSocketServer().toString(),
+					new StompSessionHandlerAdapter() {}).get();
+		} catch(InterruptedException err) {
+			Thread.currentThread().interrupt();
+		} catch (ExecutionException err) {
+			throw new RuntimeException(err);
+		}
+		throw new IllegalArgumentException();
+	}
+
+	/**
+	 * This methods allow the server send the message to the client
+	 *
+	 * @param dest the client
+	 * @param type the type of the class
+	 * @param consumer consumer of the object
+	 * @param <T> the generic type of the object that the server send to the client
+	 */
+	public <T> void registerForMessages(String dest, Class<T> type, Consumer<T> consumer) {
+		session.subscribe(dest, new StompSessionHandlerAdapter() {
+			@Override
+			public Type getPayloadType(StompHeaders headers) {
+				return type;
+			}
+			@Override
+			public void handleFrame(StompHeaders headers, Object payload) {
+				consumer.accept((T) payload);
+			}
+		});
+	}
+
+	/**
+	 * This method allows the client to send the message to server
+	 * @param dest the destination - server
+	 * @param o the object - client will send this object to the server.
+	 */
+	public void send(String dest, Object o) {
+		this.session.send(dest, o);
+	}
+
+	public void setSession(StompSession session) {
+		this.session = session;
 	}
 }

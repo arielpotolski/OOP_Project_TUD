@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -34,11 +35,12 @@ public class QuestionSetController {
 	 * These questions are then sent to the client in the main controller.
 	 *
 	 * @return The list of returned questions
+	 * @param seed The seed which dictates the order of the questions
 	 */
 	@GetMapping(path = {"", "/"})
-	public List<Question> getAll() {
+	public List<Question> getAll(@RequestParam long seed) {
 		List<Activity> as = this.repository.findAll();
-		QuestionSet qs = new QuestionSet(as);
+		QuestionSet qs = new QuestionSet(as, seed);
 		qs.fillSet(as.size());
 		return qs.getQuestions();
 	}
