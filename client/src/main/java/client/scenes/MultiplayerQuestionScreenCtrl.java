@@ -120,14 +120,14 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 
 	public void sendMessage(){
 		String message = textField.getText();
-		server.send("/app/chat/" + Integer.toString(port),
+		server.send(/*"/app/chat/" + Integer.toString(port)*/ this.createWebSocketURL(port),
 				new MessageModel(message, player.getNickName()));
 	}
 
 	public void sendEmoji(ActionEvent event) {
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
-		server.send("/app/chat/" + Integer.toString(port),
+		server.send(/*"/app/chat/" + Integer.toString(port)*/this.createWebSocketURL(port),
 				new MessageModel(emoji, player.getNickName()));
 	}
 
@@ -248,6 +248,11 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 	public void decreaseOtherPlayersTime() throws IOException {
 		server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 	}
+
+	private String createWebSocketURL(Integer port) {
+		return "/app/chat/" + port.toString();
+	}
+
 
 	/**
 	 * Setter for the port
