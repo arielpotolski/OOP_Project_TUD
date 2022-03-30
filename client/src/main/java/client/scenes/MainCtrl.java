@@ -889,6 +889,7 @@ public class MainCtrl {
 
 	/**
 	 * Changes the scene to intermediate leaderboard
+	 *
 	 * @throws IOException if something goes wrong with the socket
 	 * @throws ClassNotFoundException if Class is not found
 	 */
@@ -896,5 +897,14 @@ public class MainCtrl {
 		this.primaryStage.setScene(this.intermediateLeaderboardScreen);
 		this.primaryStage.setTitle("Leaderboard");
 		this.intLeaderboardCtrl.displayScores();
+	}
+
+	/**
+	 * 	Getter method for the multiplayer questions controller
+	 *
+	 * @return multiplayer questions controller
+	 */
+	public MultiplayerQuestionScreenCtrl getMultiplayerQuestionScreenCtrl() {
+		return multiplayerQuestionScreenCtrl;
 	}
 }

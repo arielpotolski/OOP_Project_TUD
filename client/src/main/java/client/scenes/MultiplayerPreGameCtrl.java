@@ -93,6 +93,7 @@ public class MultiplayerPreGameCtrl {
 	 */
 	public void setNickname() {
 		this.player = new Player(this.nickname.getText(), 0);
+		this.mainCtrl.getMultiplayerQuestionScreenCtrl().setPlayer(this.player);
 		this.mainCtrl.setNickname(this.nickname.getText());
 	}
 
