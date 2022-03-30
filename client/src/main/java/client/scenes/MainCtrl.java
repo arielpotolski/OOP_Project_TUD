@@ -22,15 +22,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import client.utils.ServerUtils;
-import commons.Activity;
-import commons.Connection;
-import commons.EstimateQuestion;
-import commons.HighestConsumptionQuestion;
-import commons.InsteadOfQuestion;
-import commons.LobbyResponse;
-import commons.MCQuestion;
-import commons.Player;
-import commons.Question;
+import commons.*;
 import commons.messages.ErrorMessage;
 import commons.messages.JokerMessage;
 import commons.messages.JokerType;
@@ -269,6 +261,10 @@ public class MainCtrl {
 			screenCtrl = questionScreenSinglePlayerCtrl;
 		} else {
 			screenCtrl = multiplayerQuestionScreenCtrl;
+
+			server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
+				multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
+			});
 		}
 
 		// If the size of question set equals to zero, this method change to final screen.
