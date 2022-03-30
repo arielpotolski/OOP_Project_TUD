@@ -50,7 +50,8 @@ public class PlayerController {
 	 */
 	@MessageMapping("/chat/{idFromClient}")
 	@SendTo("/message/receive/{idFromClient}")
-	public MessageModel sendMessage(@DestinationVariable String idFromClient, MessageModel messageModel) {
+	public MessageModel sendMessage(@DestinationVariable String idFromClient,
+									MessageModel messageModel) {
 		return messageModel;
 	}
 
