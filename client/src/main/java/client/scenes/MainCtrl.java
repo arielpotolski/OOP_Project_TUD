@@ -726,7 +726,7 @@ public class MainCtrl {
 				currentPoint = 0;
 			}
 
-			if (currentPoint < 500) {
+			if (currentPoint < 1000) {
 				if (currentPoint > 300) {
 					color = "-fx-background-color: #f0de8d; -fx-background-radius: 15;";
 					message = "Well done!";
