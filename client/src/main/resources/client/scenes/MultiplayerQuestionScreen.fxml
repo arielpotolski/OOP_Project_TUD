@@ -93,7 +93,7 @@
                            </content>
                         </ScrollPane>
                      </children></Pane>
-                  <TextField fx:id="textField" prefHeight="25.0" prefWidth="132.0" />
+                  <TextField fx:id="textFieldChat" prefHeight="25.0" prefWidth="132.0" />
                   <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessage" text="Send" />
                </children>
             </VBox>
@@ -214,5 +214,17 @@
             </VBox>
          </children>
       </HBox>
+      <TextField fx:id="textField" layoutX="385.0" layoutY="460.0" onAction="#answerReturn" />
+      <Label fx:id="estimateAnswer" alignment="CENTER" layoutX="360.0" layoutY="510.0" style="-fx-background-color: #b4c7e7; -fx-background-radius: 20;" text="The correct answer is [...]" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textField1" layoutX="385.0" layoutY="460.0" onAction="#answerReturn" />
+      <Label fx:id="estimateAnswer1" alignment="CENTER" layoutX="360.0" layoutY="510.0" style="-fx-background-color: #b4c7e7; -fx-background-radius: 20;" text="The correct answer is [...]" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

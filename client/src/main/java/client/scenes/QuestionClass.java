@@ -89,6 +89,7 @@ public abstract class QuestionClass {
 	 */
 	public void answerReturn(ActionEvent event) {
 		Object source = event.getSource();
+		this.mainCtrl.clearButtons(this);
 
 		this.timeStamp = getProgress();
 
@@ -105,6 +106,8 @@ public abstract class QuestionClass {
 			this.inputButton = null;
 			this.inputText = this.textField;
 		}
+
+		this.mainCtrl.updatePoints(inputButton, inputText, this);
 	}
 
 	/**

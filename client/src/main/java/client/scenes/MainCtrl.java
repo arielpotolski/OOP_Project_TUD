@@ -29,7 +29,6 @@ import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
 import commons.LobbyResponse;
 import commons.MCQuestion;
-import commons.MessageModel;
 import commons.Player;
 import commons.Question;
 import commons.messages.ErrorMessage;
@@ -94,7 +93,6 @@ public class MainCtrl {
 	private ServerUtils server;
 
 	private List<Question> questions;
-	private String answer;
 	private Question question;
 
 	private Timeline timeLine;
@@ -586,15 +584,13 @@ public class MainCtrl {
 			Activity activity1 = highConsumptionQuestion.getActivity1();
 			Activity activity2 = highConsumptionQuestion.getActivity2();
 			Activity activity3 = highConsumptionQuestion.getActivity3();
+			long correctAnswer = highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh();
 
-			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity1.getConsumptionInWh()) {
+			if (correctAnswer == activity1.getConsumptionInWh()) {
 				buttonId = 1;
-			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity2.getConsumptionInWh()) {
+			} else if (correctAnswer == activity2.getConsumptionInWh()) {
 				buttonId = 2;
-			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity3.getConsumptionInWh()) {
+			} else if (correctAnswer == activity3.getConsumptionInWh()) {
 				buttonId = 3;
 			}
 			currentPoint = highConsumptionQuestion.pointsEarned(1000, buttonId, timePassed);
@@ -726,16 +722,16 @@ public class MainCtrl {
 				currentPoint = 0;
 			}
 
-			if (currentPoint < 1000) {
+			if (currentPoint < 800) {
 				if (currentPoint > 300) {
 					color = "-fx-background-color: #f0de8d; -fx-background-radius: 15;";
-					message = "Well done!";
+					message = "Not bad!";
 				} else {
 					color = "-fx-background-color: #E37474; -fx-background-radius: 15;";
 					message = "Oh!";
 				}
 			} else {
-				message = "Bullseye!";
+				message = "Well done!";
 			}
 
 			screenCtrl.setEstimateAnswerStyle(color);
@@ -890,23 +886,6 @@ public class MainCtrl {
 		this.multiplayerPreGameCtrl.joinLobby();
 	}
 
-	public void showMultiPlayerQuestionScreen() {
-		player = multiplayerPreGameCtrl.getPlayer();
-		multiplayerQuestionScreenCtrl.setPlayer(player);
-		multiplayerQuestionScreenCtrl.setServer(server);
-
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			multiplayerQuestionScreenCtrl.decreaseProgress();
-		}));
-		timeLine.setCycleCount(10);
-		timeLine.play();
-
-		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
-			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
-		});
-		primaryStage.setTitle("MultiPlayerQuestion");
-		primaryStage.setScene(multiPlayerQuestionScreen);
-	}
 
 	/**
 	 * Changes the scene to intermediate leaderboard

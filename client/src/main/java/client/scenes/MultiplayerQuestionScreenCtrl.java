@@ -1,21 +1,17 @@
 package client.scenes;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import client.utils.ServerUtils;
+import com.google.inject.Inject;
 import commons.MessageModel;
 import commons.Player;
 import commons.messages.JokerMessage;
 import commons.messages.JokerType;
-
-
-import com.google.inject.Inject;import javafx.animation.KeyFrame;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -35,36 +31,13 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class MultiplayerQuestionScreenCtrl extends QuestionClass {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Initializable {
 	private MainCtrl mainCtrl;
 	private ServerUtils server;
-
-	@FXML
-	private ProgressBar progressBarTime;
-
-	@FXML
-	private Button answerButton1;
-
-	@FXML
-	private Button answerButton2;
-
-	@FXML
-	private Button answerButton3;
-
-	@FXML
-	private Ellipse lessTimeJoker;
-
-	@FXML
-	private Ellipse doublePointsJoker;
-
-	@FXML
-	private Ellipse eliminateAnswerJoker;
-
-	@FXML
-	private Circle innerCircleEmoticon;
-
-	@FXML
-	private Pane reactionPane;
 
 	@FXML
 	Button firstEmoji;
@@ -82,10 +55,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass {
 	Button sendButton;
 
 	@FXML
-	private TextField textField;
+	private TextField textFieldChat;
 
-	@FXML
-	private ScrollPane scrollPane;
 
 	@FXML
 	private VBox vBox;
@@ -105,7 +76,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass {
 	}
 
 	public void sendMessage(){
-		String message = textField.getText();
+		String message = textFieldChat.getText();
 		server.send("/app/chat",new MessageModel(message, player.getNickName()));
 	}
 
@@ -181,6 +152,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass {
 		this.server = server;
 	}
 
+	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Image angryImage = new Image("emojis/ANGRY.png",
 				20,
@@ -210,8 +182,6 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass {
 		secondEmoji.setGraphic(victory);
 		thirdEmoji.setGraphic(cry);
 		fourthEmoji.setGraphic(wow);
-
-		super.initialize();
 	}
 
 	/**
@@ -270,7 +240,6 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass {
 	 */
 	@Override
 	public void answerReturn(ActionEvent event) {
-		this.mainCtrl.clearButtons(this);
 		super.answerReturn(event);
 	}
 

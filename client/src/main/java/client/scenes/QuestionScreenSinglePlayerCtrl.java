@@ -90,27 +90,6 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 	 * @param event the player click on the button.
 	 */
 	public void answerReturn(ActionEvent event) {
-		Object source = event.getSource();
-		timeStamp = getProgress();
-
-		mainCtrl.clearButtons(this);
-
-		if (answerButton1.equals(source)) {
-			inputButton = answerButton1;
-			inputText = null;
-		} else if (answerButton2.equals(source)) {
-			inputButton = answerButton2;
-			inputText = null;
-		} else if (answerButton3.equals(source)) {
-			inputButton = answerButton3;
-			inputText = null;
-		} else if (textField.equals(source)) {
-			inputButton = null;
-			inputText = textField;
-		}
-
-		this.mainCtrl.updatePoints(inputButton, inputText, this);
-
 		super.answerReturn(event); //TODO CHECK THIS
 	}
 
