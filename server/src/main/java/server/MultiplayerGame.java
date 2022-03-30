@@ -5,10 +5,14 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import commons.Connection;
 import commons.messages.ErrorMessage;
 import commons.messages.JoinMessage;
+import commons.messages.JokerMessage;
+import commons.messages.LeaderboardMessage;
+import commons.messages.Message;
 import commons.messages.MessageType;
 
 import org.slf4j.Logger;
@@ -18,7 +22,7 @@ public class MultiplayerGame extends Thread {
 	/**
 	 * A record for storing the information for each player in the game.
 	 */
-	private record Player(Connection connection, String name) {}
+	private record Player(Connection connection, String name, int points) {}
 
 	/**
 	 * Information about the players in the lobby.
@@ -49,12 +53,41 @@ public class MultiplayerGame extends Thread {
 	public void run() {
 		try {
 			waitForEveryoneToJoin();
+			for(Player player : players) {
+				receiveMessageFromThePlayer(player);
+			}
 			// TODO begin game
 			// TODO send out questions to players
 			// TODO track game progress
+			sendMessageToAllPlayers(new LeaderboardMessage(generateLeaderboard()));
 			// TODO send leaderboard
 		} catch (Exception err) {
 			err.printStackTrace();
+		}
+	}
+
+	/**
+	 * Generates the leaderboard of all the players
+	 * @return A hash map with name and result of the players
+	 */
+	private HashMap<String, Integer> generateLeaderboard(){
+		HashMap<String, Integer> result = new HashMap<>();
+		for (Player player : this.players) {
+			result.put(player.name(), player.points());
+		}
+		return result;
+	}
+
+	/**
+	 * Sends a message to all players
+	 * @param message the message for the players
+	 * @throws IOException It would happen if there is an issue with the socket
+	 */
+	private void sendMessageToAllPlayers(Message message) throws IOException {
+		// TODO Handle Exception here if player disconnects bcs if a player
+		//  disconnects then exception
+		for (Player player : this.players) {
+			player.connection().send(message);
 		}
 	}
 
@@ -91,7 +124,39 @@ public class MultiplayerGame extends Thread {
 			}
 
 			// Save player.
-			this.players.add(new Player(connection, name));
+			this.players.add(new Player(connection, name, 0));
+		}
+	}
+
+	private void receiveMessageFromThePlayer(Player player) {
+		Thread thread = new Thread(() -> {
+			while (true) {
+				try {
+					Message message = player.connection().receive();
+					switch (message.getType()) {
+						case JOKER -> handleJokerMessage(player, (JokerMessage) message);
+					}
+				} catch (IOException | ClassNotFoundException err) {
+					err.printStackTrace();
+				}
+			}
+		});
+		thread.start();
+	}
+
+	private void handleJokerMessage(Player player, JokerMessage message) throws IOException {
+		this.logger.debug(player.toString() + "sent a joker message");
+		// TODO track if player used joker
+		// TODO handle other stuff
+		sendMessageToAllClients(message, Optional.of(player));
+	}
+
+	private void sendMessageToAllClients(Message message, Optional<Player> exclude)
+			throws IOException {
+		for (Player player: this.players) {
+			if (exclude.isEmpty() || exclude.get() != player) {
+				player.connection.send(message);;
+			}
 		}
 	}
 }

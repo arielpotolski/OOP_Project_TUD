@@ -1,5 +1,7 @@
 package client.scenes;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -95,10 +97,156 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 	 *
 	 * @param event the player click on the button.
 	 */
-	@Override
 	public void answerReturn(ActionEvent event) {
+		Object source = event.getSource();
+		timeStamp = getProgress();
+
 		mainCtrl.clearButtons(this);
 
-		super.answerReturn(event);
+		if (answerButton1.equals(source)) {
+			inputButton = answerButton1;
+			inputText = null;
+		} else if (answerButton2.equals(source)) {
+			inputButton = answerButton2;
+			inputText = null;
+		} else if (answerButton3.equals(source)) {
+			inputButton = answerButton3;
+			inputText = null;
+		} else if (textField.equals(source)) {
+			inputButton = null;
+			inputText = textField;
+		}
+
+		this.mainCtrl.updatePoints(inputButton, inputText);
+
+		super.answerReturn(event); //TODO CHECK THIS
+	}
+
+	/**
+	 * This method set up the color for the progress bar.
+	 */
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		this.progressBarTime.setStyle("-fx-accent: #00FF00");
+	}
+
+	/**
+	 * 	Decreases the progress bar by a certain, given, amount
+	 *
+	 * @param amount the amount to be decreased
+	 */
+	public void decreaseProgress(double amount) {
+		this.progress -= amount;
+		this.progressBarTime.setProgress(this.progress);
+	}
+
+	/**
+	 * This method returns the progress
+	 *
+	 * @return the progress.
+	 */
+	public double getProgress() {
+		return this.progress;
+	}
+
+	/**
+	 * This method set up the progress
+	 *
+	 * @param progress the starting number of for the progress bar
+	 *                    (basically progress will be set up 1).
+	 */
+	public void setProgress(double progress) {
+		this.progress = progress;
+		this.progressBarTime.setProgress(progress);
+	}
+
+	/**
+	 *  The method sets the CSS style of the first Answer Button
+	 *
+	 * @param style the CSS style that is to be applied
+	 */
+	public void setStyleAnswerButton1(String style) {
+		answerButton1.setStyle(style);
+	}
+
+	/**
+	 *  The method sets the CSS style of the second Answer Button
+	 *
+	 * @param style the CSS style that is to be applied
+	 */
+	public void setStyleAnswerButton2(String style) {
+		answerButton2.setStyle(style);
+	}
+
+	/**
+	 *  The method sets the CSS style of the third Answer Button
+	 *
+	 * @param style the CSS style that is to be applied
+	 */
+	public void setStyleAnswerButton3(String style) {
+		answerButton3.setStyle(style);
+	}
+
+	/**
+	 * 	Getter method for timeStamp
+	 *
+	 * @return The last time when the user clicked on an answer
+	 */
+	public double getTimeStamp() {
+		return timeStamp;
+	}
+
+	/**
+	 * 	Getter method for inputButton
+	 *
+	 * @return the button that was last clicked by the Player
+	 */
+	public Button getInputButton() {
+		return inputButton;
+	}
+
+	/**
+	 * 	Getter method for inputText
+	 *
+	 * @return the text that was last entered by the player
+	 */
+	public TextField getInputText() {
+		return inputText;
+	}
+
+	/**
+	 * 	Setter method for inputText
+	 *
+	 * @param text The value that is to be assigned to inputText
+	 */
+	public void setInputText(TextField text) {
+		inputText = text;
+	}
+
+	/**
+	 * 	Setter method for inputButton
+	 *
+	 * @param button The button that is to be assigned to inputButton
+	 */
+	public void setInputButton(Button button) {
+		inputButton = button;
+	}
+
+	/**
+	 * 	The method sets the CSS style of the answer Label in the estimate game mode
+	 *
+	 * @param style the CSS style that is to be applied
+	 */
+	public void setEstimateAnswerStyle(String style) {
+		estimateAnswer.setStyle(style);
+	}
+
+	/**
+	 * 	Writes a certain string to the Label estimateAnswer
+	 *
+	 * @param text The text that is to be written to the label
+	 */
+	public void setEstimateAnswerLabel(String text) {
+		estimateAnswer.setText(text);
 	}
 }

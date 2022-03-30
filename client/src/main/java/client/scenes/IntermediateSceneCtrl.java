@@ -1,5 +1,6 @@
 package client.scenes;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -31,8 +32,9 @@ public class IntermediateSceneCtrl implements Initializable {
 
 	/**
 	 * Constructor for intermediate scene controller.
-	 * @param mainCtrl The injected main controller.
-	 * @param server The injected server.
+	 *
+	 * @param mainCtrl the injected main controller.
+	 * @param server the injected server.
 	 */
 	@Inject
 	public IntermediateSceneCtrl(MainCtrl mainCtrl, ServerUtils server) {
@@ -58,8 +60,9 @@ public class IntermediateSceneCtrl implements Initializable {
 	}
 
 	/**
-	 * Decreases the progess in the progress bar by a certain, given, amount.
-	 * @param amount The amount of progress that the bar loses.
+	 * 	Decreases the progess in the progress bar by a certain, given, amount
+	 *
+	 * @param amount The amount of progress that the bar loses
 	 */
 	public void decreaseProgress(double amount) {
 		this.progress -= amount;
@@ -67,8 +70,9 @@ public class IntermediateSceneCtrl implements Initializable {
 	}
 
 	/**
-	 * Getter method for progress of the progress bar.
-	 * @return The progress.
+	 * 	Getter method for progress of the progress bar
+	 *
+	 * @return the progress
 	 */
 	public double getProgress() {
 		return this.progress;
@@ -77,5 +81,14 @@ public class IntermediateSceneCtrl implements Initializable {
 	public void setProgress(double progress) {
 		this.progress = progress;
 		this.timeUntilNextQuestion.setProgress(progress);
+	}
+
+	/**
+	 * Changes the screen to leaderboard
+	 * @throws IOException if something goes wrong with the socket
+	 * @throws ClassNotFoundException if the class is not found
+	 */
+	public void changeToIntLeaderboard() throws IOException, ClassNotFoundException {
+		this.mainCtrl.changeToLeaderboard();
 	}
 }

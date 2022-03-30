@@ -96,11 +96,15 @@ public class WaitingScreenCtrl {
 	 */
 	private void gameBegins() {
 		try {
-			this.serverUtils.makeConnection(port);
+			this.serverUtils.makeConnection(this.port);
 
+			// Set the same unique seed to all players inside the lobby.
+			this.mainCtrl.setSeed(this.port);
 			this.mainCtrl.getQuestions();
 
+			// Move to game screen.
 			this.mainCtrl.showQuestionScreen(false);
+			this.mainCtrl.startMessageReceiverThread();
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
