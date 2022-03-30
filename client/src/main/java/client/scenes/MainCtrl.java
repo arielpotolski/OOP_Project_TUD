@@ -521,34 +521,6 @@ public class MainCtrl {
 	}
 
 	/**
-	 * This method shows the intermediate scene.
-	 */
-	public void showIntermediateScene() {
-		intermediateSceneCtrl.setQuestionAnswer(numberOfQuestionAnswered);
-		intermediateSceneCtrl.setLabelPoint(player.getPoint());
-		intermediateSceneCtrl.setCurrentQuestionPointsEarned(currentPoint);
-		primaryStage.setTitle("IntermediateScene");
-		primaryStage.setScene(intermediateScene);
-
-		// This timeline will execute on another thread - run the count-down timer.
-		intermediateSceneCtrl.setProgress(1f);
-
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			intermediateSceneCtrl.decreaseProgress(0.25);
-		}));
-		timeLine.setCycleCount(4);
-		timeLine.play();
-		timeLine.setOnFinished(_e -> {
-			questionScreenSinglePlayerCtrl.setProgress(1); // Reset the progress bar after
-			try {
-				showQuestionScreen(true);     // the timeline finish its cycle.
-			} catch (IOException err) {
-				err.printStackTrace();
-			}
-		});
-	}
-
-	/**
 	 * This method shows the final screen.
 	 */
 	public void showSinglePlayerFinalScreen() {
