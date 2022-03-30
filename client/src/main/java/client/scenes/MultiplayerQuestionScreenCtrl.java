@@ -249,7 +249,10 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 		server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 	}
 
-	//Add JavaDoc
+	/**
+	 * Setter for the port
+	 * @param port the port 
+	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
