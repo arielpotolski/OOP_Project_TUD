@@ -130,10 +130,10 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 		long consumption;
 		String activityString = this.activityData.getText();
 		String[] activityInfo = activityString.split("\n");
-		String id = activityInfo[0].split(": ")[1];
-		String title = activityInfo[1].split(": ")[1];
-		String imagePath = activityInfo[3].split(": ")[1];
-		String source = activityInfo[4].split(": ")[1];
+		String id = activityInfo[0].split(": ", 2)[1];
+		String title = activityInfo[1].split(": ", 2)[1];
+		String imagePath = activityInfo[3].split(": ", 2)[1];
+		String source = activityInfo[4].split(": ", 2)[1];
 
 		/* Try to get the consumption as a long instead of a string.  If this fails (because the
 		 * input was invalid or something like that) then we cannot proceed and return an empty
