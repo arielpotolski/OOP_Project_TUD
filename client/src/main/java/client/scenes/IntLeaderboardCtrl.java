@@ -1,9 +1,6 @@
 package client.scenes;
 
 import java.net.URL;
-import java.util.ResourceBundle;
-
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,9 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
-import javafx.fxml.Initializable;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
 
 public class IntLeaderboardCtrl implements Initializable {
 	private MainCtrl mainCtrl;
