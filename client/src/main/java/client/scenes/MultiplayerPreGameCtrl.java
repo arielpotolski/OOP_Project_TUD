@@ -104,8 +104,4 @@ public class MultiplayerPreGameCtrl {
 	public void setNickname() {
 		this.mainCtrl.setNickname(this.nickname.getText());
 	}
-
-	public Player getPlayer() {
-		return new Player(this.nickname.getText());
-	}
 }

@@ -60,7 +60,7 @@ public class MainCtrl {
 	private Scene multiplayerPreGameScreen;
 
 	MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
-	private Scene multiplayerQuestionScreen;
+	private Scene multiPlayerQuestionScreen;
 
 	private QuestionScreenSinglePlayerCtrl questionScreenSinglePlayerCtrl;
 	private Scene questionScreenSinglePlayer;
@@ -79,9 +79,6 @@ public class MainCtrl {
 
 	private TopPlayersLeaderboardCtrl topPlayersLeaderboardCtrl;
 	private Scene topPlayersLeaderboard;
-
-	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
-	private Scene multiPlayerQuestionScreen;
 
 	private IntLeaderboardCtrl intLeaderboardCtrl;
 	private Scene intermediateLeaderboardScreen;
@@ -491,7 +488,7 @@ public class MainCtrl {
 		timeLine.setOnFinished(_e -> {
 			questionScreenSinglePlayerCtrl.setProgress(1); // Reset the progress bar after
 			try {
-				showQuestionScreenSinglePlayer();     // the timeline finish its cycle.
+				showQuestionScreen(true);     // the timeline finish its cycle.
 			} catch (IOException err) {
 				err.printStackTrace();
 			}
@@ -509,26 +506,6 @@ public class MainCtrl {
 		primaryStage.setTitle("Final Score");
 		primaryStage.setScene(singlePlayerFinalScene);
 		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
-	}
-
-	/**
-	 * This method shows the final screen.
-	 */
-	public void showSinglePlayerFinalScreen() {
-		singlePlayerFinalSceneCtrl.setTotalScore(player.getPoint());
-		singlePlayerFinalSceneCtrl.setCorrectAnswers(numberOfCorrectAnswered);
-		singlePlayerFinalSceneCtrl.setServer(server);
-		singlePlayerFinalSceneCtrl.addPlayer(player);
-		primaryStage.setTitle("Final Score");
-		primaryStage.setScene(singlePlayerFinalScene);
-		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
-	}
-
-	/**
-	 * This method shows the final screen for multiplayer.
-	 */
-	public void showMultiPlayerFinalScreen() {
-		//TODO show final screen for multiplayer
 	}
 
 	/**
@@ -771,8 +748,8 @@ public class MainCtrl {
 	 * Getter method for the multiplayer question screen.
 	 * @return The multiplayer question screen.
 	 */
-	public Scene getMultiplayerQuestionScreen() {
-		return multiplayerQuestionScreen;
+	public Scene getMultiPlayerQuestionScreen() {
+		return multiPlayerQuestionScreen;
 	}
 
 	/**
@@ -903,5 +880,4 @@ public class MainCtrl {
 		this.primaryStage.setTitle("Leaderboard");
 		this.intLeaderboardCtrl.displayScores();
 	}
-
 }

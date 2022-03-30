@@ -1,9 +1,6 @@
 package client.scenes;
 
 import java.net.URL;
-import java.util.ResourceBundle;
-
-import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,12 +9,9 @@ import java.util.ResourceBundle;
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ProgressBar;
-
-public class IntLeaderboardCtrl implements Initializable {
 
 public class IntLeaderboardCtrl implements Initializable {
 	private MainCtrl mainCtrl;
@@ -65,7 +59,6 @@ public class IntLeaderboardCtrl implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		this.timeUntilNextQuestion.setStyle("-fx-accent: #00FF00");
 	}
-}
 
 	/**
 	 * Setter method for the progress.

@@ -1,26 +1,22 @@
 package client.scenes;
 
 import java.io.IOException;
-
-import commons.Player;
-
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 import client.utils.ServerUtils;
 import commons.MessageModel;
 import commons.Player;
 
 import com.google.inject.Inject;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
@@ -33,10 +29,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
-import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 	private MainCtrl mainCtrl;
@@ -182,7 +178,6 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 		this.server = server;
 	}
 
-	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Image angryImage = new Image("emojis/ANGRY.png",
 				20,
@@ -220,8 +215,6 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 	public void decreaseProgress() {
 		// TODO
 	}
-}
-
 
 	@Override
 	public void showFinalScreen() {
@@ -235,7 +228,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 
 	@Override
 	public Scene getScene() {
-		return this.mainCtrl.getMultiplayerQuestionScreen();
+		return this.mainCtrl.getMultiPlayerQuestionScreen();
 	}
 
 	@Override
