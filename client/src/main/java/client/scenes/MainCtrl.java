@@ -18,6 +18,7 @@ package client.scenes;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import client.utils.ServerUtils;
@@ -39,11 +40,16 @@ import commons.messages.Message;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.slf4j.Logger;
@@ -97,6 +103,8 @@ public class MainCtrl {
 	private int currentPoint;
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
+
+	private EventHandler<WindowEvent> confirmCloseEventHandler;
 
 	private Logger logger;
 
@@ -175,17 +183,56 @@ public class MainCtrl {
 		this.intLeaderboardCtrl = intLeaderboard.getKey();
 		this.intermediateLeaderboardScreen = new Scene(intLeaderboard.getValue());
 
+		setEventHandlerForClosure();
+		closeConfirmation();
 		showSplashScreen();
-
 		primaryStage.show();
 	}
 
+	/**
+	 * Sets the event for closure
+	 */
+	private void closeConfirmation() {
+		this.primaryStage.setOnCloseRequest(event ->
+			this.primaryStage.fireEvent(
+					new WindowEvent(
+							this.primaryStage,
+							WindowEvent.WINDOW_CLOSE_REQUEST
+					)
+			)
+		);
+	}
+
+	/**
+	 * Setter for the event handler when the user requests to exit the screen
+	 */
+	private void setEventHandlerForClosure() {
+		this.confirmCloseEventHandler = event -> {
+			Alert closeConfirmation = new Alert(
+					Alert.AlertType.CONFIRMATION,
+					"Are you sure you want to exit?"
+			);
+			Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+					ButtonType.OK
+			);
+			exitButton.setText("Yes");
+			closeConfirmation.setHeaderText("Confirm Exit");
+			closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+			closeConfirmation.initOwner(this.primaryStage);
+
+			Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+			if (!ButtonType.OK.equals(closeResponse.get())) {
+				event.consume();
+			}
+		};
+	}
 	/**
 	 * This method shows up the splash screen.
 	 */
 	public void showSplashScreen() {
 		primaryStage.setTitle("Quizzz");
 		primaryStage.setScene(splashScreen);
+		this.primaryStage.setOnCloseRequest(this.confirmCloseEventHandler);
 	}
 
 	/**
