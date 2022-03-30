@@ -4,6 +4,11 @@ import java.util.List;
 
 import commons.MessageModel;
 import commons.Player;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import server.database.PlayerRepository;
 import static commons.Utility.nullOrEmpty;
@@ -17,9 +22,11 @@ import org.springframework.messaging.handler.annotation.SendTo;
 @RequestMapping("/api/players")
 public class PlayerController {
 	private final PlayerRepository playerRepository;
+	final SimpMessagingTemplate simpMessagingTemplate;
 
-	public PlayerController(PlayerRepository playerRepository) {
+	public PlayerController(PlayerRepository playerRepository, SimpMessagingTemplate simpMessagingTemplate) {
 		this.playerRepository = playerRepository;
+		this.simpMessagingTemplate = simpMessagingTemplate;
 	}
 
 	@GetMapping(path = {"", "/"})
@@ -36,14 +43,19 @@ public class PlayerController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@MessageMapping("/chat/{id}") //app/chat
-	@SendTo("/message/receive/{id}")
+
 	/**
 	 * This method return the MessageModel to other clients after one client want to
 	 * send the message to other clients
+	 * @param messageModel
+	 * @param idFromClient
+	 * @return return the message which is sent by the client
 	 */
-	public MessageModel sendMessage(@PathVariable(value = "id") int id, MessageModel messageModel) {
-		return messageModel;
+	@MessageMapping("/chat/{idFromClient}")
+	@SendTo("/message/receive/{idFromServer}")
+	public void sendMessage(@DestinationVariable String idFromClient,
+									MessageModel messageModel) {
+		simpMessagingTemplate.convertAndSend("/message/receive/" + idFromClient, messageModel);
 	}
 
 }

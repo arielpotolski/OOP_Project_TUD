@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
-import commons.LobbyResponse;
 import commons.MessageModel;
 import commons.Player;
 
@@ -116,14 +115,14 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 
 	public void sendMessage(){
 		String message = textField.getText();
-		server.send("/app/chat/" + port,
+		server.send("/app/chat/" + Integer.toString(port),
 				new MessageModel(message, player.getNickName()));
 	}
 
 	public void sendEmoji(ActionEvent event) {
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
-		server.send("/app/chat/" + port,
+		server.send("/app/chat/" + Integer.toString(port),
 				new MessageModel(emoji, player.getNickName()));
 	}
 
