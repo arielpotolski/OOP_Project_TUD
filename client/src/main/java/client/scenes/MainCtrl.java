@@ -306,9 +306,13 @@ public class MainCtrl {
 			screenCtrl.decreaseProgress(0.1f);
 		}));
 		timeLine.setOnFinished(_e -> {
-			updatePoints(screenCtrl.getInputButton(),
-						screenCtrl.getInputText(),
-						screenCtrl);
+			try {
+				updatePoints(screenCtrl.getInputButton(),
+							screenCtrl.getInputText(),
+							screenCtrl);
+			} catch (IOException err) {
+				err.printStackTrace();
+			}
 		});
 		timeLine.setCycleCount(10);
 		timeLine.setOnFinished(_e -> {
