@@ -11,6 +11,7 @@ import commons.Connection;
 import commons.messages.ErrorMessage;
 import commons.messages.JoinMessage;
 import commons.messages.JokerMessage;
+import commons.messages.KillerMessage;
 import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
 import commons.messages.MessageType;
@@ -130,11 +131,16 @@ public class MultiplayerGame extends Thread {
 
 	private void receiveMessageFromThePlayer(Player player) {
 		Thread thread = new Thread(() -> {
-			while (true) {
+			message_loop: while (true) {
 				try {
 					Message message = player.connection().receive();
 					switch (message.getType()) {
 						case JOKER -> handleJokerMessage(player, (JokerMessage) message);
+						case KILLER -> {
+							player.connection().send(new KillerMessage());
+							players.remove(player);
+							break message_loop;
+						}
 					}
 				} catch (IOException | ClassNotFoundException err) {
 					err.printStackTrace();
