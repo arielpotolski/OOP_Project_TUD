@@ -106,7 +106,7 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 
 	private double progress = 1;
 
-	int port;
+	private int gameId;
 
 	@Inject
 	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
@@ -120,14 +120,14 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 
 	public void sendMessage(){
 		String message = textField.getText();
-		server.send("/app/chat/" + Integer.toString(port),
+		server.send(this.createWebSocketURL(gameId),
 				new MessageModel(message, player.getNickName()));
 	}
 
 	public void sendEmoji(ActionEvent event) {
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
-		server.send("/app/chat/" + Integer.toString(port),
+		server.send(this.createWebSocketURL(gameId),
 				new MessageModel(emoji, player.getNickName()));
 	}
 
@@ -242,7 +242,7 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 
 	/**
 	 *  Decreases the progress of progress bar (aka the timer)
-	 * @param progress the amount of time the player want to subtract from other players 
+	 * @param progress the amount of time the player want to subtract from other players
 	 */
 	public void decreaseProgress(double progress) {
 		this.progress -= progress;
@@ -251,5 +251,18 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 
 	public void decreaseOtherPlayersTime() throws IOException {
 		server.getConnection().send(new JokerMessage(JokerType.DECREASE));
+	}
+
+	private String createWebSocketURL(Integer gameId) {
+		return "/app/chat/" + gameId.toString();
+	}
+
+
+	/**
+	 * Setter for the gameId
+	 * @param gameId the gameId
+	 */
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
 	}
 }

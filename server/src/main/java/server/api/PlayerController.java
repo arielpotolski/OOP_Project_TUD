@@ -4,29 +4,27 @@ import java.util.List;
 
 import commons.MessageModel;
 import commons.Player;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.Message;
-import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.*;
 import server.database.PlayerRepository;
 import static commons.Utility.nullOrEmpty;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/players")
 public class PlayerController {
 	private final PlayerRepository playerRepository;
-	final SimpMessagingTemplate simpMessagingTemplate;
 
-	public PlayerController(PlayerRepository playerRepository, SimpMessagingTemplate simpMessagingTemplate) {
+	public PlayerController(PlayerRepository playerRepository) {
 		this.playerRepository = playerRepository;
-		this.simpMessagingTemplate = simpMessagingTemplate;
 	}
 
 	@GetMapping(path = {"", "/"})
@@ -42,7 +40,6 @@ public class PlayerController {
 		Player result = playerRepository.save(player);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-
 
 	/**
 	 * This method return the MessageModel to other clients after one client want to

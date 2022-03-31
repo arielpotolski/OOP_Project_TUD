@@ -35,8 +35,6 @@ public class WaitingScreenCtrl {
 	@FXML
 	private ListView<String> usersInLobbyView;
 
-	LobbyResponse lobbyResponse;
-
 	@Inject
 	public WaitingScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
@@ -111,7 +109,7 @@ public class WaitingScreenCtrl {
 					messageModel -> {
 						mainCtrl.renderTheMessageInTheChatBox(messageModel.getMessage());
 					});
-			this.mainCtrl.setPortInMultiplayerQuestionScreen(port);
+			this.mainCtrl.setGameIdInMultiplayerQuestionScreen(port);
 
 			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.
