@@ -2,21 +2,22 @@ package client.scenes;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class QuestionClassTest {
 	@Test
-	public void IsNumericNull() {
+	public void isNumericNull() {
 		assertFalse(QuestionClass.isNumeric(null));
 	}
 
 	@Test
-	public void IsNumericHasChar() {
+	public void isNumericHasChar() {
 		assertFalse(QuestionClass.isNumeric("12Ad"));
 	}
 
 	@Test
-	public void IsNumericTrue() {
+	public void isNumericTrue() {
 		assertTrue(QuestionClass.isNumeric("1241"));
 	}
 }
