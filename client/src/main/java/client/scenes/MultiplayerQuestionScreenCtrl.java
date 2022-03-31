@@ -261,4 +261,8 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
 	}
+
+	public double getProgress() {
+		return this.progress;
+	}
 }
