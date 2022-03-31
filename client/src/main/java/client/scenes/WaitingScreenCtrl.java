@@ -5,6 +5,7 @@ import java.util.Set;
 
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
+import commons.MessageModel;
 import static commons.Utility.contentsEqual;
 
 import com.google.inject.Inject;
@@ -102,6 +103,15 @@ public class WaitingScreenCtrl {
 			this.mainCtrl.setSeed(this.port);
 			this.mainCtrl.getQuestions();
 
+			this.serverUtils.registerForMessages(
+					"/message/receive/" + Integer.toString(port),
+					MessageModel.class,
+					messageModel -> {
+						mainCtrl.renderTheMessageInTheChatBox(messageModel.getMessage());
+					});
+			this.mainCtrl.setGameIdInMultiplayerQuestionScreen(port);
+
+			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.
 			this.mainCtrl.showQuestionScreen(false);
 			this.mainCtrl.startMessageReceiverThread();

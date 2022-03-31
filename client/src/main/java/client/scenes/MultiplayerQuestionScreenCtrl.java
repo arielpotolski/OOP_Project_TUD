@@ -62,6 +62,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	private double progress = 1;
 
+	private int gameId;
+
 	@Inject
 	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
 		this.server = server;
@@ -74,13 +76,15 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	public void sendMessage(){
 		String message = textFieldChat.getText();
-		server.send("/app/chat",new MessageModel(message, player.getNickName()));
+		server.send(this.createWebSocketURL(gameId),
+				new MessageModel(message, player.getNickName()));
 	}
 
 	public void sendEmoji(ActionEvent event) {
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
-		server.send("/app/chat", new MessageModel(emoji, player.getNickName()));
+		server.send(this.createWebSocketURL(gameId),
+				new MessageModel(emoji, player.getNickName()));
 	}
 
 	/**
@@ -237,5 +241,17 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	@Override
 	public void showFinalScreen() {
 		this.mainCtrl.showMultiPlayerFinalScreen();
+	}
+
+	private String createWebSocketURL(Integer gameId) {
+		return "/app/chat/" + gameId.toString();
+	}
+
+	/**
+	 * Setter for the gameId
+	 * @param gameId the gameId
+	 */
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
 	}
 }

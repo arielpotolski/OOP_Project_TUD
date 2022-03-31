@@ -9,6 +9,7 @@ import static commons.Utility.nullOrEmpty;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,13 +41,17 @@ public class PlayerController {
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
-	@MessageMapping("/chat") //app/chat
-	@SendTo("/message/receive")
 	/**
 	 * This method return the MessageModel to other clients after one client want to
 	 * send the message to other clients
+	 * @param messageModel
+	 * @param idFromClient
+	 * @return return the message which is sent by the client
 	 */
-	public MessageModel sendMessage(MessageModel messageModel) {
+	@MessageMapping("/chat/{idFromClient}")
+	@SendTo("/message/receive/{idFromClient}")
+	public MessageModel sendMessage(@DestinationVariable String idFromClient,
+									MessageModel messageModel) {
 		return messageModel;
 	}
 

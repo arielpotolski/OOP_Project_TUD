@@ -879,7 +879,6 @@ public class MainCtrl {
 		this.multiplayerPreGameCtrl.joinLobby();
 	}
 
-
 	/**
 	 * Changes the scene to intermediate leaderboard
 	 *
@@ -899,5 +898,13 @@ public class MainCtrl {
 	 */
 	public MultiplayerQuestionScreenCtrl getMultiplayerQuestionScreenCtrl() {
 		return multiplayerQuestionScreenCtrl;
+	}
+
+	public void renderTheMessageInTheChatBox(String message) {
+		multiplayerQuestionScreenCtrl.updateMessage(message);
+	}
+
+	public void setGameIdInMultiplayerQuestionScreen(int gameId) {
+		multiplayerQuestionScreenCtrl.setGameId(gameId);
 	}
 }
