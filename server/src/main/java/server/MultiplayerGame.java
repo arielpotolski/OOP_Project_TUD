@@ -32,7 +32,7 @@ public class MultiplayerGame extends Thread {
 	 */
 	private final HashMap<String, LobbyPlayer> lobbyPlayers;
 	/**
-	 * Scores of the players with relation to their
+	 * Scores of the players with relation to their nickname
 	 */
 	private final HashMap<String, Integer> scores;
 	/**
@@ -67,7 +67,6 @@ public class MultiplayerGame extends Thread {
 			// TODO send out questions to players
 			// TODO track game progress
 			sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
-			// TODO send leaderboard
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
@@ -133,6 +132,10 @@ public class MultiplayerGame extends Thread {
 		}
 	}
 
+	/**
+	 * Receives a message from the player
+	 * @param player the sender of the message
+	 */
 	private void receiveMessageFromThePlayer(Player player) {
 		Thread thread = new Thread(() -> {
 			message_loop: while (true) {
@@ -141,8 +144,8 @@ public class MultiplayerGame extends Thread {
 					switch (message.getType()) {
 						case JOKER -> handleJokerMessage(player, (JokerMessage) message);
 						case POINTS -> {
-							this.scores.put(((PointMessage) message).getName(),
-									((PointMessage) message).getPoints() +
+							PointMessage current = (PointMessage) message;
+							this.scores.put(current.getName(), current.getPoints() +
 											this.scores.get(player.name()));
 							// Give as argument a copy of the map
 							LeaderboardMessage res =
