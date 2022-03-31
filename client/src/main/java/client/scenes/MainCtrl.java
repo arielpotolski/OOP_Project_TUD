@@ -19,6 +19,7 @@ package client.scenes;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import client.Main;
@@ -34,16 +35,24 @@ import commons.MessageModel;
 import commons.Player;
 import commons.Question;
 import commons.messages.ErrorMessage;
+import commons.messages.JokerMessage;
+import commons.messages.JokerType;
+import commons.messages.KillerMessage;
 import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.slf4j.Logger;
@@ -100,7 +109,6 @@ public class MainCtrl {
 	private ServerUtils server;
 
 	private List<Question> questions;
-	private String answer;
 	private Question question;
 
 	private Timeline timeLine;
@@ -113,8 +121,11 @@ public class MainCtrl {
 	private List<Activity> activities;
 
 	private long seed = 0;
+	private EventHandler<WindowEvent> confirmCloseEventHandler;
 
 	private Logger logger;
+
+	private static final double JOKER_DECREASE_TIME_PERCENT = 0.5;
 
 	public MainCtrl() {
 		seed = new Random().nextInt();
@@ -208,17 +219,65 @@ public class MainCtrl {
 		this.intLeaderboardCtrl = intLeaderboard.getKey();
 		this.intermediateLeaderboardScreen = new Scene(intLeaderboard.getValue());
 
-		showSplashScreen();
+		setEventHandlerForClosure();
+		closeConfirmation();
 
+		multiplayerQuestionScreenCtrl.setMainCtrl(this);
+
+		showSplashScreen();
 		primaryStage.show();
 	}
 
+	/**
+	 * Sets the event for closure
+	 */
+	private void closeConfirmation() {
+		this.primaryStage.setOnCloseRequest(event ->
+			this.primaryStage.fireEvent(
+					new WindowEvent(
+							this.primaryStage,
+							WindowEvent.WINDOW_CLOSE_REQUEST
+					)
+			)
+		);
+	}
+
+	/**
+	 * Setter for the event handler when the user requests to exit the screen
+	 */
+	private void setEventHandlerForClosure() {
+		this.confirmCloseEventHandler = event -> {
+			Alert closeConfirmation = new Alert(
+					Alert.AlertType.CONFIRMATION,
+					"Are you sure you want to exit?"
+			);
+			Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+					ButtonType.OK
+			);
+			exitButton.setText("Yes");
+			closeConfirmation.setHeaderText("Confirm Exit");
+			closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+			closeConfirmation.initOwner(this.primaryStage);
+
+			Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+			if (!ButtonType.OK.equals(closeResponse.get())) {
+				event.consume();
+			} else if (this.server != null){
+				try {
+					this.server.getConnection().send(new KillerMessage());
+				} catch (IOException err) {
+					err.printStackTrace();
+				}
+			}
+		};
+	}
 	/**
 	 * This method shows up the splash screen.
 	 */
 	public void showSplashScreen() {
 		primaryStage.setTitle("Quizzz");
 		primaryStage.setScene(splashScreen);
+		this.primaryStage.setOnCloseRequest(this.confirmCloseEventHandler);
 	}
 
 	/**
@@ -237,45 +296,6 @@ public class MainCtrl {
 		primaryStage.setScene(multiplayerPreGameScreen);
 	}
 
-	/**
-	 * 	Method that shows the question screen for the multiplayer game mode
-	 *
-	 * @throws IOException
-	 */
-	public void showMultiplayerQuestionScreen() throws IOException{
-		// Switch to final screen if the aren't any questions
-		if (questions.size() == 0) {
-			showMultiPlayerFinalScreen();
-			return;
-		}
-
-		primaryStage.setTitle("Question");
-		primaryStage.setScene(multiPlayerQuestionScreen);
-
-		question = questions.get(0); // get the element at the top
-		questions.remove(0); // pop the element at the top
-
-		// This timeline will execute on another thread - run the count-down timer.
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			multiplayerQuestionScreenCtrl.decreaseProgress();
-		}));
-		timeLine.setCycleCount(10);
-		timeLine.play();
-
-		numberOfQuestionAnswered++;
-
-		if (question instanceof EstimateQuestion) {
-			setUpEstimateQuestionMultiplayer((EstimateQuestion) question);
-		} else if (question instanceof HighestConsumptionQuestion) {
-			setUpHighestQuestionMultiplayer((HighestConsumptionQuestion) question);
-		} else if (question instanceof MCQuestion) {
-			setUpMultipleChoiceMultiplayer((MCQuestion) question);
-		} else if (question instanceof InsteadOfQuestion) {
-			setUpInsteadQuestionMultiplayer((InsteadOfQuestion) question);
-		}
-		primaryStage.setScene(multiPlayerQuestionScreen);
-	}
-
 	public void showWaitingScreen(LobbyResponse firstResponse) {
 		primaryStage.setTitle("Waiting Lobby");
 		primaryStage.setScene(waitingScreen);
@@ -284,31 +304,43 @@ public class MainCtrl {
 
 	/**
 	 * This method shows up the question screen in single player mode.
+	 * @param isSingleplayer Whether the current game mode is single player or not.
 	 */
-	public void showQuestionScreenSinglePlayer() throws IOException {
+	public void showQuestionScreen(boolean isSingleplayer) throws IOException {
+		QuestionClass screenCtrl;
+
+		if (isSingleplayer) {
+			screenCtrl = questionScreenSinglePlayerCtrl;
+		} else {
+			screenCtrl = multiplayerQuestionScreenCtrl;
+
+			server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
+				multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
+			});
+		}
+		// Enable all buttons to make sure the player can answer
+		screenCtrl.disableButtons(false);
+
 		// If the size of question set equals to zero, this method change to final screen.
 		if (questions.size() == 0) {
-			showSinglePlayerFinalScreen();
+			screenCtrl.showFinalScreen();
 			return;
 		}
 
-		clearButtons();	// change back the color of the buttons
-		questionScreenSinglePlayerCtrl.setInputButton(null);
-		questionScreenSinglePlayerCtrl.setInputText(null);
+		clearButtons(screenCtrl);	// change back the color of the buttons
+		screenCtrl.setInputButton(null);
+		screenCtrl.setInputText(null);
 
 		// Assign the player variable that got from
 		// SinglePlayerPreGame to player variable in MainCtrl
-		player = singlePlayerPreGameCtrl.getPlayer();
+		player = screenCtrl.getPlayer();
+		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
 		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			questionScreenSinglePlayerCtrl.decreaseProgress(0.1f);
+			screenCtrl.decreaseProgress(0.1f);
 		}));
 		timeLine.setCycleCount(10);
-		timeLine.setOnFinished(_e -> {
-			updatePoints(questionScreenSinglePlayerCtrl.getInputButton(),
-						questionScreenSinglePlayerCtrl.getInputText());
-		});
 		timeLine.play();
 
 		primaryStage.setTitle("Question");
@@ -319,23 +351,16 @@ public class MainCtrl {
 
 		numberOfQuestionAnswered++;
 		if (question instanceof EstimateQuestion) {
-			setUpEstimateQuestion((EstimateQuestion) question);
+			setUpEstimateQuestion((EstimateQuestion) question, screenCtrl);
 		} else if (question instanceof HighestConsumptionQuestion) {
-			setUpHighestQuestion((HighestConsumptionQuestion) question);
+			setUpHighestQuestion((HighestConsumptionQuestion) question, screenCtrl);
 		} else if (question instanceof MCQuestion) {
-			setUpMultipleChoice((MCQuestion) question);
+			setUpMultipleChoice((MCQuestion) question, screenCtrl);
 		} else if (question instanceof InsteadOfQuestion) {
-			setUpInsteadQuestion((InsteadOfQuestion) question);
+			setUpInsteadQuestion((InsteadOfQuestion) question, screenCtrl);
 		}
 
-		primaryStage.setScene(questionScreenSinglePlayer);
-	}
-
-	/**
-	 *  Method that switches to multiplayer final screen
-	 */
-	public void showMultiPlayerFinalScreen() {
-		//TODO implement this
+		primaryStage.setScene(screenCtrl.getScene());
 	}
 
 	public ServerUtils getServer() {
@@ -356,12 +381,21 @@ public class MainCtrl {
 						this.intLeaderboardCtrl.setPlayers(
 								((LeaderboardMessage) message).getPlayers());
 						break;
+					case JOKER:
+						JokerMessage jokerMessage = (JokerMessage) message;
+						if (jokerMessage.getJokerType() == JokerType.DECREASE) {
+							multiplayerQuestionScreenCtrl.
+								decreaseProgress(this.multiplayerQuestionScreenCtrl.getProgress()
+									* JOKER_DECREASE_TIME_PERCENT);
+							}
+						break;
 					case JOIN:
 					case ERROR:
 						this.logger.error("Received error message: " +
 								((ErrorMessage) message).getError());
 						break;
-						// TODO EndGame Message to stop this thread
+					case KILLER:
+						return;
 					}
 				} catch (Exception err) {
 					err.printStackTrace();
@@ -382,138 +416,132 @@ public class MainCtrl {
 	/**
 	 * This method sets up the multiple choice question
 	 * @param question multiple choice question
+	 * @param screenCtrl The screen controller which handles the task.
 	 * @throws IOException if there is a problem with the parsing
 	 */
-	public void setUpMultipleChoice(MCQuestion question) throws IOException {
-		hideTextFieldAndRevealButtons();
-		clearImages();
+	public void setUpMultipleChoice(
+		MCQuestion question,
+		QuestionClass screenCtrl
+	) throws IOException {
+		hideTextFieldAndRevealButtons(screenCtrl);
+
 
 		// Set up label for the question and answers.
 		String questionText = question.getActivity().getTitle();
-		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setImageQuestionImageView(
-				question.imageInByteArrayQuestion());
-		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
-		questionScreenSinglePlayerCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
-		questionScreenSinglePlayerCtrl.setLabelButton2(Long.toString(question.getAnswer2()));
-		questionScreenSinglePlayerCtrl.setLabelButton3(Long.toString(question.getAnswer3()));
-		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
-	}
-
-	/**
-	 * This method sets up the multiple choice question for the multiplayer game mode
-	 * @param question multiple choice question
-	 * @throws IOException if there is a problem with the parsing
-	 */
-	public void setUpMultipleChoiceMultiplayer(MCQuestion question) throws IOException {
-		//TODO implement this
+		screenCtrl.setUpLabel(questionText);
+		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
+			clearImages();
+			screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
+			screenCtrl.setVisibleImageQuestion(true);
+		}
+		screenCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
+		screenCtrl.setLabelButton2(Long.toString(question.getAnswer2()));
+		screenCtrl.setLabelButton3(Long.toString(question.getAnswer3()));
+		screenCtrl.setVisibleEstimateAnswer(false);
+		screenCtrl.setVisibleTextField(false);
 	}
 
 	/**
 	 * This method sets up the "instead of" question
 	 * @param question "instead of" question
+	 * @param screenCtrl The screen controller which handles the task.
+	 * @throws IOException if there is a problem with the parsing
 	 */
-	public void setUpInsteadQuestion(InsteadOfQuestion question) throws IOException {
-		hideTextFieldAndRevealButtons();
-		clearImages();
-
+	public void setUpInsteadQuestion(
+			InsteadOfQuestion question,
+			QuestionClass screenCtrl
+	) throws IOException {
+		hideTextFieldAndRevealButtons(screenCtrl);
 		// Set up label for the question and answers
 		String questionText = question.getQuestionActivity().getTitle();
-		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setImageQuestionImageView(
-				question.imageInByteArrayQuestion());
-		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
-		questionScreenSinglePlayerCtrl.setLabelButton1(question.answerString(1));
-		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(1),
-				0);
-		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 0);
-		questionScreenSinglePlayerCtrl.setLabelButton2(question.answerString(2));
-		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(2),
-				1);
-		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 1);
-		questionScreenSinglePlayerCtrl.setLabelButton3(question.answerString(3));
-		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(3),
-				2);
-		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 2);
-		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
+		screenCtrl.setUpLabel(questionText);
+		screenCtrl.setLabelButton1(question.answerString(1));
+		screenCtrl.setLabelButton2(question.answerString(2));
+		screenCtrl.setLabelButton3(question.answerString(3));
+		screenCtrl.setVisibleEstimateAnswer(false);
+
+		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
+			clearImages();
+
+			screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
+			screenCtrl.setVisibleImageQuestion(true);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(1), 0);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(2), 1);
+			screenCtrl.setVisibilityImageView(true, 1);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(3), 2);
+			screenCtrl.setVisibilityImageView(true, 2);
+			screenCtrl.setVisibilityImageView(true, 0);
+			screenCtrl.setVisibleTextField(false);
+		}
 	}
 
 	/**
-	 * This method sets up the "instead of" question for the multiplayer game mode
-	 * @param question "instead of" question
+	 * This method sets up the highest consumption question.
+	 * @param question Highest consumption question.
+	 * @param screenCtrl The screen controller which handles the task.
+	 * @throws IOException If there is a problem with the parsing.
 	 */
-	public void setUpInsteadQuestionMultiplayer(InsteadOfQuestion question) throws IOException {
-		//TODO implement this
-	}
-
-	/**
-	 * This method sets up the highest consumption question
-	 * @param question highest consumption question
-	 */
-	public void setUpHighestQuestion(HighestConsumptionQuestion question) throws IOException {
-		hideTextFieldAndRevealButtons();
-		clearImages();
+	public void setUpHighestQuestion(
+		HighestConsumptionQuestion question,
+		QuestionClass screenCtrl
+	) throws IOException {
+		hideTextFieldAndRevealButtons(screenCtrl);
 
 		// Set up label for the question and answers.
 		String questionText = "Which one of these activities consumes the most energy?";
-		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setLabelButton1(question.getActivity1Title());
-		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(
-				question.imageInByteArrayActivity1(), 0);
-		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 0);
-		questionScreenSinglePlayerCtrl.setLabelButton2(question.getActivity2Title());
-		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(
-				question.imageInByteArrayActivity2(), 1);
-		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 1);
-		questionScreenSinglePlayerCtrl.setLabelButton3(question.getActivity3Title());
-		questionScreenSinglePlayerCtrl.setImagesInImageViewsAnswers(
-				question.imageInByteArrayActivity3(), 2);
-		questionScreenSinglePlayerCtrl.setVisibilityImageView(true, 2);
-		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
-	}
+		screenCtrl.setUpLabel(questionText);
+		screenCtrl.setLabelButton1(question.getActivity1Title());
+		screenCtrl.setLabelButton2(question.getActivity2Title());
+		screenCtrl.setLabelButton3(question.getActivity3Title());
+		screenCtrl.setVisibleEstimateAnswer(false);
 
-	/**
-	 * This method sets up the highest consumption question for the multiplayer game mode
-	 * @param question highest consumption question
-	 */
-	public void setUpHighestQuestionMultiplayer(HighestConsumptionQuestion question)
-			throws IOException {
-		//TODO implement this
+		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
+			clearImages();
+
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity3(), 2);
+			screenCtrl.setVisibilityImageView(true, 2);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity2(), 1);
+			screenCtrl.setVisibilityImageView(true, 1);
+			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity1(), 0);
+			screenCtrl.setVisibilityImageView(true, 0);
+			screenCtrl.setVisibleTextField(false);
+		}
 	}
 
 	/**
 	 * This method hide the text field and reveal the buttons.
+	 * @param screenCtrl Controller which dictates whether the singleplayer or the multiplayer
+	 *                   screen changes.
 	 */
-	public void hideTextFieldAndRevealButtons() {
-		questionScreenSinglePlayerCtrl.setVisibleButton1(true);
-		questionScreenSinglePlayerCtrl.setVisibleButton2(true);
-		questionScreenSinglePlayerCtrl.setVisibleButton3(true);
-		questionScreenSinglePlayerCtrl.setVisibleTextField(false);
+	public void hideTextFieldAndRevealButtons(QuestionClass screenCtrl) {
+		screenCtrl.setVisibleButton1(true);
+		screenCtrl.setVisibleButton2(true);
+		screenCtrl.setVisibleButton3(true);
+		screenCtrl.setVisibleTextField(false);
 	}
 
 	/**
-	 * This method sets up the estimate question
-	 * @param question the estimate question.
+	 * This method sets up the estimate question.
+	 * @param question The estimate question.
+	 * @param screenCtrl The screen controller which handles the task.
 	 */
-	public void setUpEstimateQuestion(EstimateQuestion question) throws IOException {
-		clearImages();
+	public void setUpEstimateQuestion(
+		EstimateQuestion question,
+		QuestionClass screenCtrl
+	) throws IOException {
 		String questionText = question.getActivityTitle();
-		questionScreenSinglePlayerCtrl.setUpLabel(questionText);
-		questionScreenSinglePlayerCtrl.setImageQuestionImageView(
-				question.imageInByteArrayQuestion());
-		questionScreenSinglePlayerCtrl.setVisibleImageQuestion(true);
-		questionScreenSinglePlayerCtrl.setVisibleTextField(true);
-		questionScreenSinglePlayerCtrl.setVisibleButton1(false);
-		questionScreenSinglePlayerCtrl.setVisibleButton2(false);
-		questionScreenSinglePlayerCtrl.setVisibleButton3(false);
-		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
-	}
-	/**
-	 * This method sets up the estimate question for the multiplayer game mode
-	 * @param question the estimate question.
-	 */
-	public void setUpEstimateQuestionMultiplayer(EstimateQuestion question) throws IOException {
+		screenCtrl.setUpLabel(questionText);
 
+		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
+			clearImages();
+			screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
+			screenCtrl.setVisibleImageQuestion(true);
+		}
+		screenCtrl.setVisibleTextField(true);
+		screenCtrl.setVisibleButton1(false);
+		screenCtrl.setVisibleButton2(false);
+		screenCtrl.setVisibleButton3(false);
+		screenCtrl.setVisibleEstimateAnswer(false);
 	}
 
 	/**
@@ -590,34 +618,6 @@ public class MainCtrl {
 	}
 
 	/**
-	 * This method shows the intermediate scene.
-	 */
-	public void showIntermediateScene() {
-		intermediateSceneCtrl.setQuestionAnswer(numberOfQuestionAnswered);
-		intermediateSceneCtrl.setLabelPoint(player.getPoint());
-		intermediateSceneCtrl.setCurrentQuestionPointsEarned(currentPoint);
-		primaryStage.setTitle("IntermediateScene");
-		primaryStage.setScene(intermediateScene);
-
-		// This timeline will execute on another thread - run the count-down timer.
-		intermediateSceneCtrl.setProgress(1f);
-
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			intermediateSceneCtrl.decreaseProgress(0.25);
-		}));
-		timeLine.setCycleCount(4);
-		timeLine.play();
-		timeLine.setOnFinished(_e -> {
-			questionScreenSinglePlayerCtrl.setProgress(1); // Reset the progress bar after
-			try {
-				showQuestionScreenSinglePlayer();     // the timeline finish its cycle.
-			} catch (IOException err) {
-				err.printStackTrace();
-			}
-		});
-	}
-
-	/**
 	 * This method shows the final screen.
 	 */
 	public void showSinglePlayerFinalScreen() {
@@ -629,32 +629,43 @@ public class MainCtrl {
 		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
 	}
 
+	/**
+	 * This method shows the final screen for multiplayer.
+	 */
+	public void showMultiPlayerFinalScreen() {
+		// TODO show final screen for multiplayer
+	}
 
 	/**
 	 * This method reveals the answer after the player clicked on the button
 	 * @param button the button
 	 * @param textField the text field.
+	 * @param screenCtrl screen controller which can be either for singleplayer or
+	 *                   for multiplayer
 	 */
-	public void updatePoints(Button button, TextField textField) {
+	public void updatePoints(Button button, TextField textField, QuestionClass screenCtrl) {
+		timeLine.stop();
+
 		// in case the player doesn't provide an answer in time
 		if (button == null && textField == null) {
-			currentPoint = 0;
-			questionScreenSinglePlayerCtrl.setProgress(1);
-
-			showAnswer();
-
+			this.currentPoint = 0;
+			screenCtrl.setProgress(1);
+			this.showAnswer(screenCtrl);
 			return;
 		}
 
 		// Get the time the player used for guessing the answer
-		double timePassed = questionScreenSinglePlayerCtrl.getTimeStamp();
+		double timePassed = screenCtrl.getTimeStamp();
 
-		if (question instanceof MCQuestion) {
-			MCQuestion multipleChoiceQuestion = (MCQuestion) question;
+		if (this.question instanceof MCQuestion) {
+			MCQuestion multipleChoiceQuestion = (MCQuestion) this.question;
 
 			// The point which the player will receive after answered the question
-			currentPoint = multipleChoiceQuestion.pointsEarned(1000,
-					Integer.parseInt(button.getText()),timePassed);
+			currentPoint = multipleChoiceQuestion.pointsEarned(
+				1000,
+				Integer.parseInt(button.getText()),
+				timePassed
+			);
 
 			// Set the point for the player
 			player.setPoint(player.getPoint() + currentPoint);
@@ -668,25 +679,9 @@ public class MainCtrl {
 		} else if (question instanceof HighestConsumptionQuestion) {
 			HighestConsumptionQuestion highConsumptionQuestion
 					= (HighestConsumptionQuestion) question;
-			int buttonId = 0;
+			int buttonId = button.getId().charAt(button.getId().length() - 1) - '0';
 
-			Activity activity1 = highConsumptionQuestion.getActivity1();
-			Activity activity2 = highConsumptionQuestion.getActivity2();
-			Activity activity3 = highConsumptionQuestion.getActivity3();
-
-			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity1.getConsumptionInWh()) {
-				buttonId = 1;
-			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity2.getConsumptionInWh()) {
-				buttonId = 2;
-			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity3.getConsumptionInWh()) {
-				buttonId = 3;
-			}
-
-			currentPoint = highConsumptionQuestion.pointsEarned(1000,
-					buttonId, timePassed);
+			currentPoint = highConsumptionQuestion.pointsEarned(1000, buttonId, timePassed);
 
 			player.setPoint(player.getPoint() + currentPoint);
 
@@ -712,41 +707,45 @@ public class MainCtrl {
 		}
 
 		// Show the recent score.
-		showAnswer();
+		showAnswer(screenCtrl);
 	}
 
 	/**
-	 *  The methods resets the answer buttons to their initial state
+	 * The methods resets the answer buttons to their initial state.
+	 * @param screenCtrl Screen controller which can be either for singleplayer or for multiplayer.
 	 */
-	public void clearButtons() {
+	public void clearButtons(QuestionClass screenCtrl) {
 		String color = "-fx-background-color: #5b9ad5; -fx-background-radius: 15;";
 
-		questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
-		questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
-		questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
+		screenCtrl.setStyleAnswerButton1(color);
+		screenCtrl.setStyleAnswerButton2(color);
+		screenCtrl.setStyleAnswerButton3(color);
 	}
 
-	private void showAnswer() {
-		Button button = questionScreenSinglePlayerCtrl.getInputButton();
-		TextField textField = questionScreenSinglePlayerCtrl.getInputText();
+	/**
+	 * Method that shows the correct answer after the timer is finished.  The correct answer will be
+	 * colored with green.  If the player choses the wrong answer, his choice will be colored with
+	 * red.
+	 * @param screenCtrl Screen controller which can be either for singleplayer or for multiplayer.
+	 */
+	private void showAnswer(QuestionClass screenCtrl) {
+		Button button = screenCtrl.getInputButton();
+		TextField textField = screenCtrl.getInputText();
 
-		questionScreenSinglePlayerCtrl.setProgress(1f);
-
-		// This timeline will execute on another thread - run the count-down timer.
 		timeLine.stop();
 
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			questionScreenSinglePlayerCtrl.decreaseProgress(1/3f);
-		}));
+		screenCtrl.setProgress(1f);
+
+		// This timeline will execute on another thread - run the count-down timer.
+		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e ->
+			screenCtrl.decreaseProgress(1 / 3f)
+		));
 		timeLine.setCycleCount(3);
-		timeLine.setOnFinished(_e -> {
-			showIntermediateScene();
-		});
+		timeLine.setOnFinished(_e -> screenCtrl.showIntermediateScene());
 		timeLine.play();
 
-		if(button != null) {
+		if (button != null) {
 			String color = "-fx-background-color: #E37474; -fx-background-radius: 15;";
-
 			button.setStyle(color);
 		}
 
@@ -760,11 +759,11 @@ public class MainCtrl {
 			long correctAnswer = multipleChoiceQuestion.getActivity().getConsumptionInWh();
 
 			if (correctAnswer == button1) {
-				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
+				screenCtrl.setStyleAnswerButton1(color);
 			} else if (correctAnswer == button2) {
-				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
+				screenCtrl.setStyleAnswerButton2(color);
 			} else if (correctAnswer == button3) {
-				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
+				screenCtrl.setStyleAnswerButton3(color);
 			}
 		} else if (question instanceof HighestConsumptionQuestion) {
 			HighestConsumptionQuestion highConsumptionQuestion
@@ -776,11 +775,11 @@ public class MainCtrl {
 			long correctAnswer = highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh();
 
 			if (correctAnswer == activity1.getConsumptionInWh()) {
-				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
+				screenCtrl.setStyleAnswerButton1(color);
 			} else if (correctAnswer == activity2.getConsumptionInWh()) {
-				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
+				screenCtrl.setStyleAnswerButton2(color);
 			} else if (correctAnswer == activity3.getConsumptionInWh()) {
-				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
+				screenCtrl.setStyleAnswerButton3(color);
 			}
 		} else if (question instanceof InsteadOfQuestion) {
 			InsteadOfQuestion insteadQuestion = (InsteadOfQuestion) question;
@@ -791,47 +790,145 @@ public class MainCtrl {
 			long correctAnswer = insteadQuestion.correctAnswer().getConsumptionInWh();
 
 			if (correctAnswer == answer1.getConsumptionInWh()) {
-				questionScreenSinglePlayerCtrl.setStyleAnswerButton1(color);
+				screenCtrl.setStyleAnswerButton1(color);
 			} else if (correctAnswer == answer2.getConsumptionInWh()) {
-				questionScreenSinglePlayerCtrl.setStyleAnswerButton2(color);
+				screenCtrl.setStyleAnswerButton2(color);
 			} else if (correctAnswer == answer3.getConsumptionInWh()) {
-				questionScreenSinglePlayerCtrl.setStyleAnswerButton3(color);
+				screenCtrl.setStyleAnswerButton3(color);
 			}
 		} else if (question instanceof EstimateQuestion) {
 			String message;
 
-			questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(true);
+			screenCtrl.setVisibleEstimateAnswer(true);
 
 			EstimateQuestion estimateQuestion = (EstimateQuestion) question;
-			if(textField != null) {
+			if (textField != null) {
 				currentPoint = estimateQuestion.pointsEarned(1000,
 						Integer.parseInt(textField.getText()),
-						questionScreenSinglePlayerCtrl.getTimeStamp());
+						screenCtrl.getTimeStamp());
 			} else {
 				currentPoint = 0;
 			}
 
-			if(currentPoint < 500) {
-				if(currentPoint > 300) {
+			if (currentPoint < 800) {
+				if (currentPoint > 300) {
 					color = "-fx-background-color: #f0de8d; -fx-background-radius: 15;";
-					message = "Well done!";
+					message = "Not bad!";
 				} else {
 					color = "-fx-background-color: #E37474; -fx-background-radius: 15;";
 					message = "Oh!";
 				}
 			} else {
-				message = "Bullseye!";
+				message = "Well done!";
 			}
 
-			questionScreenSinglePlayerCtrl.setEstimateAnswerStyle(color);
-			questionScreenSinglePlayerCtrl.setEstimateAnswerLabel(
-					message +
-					" The correct answer is: " +
-					String.valueOf(estimateQuestion.getActivity().getConsumptionInWh()));
+			screenCtrl.setEstimateAnswerStyle(color);
+			screenCtrl.setEstimateAnswerLabel(
+				message
+				+ " The correct answer is: "
+				+ estimateQuestion.getActivity().getConsumptionInWh()
+			);
 
-			if(textField != null)
+			if (textField != null) {
 				textField.clear();
+			}
 		}
+	}
+
+	/**
+	 * Getter method for the singleplayer pre game controller controller.
+	 * @return The singleplayer pre game controller.
+	 */
+	public SinglePlayerPreGameCtrl getSinglePlayerPreGameCtrl() {
+		return singlePlayerPreGameCtrl;
+	}
+
+	/**
+	 * Getter method for the singleplayer pre game controller screen.
+	 * @return The singleplayer pre game screen.
+	 */
+	public Scene getSinglePlayerPreGameScreen() {
+		return questionScreenSinglePlayer;
+	}
+
+	/**
+	 * Getter method for multiplayer pre game controller.
+	 * @return Multiplayer pre game controller.
+	 */
+	public MultiplayerPreGameCtrl getMultiplayerPreGameCtrl() {
+		return multiplayerPreGameCtrl;
+	}
+
+	/**
+	 * Getter method for the multiplayer question screen.
+	 * @return The multiplayer question screen.
+	 */
+	public Scene getMultiplayerQuestionScreen() {
+		return multiPlayerQuestionScreen;
+	}
+
+	/**
+	 * Getter method for intermediate screen controller.
+	 * @return Intermediate screen controller.
+	 */
+	public IntermediateSceneCtrl getIntermediateSceneCtrl() {
+		return intermediateSceneCtrl;
+	}
+
+	/**
+	 * Getter method for the number of questions answerd this far.
+	 * @return The number of questions answerd this far.
+	 */
+	public int getNumberOfQuestionAnswered() {
+		return numberOfQuestionAnswered;
+	}
+
+	/**
+	 * Getter method for the player.
+	 * @return The player.
+	 */
+	public Player getPlayer() {
+		return player;
+	}
+
+	/**
+	 * Getter method for the number of points.
+	 * @return The number of points received at the last question answered.
+	 */
+	public int getCurrentPoint() {
+		return currentPoint;
+	}
+
+	/**
+	 * Getter method for the primary stage.
+	 * @return The primary stage.
+	 */
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
+	/**
+	 * Getter method for the intermediate scene.
+	 * @return The intermediate scene.
+	 */
+	public Scene getIntermediateScene() {
+		return intermediateScene;
+	}
+
+	/**
+	 * Getter method for the intermediate leaderboard scene.
+	 * @return The intermediate leaderboard scene.
+	 */
+	public Scene getIntermediateLeaderboardScreen() {
+		return intermediateLeaderboardScreen;
+	}
+
+	/**
+	 * Getter method for the intermediate leaderboard controller.
+	 * @return The intermediate leaderboard controller.
+	 */
+	public IntLeaderboardCtrl getIntermediateLeaderboardCtrl() {
+		return intLeaderboardCtrl;
 	}
 
 	/**
@@ -877,18 +974,9 @@ public class MainCtrl {
 		this.multiplayerPreGameCtrl.joinLobby();
 	}
 
-	public void showMultiPlayerQuestionScreen() {
-		player = multiplayerPreGameCtrl.getPlayer();
-		multiplayerQuestionScreenCtrl.setPlayer(player);
-		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
-			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
-		});
-		primaryStage.setTitle("MultiPlayerQuestion");
-		primaryStage.setScene(multiPlayerQuestionScreen);
-	}
-
 	/**
 	 * Changes the scene to intermediate leaderboard
+	 *
 	 * @throws IOException if something goes wrong with the socket
 	 * @throws ClassNotFoundException if Class is not found
 	 */
@@ -898,4 +986,20 @@ public class MainCtrl {
 		this.intLeaderboardCtrl.displayScores();
 	}
 
+	/**
+	 * Getter method for the multiplayer questions controller
+	 *
+	 * @return multiplayer questions controller
+	 */
+	public MultiplayerQuestionScreenCtrl getMultiplayerQuestionScreenCtrl() {
+		return multiplayerQuestionScreenCtrl;
+	}
+
+	public void renderTheMessageInTheChatBox(String message) {
+		multiplayerQuestionScreenCtrl.updateMessage(message);
+	}
+
+	public void setGameIdInMultiplayerQuestionScreen(int gameId) {
+		multiplayerQuestionScreenCtrl.setGameId(gameId);
+	}
 }

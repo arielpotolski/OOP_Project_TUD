@@ -5,10 +5,13 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import commons.Connection;
 import commons.messages.ErrorMessage;
 import commons.messages.JoinMessage;
+import commons.messages.JokerMessage;
+import commons.messages.KillerMessage;
 import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
 import commons.messages.MessageType;
@@ -51,10 +54,14 @@ public class MultiplayerGame extends Thread {
 	public void run() {
 		try {
 			waitForEveryoneToJoin();
+			for(Player player : players) {
+				receiveMessageFromThePlayer(player);
+			}
 			// TODO begin game
 			// TODO send out questions to players
 			// TODO track game progress
 			sendMessageToAllPlayers(new LeaderboardMessage(generateLeaderboard()));
+			// TODO send leaderboard
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
@@ -119,6 +126,43 @@ public class MultiplayerGame extends Thread {
 
 			// Save player.
 			this.players.add(new Player(connection, name, 0));
+		}
+	}
+
+	private void receiveMessageFromThePlayer(Player player) {
+		Thread thread = new Thread(() -> {
+			message_loop: while (true) {
+				try {
+					Message message = player.connection().receive();
+					switch (message.getType()) {
+						case JOKER -> handleJokerMessage(player, (JokerMessage) message);
+						case KILLER -> {
+							player.connection().send(new KillerMessage());
+							players.remove(player);
+							break message_loop;
+						}
+					}
+				} catch (IOException | ClassNotFoundException err) {
+					err.printStackTrace();
+				}
+			}
+		});
+		thread.start();
+	}
+
+	private void handleJokerMessage(Player player, JokerMessage message) throws IOException {
+		this.logger.debug(player.toString() + "sent a joker message");
+		// TODO track if player used joker
+		// TODO handle other stuff
+		sendMessageToAllClients(message, Optional.of(player));
+	}
+
+	private void sendMessageToAllClients(Message message, Optional<Player> exclude)
+			throws IOException {
+		for (Player player: this.players) {
+			if (exclude.isEmpty() || exclude.get() != player) {
+				player.connection.send(message);;
+			}
 		}
 	}
 }
