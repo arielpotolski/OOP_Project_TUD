@@ -3,7 +3,6 @@ package client.scenes;
 import java.io.IOException;
 import java.util.Optional;
 
-import client.Main;
 import client.utils.ServerUtils;
 import commons.Activity;
 
@@ -34,7 +33,7 @@ public class AdminAddActivityScreenCtrl {
 	@Inject
 	public AdminAddActivityScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = new ServerUtils(Main.serverHost);
+		this.server = mainCtrl.getServer();
 	}
 
 	/**

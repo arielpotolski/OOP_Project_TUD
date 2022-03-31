@@ -45,7 +45,7 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 	@Inject
 	public AdminEditActivityScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = new ServerUtils(Main.serverHost);
+		this.server = mainCtrl.getServer();
 	}
 
 	/**

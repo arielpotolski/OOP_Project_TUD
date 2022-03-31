@@ -32,12 +32,11 @@ public class SinglePlayerFinalScreenCtrl {
 	 * Constructor for single player final screen controller
 	 *
 	 * @param mainCtrl the injected main controller.
-	 * @param server the injected server.
 	 */
 	@Inject
-	public void singlePlayerFinalScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
+	public void singlePlayerFinalScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = server;
+		this.server = mainCtrl.getServer();
 	}
 
 	/**

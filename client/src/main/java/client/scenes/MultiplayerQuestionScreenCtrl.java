@@ -62,9 +62,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	private int gameId;
 
 	@Inject
-	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
-		this.server = server;
+	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
+		this.server = mainCtrl.getServer();
 	}
 
 	public void setPlayer(Player player) {

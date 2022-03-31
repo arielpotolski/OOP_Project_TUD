@@ -34,7 +34,7 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 	@Inject
 	public AdminRemoveActivityScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = new ServerUtils(Main.serverHost);
+		this.server = mainCtrl.getServer();
 	}
 
 	/**

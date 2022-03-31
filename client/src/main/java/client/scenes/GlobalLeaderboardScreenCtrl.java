@@ -39,7 +39,7 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 	@Inject
 	public GlobalLeaderboardScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = new ServerUtils(Main.serverHost);
+		this.server = mainCtrl.getServer();
 	}
 
 	/**

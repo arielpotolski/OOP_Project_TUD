@@ -34,12 +34,11 @@ public class IntermediateSceneCtrl implements Initializable {
 	 * Constructor for intermediate scene controller.
 	 *
 	 * @param mainCtrl the injected main controller.
-	 * @param server the injected server.
 	 */
 	@Inject
-	public IntermediateSceneCtrl(MainCtrl mainCtrl, ServerUtils server) {
+	public IntermediateSceneCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = server;
+		this.server = mainCtrl.getServer();
 	}
 
 	public void setLabelPoint(int point) {

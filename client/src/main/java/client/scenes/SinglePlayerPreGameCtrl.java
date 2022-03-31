@@ -26,12 +26,11 @@ public class SinglePlayerPreGameCtrl {
 	 * Constructor for single player pre-game controller.
 	 *
 	 * @param mainCtrl the injected main controller.
-	 * @param server the injected server.
 	 */
 	@Inject
-	public SinglePlayerPreGameCtrl(MainCtrl mainCtrl, ServerUtils server) {
+	public SinglePlayerPreGameCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = server;
+		this.server = mainCtrl.getServer();
 	}
 
 	/**
@@ -40,7 +39,6 @@ public class SinglePlayerPreGameCtrl {
 	public void changeToQuestionScreen() throws IOException {
 		setNickname();
 		this.player = new Player(this.mainCtrl.getNickname(),0);
-		this.server = new ServerUtils(Main.serverHost);
 		this.mainCtrl.getQuestions();
 		this.mainCtrl.showQuestionScreen(true);
 	}

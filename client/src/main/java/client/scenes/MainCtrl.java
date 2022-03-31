@@ -129,7 +129,8 @@ public class MainCtrl {
 	private static final double JOKER_DECREASE_TIME_PERCENT = 0.5;
 
 	public MainCtrl() {
-		seed = new Random().nextInt();
+		this.seed = new Random().nextInt();
+		this.server = new ServerUtils(Main.serverHost);
 	}
 
 	/**
@@ -171,7 +172,6 @@ public class MainCtrl {
 		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard
 	) {
 		this.logger = LoggerFactory.getLogger(MainCtrl.class);
-		this.server = new ServerUtils(Main.serverHost);
 
 		this.primaryStage = primaryStage;
 
