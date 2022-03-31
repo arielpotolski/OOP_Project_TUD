@@ -43,7 +43,7 @@ public class SinglePlayerPreGameCtrl {
 		this.server = new ServerUtils(Main.serverHost);
 		this.mainCtrl.setServer(this.server);
 		this.mainCtrl.getQuestions();
-		this.mainCtrl.showQuestionScreenSinglePlayer();
+		this.mainCtrl.showQuestionScreen(true);
 	}
 
 	/**
