@@ -540,7 +540,7 @@ public class MainCtrl {
 	 * This method shows the final screen for multiplayer.
 	 */
 	public void showMultiPlayerFinalScreen() {
-		//TODO show final screen for multiplayer
+		// TODO show final screen for multiplayer
 	}
 
 	/**
@@ -729,9 +729,9 @@ public class MainCtrl {
 
 			screenCtrl.setEstimateAnswerStyle(color);
 			screenCtrl.setEstimateAnswerLabel(
-					message
-					+ " The correct answer is: "
-					+ estimateQuestion.getActivity().getConsumptionInWh()
+				message
+				+ " The correct answer is: "
+				+ estimateQuestion.getActivity().getConsumptionInWh()
 			);
 
 			if (textField != null) {
@@ -892,7 +892,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * 	Getter method for the multiplayer questions controller
+	 * Getter method for the multiplayer questions controller
 	 *
 	 * @return multiplayer questions controller
 	 */

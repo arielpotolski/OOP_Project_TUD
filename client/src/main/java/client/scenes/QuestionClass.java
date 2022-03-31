@@ -111,7 +111,7 @@ public abstract class QuestionClass {
 			this.inputText = this.textField;
 		}
 
-		if(this instanceof QuestionScreenSinglePlayerCtrl) {
+		if (this instanceof QuestionScreenSinglePlayerCtrl) {
 			this.mainCtrl.updatePoints(inputButton, inputText, this);
 		}
 	}
@@ -401,8 +401,8 @@ public abstract class QuestionClass {
 
 		try {
 			Integer number = Integer.parseInt(string);
-			number = number + 1;// avoid checkstyle telling
-								// that variable isn't used
+			// Avoid checkstyle erorr for unused variable
+			number = number + 1;
 		} catch (NumberFormatException err) {
 			return false;
 		}
