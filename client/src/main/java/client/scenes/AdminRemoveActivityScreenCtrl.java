@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import client.Main;
 import client.utils.ServerUtils;
 import commons.Activity;
 

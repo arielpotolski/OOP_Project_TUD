@@ -2,7 +2,6 @@ package client.scenes;
 
 import java.io.IOException;
 
-import client.Main;
 import client.utils.ServerUtils;
 import commons.Player;
 

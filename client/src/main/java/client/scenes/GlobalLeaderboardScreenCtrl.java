@@ -3,7 +3,6 @@ package client.scenes;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import client.Main;
 import client.utils.ServerUtils;
 import commons.Player;
 
