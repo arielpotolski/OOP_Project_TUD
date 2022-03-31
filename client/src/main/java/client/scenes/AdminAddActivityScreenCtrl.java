@@ -87,6 +87,10 @@ public class AdminAddActivityScreenCtrl {
 		try {
 			Activity a = new Activity(id, title, consumption, imagePath, source);
 			if (a.isValid()) {
+				this.activityTitle.clear();
+				this.activityConsumption.clear();
+				this.activityImagePath.clear();
+				this.activitySource.clear();
 				return Optional.of(this.server.addActivity(a));
 			}
 		} catch (IOException err) {
