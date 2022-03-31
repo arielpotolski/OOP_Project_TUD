@@ -59,8 +59,6 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	private Player player;
 
-	private double progress = 1;
-
 	private int gameId;
 
 	@Inject
