@@ -58,8 +58,6 @@ public class MultiplayerPreGameCtrl {
 
 		serverUtils.setSession(serverUtils.connect());
 
-		this.mainCtrl.getMultiplayerQuestionScreenCtrl().setServer(serverUtils);
-
 		Optional<LobbyResponse> maybeResponse;
 		try {
 			maybeResponse = serverUtils.connectToLobby(this.mainCtrl.getNickname());
