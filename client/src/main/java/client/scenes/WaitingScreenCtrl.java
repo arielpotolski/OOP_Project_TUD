@@ -114,7 +114,6 @@ public class WaitingScreenCtrl {
 			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.
 			mainCtrl.showMultiPlayerQuestionScreen();
-			this.mainCtrl.startMessageReceiverThread();
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
