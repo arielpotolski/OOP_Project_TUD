@@ -253,4 +253,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
 	}
+
+	public double getProgress() {
+		return this.progress;
+	}
 }

@@ -108,7 +108,7 @@ public class MainCtrl {
 
 	private Logger logger;
 
-	private static final double JOKER_DECREASE_TIME_AMOUNT = 0.3;
+	private static final double JOKER_DECREASE_TIME_PERCENT = 0.5;
 
 	private long seed = 0;
 
@@ -354,7 +354,8 @@ public class MainCtrl {
 						JokerMessage jokerMessage = (JokerMessage) message;
 						if (jokerMessage.getJokerType() == JokerType.DECREASE) {
 							multiplayerQuestionScreenCtrl.
-									decreaseProgress(JOKER_DECREASE_TIME_AMOUNT);
+								decreaseProgress(this.multiplayerQuestionScreenCtrl.getProgress()
+									* JOKER_DECREASE_TIME_PERCENT);
 							}
 						break;
 					case JOIN:
