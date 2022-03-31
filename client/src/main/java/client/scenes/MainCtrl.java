@@ -34,6 +34,7 @@ import commons.Question;
 import commons.messages.ErrorMessage;
 import commons.messages.JokerMessage;
 import commons.messages.JokerType;
+import commons.messages.KillerMessage;
 import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
 
@@ -222,6 +223,12 @@ public class MainCtrl {
 			Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
 			if (!ButtonType.OK.equals(closeResponse.get())) {
 				event.consume();
+			} else if (this.server != null){
+				try {
+					this.server.getConnection().send(new KillerMessage());
+				} catch (IOException err) {
+					err.printStackTrace();
+				}
 			}
 		};
 	}
@@ -385,7 +392,8 @@ public class MainCtrl {
 						this.logger.error("Received error message: " +
 								((ErrorMessage) message).getError());
 						break;
-						// TODO EndGame Message to stop this thread
+					case KILLER:
+						return;
 					}
 				} catch (Exception err) {
 					err.printStackTrace();
