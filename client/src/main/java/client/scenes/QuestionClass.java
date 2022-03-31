@@ -111,8 +111,6 @@ public abstract class QuestionClass {
 			this.inputText = this.textField;
 		}
 
-		this.textField.setText("");
-
 		if(this instanceof QuestionScreenSinglePlayerCtrl) {
 			this.mainCtrl.updatePoints(inputButton, inputText, this);
 		}

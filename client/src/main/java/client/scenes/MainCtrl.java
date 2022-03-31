@@ -584,20 +584,8 @@ public class MainCtrl {
 		} else if (question instanceof HighestConsumptionQuestion) {
 			HighestConsumptionQuestion highConsumptionQuestion
 					= (HighestConsumptionQuestion) question;
-			int buttonId = 0;
+			int buttonId = button.getId().charAt(button.getId().length() - 1) - '0';
 
-			Activity activity1 = highConsumptionQuestion.getActivity1();
-			Activity activity2 = highConsumptionQuestion.getActivity2();
-			Activity activity3 = highConsumptionQuestion.getActivity3();
-			long correctAnswer = highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh();
-
-			if (correctAnswer == activity1.getConsumptionInWh()) {
-				buttonId = 1;
-			} else if (correctAnswer == activity2.getConsumptionInWh()) {
-				buttonId = 2;
-			} else if (correctAnswer == activity3.getConsumptionInWh()) {
-				buttonId = 3;
-			}
 			currentPoint = highConsumptionQuestion.pointsEarned(1000, buttonId, timePassed);
 
 			player.setPoint(player.getPoint() + currentPoint);
