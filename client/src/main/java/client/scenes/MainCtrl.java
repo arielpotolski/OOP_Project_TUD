@@ -83,6 +83,9 @@ public class MainCtrl {
 	private AdminRemoveActivityScreenCtrl adminRemoveActivityScreenCtrl;
 	private Scene adminRemoveActivityScreen;
 
+	private AdminEditActivityScreenCtrl adminEditActivityScreenCtrl;
+	private Scene adminEditActivityScreen;
+
 	private TopPlayersLeaderboardCtrl topPlayersLeaderboardCtrl;
 	private Scene topPlayersLeaderboard;
 
@@ -128,6 +131,7 @@ public class MainCtrl {
 	 * @param adminInterfaceScreen A pair of admin interface screen with parent.
 	 * @param adminAddActivityScreen A pair of admin add activity screen with parent.
 	 * @param adminRemoveActivityScreen A pair of admin remove activity screen with parent.
+	 * @param adminEditActivityScreen A pair of admin edit activity screen with parent.
 	 * @param topPlayersLeaderboard a pair of top players leaderboard scene with parent.
 	 * @param multiPlayerQuestion a pair of multiplayer
 	 * @param intLeaderboard a pair of intermediate leaderboard
@@ -145,6 +149,7 @@ public class MainCtrl {
 		Pair<AdminInterfaceScreenCtrl, Parent> adminInterfaceScreen,
 		Pair<AdminAddActivityScreenCtrl, Parent> adminAddActivityScreen,
 		Pair<AdminRemoveActivityScreenCtrl, Parent> adminRemoveActivityScreen,
+		Pair<AdminEditActivityScreenCtrl, Parent> adminEditActivityScreen,
 		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion,
 		Pair<IntLeaderboardCtrl, Parent> intLeaderboard,
 		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard
@@ -185,6 +190,9 @@ public class MainCtrl {
 
 		this.adminRemoveActivityScreenCtrl = adminRemoveActivityScreen.getKey();
 		this.adminRemoveActivityScreen = new Scene(adminRemoveActivityScreen.getValue());
+
+		this.adminEditActivityScreenCtrl = adminEditActivityScreen.getKey();
+		this.adminEditActivityScreen = new Scene(adminEditActivityScreen.getValue());
 
 		this.topPlayersLeaderboardCtrl = topPlayersLeaderboard.getKey();
 		this.topPlayersLeaderboard = new Scene(topPlayersLeaderboard.getValue());
@@ -523,6 +531,7 @@ public class MainCtrl {
 	public void showAdminInterfaceScreen() {
 		this.primaryStage.setTitle("Admin Interface");
 		this.primaryStage.setScene(this.adminInterfaceScreen);
+		refreshActivities();
 	}
 
 	/**
@@ -531,6 +540,7 @@ public class MainCtrl {
 	public void showAdminAddActivityScreen() {
 		this.primaryStage.setTitle("Add Activity");
 		this.primaryStage.setScene(this.adminAddActivityScreen);
+		refreshActivities();
 	}
 
 	/**
@@ -539,6 +549,26 @@ public class MainCtrl {
 	public void showAdminRemoveActivityScreen() {
 		this.primaryStage.setTitle("Remove Activity");
 		this.primaryStage.setScene(this.adminRemoveActivityScreen);
+		refreshActivities();
+	}
+
+	/**
+	 * Take the user to the admin remove activity screen.
+	 */
+	public void showAdminEditActivityScreen() {
+		this.primaryStage.setTitle("Edit Activity");
+		this.primaryStage.setScene(this.adminEditActivityScreen);
+		refreshActivities();
+	}
+
+	/**
+	 * Calls the refresh activities method from the AdminEditActivitiesCtrl class, which refresh
+	 * the activities shown in the admin interface screens according to the current status
+	 * of the database.
+	 */
+	private void refreshActivities() {
+		this.adminRemoveActivityScreenCtrl.refreshActivities();
+		this.adminEditActivityScreenCtrl.refreshActivities();
 	}
 
 	/**

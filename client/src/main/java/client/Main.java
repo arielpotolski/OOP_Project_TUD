@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import client.scenes.AdminAddActivityScreenCtrl;
+import client.scenes.AdminEditActivityScreenCtrl;
 import client.scenes.AdminInterfaceScreenCtrl;
 import client.scenes.AdminRemoveActivityScreenCtrl;
 import client.scenes.GlobalLeaderboardScreenCtrl;
@@ -102,6 +103,12 @@ public class Main extends Application {
 			"scenes",
 			"AdminRemoveActivityScreen.fxml"
 		);
+		var adminEditActivityScreen = FXML.load(
+			AdminEditActivityScreenCtrl.class,
+			"client",
+			"scenes",
+			"AdminEditActivityScreen.fxml"
+		);
 		var topPlayersLeaderboard = FXML.load(TopPlayersLeaderboardCtrl.class,
 				"client",
 				"scenes",
@@ -126,6 +133,7 @@ public class Main extends Application {
 			adminInterfaceScreen,
 			adminAddActivityScreen,
 			adminRemoveActivityScreen,
+			adminEditActivityScreen,
 			multiPlayerQuestion,
 			intermediateLeaderboard,
 			topPlayersLeaderboard
