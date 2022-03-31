@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 import client.utils.ServerUtils;
 import commons.MessageModel;
 import commons.Player;
+import commons.messages.JokerMessage;
+import commons.messages.JokerType;
 
 import com.google.inject.Inject;
 import javafx.animation.KeyFrame;
@@ -15,55 +16,24 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class MultiplayerQuestionScreenCtrl extends QuestionClass{
+public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Initializable {
 	private MainCtrl mainCtrl;
 	private ServerUtils server;
-
-	@FXML
-	private ProgressBar progressBarTime;
-
-	@FXML
-	private Button answerButton1;
-
-	@FXML
-	private Button answerButton2;
-
-	@FXML
-	private Button answerButton3;
-
-	@FXML
-	private Ellipse lessTimeJoker;
-
-	@FXML
-	private Ellipse doublePointsJoker;
-
-	@FXML
-	private Ellipse eliminateAnswerJoker;
-
-	@FXML
-	private Circle innerCircleEmoticon;
-
-	@FXML
-	private Pane reactionPane;
 
 	@FXML
 	Button firstEmoji;
@@ -81,15 +51,17 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 	Button sendButton;
 
 	@FXML
-	private TextField textField;
+	private TextField textFieldChat;
 
-	@FXML
-	private ScrollPane scrollPane;
 
 	@FXML
 	private VBox vBox;
 
 	private Player player;
+
+	private double progress = 1;
+
+	private int gameId;
 
 	@Inject
 	public MultiplayerQuestionScreenCtrl(MainCtrl mainCtrl, ServerUtils server) {
@@ -102,14 +74,16 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 	}
 
 	public void sendMessage(){
-		String message = textField.getText();
-		server.send("/app/chat",new MessageModel(message, player.getNickName()));
+		String message = textFieldChat.getText();
+		server.send(this.createWebSocketURL(gameId),
+				new MessageModel(message, player.getNickName()));
 	}
 
 	public void sendEmoji(ActionEvent event) {
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
-		server.send("/app/chat", new MessageModel(emoji, player.getNickName()));
+		server.send(this.createWebSocketURL(gameId),
+				new MessageModel(emoji, player.getNickName()));
 	}
 
 	/**
@@ -178,6 +152,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 		this.server = server;
 	}
 
+	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Image angryImage = new Image("emojis/ANGRY.png",
 				20,
@@ -209,31 +184,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 		fourthEmoji.setGraphic(wow);
 	}
 
-	/**
-	 *  Decreases the progress of progress bar (aka the timer)
-	 */
-	public void decreaseProgress() {
-		// TODO
-	}
-
-	@Override
-	public void showFinalScreen() {
-		this.mainCtrl.showMultiPlayerFinalScreen();
-	}
-
-	@Override
-	public Player getPlayer() {
-		return this.mainCtrl.getMultiplayerPreGameCtrl().getPlayer();
-	}
-
-	@Override
-	public Scene getScene() {
-		return this.mainCtrl.getMultiPlayerQuestionScreen();
-	}
-
-	@Override
-	public void initialize() {
-		super.initialize();
+	public void decreaseOtherPlayersTime() throws IOException {
+		server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 	}
 
 	/**
@@ -272,7 +224,37 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass{
 	 */
 	@Override
 	public void answerReturn(ActionEvent event) {
-		this.mainCtrl.clearButtons(this);
 		super.answerReturn(event);
+	}
+
+	@Override
+	public Player getPlayer() {
+		return this.mainCtrl.getMultiplayerPreGameCtrl().getPlayer();
+	}
+
+	@Override
+	public Scene getScene() {
+		return this.mainCtrl.getMultiplayerQuestionScreen();
+	}
+
+	@Override
+	public void showFinalScreen() {
+		this.mainCtrl.showMultiPlayerFinalScreen();
+	}
+
+	private String createWebSocketURL(Integer gameId) {
+		return "/app/chat/" + gameId.toString();
+	}
+
+	/**
+	 * Setter for the gameId
+	 * @param gameId the gameId
+	 */
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
+
+	public double getProgress() {
+		return this.progress;
 	}
 }

@@ -88,26 +88,36 @@ public abstract class QuestionClass {
 	 * @param event The player click on the button.
 	 */
 	public void answerReturn(ActionEvent event) {
+		String color = "-fx-background-color: #f0dca5; -fx-background-radius: 15;";
 		Object source = event.getSource();
+		this.mainCtrl.clearButtons(this);
 
 		this.timeStamp = getProgress();
 
 		if (this.answerButton1.equals(source)) {
+			setStyleAnswerButton1(color);
 			this.inputButton = this.answerButton1;
 			this.inputText = null;
+			setStyleAnswerButton1(color);
 		} else if (this.answerButton2.equals(source)) {
+			setStyleAnswerButton2(color);
 			this.inputButton = this.answerButton2;
 			this.inputText = null;
+			setStyleAnswerButton2(color);
 		} else if (this.answerButton3.equals(source)) {
+			setStyleAnswerButton3(color);
 			this.inputButton = this.answerButton3;
 			this.inputText = null;
-		} else if (this.textField.equals(source)) {
+			setStyleAnswerButton3(color);
+		} else if (this.textField.equals(source) && isNumeric(this.textField.getText())) {
 			this.inputButton = null;
 			this.inputText = this.textField;
 		}
-		this.mainCtrl.updatePoints(inputButton, inputText, this);
 
 		disableButtons(true);
+		if (this instanceof QuestionScreenSinglePlayerCtrl) {
+			this.mainCtrl.updatePoints(inputButton, inputText, this);
+		}
 	}
 
 	/**
@@ -155,7 +165,7 @@ public abstract class QuestionClass {
 	}
 
 	/**
-	 * 	Getter method for timeStamp
+	 * Getter method for timeStamp
 	 *
 	 * @return The last time when the user clicked on an answer
 	 */
@@ -390,6 +400,29 @@ public abstract class QuestionClass {
 
 	public void setMainCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
+	}
+
+	/**
+	 *	Tests whether or not a given string is numeric
+	 *
+	 * @param string the string which we test if
+	 *               its numeric or not
+	 * @return a boolean value telling us if the
+	 * 	       string is numeric
+	 */
+	public static boolean isNumeric(String string) {
+		if (string == null) {
+			return false;
+		}
+
+		try {
+			Integer number = Integer.parseInt(string);
+			// Avoid checkstyle erorr for unused variable
+			number = number + 1;
+		} catch (NumberFormatException err) {
+			return false;
+		}
+		return true;
 	}
 
 	// abstract classes

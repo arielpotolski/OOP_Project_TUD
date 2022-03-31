@@ -5,6 +5,7 @@ import java.util.Set;
 
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
+import commons.MessageModel;
 import static commons.Utility.contentsEqual;
 
 import com.google.inject.Inject;
@@ -101,6 +102,14 @@ public class WaitingScreenCtrl {
 			// Set the same unique seed to all players inside the lobby.
 			this.mainCtrl.setSeed(this.port);
 			this.mainCtrl.getQuestions();
+
+			this.serverUtils.registerForMessages(
+					"/message/receive/" + Integer.toString(port),
+					MessageModel.class,
+					messageModel -> {
+						mainCtrl.renderTheMessageInTheChatBox(messageModel.getMessage());
+					});
+			this.mainCtrl.setGameIdInMultiplayerQuestionScreen(port);
 
 			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.

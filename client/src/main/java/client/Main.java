@@ -89,8 +89,8 @@ public class Main extends Application {
 				"client",
 				"scenes",
 				"MultiplayerQuestionScreen.fxml");
-		var intermediateLeaderboard = FXML.load(IntLeaderboardCtrl.class,
-				"client", "scenes", "IntermediateLeaderboard.fxml");
+		var intermediateLeaderboard = FXML.load(IntLeaderboardCtrl.class, "client", "scenes",
+				"IntermediateLeaderboard.fxml");
 		var mainCtrl = INJECTOR.getInstance(MainCtrl.class);
 		mainCtrl.initialize(
 			primaryStage,

@@ -18,6 +18,7 @@ package client.scenes;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import client.utils.ServerUtils;
@@ -32,16 +33,24 @@ import commons.MessageModel;
 import commons.Player;
 import commons.Question;
 import commons.messages.ErrorMessage;
+import commons.messages.JokerMessage;
+import commons.messages.JokerType;
+import commons.messages.KillerMessage;
 import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
 import org.slf4j.Logger;
@@ -58,9 +67,6 @@ public class MainCtrl {
 
 	private MultiplayerPreGameCtrl multiplayerPreGameCtrl;
 	private Scene multiplayerPreGameScreen;
-
-	MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
-	private Scene multiPlayerQuestionScreen;
 
 	private QuestionScreenSinglePlayerCtrl questionScreenSinglePlayerCtrl;
 	private Scene questionScreenSinglePlayer;
@@ -80,13 +86,15 @@ public class MainCtrl {
 	private TopPlayersLeaderboardCtrl topPlayersLeaderboardCtrl;
 	private Scene topPlayersLeaderboard;
 
+	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
+	private Scene multiPlayerQuestionScreen;
+
 	private IntLeaderboardCtrl intLeaderboardCtrl;
 	private Scene intermediateLeaderboardScreen;
 
 	private ServerUtils server;
 
 	private List<Question> questions;
-	private String answer;
 	private Question question;
 
 	private Timeline timeLine;
@@ -96,9 +104,13 @@ public class MainCtrl {
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
 
-	private long seed = 0;
+	private EventHandler<WindowEvent> confirmCloseEventHandler;
 
 	private Logger logger;
+
+	private static final double JOKER_DECREASE_TIME_PERCENT = 0.5;
+
+	private long seed = 0;
 
 	public MainCtrl() {
 		seed = new Random().nextInt();
@@ -171,18 +183,65 @@ public class MainCtrl {
 		this.intLeaderboardCtrl = intLeaderboard.getKey();
 		this.intermediateLeaderboardScreen = new Scene(intLeaderboard.getValue());
 
-		multiplayerQuestionScreenCtrl.setMainCtrl(this);
-		showSplashScreen();
+		setEventHandlerForClosure();
+		closeConfirmation();
 
+		multiplayerQuestionScreenCtrl.setMainCtrl(this);
+
+		showSplashScreen();
 		primaryStage.show();
 	}
 
+	/**
+	 * Sets the event for closure
+	 */
+	private void closeConfirmation() {
+		this.primaryStage.setOnCloseRequest(event ->
+			this.primaryStage.fireEvent(
+					new WindowEvent(
+							this.primaryStage,
+							WindowEvent.WINDOW_CLOSE_REQUEST
+					)
+			)
+		);
+	}
+
+	/**
+	 * Setter for the event handler when the user requests to exit the screen
+	 */
+	private void setEventHandlerForClosure() {
+		this.confirmCloseEventHandler = event -> {
+			Alert closeConfirmation = new Alert(
+					Alert.AlertType.CONFIRMATION,
+					"Are you sure you want to exit?"
+			);
+			Button exitButton = (Button) closeConfirmation.getDialogPane().lookupButton(
+					ButtonType.OK
+			);
+			exitButton.setText("Yes");
+			closeConfirmation.setHeaderText("Confirm Exit");
+			closeConfirmation.initModality(Modality.APPLICATION_MODAL);
+			closeConfirmation.initOwner(this.primaryStage);
+
+			Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
+			if (!ButtonType.OK.equals(closeResponse.get())) {
+				event.consume();
+			} else if (this.server != null){
+				try {
+					this.server.getConnection().send(new KillerMessage());
+				} catch (IOException err) {
+					err.printStackTrace();
+				}
+			}
+		};
+	}
 	/**
 	 * This method shows up the splash screen.
 	 */
 	public void showSplashScreen() {
 		primaryStage.setTitle("Quizzz");
 		primaryStage.setScene(splashScreen);
+		this.primaryStage.setOnCloseRequest(this.confirmCloseEventHandler);
 	}
 
 	/**
@@ -218,9 +277,7 @@ public class MainCtrl {
 			screenCtrl = questionScreenSinglePlayerCtrl;
 		} else {
 			screenCtrl = multiplayerQuestionScreenCtrl;
-			player = multiplayerPreGameCtrl.getPlayer();
-			multiplayerQuestionScreenCtrl.setPlayer(player);
-			multiplayerQuestionScreenCtrl.setServer(server);
+
 			server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
 				multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
 			});
@@ -270,14 +327,6 @@ public class MainCtrl {
 		primaryStage.setScene(screenCtrl.getScene());
 	}
 
-	/**
-	 *  Method that switches to multiplayer final screen
-	 */
-	public void showMultiPlayerFinalScreen() {
-		primaryStage.setTitle("Final Score");
-		primaryStage.setScene(topPlayersLeaderboard);
-	}
-
 	public void setServer(ServerUtils server) {
 		this.server = server;
 	}
@@ -300,12 +349,21 @@ public class MainCtrl {
 						this.intLeaderboardCtrl.setPlayers(
 								((LeaderboardMessage) message).getPlayers());
 						break;
+					case JOKER:
+						JokerMessage jokerMessage = (JokerMessage) message;
+						if (jokerMessage.getJokerType() == JokerType.DECREASE) {
+							multiplayerQuestionScreenCtrl.
+								decreaseProgress(this.multiplayerQuestionScreenCtrl.getProgress()
+									* JOKER_DECREASE_TIME_PERCENT);
+							}
+						break;
 					case JOIN:
 					case ERROR:
 						this.logger.error("Received error message: " +
 								((ErrorMessage) message).getError());
 						break;
-						// TODO EndGame Message to stop this thread
+					case KILLER:
+						return;
 					}
 				} catch (Exception err) {
 					err.printStackTrace();
@@ -365,9 +423,9 @@ public class MainCtrl {
 		// Set up label for the question and answers
 		String questionText = question.getQuestionActivity().getTitle();
 		screenCtrl.setUpLabel(questionText);
-		screenCtrl.setLabelButton1(question.getAnswer1().getTitle());
-		screenCtrl.setLabelButton2(question.getAnswer2().getTitle());
-		screenCtrl.setLabelButton3(question.getAnswer3().getTitle());
+		screenCtrl.setLabelButton1(question.answerString(1));
+		screenCtrl.setLabelButton2(question.answerString(2));
+		screenCtrl.setLabelButton3(question.answerString(3));
 		screenCtrl.setVisibleEstimateAnswer(false);
 
 		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
@@ -474,35 +532,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * This method shows the intermediate scene.
-	 */
-	public void showIntermediateScene() {
-		intermediateSceneCtrl.setQuestionAnswer(numberOfQuestionAnswered);
-		intermediateSceneCtrl.setLabelPoint(player.getPoint());
-		intermediateSceneCtrl.setCurrentQuestionPointsEarned(currentPoint);
-		primaryStage.setTitle("IntermediateScene");
-		primaryStage.setScene(intermediateScene);
-
-		// This timeline will execute on another thread - run the count-down timer.
-		intermediateSceneCtrl.setProgress(1f);
-
-		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			intermediateSceneCtrl.decreaseProgress(0.25);
-		}));
-		timeLine.setCycleCount(4);
-		timeLine.play();
-		timeLine.setOnFinished(_e -> {
-			questionScreenSinglePlayerCtrl.setProgress(1); // Reset the progress bar after
-			try {
-				showQuestionScreen(true);     // the timeline finish its cycle.
-			} catch (IOException err) {
-				err.printStackTrace();
-			}
-		});
-	}
-
-	/**
-	 * This method shows the final screen for singleplayer.
+	 * This method shows the final screen.
 	 */
 	public void showSinglePlayerFinalScreen() {
 		singlePlayerFinalSceneCtrl.setTotalScore(player.getPoint());
@@ -512,6 +542,13 @@ public class MainCtrl {
 		primaryStage.setTitle("Final Score");
 		primaryStage.setScene(singlePlayerFinalScene);
 		questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
+	}
+
+	/**
+	 * This method shows the final screen for multiplayer.
+	 */
+	public void showMultiPlayerFinalScreen() {
+		// TODO show final screen for multiplayer
 	}
 
 	/**
@@ -557,24 +594,9 @@ public class MainCtrl {
 		} else if (question instanceof HighestConsumptionQuestion) {
 			HighestConsumptionQuestion highConsumptionQuestion
 					= (HighestConsumptionQuestion) question;
-			int buttonId = 0;
+			int buttonId = button.getId().charAt(button.getId().length() - 1) - '0';
 
-			Activity activity1 = highConsumptionQuestion.getActivity1();
-			Activity activity2 = highConsumptionQuestion.getActivity2();
-			Activity activity3 = highConsumptionQuestion.getActivity3();
-
-			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity1.getConsumptionInWh()) {
-				buttonId = 1;
-			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity2.getConsumptionInWh()) {
-				buttonId = 2;
-			} else if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
-					== activity3.getConsumptionInWh()) {
-				buttonId = 3;
-			}
-			currentPoint = highConsumptionQuestion.pointsEarned(1000,
-					buttonId, timePassed);
+			currentPoint = highConsumptionQuestion.pointsEarned(1000, buttonId, timePassed);
 
 			player.setPoint(player.getPoint() + currentPoint);
 
@@ -625,6 +647,8 @@ public class MainCtrl {
 		Button button = screenCtrl.getInputButton();
 		TextField textField = screenCtrl.getInputText();
 
+		timeLine.stop();
+
 		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
@@ -632,9 +656,7 @@ public class MainCtrl {
 			screenCtrl.decreaseProgress(1 / 3f)
 		));
 		timeLine.setCycleCount(3);
-		timeLine.setOnFinished(_e ->
-				screenCtrl.showIntermediateScene()
-		);
+		timeLine.setOnFinished(_e -> screenCtrl.showIntermediateScene());
 		timeLine.play();
 
 		if (button != null) {
@@ -703,23 +725,23 @@ public class MainCtrl {
 				currentPoint = 0;
 			}
 
-			if (currentPoint < 500) {
+			if (currentPoint < 800) {
 				if (currentPoint > 300) {
 					color = "-fx-background-color: #f0de8d; -fx-background-radius: 15;";
-					message = "Well done!";
+					message = "Not bad!";
 				} else {
 					color = "-fx-background-color: #E37474; -fx-background-radius: 15;";
 					message = "Oh!";
 				}
 			} else {
-				message = "Bullseye!";
+				message = "Well done!";
 			}
 
 			screenCtrl.setEstimateAnswerStyle(color);
 			screenCtrl.setEstimateAnswerLabel(
-					message
-					+ " The correct answer is: "
-					+ estimateQuestion.getActivity().getConsumptionInWh()
+				message
+				+ " The correct answer is: "
+				+ estimateQuestion.getActivity().getConsumptionInWh()
 			);
 
 			if (textField != null) {
@@ -756,7 +778,7 @@ public class MainCtrl {
 	 * Getter method for the multiplayer question screen.
 	 * @return The multiplayer question screen.
 	 */
-	public Scene getMultiPlayerQuestionScreen() {
+	public Scene getMultiplayerQuestionScreen() {
 		return multiPlayerQuestionScreen;
 	}
 
@@ -867,19 +889,9 @@ public class MainCtrl {
 		this.multiplayerPreGameCtrl.joinLobby();
 	}
 
-	public void showMultiPlayerQuestionScreen() {
-		player = multiplayerPreGameCtrl.getPlayer();
-		multiplayerQuestionScreenCtrl.setPlayer(player);
-		multiplayerQuestionScreenCtrl.setServer(server);
-		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
-			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
-		});
-		primaryStage.setTitle("MultiPlayerQuestion");
-		primaryStage.setScene(multiPlayerQuestionScreen);
-	}
-
 	/**
 	 * Changes the scene to intermediate leaderboard
+	 *
 	 * @throws IOException if something goes wrong with the socket
 	 * @throws ClassNotFoundException if Class is not found
 	 */
@@ -887,5 +899,22 @@ public class MainCtrl {
 		this.primaryStage.setScene(this.intermediateLeaderboardScreen);
 		this.primaryStage.setTitle("Leaderboard");
 		this.intLeaderboardCtrl.displayScores();
+	}
+
+	/**
+	 * Getter method for the multiplayer questions controller
+	 *
+	 * @return multiplayer questions controller
+	 */
+	public MultiplayerQuestionScreenCtrl getMultiplayerQuestionScreenCtrl() {
+		return multiplayerQuestionScreenCtrl;
+	}
+
+	public void renderTheMessageInTheChatBox(String message) {
+		multiplayerQuestionScreenCtrl.updateMessage(message);
+	}
+
+	public void setGameIdInMultiplayerQuestionScreen(int gameId) {
+		multiplayerQuestionScreenCtrl.setGameId(gameId);
 	}
 }

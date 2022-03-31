@@ -20,10 +20,18 @@ public class IntLeaderboardCtrl implements Initializable {
 	@FXML
 	private ProgressBar timeUntilNextQuestion;
 
+	double progress = 1f;
+
+	/**
+	 * Decreases the progess in the progress bar by a certain, given, amount.
+	 * @param amount The amount of progress that the bar loses.
+	 */
+	public void decreaseProgress(double amount) {
+		this.progress -= amount;
+		this.timeUntilNextQuestion.setProgress(this.progress);
+	}
 	@FXML
 	private BarChart barChart;
-
-	double progress = 1f;
 
 	@Inject
 	public IntLeaderboardCtrl(MainCtrl mainCtrl) {
@@ -66,15 +74,6 @@ public class IntLeaderboardCtrl implements Initializable {
 	 */
 	public void setProgress(double amount) {
 		this.progress = amount;
-		this.timeUntilNextQuestion.setProgress(this.progress);
-	}
-
-	/**
-	 * Decreases the progess in the progress bar by a certain, given, amount.
-	 * @param amount The amount of progress that the bar loses.
-	 */
-	public void decreaseProgress(double amount) {
-		this.progress -= amount;
 		this.timeUntilNextQuestion.setProgress(this.progress);
 	}
 }

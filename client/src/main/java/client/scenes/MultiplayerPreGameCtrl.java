@@ -54,12 +54,12 @@ public class MultiplayerPreGameCtrl {
 	 * of MainCtrl and moves to the waiting screen.
 	 */
 	public void joinLobby() {
-		String name = this.nickname.getText();
-		this.player = new Player(name,0);
 		setNickname();
 		ServerUtils serverUtils = new ServerUtils(Main.serverHost);
 
 		serverUtils.setSession(serverUtils.connect());
+
+		this.mainCtrl.getMultiplayerQuestionScreenCtrl().setServer(serverUtils);
 
 		Optional<LobbyResponse> maybeResponse;
 		try {
@@ -90,18 +90,16 @@ public class MultiplayerPreGameCtrl {
 	}
 
 	/**
-	 * Getter method for the player.
-	 * @return the player.
-	 */
-	public Player getPlayer() {
-		return this.player;
-	}
-
-	/**
 	 * Set the nickname field of the main ctrl to this nickname.
 	 * After that, it joins the lobby.
 	 */
 	public void setNickname() {
+		this.player = new Player(this.nickname.getText(), 0);
+		this.mainCtrl.getMultiplayerQuestionScreenCtrl().setPlayer(this.player);
 		this.mainCtrl.setNickname(this.nickname.getText());
+	}
+
+	public Player getPlayer() {
+		return new Player(this.nickname.getText());
 	}
 }
