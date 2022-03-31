@@ -17,10 +17,12 @@
 package client.scenes;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import client.Main;
 import client.utils.ServerUtils;
 import commons.Activity;
 import commons.Connection;
@@ -83,6 +85,18 @@ public class MainCtrl {
 	private WaitingScreenCtrl waitingScreenCtrl;
 	private Scene waitingScreen;
 
+	private AdminInterfaceScreenCtrl adminInterfaceScreenCtrl;
+	private Scene adminInterfaceScreen;
+
+	private AdminAddActivityScreenCtrl adminAddActivityScreenCtrl;
+	private Scene adminAddActivityScreen;
+
+	private AdminRemoveActivityScreenCtrl adminRemoveActivityScreenCtrl;
+	private Scene adminRemoveActivityScreen;
+
+	private AdminEditActivityScreenCtrl adminEditActivityScreenCtrl;
+	private Scene adminEditActivityScreen;
+
 	private TopPlayersLeaderboardCtrl topPlayersLeaderboardCtrl;
 	private Scene topPlayersLeaderboard;
 
@@ -104,16 +118,19 @@ public class MainCtrl {
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
 
+	private List<Activity> activities;
+
+	private long seed = 0;
+
 	private EventHandler<WindowEvent> confirmCloseEventHandler;
 
 	private Logger logger;
 
 	private static final double JOKER_DECREASE_TIME_PERCENT = 0.5;
 
-	private long seed = 0;
-
 	public MainCtrl() {
-		seed = new Random().nextInt();
+		this.seed = new Random().nextInt();
+		this.server = new ServerUtils(Main.serverHost);
 	}
 
 	/**
@@ -128,6 +145,10 @@ public class MainCtrl {
 	 * @param intermediateScene a pair of intermediate screen with parent
 	 * @param singlePlayerFinalScene a pair of final single player screen with parent.
 	 * @param waitingScreen a pair of waiting screen with parent
+	 * @param adminInterfaceScreen A pair of admin interface screen with parent.
+	 * @param adminAddActivityScreen A pair of admin add activity screen with parent.
+	 * @param adminRemoveActivityScreen A pair of admin remove activity screen with parent.
+	 * @param adminEditActivityScreen A pair of admin edit activity screen with parent.
 	 * @param topPlayersLeaderboard a pair of top players leaderboard scene with parent.
 	 * @param multiPlayerQuestion a pair of multiplayer
 	 * @param intLeaderboard a pair of intermediate leaderboard
@@ -142,11 +163,15 @@ public class MainCtrl {
 		Pair<IntermediateSceneCtrl, Parent> intermediateScene,
 		Pair<SinglePlayerFinalScreenCtrl, Parent> singlePlayerFinalScene,
 		Pair<WaitingScreenCtrl, Parent> waitingScreen,
+		Pair<AdminInterfaceScreenCtrl, Parent> adminInterfaceScreen,
+		Pair<AdminAddActivityScreenCtrl, Parent> adminAddActivityScreen,
+		Pair<AdminRemoveActivityScreenCtrl, Parent> adminRemoveActivityScreen,
+		Pair<AdminEditActivityScreenCtrl, Parent> adminEditActivityScreen,
 		Pair<MultiplayerQuestionScreenCtrl, Parent> multiPlayerQuestion,
 		Pair<IntLeaderboardCtrl, Parent> intLeaderboard,
 		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard
 	) {
-		this.logger = LoggerFactory.getLogger(MainCtrl.class);;
+		this.logger = LoggerFactory.getLogger(MainCtrl.class);
 
 		this.primaryStage = primaryStage;
 
@@ -173,6 +198,18 @@ public class MainCtrl {
 
 		this.waitingScreenCtrl = waitingScreen.getKey();
 		this.waitingScreen = new Scene(waitingScreen.getValue());
+
+		this.adminInterfaceScreenCtrl = adminInterfaceScreen.getKey();
+		this.adminInterfaceScreen = new Scene(adminInterfaceScreen.getValue());
+
+		this.adminAddActivityScreenCtrl = adminAddActivityScreen.getKey();
+		this.adminAddActivityScreen = new Scene(adminAddActivityScreen.getValue());
+
+		this.adminRemoveActivityScreenCtrl = adminRemoveActivityScreen.getKey();
+		this.adminRemoveActivityScreen = new Scene(adminRemoveActivityScreen.getValue());
+
+		this.adminEditActivityScreenCtrl = adminEditActivityScreen.getKey();
+		this.adminEditActivityScreen = new Scene(adminEditActivityScreen.getValue());
 
 		this.topPlayersLeaderboardCtrl = topPlayersLeaderboard.getKey();
 		this.topPlayersLeaderboard = new Scene(topPlayersLeaderboard.getValue());
@@ -330,10 +367,6 @@ public class MainCtrl {
 		}
 
 		primaryStage.setScene(screenCtrl.getScene());
-	}
-
-	public void setServer(ServerUtils server) {
-		this.server = server;
 	}
 
 	public ServerUtils getServer() {
@@ -528,6 +561,60 @@ public class MainCtrl {
 	}
 
 	/**
+	 * Take the user to the admin interface screen.
+	 */
+	public void showAdminInterfaceScreen() {
+		this.primaryStage.setTitle("Admin Interface");
+		this.primaryStage.setScene(this.adminInterfaceScreen);
+	}
+
+	/**
+	 * Take the user to the admin add activity screen.
+	 */
+	public void showAdminAddActivityScreen() {
+		this.refreshActivities();
+		this.primaryStage.setTitle("Add Activity");
+		this.primaryStage.setScene(this.adminAddActivityScreen);
+	}
+
+	/**
+	 * Take the user to the admin remove activity screen.
+	 */
+	public void showAdminRemoveActivityScreen() {
+		this.refreshActivities();
+		this.primaryStage.setTitle("Remove Activity");
+		this.primaryStage.setScene(this.adminRemoveActivityScreen);
+	}
+
+	/**
+	 * Take the user to the admin remove activity screen.
+	 */
+	public void showAdminEditActivityScreen() {
+		this.refreshActivities();
+		this.primaryStage.setTitle("Edit Activity");
+		this.primaryStage.setScene(this.adminEditActivityScreen);
+	}
+
+	public List<Activity> getActivities() {
+		return this.activities;
+	}
+
+	/**
+	 * Calls the refresh activities method from the AdminEditActivitiesCtrl class, which refresh
+	 * the activities shown in the admin interface screens according to the current status
+	 * of the database.
+	 */
+	public void refreshActivities() {
+		this.activities = this.server
+			.getActivities()
+			.stream()
+			.sorted(Comparator.comparing(Activity::getId))
+			.toList();
+		this.adminRemoveActivityScreenCtrl.updateDropdown(this.activities);
+		this.adminEditActivityScreenCtrl.updateDropdown(this.activities);
+	}
+
+	/**
 	 * This method shows the global leader board screen.
 	 */
 	public void showGlobalLeaderboardScreen() {
@@ -542,7 +629,6 @@ public class MainCtrl {
 	public void showSinglePlayerFinalScreen() {
 		singlePlayerFinalSceneCtrl.setTotalScore(player.getPoint());
 		singlePlayerFinalSceneCtrl.setCorrectAnswers(numberOfCorrectAnswered);
-		singlePlayerFinalSceneCtrl.setServer(server);
 		singlePlayerFinalSceneCtrl.addPlayer(player);
 		primaryStage.setTitle("Final Score");
 		primaryStage.setScene(singlePlayerFinalScene);

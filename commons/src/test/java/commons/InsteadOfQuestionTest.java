@@ -166,21 +166,25 @@ public class InsteadOfQuestionTest {
 
 	@Test
 	void toStringTest() {
-		String expected = "InsteadOfQuestion{questionActivity=Activity{id='00-test-question'," +
-				" title='Title for the question', consumptionInWh=120," +
-				" imagePath='pathToImageQuestion'," +
-				" source='someSource'}, answer1=Activity{id='00-test-answer-1'," +
-				" title='Title for the answer 1'," +
-				" consumptionInWh=30, imagePath='pathToImageAnswer1', source='someSource'}," +
-				" realCoefficient1=0.25," +
-				" answer2=Activity{id='00-test-answer-2', title='Title for the answer 2'," +
-				" consumptionInWh=10," +
-				" imagePath='pathToImageAnswer2', source='someSource'}," +
-				" realCoefficient2=0.16666666666666666," +
-				" answer3=Activity{id='00-test-answer-3', title='Title for the answer 3'," +
-				" consumptionInWh=4," +
-				" imagePath='pathToImageAnswer3', source='someSource'}," +
-				" realCoefficient3=0.3333333333333333}";
+		String expected =
+			"InsteadOfQuestion{questionActivity=ID: 00-test-question\n"
+			+ "Title: Title for the question\n"
+			+ "Consumption in Wh: 120\n"
+			+ "Image Path: pathToImageQuestion\n"
+			+ "Source: someSource, answer1=ID: 00-test-answer-1\n"
+			+ "Title: Title for the answer 1\n"
+			+ "Consumption in Wh: 30\n"
+			+ "Image Path: pathToImageAnswer1\n"
+			+ "Source: someSource, realCoefficient1=0.25, answer2=ID: 00-test-answer-2\n"
+			+ "Title: Title for the answer 2\n"
+			+ "Consumption in Wh: 10\n"
+			+ "Image Path: pathToImageAnswer2\n"
+			+ "Source: someSource, realCoefficient2=0.16666666666666666, "
+			+ "answer3=ID: 00-test-answer-3\n"
+			+ "Title: Title for the answer 3\n"
+			+ "Consumption in Wh: 4\n"
+			+ "Image Path: pathToImageAnswer3\n"
+			+ "Source: someSource, realCoefficient3=0.3333333333333333}";
 		assertEquals(expected, insteadOfQuestionFixed1.toString());
 	}
 

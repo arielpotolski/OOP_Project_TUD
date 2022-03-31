@@ -2,7 +2,6 @@ package client.scenes;
 
 import java.util.Optional;
 
-import client.Main;
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
 import commons.Player;
@@ -29,13 +28,12 @@ public class MultiplayerPreGameCtrl {
 	/**
 	 * Constructor for multiplayer pre-game controller
 	 *
-	 * @param server   the injected server.
 	 * @param mainCtrl the injected main controller.
 	 */
 	@Inject
-	public MultiplayerPreGameCtrl(ServerUtils server, MainCtrl mainCtrl) {
+	public MultiplayerPreGameCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = server;
+		this.server = mainCtrl.getServer();
 	}
 
 	public void jumpToSplashScreen() {
@@ -55,11 +53,9 @@ public class MultiplayerPreGameCtrl {
 	 */
 	public void joinLobby() {
 		setNickname();
-		ServerUtils serverUtils = new ServerUtils(Main.serverHost);
+		ServerUtils serverUtils = this.mainCtrl.getServer();
 
 		serverUtils.setSession(serverUtils.connect());
-
-		this.mainCtrl.getMultiplayerQuestionScreenCtrl().setServer(serverUtils);
 
 		Optional<LobbyResponse> maybeResponse;
 		try {
@@ -76,7 +72,6 @@ public class MultiplayerPreGameCtrl {
 		}
 
 		if (maybeResponse.isPresent()) {
-			this.mainCtrl.setServer(serverUtils);
 			this.mainCtrl.showWaitingScreen(maybeResponse.get());
 		} else {
 			// Tell user the name is already taken.

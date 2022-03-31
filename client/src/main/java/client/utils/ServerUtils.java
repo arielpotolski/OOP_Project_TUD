@@ -24,6 +24,7 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+import commons.Activity;
 import commons.Connection;
 import commons.LobbyResponse;
 import commons.Player;
@@ -38,6 +39,7 @@ import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.ResponseProcessingException;
 import jakarta.ws.rs.core.GenericType;
+import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -104,6 +106,18 @@ public class ServerUtils {
 			.target(this.getServer())
 			.path("api/questions/")
 			.queryParam("seed", seed)
+			.request(APPLICATION_JSON)
+			.get(new GenericType<>() {});
+	}
+
+	/**
+	 * Get a list of activities from the server.
+	 * @return A list of activities.
+	 */
+	public List<Activity> getActivities() {
+		return this.client
+			.target(this.getServer())
+			.path("api/questions/getActivities")
 			.request(APPLICATION_JSON)
 			.get(new GenericType<>() {});
 	}
@@ -199,6 +213,32 @@ public class ServerUtils {
 	public void makeConnection(int port) throws IOException {
 		this.connection = Connection.to(this.host, port);
 		this.connection.send(new JoinMessage(this.name));
+	}
+
+	/**
+	 * Add the given activity to the severs database and return the added activity.
+	 * @param a The activity to add to the database.
+	 * @return The activity that was added.
+	 */
+	public Activity addActivity(Activity a) {
+		return this.client
+			.target(this.getServer())
+			.path("api/questions/addActivity")
+			.request(APPLICATION_JSON)
+			.put(Entity.entity(a, APPLICATION_JSON), Activity.class);
+	}
+
+	/**
+	 * Remove an activity from the server.
+	 * @param a The activity to remove.
+	 * @return The servers response after the DELETE request.
+	 */
+	public Response removeActivity(Activity a) {
+		return this.client
+			.target(this.getServer())
+			.path("api/questions/" + a.getId())
+			.request(APPLICATION_JSON)
+			.delete();
 	}
 
 	private URI getWebSocketServer() {

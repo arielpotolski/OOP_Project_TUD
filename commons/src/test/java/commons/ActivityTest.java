@@ -112,9 +112,8 @@ class ActivityTest {
 
 	@Test
 	void toStringTest() {
-		String expected = "Activity{id='123', title='title', " +
-				"consumptionInWh=230, imagePath='pathpng', " +
-				"source='some site'}";
+		String expected =
+			"ID: 123\nTitle: title\nConsumption in Wh: 230\nImage Path: pathpng\nSource: some site";
 		assertEquals(expected, activity1.toString());
 	}
 

@@ -28,7 +28,7 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 	@Inject
 	public QuestionScreenSinglePlayerCtrl(MainCtrl mainCtrl,ServerUtils server) {
 		this.mainCtrl = mainCtrl;
-		this.server = server;
+		this.server = mainCtrl.getServer();
 	}
 
 	/**
