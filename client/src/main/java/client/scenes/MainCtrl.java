@@ -304,6 +304,11 @@ public class MainCtrl {
 		timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
 			screenCtrl.decreaseProgress(0.1f);
 		}));
+		timeLine.setOnFinished(_e -> {
+			updatePoints(screenCtrl.getInputButton(),
+						screenCtrl.getInputText(),
+						screenCtrl);
+		});
 		timeLine.setCycleCount(10);
 		timeLine.play();
 
