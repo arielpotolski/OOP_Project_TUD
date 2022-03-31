@@ -2,7 +2,6 @@ package client.scenes;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -12,6 +11,7 @@ import client.utils.ServerUtils;
 import commons.Activity;
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -24,7 +24,6 @@ import javax.inject.Inject;
 public class AdminEditActivityScreenCtrl implements Initializable {
 	private final MainCtrl mainCtrl;
 	private final ServerUtils server;
-	private List<Activity> activities;
 
 	@FXML
 	private TextArea activityData;
@@ -47,7 +46,6 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 	public AdminEditActivityScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
 		this.server = new ServerUtils(Main.serverHost);
-		this.refreshActivities();
 	}
 
 	/**
@@ -71,27 +69,8 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 	 */
 	@Override
 	public void initialize(URL _location, ResourceBundle _resources) {
-		this.activityDropdown
-			.getItems()
-			.addAll(
-				this.activities
-					.stream()
-					.map(Activity::getId)
-					.toList()
-			);
-		this.activityDropdown
-			.getSelectionModel()
-			.selectFirst();
 		this.activityData
 			.setWrapText(true);
-		this.activityData
-			.setText(
-				this.activities
-					.stream()
-					.findFirst()
-					.orElse(new Activity())
-					.toString()
-			);
 		this.activityDropdown
 			.getSelectionModel()
 			.selectedItemProperty()
@@ -99,16 +78,16 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 				ObservableValue<? extends String> _observable,
 				String _oldString,
 				String newString
-			) -> this.activityData
-				.setText(
-					this.activities
-						.stream()
-						.filter(a -> a.getId().equals(newString))
-						.findFirst()
-						.orElseThrow(IndexOutOfBoundsException::new)
-						.toString()
-				)
-			);
+			) -> {
+				Optional<Activity> maybeActivity = this.mainCtrl
+					.getActivities()
+					.stream()
+					.filter(a -> a.getId().equals(newString))
+					.findFirst();
+				this.activityData.setText(
+					maybeActivity.map(activity -> activity.toString()).orElse("")
+				);
+			});
 	}
 
 	/**
@@ -151,13 +130,25 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 		 * activity was invalid we return an empty optional.
 		 */
 		try {
+			String oldId = this.activityDropdown
+				.getSelectionModel()
+				.getSelectedItem();
+			if (!id.equals(oldId)) {
+				this.server.removeActivity(
+					this.mainCtrl
+						.getActivities()
+						.stream()
+						.filter(a -> a.getId().equals(oldId))
+						.findFirst()
+						.get()
+				);
+			}
+
 			Activity a = new Activity(id, title, consumption, imagePath, source);
 			if (a.isValid()) {
-				this.refreshActivities();
-				this.activityDropdown
-					.getSelectionModel()
-					.selectFirst();
-				return Optional.of(this.server.addActivity(a));
+				Activity result = this.server.addActivity(a);
+				this.mainCtrl.refreshActivities();
+				return Optional.of(result);
 			}
 		} catch (IOException err) {
 			err.printStackTrace();
@@ -166,13 +157,18 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 	}
 
 	/**
-	 * Refresh the list of activities.
+	 * Update the dropdown of activities.
+	 * @param activities List of sorted of activities to from the dropdown from.
 	 */
-	protected void refreshActivities() {
-		this.activities = this.server
-			.getActivities()
-			.stream()
-			.sorted(Comparator.comparing(Activity::getId))
-			.toList();
+	protected void updateDropdown(List<Activity> activities) {
+		String selectedItem = this.activityDropdown.getSelectionModel().getSelectedItem();
+
+		ObservableList<String> list = this.activityDropdown.getItems();
+		list.clear();
+		list.addAll(activities.stream().map(Activity::getId).toList());
+
+		if (activities.stream().anyMatch(activity -> activity.getId().equals(selectedItem))) {
+			this.activityDropdown.getSelectionModel().select(selectedItem);
+		}
 	}
 }

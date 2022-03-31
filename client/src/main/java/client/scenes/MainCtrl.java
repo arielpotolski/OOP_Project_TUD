@@ -531,34 +531,37 @@ public class MainCtrl {
 	public void showAdminInterfaceScreen() {
 		this.primaryStage.setTitle("Admin Interface");
 		this.primaryStage.setScene(this.adminInterfaceScreen);
-		refreshActivities();
 	}
 
 	/**
 	 * Take the user to the admin add activity screen.
 	 */
 	public void showAdminAddActivityScreen() {
+		this.refreshActivities();
 		this.primaryStage.setTitle("Add Activity");
 		this.primaryStage.setScene(this.adminAddActivityScreen);
-		refreshActivities();
 	}
 
 	/**
 	 * Take the user to the admin remove activity screen.
 	 */
 	public void showAdminRemoveActivityScreen() {
+		this.refreshActivities();
 		this.primaryStage.setTitle("Remove Activity");
 		this.primaryStage.setScene(this.adminRemoveActivityScreen);
-		refreshActivities();
 	}
 
 	/**
 	 * Take the user to the admin remove activity screen.
 	 */
 	public void showAdminEditActivityScreen() {
+		this.refreshActivities();
 		this.primaryStage.setTitle("Edit Activity");
 		this.primaryStage.setScene(this.adminEditActivityScreen);
-		refreshActivities();
+	}
+
+	public List<Activity> getActivities() {
+		return this.activities;
 	}
 
 	/**
@@ -566,9 +569,14 @@ public class MainCtrl {
 	 * the activities shown in the admin interface screens according to the current status
 	 * of the database.
 	 */
-	private void refreshActivities() {
-		this.adminRemoveActivityScreenCtrl.refreshActivities();
-		this.adminEditActivityScreenCtrl.refreshActivities();
+	public void refreshActivities() {
+		this.activities = this.server
+			.getActivities()
+			.stream()
+			.sorted(Comparator.comparing(Activity::getId))
+			.toList();
+		this.adminRemoveActivityScreenCtrl.updateDropdown(this.activities);
+		this.adminEditActivityScreenCtrl.updateDropdown(this.activities);
 	}
 
 	/**

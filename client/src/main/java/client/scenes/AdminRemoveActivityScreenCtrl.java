@@ -1,8 +1,8 @@
 package client.scenes;
 
 import java.net.URL;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import client.Main;
@@ -10,6 +10,7 @@ import client.utils.ServerUtils;
 import commons.Activity;
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
@@ -19,7 +20,6 @@ import javax.inject.Inject;
 public class AdminRemoveActivityScreenCtrl implements Initializable {
 	private final MainCtrl mainCtrl;
 	private final ServerUtils server;
-	private List<Activity> activities;
 
 	@FXML
 	private TextArea activityData;
@@ -35,7 +35,6 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 	public AdminRemoveActivityScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
 		this.server = new ServerUtils(Main.serverHost);
-		this.refreshActivities();
 	}
 
 	/**
@@ -51,27 +50,8 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 	 */
 	@Override
 	public void initialize(URL _location, ResourceBundle _resources) {
-		this.activityDropdown
-			.getItems()
-			.addAll(
-				this.activities
-					.stream()
-					.map(Activity::getId)
-					.toList()
-			);
-		this.activityDropdown
-			.getSelectionModel()
-			.selectFirst();
 		this.activityData
 			.setWrapText(true);
-		this.activityData
-			.setText(
-				this.activities
-					.stream()
-					.findFirst()
-					.orElse(new Activity())
-					.toString()
-			);
 		this.activityDropdown
 			.getSelectionModel()
 			.selectedItemProperty()
@@ -79,16 +59,16 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 				ObservableValue<? extends String> _observable,
 				String _oldString,
 				String newString
-			) -> this.activityData
-				.setText(
-					this.activities
-						.stream()
-						.filter(a -> a.getId().equals(newString))
-						.findFirst()
-						.orElseThrow(IndexOutOfBoundsException::new)
-						.toString()
-				)
-			);
+			) -> {
+				Optional<Activity> maybeActivity = this.mainCtrl
+					.getActivities()
+					.stream()
+					.filter(a -> a.getId().equals(newString))
+					.findFirst();
+				this.activityData.setText(
+					maybeActivity.map(activity -> activity.toString()).orElse("")
+				);
+			});
 	}
 
 	/**
@@ -112,30 +92,23 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 		String id = this.activityDropdown
 			.getSelectionModel()
 			.getSelectedItem();
-		Activity activity = this.activities
+		Activity activity = this.mainCtrl
+			.getActivities()
 			.stream()
 			.filter(a -> a.getId().equals(id))
 			.findFirst()
 			.orElseThrow(IndexOutOfBoundsException::new);
-		this.server
-			.removeActivity(activity);
-		this.refreshActivities();
-		this.activityDropdown
-			.getItems()
-			.remove(activity.getId());
-		this.activityDropdown
-			.getSelectionModel()
-			.selectFirst();
+		this.server.removeActivity(activity);
+		this.mainCtrl.refreshActivities();
 	}
 
 	/**
-	 * Refresh the list of activities.
+	 * Update the dropdown of activities.
+	 * @param activities List of sorted of activities to from the dropdown from.
 	 */
-	protected void refreshActivities() {
-		this.activities = this.server
-			.getActivities()
-			.stream()
-			.sorted(Comparator.comparing(Activity::getId))
-			.toList();
+	protected void updateDropdown(List<Activity> activities) {
+		ObservableList list = this.activityDropdown.getItems();
+		list.clear();
+		list.addAll(activities.stream().map(Activity::getId).toList());
 	}
 }
