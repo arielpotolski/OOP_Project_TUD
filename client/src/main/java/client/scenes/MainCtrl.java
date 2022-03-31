@@ -283,6 +283,8 @@ public class MainCtrl {
 				multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
 			});
 		}
+		// Enable all buttons to make sure the player can answer
+		screenCtrl.disableButtons(false);
 
 		// If the size of question set equals to zero, this method change to final screen.
 		if (questions.size() == 0) {
@@ -567,7 +569,9 @@ public class MainCtrl {
 	 *                   for multiplayer
 	 */
 	public void updatePoints(Button button, TextField textField, QuestionClass screenCtrl)
-			throws IOException {
+		throws IOException {
+		timeLine.stop();
+
 		// in case the player doesn't provide an answer in time
 		if (button == null && textField == null) {
 			this.currentPoint = 0;
@@ -732,8 +736,6 @@ public class MainCtrl {
 			} else {
 				currentPoint = 0;
 			}
-
-			//this.server.getConnection().send(new JoinMessage(this.nickname, this.currentPoint));
 
 			if (currentPoint < 800) {
 				if (currentPoint > 300) {

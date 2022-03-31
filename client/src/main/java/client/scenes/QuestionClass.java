@@ -95,14 +95,17 @@ public abstract class QuestionClass {
 		this.timeStamp = getProgress();
 
 		if (this.answerButton1.equals(source)) {
+			setStyleAnswerButton1(color);
 			this.inputButton = this.answerButton1;
 			this.inputText = null;
 			setStyleAnswerButton1(color);
 		} else if (this.answerButton2.equals(source)) {
+			setStyleAnswerButton2(color);
 			this.inputButton = this.answerButton2;
 			this.inputText = null;
 			setStyleAnswerButton2(color);
 		} else if (this.answerButton3.equals(source)) {
+			setStyleAnswerButton3(color);
 			this.inputButton = this.answerButton3;
 			this.inputText = null;
 			setStyleAnswerButton3(color);
@@ -111,9 +114,22 @@ public abstract class QuestionClass {
 			this.inputText = this.textField;
 		}
 
+		disableButtons(true);
 		if (this instanceof QuestionScreenSinglePlayerCtrl) {
 			this.mainCtrl.updatePoints(inputButton, inputText, this);
 		}
+	}
+
+	/**
+	 *  The method disables the buttons after the player answers
+	 *
+	 *  @param disabled boolean value that dictates whether or not
+	 *                  the buttons should be disabled
+	 */
+	public void disableButtons(boolean disabled) {
+		answerButton1.setDisable(disabled);
+		answerButton2.setDisable(disabled);
+		answerButton3.setDisable(disabled);
 	}
 
 	/**
