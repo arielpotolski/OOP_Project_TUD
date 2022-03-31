@@ -25,7 +25,7 @@
                               <Font name="Calibri" size="14.0" />
                            </font>
                         </TextArea>
-                        <Button fx:id="applyChangesButton" layoutX="200.0" layoutY="435.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#applyChanges" onMouseClicked="#applyChanges" prefHeight="86.0" prefWidth="205.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="Apply">
+                        <Button fx:id="applyChangesButton" layoutX="200.0" layoutY="435.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#applyChanges" prefHeight="86.0" prefWidth="205.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="Apply">
                            <font>
                               <Font name="System Bold" size="40.0" />
                            </font>
