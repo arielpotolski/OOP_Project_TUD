@@ -32,7 +32,7 @@ public class MultiplayerGame extends Thread {
 	 */
 	private final HashMap<String, LobbyPlayer> lobbyPlayers;
 	/**
-	 *
+	 * Scores of the players with relation to their
 	 */
 	private final HashMap<String, Integer> scores;
 	/**
@@ -66,29 +66,11 @@ public class MultiplayerGame extends Thread {
 			// TODO begin game
 			// TODO send out questions to players
 			// TODO track game progress
-			sendMessageToAllPlayers(new LeaderboardMessage(generateLeaderboard()));
+			sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
 			// TODO send leaderboard
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
-	}
-
-	/**
-	 * Generates the leaderboard of all the players
-	 * @return A hash map with name and result of the players
-	 */
-	private HashMap<String, Integer> generateLeaderboard(){
-		return this.scores;
-	}
-
-	/**
-	 * Sets the new points of the player
-	 * @param message the message containing the name of the player and their score
-	 */
-	private void setNewPointForPlayer(PointMessage message) {
-		if (!this.scores.containsKey(message.getName()))
-			throw new IllegalArgumentException("Name of the player not found");
-		this.scores.put(message.getName(), message.getPoints());
 	}
 
 	/**
@@ -158,6 +140,15 @@ public class MultiplayerGame extends Thread {
 					Message message = player.connection().receive();
 					switch (message.getType()) {
 						case JOKER -> handleJokerMessage(player, (JokerMessage) message);
+						case POINTS -> {
+							this.scores.put(((PointMessage) message).getName(),
+									((PointMessage) message).getPoints() +
+											this.scores.get(player.name()));
+							// Give as argument a copy of the map
+							LeaderboardMessage res =
+									new LeaderboardMessage(new HashMap<>(this.scores));
+							sendMessageToAllPlayers(res);
+						}
 						case KILLER -> {
 							player.connection().send(new KillerMessage());
 							players.remove(player);
