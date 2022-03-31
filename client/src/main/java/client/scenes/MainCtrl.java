@@ -17,9 +17,11 @@
 package client.scenes;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import client.Main;
 import client.utils.ServerUtils;
 import commons.Activity;
 import commons.Connection;
@@ -108,6 +110,8 @@ public class MainCtrl {
 	private int numberOfQuestionAnswered = 0;
 	private int numberOfCorrectAnswered = 0;
 
+	private List<Activity> activities;
+
 	private long seed = 0;
 
 	private Logger logger;
@@ -154,7 +158,8 @@ public class MainCtrl {
 		Pair<IntLeaderboardCtrl, Parent> intLeaderboard,
 		Pair<TopPlayersLeaderboardCtrl, Parent> topPlayersLeaderboard
 	) {
-		this.logger = LoggerFactory.getLogger(MainCtrl.class);;
+		this.logger = LoggerFactory.getLogger(MainCtrl.class);
+		this.server = new ServerUtils(Main.serverHost);
 
 		this.primaryStage = primaryStage;
 
@@ -331,10 +336,6 @@ public class MainCtrl {
 	 */
 	public void showMultiPlayerFinalScreen() {
 		//TODO implement this
-	}
-
-	public void setServer(ServerUtils server) {
-		this.server = server;
 	}
 
 	public ServerUtils getServer() {
@@ -622,7 +623,6 @@ public class MainCtrl {
 	public void showSinglePlayerFinalScreen() {
 		singlePlayerFinalSceneCtrl.setTotalScore(player.getPoint());
 		singlePlayerFinalSceneCtrl.setCorrectAnswers(numberOfCorrectAnswered);
-		singlePlayerFinalSceneCtrl.setServer(server);
 		singlePlayerFinalSceneCtrl.addPlayer(player);
 		primaryStage.setTitle("Final Score");
 		primaryStage.setScene(singlePlayerFinalScene);
@@ -880,7 +880,6 @@ public class MainCtrl {
 	public void showMultiPlayerQuestionScreen() {
 		player = multiplayerPreGameCtrl.getPlayer();
 		multiplayerQuestionScreenCtrl.setPlayer(player);
-		multiplayerQuestionScreenCtrl.setServer(server);
 		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
 			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
 		});

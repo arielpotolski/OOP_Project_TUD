@@ -41,7 +41,6 @@ public class SinglePlayerPreGameCtrl {
 		setNickname();
 		this.player = new Player(this.mainCtrl.getNickname(),0);
 		this.server = new ServerUtils(Main.serverHost);
-		this.mainCtrl.setServer(this.server);
 		this.mainCtrl.getQuestions();
 		this.mainCtrl.showQuestionScreenSinglePlayer();
 	}

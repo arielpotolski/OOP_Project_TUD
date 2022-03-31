@@ -184,10 +184,6 @@ public class MultiplayerQuestionScreenCtrl implements Initializable{
 		});
 	}
 
-	public void setServer(ServerUtils server) {
-		this.server = server;
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		Image angryImage = new Image("emojis/ANGRY.png",

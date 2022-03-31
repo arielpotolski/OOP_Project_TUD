@@ -81,12 +81,4 @@ public class SinglePlayerFinalScreenCtrl {
 	public void addPlayer(Player player) {
 		this.server.addPlayer(player);
 	}
-
-	/**
-	 *  This method sets the server
-	 * @param server the server
-	 */
-	public void setServer(ServerUtils server) {
-		this.server = server;
-	}
 }

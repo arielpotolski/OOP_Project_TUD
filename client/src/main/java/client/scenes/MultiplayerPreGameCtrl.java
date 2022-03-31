@@ -2,7 +2,6 @@ package client.scenes;
 
 import java.util.Optional;
 
-import client.Main;
 import client.utils.ServerUtils;
 import commons.LobbyResponse;
 import commons.Player;
@@ -54,7 +53,7 @@ public class MultiplayerPreGameCtrl {
 	 */
 	public void joinLobby() {
 		setNickname();
-		ServerUtils serverUtils = new ServerUtils(Main.serverHost);
+		ServerUtils serverUtils = this.mainCtrl.getServer();
 
 		serverUtils.setSession(serverUtils.connect());
 
@@ -73,7 +72,6 @@ public class MultiplayerPreGameCtrl {
 		}
 
 		if (maybeResponse.isPresent()) {
-			this.mainCtrl.setServer(serverUtils);
 			this.mainCtrl.showWaitingScreen(maybeResponse.get());
 		} else {
 			// Tell user the name is already taken.
