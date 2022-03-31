@@ -1,47 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
+                               <?xml version="1.0" encoding="UTF-8"?>
+                                                  
+                               <?import javafx.scene.control.Label?>
+                            <?import javafx.scene.control.ProgressBar?>
+                             <?import javafx.scene.layout.AnchorPane?>
+                                <?import javafx.scene.layout.VBox?>
+                                 <?import javafx.scene.text.Font?>
+                                                  
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.IntermediateSceneCtrl">
-   <children>
-      <ProgressBar fx:id="timeUntilNextQuestion" prefHeight="18.0" prefWidth="900.0" progress="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <VBox alignment="CENTER" layoutX="1.0" prefHeight="600.0" prefWidth="900.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label alignment="CENTER" text="Answered:">
-               <font>
-                  <Font name="Calibri Bold" size="36.0" />
-               </font>
-            </Label>
-            <Label fx:id="questionsAnswered" alignment="CENTER" text="2 / 20">
-               <font>
-                  <Font name="Calibri Bold" size="36.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" text="Points earned in this question:">
-               <font>
-                  <Font name="Calibri Bold" size="36.0" />
-               </font>
-            </Label>
-            <Label fx:id="currentQuestionPointsEarned" alignment="CENTER" text="950/1000">
-               <font>
-                  <Font name="Calibri Bold" size="36.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" text="Your Current Total Score: ">
-               <font>
-                  <Font name="Calibri Bold" size="36.0" />
-               </font>
-            </Label>
-            <Label fx:id="playerPoints" alignment="CENTER" text="1650">
-               <font>
-                  <Font name="Calibri Bold" size="36.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
-   </children>
-</AnchorPane>
+                                             <children>
+<ProgressBar fx:id="timeUntilNextQuestion" prefHeight="18.0" prefWidth="900.0" progress="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+<VBox alignment="CENTER" layoutX="1.0" prefHeight="600.0" prefWidth="900.0" spacing="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                            <Label alignment="CENTER" text="Answered:">
+                                               <font>
+                              <Font name="Calibri Bold" size="36.0" />
+                                              </font>
+                                              </Label>
+                 <Label fx:id="questionsAnswered" alignment="CENTER" text="2 / 20">
+                                               <font>
+                              <Font name="Calibri Bold" size="36.0" />
+                                              </font>
+                                              </Label>
+                 <Label alignment="CENTER" text="Points earned in this question:">
+                                               <font>
+                              <Font name="Calibri Bold" size="36.0" />
+                                              </font>
+                                              </Label>
+           <Label fx:id="currentQuestionPointsEarned" alignment="CENTER" text="950/1000">
+                                               <font>
+                              <Font name="Calibri Bold" size="36.0" />
+                                              </font>
+                                              </Label>
+                    <Label alignment="CENTER" text="Your Current Total Score: ">
+                                               <font>
+                              <Font name="Calibri Bold" size="36.0" />
+                                              </font>
+                                              </Label>
+                    <Label fx:id="playerPoints" alignment="CENTER" text="1650">
+                                               <font>
+                              <Font name="Calibri Bold" size="36.0" />
+                                              </font>
+                                              </Label>
+                                            </children>
+                                              </VBox>
+                                            </children>
+                                           </AnchorPane>

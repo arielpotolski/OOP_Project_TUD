@@ -1,35 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.chart.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
+                               <?xml version="1.0" encoding="UTF-8"?>
+                                                  
+                                  <?import javafx.scene.chart.*?>
+                                 <?import javafx.scene.control.*?>
+                                  <?import javafx.scene.layout.*?>
+                                   <?import javafx.scene.text.*?>
+                                                  
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.IntLeaderboardCtrl">
-   <children>
-      <ProgressBar fx:id="timeUntilNextQuestion" prefHeight="23.0" prefWidth="900.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
-         <children>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
-            <VBox alignment="TOP_CENTER" prefHeight="602.0" prefWidth="697.0" spacing="50.0">
-               <children>
-                  <Label alignment="CENTER" prefHeight="113.0" prefWidth="638.0" text="Intermediate Leaderboard">
-                     <font>
-                        <Font name="Calibri" size="48.0" />
-                     </font>
-                  </Label>
-                  <BarChart fx:id="barChart" prefWidth="488.0" BorderPane.alignment="CENTER">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </BarChart>
-               </children>
-            </VBox>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
-         </children>
-      </HBox>
-   </children>
-</AnchorPane>
+                                             <children>
+<ProgressBar fx:id="timeUntilNextQuestion" prefHeight="23.0" prefWidth="900.0" progress="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+<HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
+                                             <children>
+                           <VBox prefHeight="200.0" prefWidth="100.0" />
+         <VBox alignment="TOP_CENTER" prefHeight="602.0" prefWidth="697.0" spacing="50.0">
+                                             <children>
+  <Label alignment="CENTER" prefHeight="113.0" prefWidth="638.0" text="Intermediate Leaderboard">
+                                               <font>
+                                <Font name="Calibri" size="48.0" />
+                                              </font>
+                                              </Label>
+            <BarChart fx:id="barChart" prefWidth="488.0" BorderPane.alignment="CENTER">
+                                              <xAxis>
+                                   <CategoryAxis side="BOTTOM" />
+                                              </xAxis>
+                                              <yAxis>
+                                     <NumberAxis side="LEFT" />
+                                              </yAxis>
+                                            </BarChart>
+                                            </children>
+                                              </VBox>
+                           <VBox prefHeight="200.0" prefWidth="100.0" />
+                                            </children>
+                                              </HBox>
+                                            </children>
+                                           </AnchorPane>
