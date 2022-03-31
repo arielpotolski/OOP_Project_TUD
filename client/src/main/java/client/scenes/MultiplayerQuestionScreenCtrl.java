@@ -202,6 +202,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 			intLeaderboardCtrl.decreaseProgress(0.25);
 		}));
 
+		intLeaderboardCtrl.displayScores();
+
 		primaryStage.setTitle("IntermediateScene");
 		primaryStage.setScene(this.mainCtrl.getIntermediateLeaderboardScreen());
 
@@ -223,7 +225,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * @param event The player click on the button.
 	 */
 	@Override
-	public void answerReturn(ActionEvent event) {
+	public void answerReturn(ActionEvent event) throws IOException {
 		super.answerReturn(event);
 	}
 

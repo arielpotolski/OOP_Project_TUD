@@ -89,7 +89,7 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 	 *
 	 * @param event the player click on the button.
 	 */
-	public void answerReturn(ActionEvent event) {
+	public void answerReturn(ActionEvent event) throws IOException {
 		super.answerReturn(event); //TODO CHECK THIS
 	}
 
