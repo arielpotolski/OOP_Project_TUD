@@ -29,7 +29,6 @@ import commons.HighestConsumptionQuestion;
 import commons.InsteadOfQuestion;
 import commons.LobbyResponse;
 import commons.MCQuestion;
-import commons.MessageModel;
 import commons.Player;
 import commons.Question;
 import commons.messages.ErrorMessage;
@@ -860,9 +859,6 @@ public class MainCtrl {
 		timeLine.setCycleCount(10);
 		timeLine.play();
 
-		server.registerForMessages("/message/receive", MessageModel.class, messageModel -> {
-			multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage());
-		});
 		primaryStage.setTitle("MultiPlayerQuestion");
 		primaryStage.setScene(multiPlayerQuestionScreen);
 	}
@@ -876,5 +872,13 @@ public class MainCtrl {
 		this.primaryStage.setScene(this.intermediateLeaderboardScreen);
 		this.primaryStage.setTitle("Leaderboard");
 		this.intLeaderboardCtrl.displayScores();
+	}
+
+	public void renderTheMessageInTheChatBox(String message) {
+		multiplayerQuestionScreenCtrl.updateMessage(message);
+	}
+
+	public void setGameIdInMultiplayerQuestionScreen(int gameId) {
+		multiplayerQuestionScreenCtrl.setGameId(gameId);
 	}
 }

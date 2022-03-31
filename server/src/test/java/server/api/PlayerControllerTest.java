@@ -39,6 +39,6 @@ class PlayerControllerTest {
 
 	@Test
 	void sendMessage() {
-		assertEquals(messageModel, playerController.sendMessage(messageModel));
+		assertEquals(messageModel, playerController.sendMessage("0", messageModel));
 	}
 }
