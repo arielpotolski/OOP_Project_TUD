@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 public class MultiplayerPreGameCtrl {
 	private final ServerUtils server;
 	private final MainCtrl mainCtrl;
+	private Player player;
 
 	@FXML
 	private TextField nickname;
@@ -58,6 +59,8 @@ public class MultiplayerPreGameCtrl {
 
 		serverUtils.setSession(serverUtils.connect());
 
+		this.mainCtrl.getMultiplayerQuestionScreenCtrl().setServer(serverUtils);
+
 		Optional<LobbyResponse> maybeResponse;
 		try {
 			maybeResponse = serverUtils.connectToLobby(this.mainCtrl.getNickname());
@@ -91,6 +94,8 @@ public class MultiplayerPreGameCtrl {
 	 * After that, it joins the lobby.
 	 */
 	public void setNickname() {
+		this.player = new Player(this.nickname.getText(), 0);
+		this.mainCtrl.getMultiplayerQuestionScreenCtrl().setPlayer(this.player);
 		this.mainCtrl.setNickname(this.nickname.getText());
 	}
 
