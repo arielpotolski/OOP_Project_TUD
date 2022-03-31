@@ -149,7 +149,7 @@ public abstract class QuestionClass {
 	}
 
 	/**
-	 * 	Getter method for timeStamp
+	 * Getter method for timeStamp
 	 *
 	 * @return The last time when the user clicked on an answer
 	 */
