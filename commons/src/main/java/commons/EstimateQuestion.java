@@ -62,7 +62,8 @@ public class EstimateQuestion extends Question {
 	 * @param doublePoints if the joker has been
 	 * @return the amount of points player have earned in the question.
 	 */
-	public int pointsEarned(int maxPoints, long answerGiven, double progress, boolean doublePoints) {
+	public int pointsEarned(int maxPoints, long answerGiven, double progress,
+							boolean doublePoints) {
 		double t = ((double) this.activity.getConsumptionInWh()) / ((double) answerGiven);
 		double partialPoints = Math.abs(Math.log10(t));
 		int factor = doublePoints ? 2 : 1;
