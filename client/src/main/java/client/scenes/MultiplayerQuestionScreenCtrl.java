@@ -33,8 +33,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Initializable {
-	private MainCtrl mainCtrl;
-	private ServerUtils server;
+	private final MainCtrl mainCtrl;
+	private final ServerUtils server;
+
+	@FXML
+	public Pane reactionPane;
 
 	@FXML
 	Button firstEmoji;
@@ -57,7 +60,6 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	@FXML
 	private TextField textFieldChat;
 
-
 	@FXML
 	private VBox vBox;
 
@@ -75,115 +77,91 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		this.player = player;
 	}
 
-	public void sendMessage(){
-		String message = textFieldChat.getText();
-		server.send(this.createWebSocketURL(gameId),
-				new MessageModel(message, player.getNickName()));
+	public void sendMessage() {
+		String message = this.textFieldChat.getText();
+		this.server.send(
+			this.createWebSocketURL(this.gameId),
+			new MessageModel(message, this.player.getNickName())
+		);
 	}
 
 	public void sendEmoji(ActionEvent event) {
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
-		server.send(this.createWebSocketURL(gameId),
-				new MessageModel(emoji, player.getNickName()));
+		this.server.send(
+			this.createWebSocketURL(this.gameId),
+			new MessageModel(emoji, this.player.getNickName())
+		);
 	}
 
 	/**
 	 * This method will insert the message into the chat box after the client
 	 * sends the emojis to other clients.
-	 * @param message
+	 * @param message The message to send.
 	 */
 	public void updateMessage(String message) {
-
-		if ("CRY".equals(message)) {
-			updateImage("/emojis/CRY.png");
-			return;
-		} else if ("WOW".equals(message)) {
-			updateImage("/emojis/WOW.png");
-			return;
-		} else if ("ANGRY".equals(message)) {
-			updateImage("/emojis/ANGRY.png");
-			return;
-		} else if ("VICTORY".equals(message)) {
-			updateImage("/emojis/VICTORY.png");
+		switch (message) {
+		case "CRY":
+		case "WOW":
+		case "ANGRY":
+		case "VICTORY":
+			this.updateImage("/emojis/" + message + ".png");
 			return;
 		}
 
 		HBox hBox = new HBox();
-
 		Text text = new Text(message);
-
 		TextFlow textFlow = new TextFlow(text);
-
-		textFlow.setStyle("-fx-color: rgb(239,242,255);"
+		textFlow.setStyle(
+			"-fx-color: rgb(239,242,255);"
 				+ "-fx-background-color: rgb(15,125,242);"
-				+ "-fx-background-radius: 20px");
+				+ "-fx-background-radius: 20px"
+		);
 
 		text.setFill(Color.color(0.934, 0.945, 0.996));
-
 		hBox.getChildren().add(textFlow);
-
-		textField.clear();
-
-		Platform.runLater(() -> {
-			vBox.getChildren().add(hBox);
-		});
+		this.textField.clear();
+		Platform.runLater(() -> this.vBox.getChildren().add(hBox));
 	}
 
 	/**
 	 * This method will insert the emojis into the chat box after the client
 	 * sends the emojis to other clients.
-	 * @param url the path of the image
+	 * @param url The path of the image.
 	 */
 	public void updateImage(String url) {
 		Image image = new Image(url, 20, 20, false, true);
 		ImageView imageView = new ImageView(image);
 		HBox hBox = new HBox();
 		TextFlow textFlow = new TextFlow(imageView);
-		textFlow.setStyle("-fx-color: rgb(239,242,255)" +
-				";-fx-background-color: rgb(15,125,242)" +
-				";-fx-background-radius: 20px");
+		textFlow.setStyle(
+			"-fx-color: rgb(239,242,255)"
+			+ ";-fx-background-color: rgb(15,125,242)"
+			+ ";-fx-background-radius: 20px"
+		);
 		hBox.getChildren().add(textFlow);
-		textField.clear();
-		Platform.runLater(() -> {
-			vBox.getChildren().add(hBox);
-		});
+		this.textField.clear();
+		Platform.runLater(() -> this.vBox.getChildren().add(hBox));
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Image angryImage = new Image("emojis/ANGRY.png",
-				20,
-				20,
-				false,
-				true);
+		Image angryImage = new Image("emojis/ANGRY.png", 20, 20, false, true);
 		ImageView angry = new ImageView(angryImage);
-		Image cryImage = new Image("emojis/CRY.png",
-				20,
-				20,
-				false,
-				true);
+		Image cryImage = new Image("emojis/CRY.png", 20, 20, false, true);
 		ImageView cry = new ImageView(cryImage);
-		Image victoryImage = new Image("emojis/VICTORY.png",
-				20,
-				20,
-				false,
-				true);
+		Image victoryImage = new Image("emojis/VICTORY.png", 20, 20, false, true);
 		ImageView victory = new ImageView(victoryImage);
-		Image wowImage = new Image("emojis/WOW.png",
-				20,
-				20,
-				false,
-				true);
+		Image wowImage = new Image("emojis/WOW.png", 20, 20, false, true);
 		ImageView wow = new ImageView(wowImage);
-		firstEmoji.setGraphic(angry);
-		secondEmoji.setGraphic(victory);
-		thirdEmoji.setGraphic(cry);
-		fourthEmoji.setGraphic(wow);
+		this.firstEmoji.setGraphic(angry);
+		this.secondEmoji.setGraphic(victory);
+		this.thirdEmoji.setGraphic(cry);
+		this.fourthEmoji.setGraphic(wow);
 	}
 
 	public void decreaseOtherPlayersTime() throws IOException {
-		server.getConnection().send(new JokerMessage(JokerType.DECREASE));
+		this.server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 	}
 
 	/**
@@ -191,18 +169,17 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 */
 	@Override
 	public void showIntermediateScene() {
-		IntLeaderboardCtrl intLeaderboardCtrl =
-				this.mainCtrl.getIntermediateLeaderboardCtrl();
+		IntLeaderboardCtrl intLeaderboardCtrl = this.mainCtrl.getIntermediateLeaderboardCtrl();
 		Stage primaryStage = this.mainCtrl.getPrimaryStage();
 
 		intLeaderboardCtrl.setProgress(1f);
-		Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			intLeaderboardCtrl.decreaseProgress(0.25);
-		}));
+		Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e ->
+			intLeaderboardCtrl.decreaseProgress(0.25)
+		));
 
 		intLeaderboardCtrl.displayScores();
 
-		primaryStage.setTitle("IntermediateScene");
+		primaryStage.setTitle("Intermediate Scene");
 		primaryStage.setScene(this.mainCtrl.getIntermediateLeaderboardScreen());
 
 		// This timeline will execute on another thread - run the count-down timer.
@@ -211,7 +188,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		timeLine.play();
 		timeLine.setOnFinished(_e -> {
 			try {
-				this.mainCtrl.showQuestionScreen(false); // the timeline finish its cycle.
+				this.mainCtrl.showQuestionScreen(false); // The timeline finish its cycle.
 			} catch (IOException err) {
 				err.printStackTrace();
 			}
@@ -247,8 +224,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	/**
-	 * Setter for the gameId
-	 * @param gameId the gameId
+	 * Setter for the gameId.
+	 * @param gameId The gameId.
 	 */
 	public void setGameId(int gameId) {
 		this.gameId = gameId;
@@ -259,23 +236,23 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	/**
-	 * Hides the jokerPane
-	 * @param jokerPane the joker pane to be hidden
+	 * Hides the jokerPane.
+	 * @param jokerPane The joker pane to be hidden.
 	 */
 	public void hideJoker(Pane jokerPane) {
 		jokerPane.setVisible(false);
 	}
 
 	/**
-	 * Uses the joker
+	 * Uses the joker.
 	 */
 	public void useDoublePoints() {
-		hideJoker(this.doublePointsPane);
+		this.hideJoker(this.doublePointsPane);
 		this.mainCtrl.setDoublePointsUsed(1);
 	}
 
 	/**
-	 * Sets up all the joker panes
+	 * Sets up all the joker panes.
 	 */
 	public void setAllJokersUp() {
 		// TODO for all other jokers set everything visible

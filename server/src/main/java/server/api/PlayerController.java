@@ -37,22 +37,23 @@ public class PlayerController {
 		if (player == null || nullOrEmpty(player.getNickName())) {
 			return ResponseEntity.badRequest().build();
 		}
-		Player result = playerRepository.save(player);
+		Player result = this.playerRepository.save(player);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 
 	/**
 	 * This method return the MessageModel to other clients after one client want to
-	 * send the message to other clients
-	 * @param messageModel
-	 * @param idFromClient
-	 * @return return the message which is sent by the client
+	 * send the message to other clients.
+	 * @param idFromClient Unused.
+	 * @param messageModel Unused.
+	 * @return The message which is sent by the client.
 	 */
 	@MessageMapping("/chat/{idFromClient}")
 	@SendTo("/message/receive/{idFromClient}")
-	public MessageModel sendMessage(@DestinationVariable String idFromClient,
-									MessageModel messageModel) {
+	public MessageModel sendMessage(
+		@DestinationVariable String idFromClient,
+		MessageModel messageModel
+	) {
 		return messageModel;
 	}
-
 }

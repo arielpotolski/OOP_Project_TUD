@@ -19,7 +19,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.shape.Polygon;
 import javax.inject.Inject;
 
-
 public class AdminEditActivityScreenCtrl implements Initializable {
 	private final MainCtrl mainCtrl;
 	private final ServerUtils server;

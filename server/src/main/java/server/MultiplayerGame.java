@@ -31,18 +31,22 @@ public class MultiplayerGame extends Thread {
 	 * This is only used when waiting for the initial TCP connections.
 	 */
 	private final HashMap<String, LobbyPlayer> lobbyPlayers;
+
 	/**
 	 * Scores of the players with relation to their nickname
 	 */
 	private final HashMap<String, Integer> scores;
+
 	/**
 	 * A list of players in the multiplayer game.
 	 */
 	private final List<Player> players;
+
 	/**
 	 * The TCP socket each client connects to.
 	 */
 	private final ServerSocket serverSocket;
+
 	/**
 	 * Logger for this game.
 	 */
@@ -59,23 +63,21 @@ public class MultiplayerGame extends Thread {
 	@Override
 	public void run() {
 		try {
-			waitForEveryoneToJoin();
-			for(Player player : players) {
-				receiveMessageFromThePlayer(player);
-			}
+			this.waitForEveryoneToJoin();
+			this.players.forEach(this::receiveMessageFromThePlayer);
 			// TODO begin game
 			// TODO send out questions to players
 			// TODO track game progress
-			sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
+			this.sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
 	}
 
 	/**
-	 * Sends a message to all players
-	 * @param message the message for the players
-	 * @throws IOException It would happen if there is an issue with the socket
+	 * Sends a message to all players.
+	 * @param message The message for the players.
+	 * @throws IOException It would happen if there is an issue with the socket.
 	 */
 	private void sendMessageToAllPlayers(Message message) throws IOException {
 		// TODO Handle Exception here if player disconnects bcs if a player
@@ -86,9 +88,7 @@ public class MultiplayerGame extends Thread {
 	}
 
 	/**
-	 * Waits for all players from the lobby to create
-	 * TCP connections to the server.
-	 *
+	 * Waits for all players from the lobby to create TCP connections to the server.
 	 * @throws IOException When something goes wrong with sockets.
 	 * @throws ClassNotFoundException When receiving an unrecognized message class.
 	 */
@@ -101,7 +101,7 @@ public class MultiplayerGame extends Thread {
 			// If a player does not make a connection after the game starts
 			// the thread could just stall indefinitely.
 			// We were told we can trust our clients, so we can ignore this issue.
-			Connection connection = Connection.fromSocket(serverSocket.accept());
+			Connection connection = Connection.fromSocket(this.serverSocket.accept());
 
 			// Receive the first message from the client.
 			JoinMessage message = (JoinMessage) connection.receiveType(MessageType.JOIN);
@@ -120,11 +120,11 @@ public class MultiplayerGame extends Thread {
 			// Save player.
 			this.players.add(new Player(connection, name));
 		}
-		initializeScore();
+		this.initializeScore();
 	}
 
 	/**
-	 * Initializes everybody's score to 0
+	 * Initializes everybody's score to 0.
 	 */
 	private void initializeScore() {
 		for (Player player : this.players) {
@@ -133,8 +133,8 @@ public class MultiplayerGame extends Thread {
 	}
 
 	/**
-	 * Receives a message from the player
-	 * @param player the sender of the message
+	 * Receives a message from the player.
+	 * @param player The sender of the message.
 	 */
 	private void receiveMessageFromThePlayer(Player player) {
 		Thread thread = new Thread(() -> {
@@ -142,19 +142,22 @@ public class MultiplayerGame extends Thread {
 				try {
 					Message message = player.connection().receive();
 					switch (message.getType()) {
-						case JOKER -> handleJokerMessage(player, (JokerMessage) message);
+						case JOKER -> this.handleJokerMessage(player, (JokerMessage) message);
 						case POINTS -> {
 							PointMessage current = (PointMessage) message;
-							this.scores.put(current.getName(), current.getPoints() +
-											this.scores.get(player.name()));
+							this.scores.put(
+								current.getName(),
+								current.getPoints() + this.scores.get(player.name())
+							);
 							// Give as argument a copy of the map
-							LeaderboardMessage res =
-									new LeaderboardMessage(new HashMap<>(this.scores));
-							sendMessageToAllPlayers(res);
+							LeaderboardMessage res = new LeaderboardMessage(
+								new HashMap<>(this.scores)
+							);
+							this.sendMessageToAllPlayers(res);
 						}
 						case KILLER -> {
 							player.connection().send(new KillerMessage());
-							players.remove(player);
+							this.players.remove(player);
 							break message_loop;
 						}
 					}
@@ -170,11 +173,13 @@ public class MultiplayerGame extends Thread {
 		this.logger.debug(player.toString() + "sent a joker message");
 		// TODO track if player used joker
 		// TODO handle other stuff
-		sendMessageToAllClients(message, Optional.of(player));
+		this.sendMessageToAllClients(message, Optional.of(player));
 	}
 
-	private void sendMessageToAllClients(Message message, Optional<Player> exclude)
-			throws IOException {
+	private void sendMessageToAllClients(
+		Message message,
+		Optional<Player> exclude
+	) throws IOException {
 		for (Player player: this.players) {
 			if (exclude.isEmpty() || exclude.get() != player) {
 				player.connection.send(message);;

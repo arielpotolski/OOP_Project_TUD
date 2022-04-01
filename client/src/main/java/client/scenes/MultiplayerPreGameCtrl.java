@@ -26,9 +26,8 @@ public class MultiplayerPreGameCtrl {
 	private Button enterButton;
 
 	/**
-	 * Constructor for multiplayer pre-game controller
-	 *
-	 * @param mainCtrl the injected main controller.
+	 * Constructor for multiplayer pre-game controller.
+	 * @param mainCtrl The injected main controller.
 	 */
 	@Inject
 	public MultiplayerPreGameCtrl(MainCtrl mainCtrl) {
@@ -52,7 +51,7 @@ public class MultiplayerPreGameCtrl {
 	 * of MainCtrl and moves to the waiting screen.
 	 */
 	public void joinLobby() {
-		setNickname();
+		this.setNickname();
 		ServerUtils serverUtils = this.mainCtrl.getServer();
 
 		serverUtils.setSession(serverUtils.connect());

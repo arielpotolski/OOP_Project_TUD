@@ -15,11 +15,11 @@ import org.springframework.data.repository.query.FluentQuery;
 
 public class DummyPlayerRepository implements PlayerRepository {
 	Player firstPlayer = new Player("Dimitar");
-	List<Player> playerList = List.of(firstPlayer);
+	List<Player> playerList = List.of(this.firstPlayer);
 
 	@Override
 	public List<Player> findAll() {
-		return playerList;
+		return this.playerList;
 	}
 
 	@Override
@@ -43,29 +43,19 @@ public class DummyPlayerRepository implements PlayerRepository {
 	}
 
 	@Override
-	public void deleteById(Long aLong) {
-
-	}
+	public void deleteById(Long aLong) {}
 
 	@Override
-	public void delete(Player entity) {
-
-	}
+	public void delete(Player entity) {}
 
 	@Override
-	public void deleteAllById(Iterable<? extends Long> longs) {
-
-	}
+	public void deleteAllById(Iterable<? extends Long> longs) {}
 
 	@Override
-	public void deleteAll(Iterable<? extends Player> entities) {
-
-	}
+	public void deleteAll(Iterable<? extends Player> entities) {}
 
 	@Override
-	public void deleteAll() {
-
-	}
+	public void deleteAll() {}
 
 	@Override
 	public <S extends Player> S save(S entity) {
@@ -88,9 +78,7 @@ public class DummyPlayerRepository implements PlayerRepository {
 	}
 
 	@Override
-	public void flush() {
-
-	}
+	public void flush() {}
 
 	@Override
 	public <S extends Player> S saveAndFlush(S entity) {
@@ -103,19 +91,13 @@ public class DummyPlayerRepository implements PlayerRepository {
 	}
 
 	@Override
-	public void deleteAllInBatch(Iterable<Player> entities) {
-
-	}
+	public void deleteAllInBatch(Iterable<Player> entities) {}
 
 	@Override
-	public void deleteAllByIdInBatch(Iterable<Long> longs) {
-
-	}
+	public void deleteAllByIdInBatch(Iterable<Long> longs) {}
 
 	@Override
-	public void deleteAllInBatch() {
-
-	}
+	public void deleteAllInBatch() {}
 
 	@Override
 	public Player getOne(Long aLong) {
@@ -158,9 +140,10 @@ public class DummyPlayerRepository implements PlayerRepository {
 	}
 
 	@Override
-	public <S extends Player, R> R findBy(Example<S> example,
-		Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-
+	public <S extends Player, R> R findBy(
+		Example<S> example,
+		Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction
+	) {
 		return null;
 	}
 }
