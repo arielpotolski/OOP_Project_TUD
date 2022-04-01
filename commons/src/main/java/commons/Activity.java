@@ -226,13 +226,11 @@ public class Activity {
 	 */
 	@Override
 	public String toString() {
-		return "Activity{" +
-				"id='" + this.id + '\'' +
-				", title='" + this.title + '\'' +
-				", consumptionInWh=" + this.consumptionInWh +
-				", imagePath='" + this.imagePath + '\'' +
-				", source='" + this.source + '\'' +
-				'}';
+		return "ID: " + this.id + '\n'
+			+ "Title: " + this.title + '\n'
+			+ "Consumption in Wh: " + this.consumptionInWh + '\n'
+			+ "Image Path: " + this.imagePath + '\n'
+			+ "Source: " + this.source;
 	}
 
 	/**

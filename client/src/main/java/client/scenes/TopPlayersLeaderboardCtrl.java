@@ -34,12 +34,11 @@ public class TopPlayersLeaderboardCtrl {
 	/**
 	 * Constructor for TopPlayersLeaderboardController.
 	 * @param mainCtrl the injected main controller.
-	 * @param server the injected server.
 	 */
 	@Inject
-	public TopPlayersLeaderboardCtrl(MainCtrl mainCtrl, ServerUtils server) {
+	public TopPlayersLeaderboardCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = server;
+		this.server = mainCtrl.getServer();
 	}
 
 	/**

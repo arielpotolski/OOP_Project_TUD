@@ -39,6 +39,13 @@ public class SplashCtrl {
 		this.mainCtrl.showGlobalLeaderboardScreen();
 	}
 
+	/**
+	 * Take the user to the admin interface screen.
+	 */
+	public void changeToAdminInterface() {
+		this.mainCtrl.showAdminInterfaceScreen();
+	}
+
 	public void showHelp() {
 	}
 }

@@ -20,6 +20,10 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import client.scenes.AdminAddActivityScreenCtrl;
+import client.scenes.AdminEditActivityScreenCtrl;
+import client.scenes.AdminInterfaceScreenCtrl;
+import client.scenes.AdminRemoveActivityScreenCtrl;
 import client.scenes.GlobalLeaderboardScreenCtrl;
 import client.scenes.IntLeaderboardCtrl;
 import client.scenes.IntermediateSceneCtrl;
@@ -81,6 +85,30 @@ public class Main extends Application {
 				"SinglePlayerFinalScreen.fxml");
 		var waitingScreen = FXML.load(WaitingScreenCtrl.class,
 				"client", "scenes", "WaitingScreen.fxml");
+		var adminInterfaceScreen = FXML.load(
+			AdminInterfaceScreenCtrl.class,
+			"client",
+			"scenes",
+			"AdminInterfaceScreen.fxml"
+		);
+		var adminAddActivityScreen = FXML.load(
+			AdminAddActivityScreenCtrl.class,
+			"client",
+			"scenes",
+			"AdminAddActivityScreen.fxml"
+		);
+		var adminRemoveActivityScreen = FXML.load(
+			AdminRemoveActivityScreenCtrl.class,
+			"client",
+			"scenes",
+			"AdminRemoveActivityScreen.fxml"
+		);
+		var adminEditActivityScreen = FXML.load(
+			AdminEditActivityScreenCtrl.class,
+			"client",
+			"scenes",
+			"AdminEditActivityScreen.fxml"
+		);
 		var topPlayersLeaderboard = FXML.load(TopPlayersLeaderboardCtrl.class,
 				"client",
 				"scenes",
@@ -102,10 +130,13 @@ public class Main extends Application {
 			intermediateScene,
 			singlePlayerFinalScene,
 			waitingScreen,
+			adminInterfaceScreen,
+			adminAddActivityScreen,
+			adminRemoveActivityScreen,
+			adminEditActivityScreen,
 			multiPlayerQuestion,
 			intermediateLeaderboard,
 			topPlayersLeaderboard
 		);
 	}
 }
-	

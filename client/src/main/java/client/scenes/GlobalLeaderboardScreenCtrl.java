@@ -3,7 +3,6 @@ package client.scenes;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import client.Main;
 import client.utils.ServerUtils;
 import commons.Player;
 
@@ -39,7 +38,7 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 	@Inject
 	public GlobalLeaderboardScreenCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = new ServerUtils(Main.serverHost);
+		this.server = mainCtrl.getServer();
 	}
 
 	/**
