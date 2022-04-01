@@ -52,7 +52,7 @@ public class AdminAddActivityScreenCtrl {
 	@FXML
 	private Optional<Activity> addActivity() {
 		/* Get all the contents of the UI text fields to create the activity.  We also need to make
-		 * an activity ID.  The IDs are prefixed with the string "38-" to denote our group number
+		 * an activity ID.  The IDs are prefixed with the string "39-" to denote our group number
 		 * since that appears to be the convention, and then we append a normalized activity title
 		 * to it.  To normalize the title, we convert all whitespace to hyphens ('-'), turn all
 		 * characters lowercase, and remove all symbols.
@@ -61,7 +61,7 @@ public class AdminAddActivityScreenCtrl {
 		String title = this.activityTitle.getText();
 		String imagePath = this.activityImagePath.getText();
 		String source = this.activitySource.getText();
-		String id = "38-" + title
+		String id = "39-" + title
 			.chars()
 			.filter(c -> Character.isWhitespace(c) || Character.isLetterOrDigit(c))
 			.map(c -> Character.isWhitespace(c) ? '-' : Character.toLowerCase(c))
