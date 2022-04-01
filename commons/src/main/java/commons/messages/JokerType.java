@@ -1,3 +1,3 @@
 package commons.messages;
 
-public enum JokerType { DECREASE, DOUBLE }
+public enum JokerType { DECREASE, DOUBLE, ELIMINATE }
