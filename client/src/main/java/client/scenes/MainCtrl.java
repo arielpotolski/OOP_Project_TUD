@@ -248,7 +248,7 @@ public class MainCtrl {
 			Optional<ButtonType> closeResponse = closeConfirmation.showAndWait();
 			if (!ButtonType.OK.equals(closeResponse.get())) {
 				event.consume();
-			} else if (this.server != null){
+			} else if (this.server != null && this.server.getConnection() != null){
 				try {
 					this.server.getConnection().send(new KillerMessage());
 				} catch (IOException err) {
