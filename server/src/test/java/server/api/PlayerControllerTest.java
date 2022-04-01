@@ -19,26 +19,26 @@ class PlayerControllerTest {
 	List<Player> listPlayers;
 
 	@BeforeEach
-	void setup() throws Exception {
-		player = new Player("Dimitar");
-		listPlayers = new ArrayList<>();
-		listPlayers.add(player);
-		playerController = new PlayerController(new DummyPlayerRepository());
-		messageModel = new MessageModel("Hello World", "Viet Luong");
+	void setup() {
+		this.player = new Player("Dimitar");
+		this.listPlayers = new ArrayList<>();
+		this.listPlayers.add(this.player);
+		this.playerController = new PlayerController(new DummyPlayerRepository());
+		this.messageModel = new MessageModel("Hello World", "Viet Luong");
 	}
 
 	@Test
 	void getAll() {
-		assertEquals(listPlayers, playerController.getAll());
+		assertEquals(this.listPlayers, this.playerController.getAll());
 	}
 
 	@Test
 	void addPlayer() {
-		assertResponseEquals(HttpStatus.OK, playerController.addPlayer(player));
+		assertResponseEquals(HttpStatus.OK, this.playerController.addPlayer(this.player));
 	}
 
 	@Test
 	void sendMessage() {
-		assertEquals(messageModel, playerController.sendMessage("0", messageModel));
+		assertEquals(this.messageModel, this.playerController.sendMessage("0", this.messageModel));
 	}
 }

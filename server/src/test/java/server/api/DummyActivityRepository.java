@@ -17,16 +17,10 @@ import org.springframework.data.repository.query.FluentQuery;
 
 class DummyActivityRepository implements ActivityRepository {
 	public final List<Activity> activities = new ArrayList<>();
-	public final List<String> calledMethods = new ArrayList<>();
-
-	private void call(String name) {
-		calledMethods.add(name);
-	}
 
 	@Override
 	public List<Activity> findAll() {
-		calledMethods.add("findAll");
-		return activities;
+		return this.activities;
 	}
 
 	@Override
@@ -43,7 +37,6 @@ class DummyActivityRepository implements ActivityRepository {
 
 	@Override
 	public <S extends Activity> List<S> saveAll(Iterable<S> entities) {
-		this.calledMethods.add("saveAll");
 		return StreamSupport
 			.stream(entities.spliterator(), false)
 			.map(this::save)
@@ -94,12 +87,14 @@ class DummyActivityRepository implements ActivityRepository {
 
 	@Override
 	public Activity getById(String id) {
-		call("getById");
-		return find(id).get();
+		return this.find(id).get();
 	}
 
 	private Optional<Activity> find(String id) {
-		return activities.stream().filter(q -> q.getId().equals(id)).findFirst();
+		return this.activities
+			.stream()
+			.filter(q -> q.getId().equals(id))
+			.findFirst();
 	}
 
 	@Override
@@ -122,8 +117,7 @@ class DummyActivityRepository implements ActivityRepository {
 
 	@Override
 	public <S extends Activity> S save(S entity) {
-		call("save");
-		activities.add(entity);
+		this.activities.add(entity);
 		return entity;
 	}
 
@@ -137,13 +131,12 @@ class DummyActivityRepository implements ActivityRepository {
 
 	@Override
 	public boolean existsById(String id) {
-		call("existsById");
-		return find(id).isPresent();
+		return this.find(id).isPresent();
 	}
 
 	@Override
 	public long count() {
-		return activities.size();
+		return this.activities.size();
 	}
 
 	@Override
@@ -200,10 +193,11 @@ class DummyActivityRepository implements ActivityRepository {
 	}
 
 	@Override
-	public <S extends Activity, R> R
-	findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+	public <S extends Activity, R> R findBy(
+		Example<S> example,
+		Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction
+	) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

@@ -5,50 +5,51 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.AdminEditActivityScreenCtrl">
-   <children>
-      <HBox alignment="TOP_CENTER" layoutX="350.0" layoutY="126.0" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
-         <children>
-            <VBox prefHeight="602.0" prefWidth="150.0" />
-            <VBox prefHeight="602.0" prefWidth="603.0">
-               <children>
-                  <Pane prefHeight="602.0" prefWidth="603.0">
-                     <children>
-                        <ChoiceBox fx:id="activityDropdown" layoutX="68.0" layoutY="129.0" prefHeight="25.0" prefWidth="468.0" />
-                        <Label alignment="CENTER" layoutX="158.0" layoutY="50.0" prefHeight="59.0" prefWidth="290.0" text="Edit Activity">
-                           <font>
-                              <Font name="Calibri Bold" size="40.0" />
-                           </font>
-                        </Label>
-                        <TextArea fx:id="activityData" layoutX="1.0" layoutY="201.0" prefHeight="200.0" prefWidth="603.0" promptText="Activity info">
-                           <font>
-                              <Font name="Calibri" size="14.0" />
-                           </font>
-                        </TextArea>
-                        <Button fx:id="applyChangesButton" layoutX="200.0" layoutY="435.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#applyChanges" prefHeight="86.0" prefWidth="205.0" style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="Apply">
-                           <font>
-                              <Font name="System Bold" size="40.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </Pane>
-               </children>
-            </VBox>
-            <VBox alignment="BOTTOM_CENTER" prefHeight="602.0" prefWidth="150.0">
-               <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-153.0" layoutY="-12.0" onMouseClicked="#jumpToAdminInterfaceScreen" points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Label layoutX="67.0" layoutY="150.0" onMouseClicked="#jumpToAdminInterfaceScreen" text="back">
-                           <font>
-                              <Font name="Calibri" size="22.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </children>
+<AnchorPane prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;"
+            xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="client.scenes.AdminEditActivityScreenCtrl">
+   <HBox alignment="TOP_CENTER" layoutX="350.0" layoutY="126.0" prefHeight="100.0" prefWidth="200.0"
+         AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0"
+         AnchorPane.topAnchor="-1.0">
+      <VBox prefHeight="602.0" prefWidth="150.0"/>
+      <VBox prefHeight="602.0" prefWidth="603.0">
+         <Pane prefHeight="602.0" prefWidth="603.0">
+            <ChoiceBox fx:id="activityDropdown" layoutX="68.0" layoutY="129.0" prefHeight="25.0"
+                       prefWidth="468.0"/>
+            <Label alignment="CENTER" layoutX="158.0" layoutY="50.0" prefHeight="59.0" prefWidth="290.0"
+                   text="Edit Activity">
+               <font>
+                  <Font name="Calibri Bold" size="40.0"/>
+               </font>
+            </Label>
+            <TextArea fx:id="activityData" layoutX="1.0" layoutY="201.0" prefHeight="200.0" prefWidth="603.0"
+                      promptText="Activity info">
+               <font>
+                  <Font name="Calibri" size="14.0"/>
+               </font>
+            </TextArea>
+            <Button fx:id="applyChangesButton" layoutX="200.0" layoutY="435.0" maxHeight="-Infinity"
+                    maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false"
+                    onAction="#applyChanges" prefHeight="86.0" prefWidth="205.0"
+                    style="-fx-background-color: #38d956; -fx-background-radius: 35;" text="Apply">
+               <font>
+                  <Font name="System Bold" size="40.0"/>
+               </font>
+            </Button>
+         </Pane>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="602.0" prefWidth="150.0">
+         <Pane prefHeight="200.0" prefWidth="200.0">
+            <Polygon fx:id="backArrow" accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-153.0"
+                     layoutY="-12.0" onMouseClicked="#jumpToAdminInterfaceScreen"
+                     points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0"
+                     scaleX="-1.0" stroke="BLACK" strokeType="INSIDE"/>
+            <Label layoutX="67.0" layoutY="150.0" onMouseClicked="#jumpToAdminInterfaceScreen" text="back">
+               <font>
+                  <Font name="Calibri" size="22.0"/>
+               </font>
+            </Label>
+         </Pane>
+      </VBox>
+   </HBox>
 </AnchorPane>

@@ -1,6 +1,7 @@
 package server;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import commons.Connection;
 import commons.LobbyResponse;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LobbyControllerTest {
@@ -24,7 +26,7 @@ public class LobbyControllerTest {
 		assertResponseEquals(HttpStatus.ACCEPTED, response);
 		// Check that the number of players is 1.
 		// The ID is an implementation detail.
-		assertEquals(1, response.getBody().playersInLobby().size());
+		assertEquals(1, Objects.requireNonNull(response.getBody()).playersInLobby().size());
 	}
 
 	@Test
@@ -45,6 +47,9 @@ public class LobbyControllerTest {
 		LobbyResponse charlie = responseCharlie.getBody();
 
 		// Make sure IDs are unique.
+		assertNotNull(alice);
+		assertNotNull(bob);
+		assertNotNull(charlie);
 		assertNotEquals(alice.playerID(), bob.playerID());
 		assertNotEquals(bob.playerID(), charlie.playerID());
 		assertNotEquals(charlie.playerID(), alice.playerID());
@@ -69,10 +74,11 @@ public class LobbyControllerTest {
 	public void refreshLobby() {
 		LobbyController lobby = new LobbyController();
 		LobbyResponse alice = lobby.registerPlayer("Alice").getBody();
+		assertNotNull(alice);
 		ResponseEntity<LobbyResponse> response = lobby.refreshPlayer("Alice", alice.playerID());
 		assertResponseEquals(HttpStatus.ACCEPTED, response);
 		// Check that player ID stays the same.
-		assertEquals(alice.playerID(), response.getBody().playerID());
+		assertEquals(alice.playerID(), Objects.requireNonNull(response.getBody()).playerID());
 		// Check that the number of players stays one.
 		assertEquals(1, response.getBody().playersInLobby().size());
 	}
@@ -81,6 +87,7 @@ public class LobbyControllerTest {
 	public void refreshWithWrongParams() {
 		LobbyController lobby = new LobbyController();
 		LobbyResponse alice = lobby.registerPlayer("Alice").getBody();
+		assertNotNull(alice);
 		assertResponseEquals(
 			HttpStatus.BAD_REQUEST,
 			lobby.refreshPlayer("Alice", alice.playerID() + 999)
@@ -96,6 +103,7 @@ public class LobbyControllerTest {
 		LobbyController lobby = new LobbyController();
 		LobbyResponse alice = lobby.registerPlayer("Alice").getBody();
 		// Check that refresh works.
+		assertNotNull(alice);
 		assertResponseEquals(
 			HttpStatus.ACCEPTED,
 			lobby.refreshPlayer("Alice", alice.playerID())
@@ -111,6 +119,7 @@ public class LobbyControllerTest {
 		);
 		// Check that new registration works.
 		LobbyResponse newAlice = lobby.registerPlayer("Alice").getBody();
+		assertNotNull(newAlice);
 		assertNotEquals(alice.playerID(), newAlice.playerID());
 		// Check that the number of players is still one.
 		assertEquals(1, alice.playersInLobby().size());
@@ -123,19 +132,35 @@ public class LobbyControllerTest {
 		assertResponseEquals(HttpStatus.ACCEPTED, lobby.registerPlayer("Alice"));
 		LobbyResponse bob = lobby.registerPlayer("Bob").getBody();
 		// There are two players in the lobby.
+		assertNotNull(bob);
 		assertEquals(2, bob.playersInLobby().size());
 		Thread.sleep(LobbyController.TIMEOUT_MILLISECONDS / 2);
 		// After a while there should still be two. Bob refreshes his timer.
-		assertEquals(2, lobby.refreshPlayer("Bob", bob.playerID())
-				.getBody().playersInLobby().size());
+		assertEquals(
+			2,
+			Objects
+				.requireNonNull(lobby.refreshPlayer("Bob", bob.playerID()).getBody())
+				.playersInLobby()
+				.size()
+		);
 		Thread.sleep(LobbyController.TIMEOUT_MILLISECONDS / 2 + 10);
 		// Now, Alice should have timed out and bob should see only one player in the lobby.
-		assertEquals(1, lobby.refreshPlayer("Bob", bob.playerID())
-				.getBody().playersInLobby().size());
+		assertEquals(
+			1,
+			Objects
+				.requireNonNull(lobby.refreshPlayer("Bob", bob.playerID()).getBody())
+				.playersInLobby()
+				.size()
+		);
 		// A different Alice joins now and Bob should see two players again.
 		assertResponseEquals(HttpStatus.ACCEPTED, lobby.registerPlayer("Alice"));
-		assertEquals(2, lobby.refreshPlayer("Bob", bob.playerID())
-				.getBody().playersInLobby().size());
+		assertEquals(
+			2,
+			Objects
+				.requireNonNull(lobby.refreshPlayer("Bob", bob.playerID()).getBody())
+				.playersInLobby()
+				.size()
+		);
 	}
 
 	@Test
@@ -147,15 +172,19 @@ public class LobbyControllerTest {
 		LobbyResponse bob = lobby.registerPlayer("Bob").getBody();
 
 		// Start the game on the server.
+		assertNotNull(alice);
 		LobbyResponse response = lobby.startGame("Alice", alice.playerID()).getBody();
 
 		// Make sure the game started and the port is valid.
+		assertNotNull(response);
 		assertTrue(response.gameStarted());
 		assertNotEquals(-1, response.tcpPort());
 		assertNotEquals(0, response.tcpPort());
 
 		// Bob also sees that the game started.
+		assertNotNull(bob);
 		LobbyResponse refreshResponse = lobby.refreshPlayer("Bob", bob.playerID()).getBody();
+		assertNotNull(refreshResponse);
 		assertTrue(refreshResponse.gameStarted());
 		assertEquals(response.tcpPort(), refreshResponse.tcpPort());
 

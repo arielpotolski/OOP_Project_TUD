@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import client.utils.ServerUtils;
 import commons.Player;
+import static commons.Utility.isNumeric;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +27,7 @@ import javax.imageio.ImageIO;
 public abstract class QuestionClass {
 	protected MainCtrl mainCtrl;
 	protected ServerUtils server;
-	protected double timeStamp;
+	protected double timestamp;
 
 	@FXML
 	private HBox hBoxImages;
@@ -92,44 +93,42 @@ public abstract class QuestionClass {
 		Object source = event.getSource();
 		this.mainCtrl.clearButtons(this);
 
-		this.timeStamp = getProgress();
+		this.timestamp = this.getProgress();
 
 		if (this.answerButton1.equals(source)) {
-			setStyleAnswerButton1(color);
+			this.setStyleAnswerButton1(color);
 			this.inputButton = this.answerButton1;
 			this.inputText = null;
-			setStyleAnswerButton1(color);
+			this.setStyleAnswerButton1(color);
 		} else if (this.answerButton2.equals(source)) {
-			setStyleAnswerButton2(color);
+			this.setStyleAnswerButton2(color);
 			this.inputButton = this.answerButton2;
 			this.inputText = null;
-			setStyleAnswerButton2(color);
+			this.setStyleAnswerButton2(color);
 		} else if (this.answerButton3.equals(source)) {
-			setStyleAnswerButton3(color);
+			this.setStyleAnswerButton3(color);
 			this.inputButton = this.answerButton3;
 			this.inputText = null;
-			setStyleAnswerButton3(color);
+			this.setStyleAnswerButton3(color);
 		} else if (this.textField.equals(source) && isNumeric(this.textField.getText())) {
 			this.inputButton = null;
 			this.inputText = this.textField;
 		}
 
-		disableButtons(true);
+		this.disableButtons(true);
 		if (this instanceof QuestionScreenSinglePlayerCtrl) {
-			this.mainCtrl.updatePoints(inputButton, inputText, this);
+			this.mainCtrl.updatePoints(this.inputButton, this.inputText, this);
 		}
 	}
 
 	/**
-	 *  The method disables the buttons after the player answers
-	 *
-	 *  @param disabled boolean value that dictates whether or not
-	 *                  the buttons should be disabled
+	 * The method disables the buttons after the player answers.
+	 * @param disabled Boolean value that dictates whether the buttons should be disabled.
 	 */
 	public void disableButtons(boolean disabled) {
-		answerButton1.setDisable(disabled);
-		answerButton2.setDisable(disabled);
-		answerButton3.setDisable(disabled);
+		this.answerButton1.setDisable(disabled);
+		this.answerButton2.setDisable(disabled);
+		this.answerButton3.setDisable(disabled);
 	}
 
 	/**
@@ -165,90 +164,80 @@ public abstract class QuestionClass {
 	}
 
 	/**
-	 * Getter method for timeStamp
-	 *
-	 * @return The last time when the user clicked on an answer
+	 * Getter method for timestamp.
+	 * @return The last time when the user clicked on an answer.
 	 */
-	public double getTimeStamp() {
-		return timeStamp;
+	public double getTimestamp() {
+		return this.timestamp;
 	}
 
 	/**
-	 * 	Getter method for inputButton
-	 *
-	 * @return the button that was last clicked by the Player
+	 * Getter method for inputButton.
+	 * @return The button that was last clicked by the player.
 	 */
 	public Button getInputButton() {
-		return inputButton;
+		return this.inputButton;
 	}
 
 	/**
-	 * 	Getter method for inputText
-	 *
-	 * @return the text that was last entered by the player
+	 * Getter method for inputText.
+	 * @return The text that was last entered by the player.
 	 */
 	public TextField getInputText() {
-		return inputText;
+		return this.inputText;
 	}
 
 	/**
-	 * 	Setter method for inputText
-	 *
-	 * @param text The value that is to be assigned to inputText
+	 * Setter method for inputText.
+	 * @param text The value that is to be assigned to inputText.
 	 */
 	public void setInputText(TextField text) {
-		inputText = text;
+		this.inputText = text;
 	}
 
 	/**
-	 * 	The method sets the CSS style of the answer Label in the estimate game mode
-	 *
-	 * @param style the CSS style that is to be applied
+	 * The method sets the CSS style of the answer Label in the estimate game mode.
+	 * @param style The CSS style that is to be applied.
 	 */
 	public void setEstimateAnswerStyle(String style) {
-		estimateAnswer.setStyle(style);
+		this.estimateAnswer.setStyle(style);
 	}
 
 	/**
-	 * 	Writes a certain string to the Label estimateAnswer
-	 *
-	 * @param text The text that is to be written to the label
+	 * Writes a certain string to the Label estimateAnswer.
+	 * @param text The text that is to be written to the label.
 	 */
 	public void setEstimateAnswerLabel(String text) {
-		estimateAnswer.setText(text);
+		this.estimateAnswer.setText(text);
 	}
 
 	/**
-	 * This method set up the question in the label
-	 *
-	 * @param label the question.
+	 * This method set up the question in the label.
+	 * @param label The question.
 	 */
 	public void setUpLabel(String label) {
 		this.labelQuestion.setText(label);
 	}
 
 	/**
-	 * This method set up the first answer in the first button
-	 *
-	 * @param label the first answer.
+	 * This method set up the first answer in the first button.
+	 * @param label The first answer.
 	 */
 	public void setLabelButton1(String label) {
 		this.answerButton1.setText(label);
 	}
 
 	/**
-	 * This method set up the second answer in the second button
-	 *
-	 * @param label the second answer.
+	 * This method set up the second answer in the second button.
+	 * @param label The second answer.
 	 */
 	public void setLabelButton2(String label) {
 		this.answerButton2.setText(label);
 	}
 
 	/**
-	 * This method set up the third answer in the third button
-	 *
-	 * @param label the third answer.
+	 * This method set up the third answer in the third button.
+	 * @param label The third answer.
 	 */
 	public void setLabelButton3(String label) {
 		this.answerButton3.setText(label);
@@ -256,8 +245,7 @@ public abstract class QuestionClass {
 
 	/**
 	 * This method set up the visibility of the first button.
-	 *
-	 * @param visible the visibility of a button
+	 * @param visible The visibility of a button.
 	 */
 	public void setVisibleButton1(boolean visible) {
 		this.answerButton1.setVisible(visible);
@@ -265,8 +253,7 @@ public abstract class QuestionClass {
 
 	/**
 	 * This method set up the visibility of the second button.
-	 *
-	 * @param visible the visibility of a button
+	 * @param visible The visibility of a button.
 	 */
 	public void setVisibleButton2(boolean visible) {
 		this.answerButton2.setVisible(visible);
@@ -274,17 +261,15 @@ public abstract class QuestionClass {
 
 	/**
 	 * This method set up the visibility of the third button.
-	 *
-	 * @param visible the visibility of a button
+	 * @param visible The visibility of a button.
 	 */
 	public void setVisibleButton3(boolean visible) {
 		this.answerButton3.setVisible(visible);
 	}
 
 	/**
-	 * 	The method sets up the visibility of the estimateAnswer Label
-	 *
-	 * @param visible the visibility of a button
+	 * The method sets up the visibility of the estimateAnswer label.
+	 * @param visible The visibility of a button.
 	 */
 	public void setVisibleEstimateAnswer(boolean visible) {
 		this.estimateAnswer.setVisible(visible);
@@ -292,16 +277,14 @@ public abstract class QuestionClass {
 
 	/**
 	 * This method set up the color for the progress bar.
-	 *
 	 */
 	public void initialize() {
 		this.progressBarTime.setStyle("-fx-accent: #00FF00");
 	}
 
 	/**
-	 * 	Decreases the progress bar by a certain, given, amount
-	 *
-	 * @param amount the amount to be decreased
+	 * Decreases the progress bar by a certain, given, amount.
+	 * @param amount The amount to be decreased.
 	 */
 	public void decreaseProgress(double amount) {
 		this.progress -= amount;
@@ -309,10 +292,9 @@ public abstract class QuestionClass {
 	}
 
 	/**
-	 * This method set up the progress
-	 *
-	 * @param progress the starting number of for the progress bar
-	 *                    (basically progress will be set up 1).
+	 * This method sets up the progress.
+	 * @param progress The starting number of for the progress bar (basically progress will be set
+	 *                 up 1).
 	 */
 	public void setProgress(double progress) {
 		this.progress = progress;
@@ -320,8 +302,8 @@ public abstract class QuestionClass {
 	}
 
 	/**
-	 * Setter for the visibility of the ImageView of the Question
-	 * @param visible the visibility of the ImageView
+	 * Setter for the visibility of the ImageView of the Question.
+	 * @param visible The visibility of the ImageView.
 	 */
 	public void setVisibleImageQuestion(boolean visible) {
 		this.imageQuestion.setVisible(visible);
@@ -329,32 +311,33 @@ public abstract class QuestionClass {
 
 	/**
 	 * This method set up the visibility of the text field.
-	 *
-	 * @param visible the visibility of the text field.
+	 * @param visible The visibility of the text field.
 	 */
 	public void setVisibleTextField(boolean visible) {
 		this.textField.setVisible(visible);
 	}
 
 	/**
-	 * Sets the image for the question from a given path
-	 * @param imageArray the byte array with information about the image
+	 * Sets the image for the question from a given path.
+	 * @param imageArray The byte array with information about the image.
 	 */
 	public void setImageQuestionImageView(byte[] imageArray) throws IOException {
-		imageQuestion.setImage(imageParser(imageArray));
+		this.imageQuestion.setImage(this.imageParser(imageArray));
 	}
 
 	/**
-	 * Parses a byteArray to image
-	 * @param imageArray the byte array with information about the image
-	 * @return an image object for the imageViews
-	 * @throws IOException exception if there is a problem with the parsing
+	 * Parses a byteArray to image.
+	 * @param imageArray The byte array with information about the image.
+	 * @return An image object for the imageViews.
+	 * @throws IOException There is a problem with parsing.
 	 */
 	public Image imageParser(byte[] imageArray) throws IOException {
 		ByteArrayInputStream bis = new ByteArrayInputStream(imageArray);
 		BufferedImage bufferedImage = ImageIO.read(bis);
-		WritableImage result = new WritableImage(bufferedImage.getWidth(),
-				bufferedImage.getHeight());
+		WritableImage result = new WritableImage(
+			bufferedImage.getWidth(),
+			bufferedImage.getHeight()
+		);
 		PixelWriter pw = result.getPixelWriter();
 		for (int xAxis = 0; xAxis < bufferedImage.getWidth(); xAxis++) {
 			for (int yAxis = 0; yAxis < bufferedImage.getHeight(); yAxis++) {
@@ -365,64 +348,41 @@ public abstract class QuestionClass {
 	}
 
 	/**
-	 * Method for setting visibility of the image views for the answers
-	 * @param visible the visibility of the image view
-	 * @param number the sequential number of the image view
+	 * Method for setting visibility of the image views for the answers.
+	 * @param visible The visibility of the image view.
+	 * @param number The sequential number of the image view.
 	 */
 	public void setVisibilityImageView(boolean visible, int number) {
-		if (number < 0 || number > 3) throw new IllegalArgumentException("Number should be " +
-				"between 0 and 4");
-		getImageViewOfTheVbox(number).setVisible(visible);
+		if (number < 0 || number > 3)
+			throw new IllegalArgumentException("Number should be between 0 and 4");
+		this.getImageViewOfTheVbox(number).setVisible(visible);
 	}
 
 	/**
-	 * Sets the image for the different image views based on which picture should be loaded
-	 * @param imageArray the array containing information about the picture
-	 * @param number the number of the VBox with the imageView for the picture
-	 * @throws IOException if something is wrong with reading the file
+	 * Sets the image for the different image views based on which picture should be loaded.
+	 * @param imageArray The array containing information about the picture.
+	 * @param number The number of the VBox with the imageView for the picture.
+	 * @throws IOException Something went wrong reading the file.
 	 */
 	public void setImagesInImageViewsAnswers(byte[] imageArray, int number) throws IOException {
-		if (number < 0 || number > 3) throw new IllegalArgumentException("Number should be " +
-				"between 0 and 4");
-		ImageView currentImageView = getImageViewOfTheVbox(number);
-		currentImageView.setImage(imageParser(imageArray));
+		if (number < 0 || number > 3)
+			throw new IllegalArgumentException("Number should be between 0 and 4");
+		ImageView currentImageView = this.getImageViewOfTheVbox(number);
+		currentImageView.setImage(this.imageParser(imageArray));
 	}
 
 	/**
-	 * Gets the image view related with the number of the VBox
-	 * @param number the number of the VBox
-	 * @return current image view desired
+	 * Gets the image view related with the number of the VBox.
+	 * @param number The number of the VBox.
+	 * @return Current image view desired.
 	 */
 	protected ImageView getImageViewOfTheVbox(int number) {
-		VBox current = ((VBox) (hBoxImages.getChildren().get(number)));
+		VBox current = (VBox) this.hBoxImages.getChildren().get(number);
 		return (ImageView) current.getChildren().get(0);
 	}
 
 	public void setMainCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-	}
-
-	/**
-	 *	Tests whether or not a given string is numeric
-	 *
-	 * @param string the string which we test if
-	 *               its numeric or not
-	 * @return a boolean value telling us if the
-	 * 	       string is numeric
-	 */
-	public static boolean isNumeric(String string) {
-		if (string == null) {
-			return false;
-		}
-
-		try {
-			Integer number = Integer.parseInt(string);
-			// Avoid checkstyle erorr for unused variable
-			number = number + 1;
-		} catch (NumberFormatException err) {
-			return false;
-		}
-		return true;
 	}
 
 	// abstract classes
