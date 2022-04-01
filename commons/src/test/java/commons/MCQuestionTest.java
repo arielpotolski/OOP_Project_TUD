@@ -154,7 +154,7 @@ public class MCQuestionTest {
 
 	@Test
 	void pointsEarned() {
-		Assertions.assertEquals(1000, mcQuestion4.pointsEarned(1000, 120, 1.0));
+		Assertions.assertEquals(1000, mcQuestion4.pointsEarned(1000, 120, 1.0, false));
 	}
 
 	@Test

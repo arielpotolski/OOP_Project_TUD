@@ -120,9 +120,11 @@ public class HighestConsumptionQuestion extends Question {
 	 * @param maxPoints maximum of points that is possible to earn.
 	 * @param answerGivenConsumption title of the option selected by the user.
 	 * @param progress time left
+	 * @param doublePoints if the joker has been used
 	 * @return the amount of points user earned for this question.
 	 */
-	public int pointsEarned(int maxPoints, long answerGivenConsumption, double progress) {
+	public int pointsEarned(int maxPoints, long answerGivenConsumption, double progress,
+							boolean doublePoints) {
 		long maxConsumption;
 		int positionHighest;
 		maxConsumption = Math.max(
@@ -140,10 +142,11 @@ public class HighestConsumptionQuestion extends Question {
 		} else {
 			positionHighest = 3;
 		}
+		int factor = doublePoints ? 2 : 1;
 
 		if (answerGivenConsumption != positionHighest)
 			return 0;
-		return (int) Math.round(maxPoints * progress);
+		return (int) Math.round(maxPoints * progress * factor);
 	}
 
 

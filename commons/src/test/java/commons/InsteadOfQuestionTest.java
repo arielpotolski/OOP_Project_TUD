@@ -206,16 +206,16 @@ public class InsteadOfQuestionTest {
 
 	@Test
 	void pointsEarned() {
-		assertEquals(500, insteadOfQuestionFixed1.pointsEarned(1000, 1, 0.5));
-		assertEquals(0, insteadOfQuestionFixed1.pointsEarned(1000, 2, 0.5));
-		assertEquals(0, insteadOfQuestionFixed1.pointsEarned(1000, 3, 0.5));
+		assertEquals(500, insteadOfQuestionFixed1.pointsEarned(1000, 1, 0.5, false));
+		assertEquals(0, insteadOfQuestionFixed1.pointsEarned(1000, 2, 0.5, false));
+		assertEquals(0, insteadOfQuestionFixed1.pointsEarned(1000, 3, 0.5, false));
 	}
 
 	@Test
 	void singleCorrectAnswer() throws IOException {
-		int points = insteadOfQuestionRandomized.pointsEarned(1000, 1, 1.0);
-		points += insteadOfQuestionRandomized.pointsEarned(1000, 2, 1.0);
-		points += insteadOfQuestionRandomized.pointsEarned(1000, 3, 1.0);
+		int points = insteadOfQuestionRandomized.pointsEarned(1000, 1, 1.0, false);
+		points += insteadOfQuestionRandomized.pointsEarned(1000, 2, 1.0, false);
+		points += insteadOfQuestionRandomized.pointsEarned(1000, 3, 1.0, false);
 		assertEquals(1000, points);
 
 		insteadOfQuestionFixed.setQuestionActivity(activityQuestion);
@@ -229,9 +229,9 @@ public class InsteadOfQuestionTest {
 		insteadOfQuestionFixed.setRealCoefficient2(6.0 / 120.0);
 		insteadOfQuestionFixed.setRealCoefficient3(20.0 / 120.0);
 		points = 0;
-		points += insteadOfQuestionFixed.pointsEarned(1000, 1, 1.0);
-		points += insteadOfQuestionFixed.pointsEarned(1000, 2, 1.0);
-		points += insteadOfQuestionFixed.pointsEarned(1000, 3, 1.0);
+		points += insteadOfQuestionFixed.pointsEarned(1000, 1, 1.0, false);
+		points += insteadOfQuestionFixed.pointsEarned(1000, 2, 1.0, false);
+		points += insteadOfQuestionFixed.pointsEarned(1000, 3, 1.0, false);
 		assertEquals(1000, points);
 	}
 

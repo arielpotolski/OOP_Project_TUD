@@ -111,12 +111,15 @@ public class MCQuestion extends Question{
 	 * @param maxPoints the maximum amount of points
 	 * @param answerGiven the answer given by the user
 	 * @param progress time left
+	 * @param doublePoints if the joker has been used
 	 * @return the amount of points the user achieved
 	 */
-	public int pointsEarned(int maxPoints, long answerGiven, double progress) {
+	public int pointsEarned(int maxPoints, long answerGiven, double progress,
+							boolean doublePoints) {
 		if (answerGiven != this.activity.getConsumptionInWh())
 			return 0;
-		return (int) Math.round(maxPoints * progress);
+		int factor = doublePoints ? 2 : 1;
+		return (int) Math.round(maxPoints * progress * factor);
 	}
 
 	/**

@@ -18,7 +18,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 public abstract class Question {
 	public Question() {}
 
-	public abstract int pointsEarned(int maxPoints, long answerGiven, double progress);
+	public abstract int pointsEarned(int maxPoints, long answerGiven, double progress,
+									boolean doublePoints);
 
 	//necessary for testing
 	public abstract boolean equals(Object other);
