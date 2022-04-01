@@ -15,6 +15,7 @@ import commons.messages.KillerMessage;
 import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
 import commons.messages.MessageType;
+import commons.messages.PointMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,13 +24,17 @@ public class MultiplayerGame extends Thread {
 	/**
 	 * A record for storing the information for each player in the game.
 	 */
-	private record Player(Connection connection, String name, int points) {}
+	private record Player(Connection connection, String name) {}
 
 	/**
 	 * Information about the players in the lobby.
 	 * This is only used when waiting for the initial TCP connections.
 	 */
 	private final HashMap<String, LobbyPlayer> lobbyPlayers;
+	/**
+	 * Scores of the players with relation to their nickname
+	 */
+	private final HashMap<String, Integer> scores;
 	/**
 	 * A list of players in the multiplayer game.
 	 */
@@ -48,6 +53,7 @@ public class MultiplayerGame extends Thread {
 		this.lobbyPlayers = players;
 		this.players = new ArrayList<>();
 		this.logger = LoggerFactory.getLogger(MultiplayerGame.class);
+		this.scores = new HashMap<>();
 	}
 
 	@Override
@@ -60,23 +66,10 @@ public class MultiplayerGame extends Thread {
 			// TODO begin game
 			// TODO send out questions to players
 			// TODO track game progress
-			sendMessageToAllPlayers(new LeaderboardMessage(generateLeaderboard()));
-			// TODO send leaderboard
+			sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
-	}
-
-	/**
-	 * Generates the leaderboard of all the players
-	 * @return A hash map with name and result of the players
-	 */
-	private HashMap<String, Integer> generateLeaderboard(){
-		HashMap<String, Integer> result = new HashMap<>();
-		for (Player player : this.players) {
-			result.put(player.name(), player.points());
-		}
-		return result;
 	}
 
 	/**
@@ -125,10 +118,24 @@ public class MultiplayerGame extends Thread {
 			}
 
 			// Save player.
-			this.players.add(new Player(connection, name, 0));
+			this.players.add(new Player(connection, name));
+		}
+		initializeScore();
+	}
+
+	/**
+	 * Initializes everybody's score to 0
+	 */
+	private void initializeScore() {
+		for (Player player : this.players) {
+			this.scores.put(player.name(), 0);
 		}
 	}
 
+	/**
+	 * Receives a message from the player
+	 * @param player the sender of the message
+	 */
 	private void receiveMessageFromThePlayer(Player player) {
 		Thread thread = new Thread(() -> {
 			message_loop: while (true) {
@@ -136,6 +143,15 @@ public class MultiplayerGame extends Thread {
 					Message message = player.connection().receive();
 					switch (message.getType()) {
 						case JOKER -> handleJokerMessage(player, (JokerMessage) message);
+						case POINTS -> {
+							PointMessage current = (PointMessage) message;
+							this.scores.put(current.getName(), current.getPoints() +
+											this.scores.get(player.name()));
+							// Give as argument a copy of the map
+							LeaderboardMessage res =
+									new LeaderboardMessage(new HashMap<>(this.scores));
+							sendMessageToAllPlayers(res);
+						}
 						case KILLER -> {
 							player.connection().send(new KillerMessage());
 							players.remove(player);

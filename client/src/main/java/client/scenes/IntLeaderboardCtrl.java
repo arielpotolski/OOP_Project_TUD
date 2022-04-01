@@ -49,17 +49,24 @@ public class IntLeaderboardCtrl implements Initializable {
 		List<Map.Entry<String, Integer>> playersInTheGame = this.players
 			.entrySet()
 			.stream()
-			.sorted(Map.Entry.comparingByValue())
 			.toList();
 		this.barChart.setTitle("Player Scores");
 		if (playersInTheGame.size() < 6) {
 			this.barChart.setMaxWidth(playersInTheGame.size() * 100);
 		}
-		for (Map.Entry<String, Integer> player : playersInTheGame) {
-			XYChart.Series series = new XYChart.Series();
-			series.getData().add(new XYChart.Data("", player.getValue()));
-			series.setName(player.getKey());
-			this.barChart.getData().add(series);
+		if (this.barChart.getData().size() == 0) {
+			for (Map.Entry<String, Integer> player : playersInTheGame) {
+				XYChart.Series series = new XYChart.Series();
+				series.getData().add(new XYChart.Data("", player.getValue()));
+				series.setName(player.getKey());
+				this.barChart.getData().add(series);
+			}
+		} else {
+			List<XYChart.Series> data = this.barChart.getData();
+			for (int i = 0; i < playersInTheGame.size(); i++) {
+				Map.Entry<String, Integer> player = playersInTheGame.get(i);
+				data.get(i).getData().set(0, new XYChart.Data("", player.getValue()));
+			}
 		}
 	}
 
