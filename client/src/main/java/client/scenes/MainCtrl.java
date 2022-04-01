@@ -703,14 +703,14 @@ public class MainCtrl {
 			}
 		} else if (this.question instanceof HighestConsumptionQuestion highConsumptionQuestion) {
 			int buttonId = button.getId().charAt(button.getId().length() - 1) - '0';
-			currentPoint = highConsumptionQuestion.pointsEarned(
+			this.currentPoints = highConsumptionQuestion.pointsEarned(
 				1000,
 				buttonId,
 				timePassed,
 				this.doublePointsUsed == 1
 			);
 
-			player.setPoint(player.getPoint() + currentPoint);
+			this.player.setPoint(this.player.getPoint() + this.currentPoints);
 
 			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
 					== highConsumptionQuestion.returnEnergyConsumption(button.getText())) {
@@ -729,13 +729,13 @@ public class MainCtrl {
 				this.numberOfCorrectAnswers++;
 			}
 		} else if (this.question instanceof EstimateQuestion estimateQuestion) {
-			currentPoint = estimateQuestion.pointsEarned(
+			this.currentPoints = estimateQuestion.pointsEarned(
 				1000,
 				Integer.parseInt(textField.getText()),
 				timePassed,
 				this.doublePointsUsed == 1
 			);
-			this.player.setPoint(this.player.getPoint() + this.currentPoint);
+			this.player.setPoint(this.player.getPoint() + this.currentPoints);
 		}
 		if (this.doublePointsUsed == 1) {
 			this.doublePointsUsed++;
@@ -840,8 +840,8 @@ public class MainCtrl {
 			}
 
 			int stylingPoints = this.doublePointsUsed == 1
-				? this.currentPoint / 2
-				: this.currentPoint;
+				? this.currentPoints / 2
+				: this.currentPoints;
 			if (this.doublePointsUsed == 2) {
 				this.doublePointsUsed++;
 			}
