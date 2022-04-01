@@ -58,6 +58,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	Pane doublePointsPane;
 
 	@FXML
+	Pane decreaseTimePane;
+
+	@FXML
 	private TextField textFieldChat;
 
 	@FXML
@@ -162,6 +165,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	public void decreaseOtherPlayersTime() throws IOException {
 		this.server.getConnection().send(new JokerMessage(JokerType.DECREASE));
+		this.hideJoker(this.decreaseTimePane);
 	}
 
 	/**
