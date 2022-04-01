@@ -263,9 +263,15 @@ public class InsteadOfQuestion extends Question {
 	 * @param maxPoints The maximal amount of points possible.
 	 * @param answerGiven The answer given by the user.
 	 * @param progress Time left.
+	 * @param doublePoints If the joker has been used.
 	 * @return The total amount of points earned as an integer.
 	 */
-	public int pointsEarned(int maxPoints, long answerGiven, double progress) {
+	public int pointsEarned(
+		int maxPoints,
+		long answerGiven,
+		double progress,
+		boolean doublePoints
+	) {
 		Activity answerActivity;
 		switch ((int) answerGiven) {
 			case 1 -> answerActivity = this.answer1;
@@ -278,7 +284,8 @@ public class InsteadOfQuestion extends Question {
 		if (!doubleEquals(currentCoefficient, this.correctAnswerCoefficient((int) answerGiven))) {
 			return 0;
 		}
-		float pointsEarned = (float) progress * maxPoints;
+		int factor = doublePoints ? 2 : 1;
+		float pointsEarned = (float) progress * maxPoints * factor;
 		return Math.round(pointsEarned);
 	}
 

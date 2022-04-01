@@ -68,12 +68,12 @@ public class HighestConsumptionQuestionTest{
 
 	@Test
 	public void wrongAnswerTest() {
-		assertEquals(0, this.question.pointsEarned(1000, 1, 15.0));
+		assertEquals(0, this.question.pointsEarned(1000, 1, 15.0, false));
 	}
 
 	@Test
 	public void correctAnswerTest1() {
-		assertEquals(500, this.question.pointsEarned(1000, 3, 0.5));
+		assertEquals(500, this.question.pointsEarned(1000, 3, 0.5, false));
 	}
 
 	@Test

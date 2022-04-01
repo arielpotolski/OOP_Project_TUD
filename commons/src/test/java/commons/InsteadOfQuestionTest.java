@@ -252,16 +252,16 @@ public class InsteadOfQuestionTest {
 
 	@Test
 	void pointsEarned() {
-		assertEquals(500, this.insteadOfQuestionFixed1.pointsEarned(1000, 1, 0.5));
-		assertEquals(0, this.insteadOfQuestionFixed1.pointsEarned(1000, 2, 0.5));
-		assertEquals(0, this.insteadOfQuestionFixed1.pointsEarned(1000, 3, 0.5));
+		assertEquals(500, this.insteadOfQuestionFixed1.pointsEarned(1000, 1, 0.5, false));
+		assertEquals(0, this.insteadOfQuestionFixed1.pointsEarned(1000, 2, 0.5, false));
+		assertEquals(0, this.insteadOfQuestionFixed1.pointsEarned(1000, 3, 0.5, false));
 	}
 
 	@Test
 	void singleCorrectAnswer() throws IOException {
-		int points = this.insteadOfQuestionRandomized.pointsEarned(1000, 1, 1.0)
-			+ this.insteadOfQuestionRandomized.pointsEarned(1000, 2, 1.0)
-			+ this.insteadOfQuestionRandomized.pointsEarned(1000, 3, 1.0);
+		int points = this.insteadOfQuestionRandomized.pointsEarned(1000, 1, 1.0, false)
+			+ this.insteadOfQuestionRandomized.pointsEarned(1000, 2, 1.0, false)
+			+ this.insteadOfQuestionRandomized.pointsEarned(1000, 3, 1.0, false);
 		assertEquals(1000, points);
 
 		this.insteadOfQuestionFixed.setQuestionActivity(this.activityQuestion);
@@ -289,9 +289,9 @@ public class InsteadOfQuestionTest {
 		this.insteadOfQuestionFixed.setRealCoefficient1(30.0 / 120.0);
 		this.insteadOfQuestionFixed.setRealCoefficient2(6.0 / 120.0);
 		this.insteadOfQuestionFixed.setRealCoefficient3(20.0 / 120.0);
-		points = this.insteadOfQuestionFixed.pointsEarned(1000, 1, 1.0)
-			+ this.insteadOfQuestionFixed.pointsEarned(1000, 2, 1.0)
-			+ this.insteadOfQuestionFixed.pointsEarned(1000, 3, 1.0);
+		points = this.insteadOfQuestionFixed.pointsEarned(1000, 1, 1.0, false)
+			+ this.insteadOfQuestionFixed.pointsEarned(1000, 2, 1.0, false)
+			+ this.insteadOfQuestionFixed.pointsEarned(1000, 3, 1.0, false);
 		assertEquals(1000, points);
 	}
 

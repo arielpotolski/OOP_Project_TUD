@@ -114,6 +114,17 @@ public class MainCtrl {
 
 	private static final double JOKER_DECREASE_TIME_PERCENT = 0.5;
 
+	/**
+	 * This counts the amount of times the joker is used and will only give
+	 * double points if it is used only once
+	 *
+	 * It should have three states in total
+	 * 0 - not used
+	 * 1 - used but not in styling
+	 * 2 - absolutely used
+	 */
+	private int doublePointsUsed = 0;
+
 	public MainCtrl() {
 		this.seed = new Random().nextInt();
 		this.server = new ServerUtils(Main.serverHost);
@@ -677,7 +688,8 @@ public class MainCtrl {
 			this.currentPoints = multipleChoiceQuestion.pointsEarned(
 				1000,
 				Integer.parseInt(button.getText()),
-				timePassed
+				timePassed,
+				this.doublePointsUsed == 1
 			);
 
 			// Set the point for the player
@@ -691,19 +703,25 @@ public class MainCtrl {
 			}
 		} else if (this.question instanceof HighestConsumptionQuestion highConsumptionQuestion) {
 			int buttonId = button.getId().charAt(button.getId().length() - 1) - '0';
-			this.currentPoints = highConsumptionQuestion.pointsEarned(1000, buttonId, timePassed);
+			this.currentPoints = highConsumptionQuestion.pointsEarned(
+				1000,
+				buttonId,
+				timePassed,
+				this.doublePointsUsed == 1
+			);
+
 			this.player.setPoint(this.player.getPoint() + this.currentPoints);
 
 			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
 					== highConsumptionQuestion.returnEnergyConsumption(button.getText())) {
 				this.numberOfCorrectAnswers++;
 			}
-
 		} else if (this.question instanceof InsteadOfQuestion insteadQuestion) {
 			this.currentPoints = insteadQuestion.pointsEarned(
 				1000,
 				Integer.parseInt(String.valueOf(button.getId().charAt(12))),
-				timePassed
+				timePassed,
+				this.doublePointsUsed == 1
 			);
 			this.player.setPoint(this.player.getPoint() + this.currentPoints);
 			if (insteadQuestion.correctAnswer().getConsumptionInWh()
@@ -714,9 +732,13 @@ public class MainCtrl {
 			this.currentPoints = estimateQuestion.pointsEarned(
 				1000,
 				Integer.parseInt(textField.getText()),
-				timePassed
+				timePassed,
+				this.doublePointsUsed == 1
 			);
 			this.player.setPoint(this.player.getPoint() + this.currentPoints);
+		}
+		if (this.doublePointsUsed == 1) {
+			this.doublePointsUsed++;
 		}
 		this.server.getConnection().send(new PointMessage(this.nickname, this.player.getPoint()));
 		this.showAnswer(screenCtrl);
@@ -806,18 +828,26 @@ public class MainCtrl {
 			String message;
 			screenCtrl.setVisibleEstimateAnswer(true);
 
-			if (textField != null) {
+			if (textField != null && !textField.getText().equals("")) {
 				this.currentPoints = estimateQuestion.pointsEarned(
 					1000,
 					Integer.parseInt(textField.getText()),
-					screenCtrl.getTimestamp()
+					screenCtrl.getTimestamp(),
+					this.doublePointsUsed == 2
 				);
 			} else {
 				this.currentPoints = 0;
 			}
 
-			if (this.currentPoints < 800) {
-				if (this.currentPoints > 300) {
+			int stylingPoints = this.doublePointsUsed == 1
+				? this.currentPoints / 2
+				: this.currentPoints;
+			if (this.doublePointsUsed == 2) {
+				this.doublePointsUsed++;
+			}
+
+			if (stylingPoints < 800) {
+				if (stylingPoints > 300) {
 					color = "-fx-background-color: #f0de8d; -fx-background-radius: 15;";
 					message = "Not bad!";
 				} else {
@@ -827,6 +857,9 @@ public class MainCtrl {
 			} else {
 				message = "Well done!";
 			}
+			// This here is necessary in case when the joker has been used on non-Estimate question
+			// Then on the next styling for Estimate Question it will colour it incorrectly
+			if (this.doublePointsUsed == 1) this.doublePointsUsed = 2;
 
 			screenCtrl.setEstimateAnswerStyle(color);
 			screenCtrl.setEstimateAnswerLabel(
@@ -839,6 +872,13 @@ public class MainCtrl {
 				textField.clear();
 			}
 		}
+	}
+
+	/**
+	 * Sets up the jokers in the beginning of the multiplayer game
+	 */
+	public void setUpJokers() {
+		this.multiplayerQuestionScreenCtrl.setAllJokersUp();
 	}
 
 	/**
@@ -970,6 +1010,14 @@ public class MainCtrl {
 	 */
 	public String getNickname() {
 		return this.nickname;
+	}
+
+	/**
+	 * Setter for whether double points should be given.
+	 * @param doublePointsUsed The new double points.
+	 */
+	public void setDoublePointsUsed(int doublePointsUsed) {
+		this.doublePointsUsed = doublePointsUsed;
 	}
 
 	/**

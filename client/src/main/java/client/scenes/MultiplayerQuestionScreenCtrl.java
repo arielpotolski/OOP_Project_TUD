@@ -55,6 +55,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	Button sendButton;
 
 	@FXML
+	Pane doublePointsPane;
+
+	@FXML
 	private TextField textFieldChat;
 
 	@FXML
@@ -230,5 +233,30 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	public double getProgress() {
 		return this.progress;
+	}
+
+	/**
+	 * Hides the jokerPane.
+	 * @param jokerPane The joker pane to be hidden.
+	 */
+	public void hideJoker(Pane jokerPane) {
+		jokerPane.setVisible(false);
+	}
+
+	/**
+	 * Uses the joker.
+	 */
+	public void useDoublePoints() {
+		this.hideJoker(this.doublePointsPane);
+		this.mainCtrl.setDoublePointsUsed(1);
+	}
+
+	/**
+	 * Sets up all the joker panes.
+	 */
+	public void setAllJokersUp() {
+		// TODO for all other jokers set everything visible
+		this.doublePointsPane.setVisible(true);
+		this.mainCtrl.setDoublePointsUsed(0);
 	}
 }

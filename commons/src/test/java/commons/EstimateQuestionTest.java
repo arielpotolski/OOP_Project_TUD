@@ -40,7 +40,7 @@ public class EstimateQuestionTest {
 
 	@Test
 	public void pointsEarnedTest() {
-		assertEquals(250, this.question.pointsEarned(1000, 100, 0.5));
+		assertEquals(250, this.question.pointsEarned(1000, 100, 0.5, false));
 	}
 
 	@Test
