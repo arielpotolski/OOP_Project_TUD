@@ -87,7 +87,7 @@ public abstract class QuestionClass {
 	 * This method shows answer when player click on one of the three buttons.
 	 * @param event The player click on the button.
 	 */
-	public void answerReturn(ActionEvent event) {
+	public void answerReturn(ActionEvent event) throws IOException {
 		String color = "-fx-background-color: #f0dca5; -fx-background-radius: 15;";
 		Object source = event.getSource();
 		this.mainCtrl.clearButtons(this);

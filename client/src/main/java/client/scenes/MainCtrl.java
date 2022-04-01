@@ -40,6 +40,7 @@ import commons.messages.JokerType;
 import commons.messages.KillerMessage;
 import commons.messages.LeaderboardMessage;
 import commons.messages.Message;
+import commons.messages.PointMessage;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -342,11 +343,24 @@ public class MainCtrl {
 			screenCtrl.decreaseProgress(0.1f);
 		}));
 		timeLine.setOnFinished(_e -> {
-			updatePoints(screenCtrl.getInputButton(),
-						screenCtrl.getInputText(),
-						screenCtrl);
+			try {
+				updatePoints(screenCtrl.getInputButton(),
+							screenCtrl.getInputText(),
+							screenCtrl);
+			} catch (IOException err) {
+				err.printStackTrace();
+			}
 		});
 		timeLine.setCycleCount(10);
+		timeLine.setOnFinished(_e -> {
+					try {
+						updatePoints(screenCtrl.getInputButton(),
+								screenCtrl.getInputText(), screenCtrl);
+					} catch (IOException err) {
+						err.printStackTrace();
+					}
+				}
+		);
 		timeLine.play();
 
 		primaryStage.setTitle("Question");
@@ -649,7 +663,8 @@ public class MainCtrl {
 	 * @param screenCtrl screen controller which can be either for singleplayer or
 	 *                   for multiplayer
 	 */
-	public void updatePoints(Button button, TextField textField, QuestionClass screenCtrl) {
+	public void updatePoints(Button button, TextField textField, QuestionClass screenCtrl)
+		throws IOException {
 		timeLine.stop();
 
 		// in case the player doesn't provide an answer in time
@@ -711,7 +726,8 @@ public class MainCtrl {
 					Integer.parseInt(textField.getText()), timePassed);
 			player.setPoint(player.getPoint() + currentPoint);
 		}
-
+//		System.out.println(this.player.getPoint());
+		this.server.getConnection().send(new PointMessage(this.nickname, this.player.getPoint()));
 		// Show the recent score.
 		showAnswer(screenCtrl);
 	}
@@ -734,7 +750,7 @@ public class MainCtrl {
 	 * red.
 	 * @param screenCtrl Screen controller which can be either for singleplayer or for multiplayer.
 	 */
-	private void showAnswer(QuestionClass screenCtrl) {
+	private void showAnswer(QuestionClass screenCtrl) throws IOException {
 		Button button = screenCtrl.getInputButton();
 		TextField textField = screenCtrl.getInputText();
 
