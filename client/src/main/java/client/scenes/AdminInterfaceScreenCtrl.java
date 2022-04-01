@@ -3,17 +3,9 @@ package client.scenes;
 import javafx.fxml.FXML;
 import javax.inject.Inject;
 
-public class AdminInterfaceScreenCtrl {
-	private MainCtrl mainCtrl;
-
-	/**
-	 * The AdminInterfaceScreenCtrl constructor.
-	 * @param mainCtrl The main controller.
-	 */
+public record AdminInterfaceScreenCtrl(MainCtrl mainCtrl) {
 	@Inject
-	public AdminInterfaceScreenCtrl(MainCtrl mainCtrl) {
-		this.mainCtrl = mainCtrl;
-	}
+	public AdminInterfaceScreenCtrl {}
 
 	/**
 	 * Take the user to the splash screen.

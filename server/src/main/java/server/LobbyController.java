@@ -30,6 +30,7 @@ public class LobbyController {
 	 *  - whether they are supposed to be in a game
 	 */
 	private final HashMap<String, LobbyPlayer> players;
+
 	/**
 	 * Used to generate unique IDs. It only ever increases in value.
 	 */
@@ -41,7 +42,6 @@ public class LobbyController {
 
 	/**
 	 * Increments the id and then returns it.
-	 *
 	 * @return a unique ID
 	 */
 	private int getUniqueID() {
@@ -62,7 +62,7 @@ public class LobbyController {
 	 * Checks ID against players in the lobby.
 	 * @param name The name of the player.
 	 * @param id The ID of the player that should be checked.
-	 * @return whether the ID was wrong.
+	 * @return Whether the ID was wrong.
 	 */
 	private boolean wrongID(String name, int id) {
 		return !this.players.containsKey(name) || this.players.get(name).getId() != id;
@@ -70,7 +70,7 @@ public class LobbyController {
 
 	@GetMapping("/register/")
 	public ResponseEntity<LobbyResponse> registerPlayer(@RequestParam String name) {
-		clearOld();
+		this.clearOld();
 
 		// Check for name collision.
 		if (this.players.containsKey(name)) {
@@ -91,8 +91,8 @@ public class LobbyController {
 		@RequestParam String name,
 		@RequestParam int id
 	) {
-		clearOld();
-		if (wrongID(name, id)) {
+		this.clearOld();
+		if (this.wrongID(name, id)) {
 			return ResponseEntity.badRequest().build();
 		}
 
@@ -111,8 +111,8 @@ public class LobbyController {
 		@RequestParam String name,
 		@RequestParam int id
 	) throws IOException {
-		clearOld();
-		if (wrongID(name, id)) {
+		this.clearOld();
+		if (this.wrongID(name, id)) {
 			return ResponseEntity.badRequest().build();
 		}
 
@@ -133,12 +133,7 @@ public class LobbyController {
 		}
 
 		return new ResponseEntity<>(
-			new LobbyResponse(
-				this.players.keySet(),
-				id,
-				true,
-				port
-			),
+			new LobbyResponse(this.players.keySet(), id, true, port),
 			HttpStatus.ACCEPTED
 		);
 	}

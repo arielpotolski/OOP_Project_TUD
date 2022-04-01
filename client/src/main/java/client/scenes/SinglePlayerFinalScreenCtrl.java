@@ -29,9 +29,8 @@ public class SinglePlayerFinalScreenCtrl {
 	private Polygon backArrow;
 
 	/**
-	 * Constructor for single player final screen controller
-	 *
-	 * @param mainCtrl the injected main controller.
+	 * Constructor for single player final screen controller.
+	 * @param mainCtrl The injected main controller.
 	 */
 	@Inject
 	public void singlePlayerFinalScreenCtrl(MainCtrl mainCtrl) {
@@ -40,9 +39,8 @@ public class SinglePlayerFinalScreenCtrl {
 	}
 
 	/**
-	 * This method sets up the number of correct answers after the player finished the game
-	 *
-	 * @param numberOfCorrectAnswers the number of correct answers.
+	 * This method sets up the number of correct answers after the player finished the game.
+	 * @param numberOfCorrectAnswers The number of correct answers.
 	 */
 	public void setCorrectAnswers(int numberOfCorrectAnswers) {
 		this.correctAnswers.setText(numberOfCorrectAnswers + "/20");
@@ -58,7 +56,6 @@ public class SinglePlayerFinalScreenCtrl {
 
 	/**
 	 * This method changes the final screen to pre-game screen.
-	 *
 	 */
 	public void jumpToPreGameScene() {
 		this.mainCtrl.showSinglePlayerPreGameScreen();
@@ -66,7 +63,6 @@ public class SinglePlayerFinalScreenCtrl {
 
 	/**
 	 * This method changes the final screen to splash screen.
-	 *
 	 */
 	public void jumpToSplashScreen() {
 		this.mainCtrl.showSplashScreen();
@@ -74,8 +70,7 @@ public class SinglePlayerFinalScreenCtrl {
 
 	/**
 	 * This method adds a player to database.
-	 *
-	 * @param player a player.
+	 * @param player A player.
 	 */
 	public void addPlayer(Player player) {
 		this.server.addPlayer(player);

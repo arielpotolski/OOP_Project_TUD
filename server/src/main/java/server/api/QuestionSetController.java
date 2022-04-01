@@ -34,8 +34,8 @@ public class QuestionSetController {
 	 * This method will get a list of activities and transform it into a list of questions.
 	 * These questions are then sent to the client in the main controller.
 	 *
-	 * @return The list of returned questions
-	 * @param seed The seed which dictates the order of the questions
+	 * @param seed The seed which dictates the order of the questions.
+	 * @return The list of returned questions.
 	 */
 	@GetMapping(path = {"", "/"})
 	public List<Question> getAll(@RequestParam long seed) {
@@ -65,8 +65,13 @@ public class QuestionSetController {
 		}
 		List<Activity> res = new ArrayList<>();
 		for (Activity activity : activities) {
-			res.add(new Activity(activity.getId(), activity.getTitle(),
-					activity.getConsumptionInWh(), activity.getImagePath(), activity.getSource()));
+			res.add(new Activity(
+				activity.getId(),
+				activity.getTitle(),
+				activity.getConsumptionInWh(),
+				activity.getImagePath(),
+				activity.getSource()
+			));
 		}
 		List<Activity> result = this.repository.saveAll(res);
 		return new ResponseEntity<>(result, HttpStatus.OK);
@@ -77,8 +82,13 @@ public class QuestionSetController {
 		if (activity == null || !activity.isValid()) {
 			return ResponseEntity.badRequest().build();
 		}
-		Activity res = new Activity(activity.getId(), activity.getTitle(),
-				activity.getConsumptionInWh(), activity.getImagePath(), activity.getSource());
+		Activity res = new Activity(
+			activity.getId(),
+			activity.getTitle(),
+			activity.getConsumptionInWh(),
+			activity.getImagePath(),
+			activity.getSource()
+		);
 		Activity result = this.repository.save(res);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}

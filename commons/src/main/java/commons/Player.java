@@ -42,7 +42,7 @@ public class Player {
 		return this.nickname;
 	}
 
-	public void setNickName(String nickname) {
+	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
 
@@ -52,7 +52,7 @@ public class Player {
 
 	@Override
 	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
+		return (obj instanceof Player) && EqualsBuilder.reflectionEquals(this, obj);
 	}
 
 	@Override

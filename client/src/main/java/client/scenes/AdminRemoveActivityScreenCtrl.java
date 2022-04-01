@@ -65,7 +65,7 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 					.filter(a -> a.getId().equals(newString))
 					.findFirst();
 				this.activityData.setText(
-					maybeActivity.map(activity -> activity.toString()).orElse("")
+					maybeActivity.map(Activity::toString).orElse("")
 				);
 			});
 	}
@@ -106,7 +106,7 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 	 * @param activities List of sorted of activities to from the dropdown from.
 	 */
 	protected void updateDropdown(List<Activity> activities) {
-		ObservableList list = this.activityDropdown.getItems();
+		ObservableList<String> list = this.activityDropdown.getItems();
 		list.clear();
 		list.addAll(activities.stream().map(Activity::getId).toList());
 	}

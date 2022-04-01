@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
@@ -14,11 +13,13 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ProgressBar;
 
 public class IntLeaderboardCtrl implements Initializable {
-	private MainCtrl mainCtrl;
 	private HashMap<String, Integer> players;
 
 	@FXML
 	private ProgressBar timeUntilNextQuestion;
+
+	@FXML
+	private BarChart<String, Integer> barChart;
 
 	double progress = 1f;
 
@@ -29,13 +30,6 @@ public class IntLeaderboardCtrl implements Initializable {
 	public void decreaseProgress(double amount) {
 		this.progress -= amount;
 		this.timeUntilNextQuestion.setProgress(this.progress);
-	}
-	@FXML
-	private BarChart barChart;
-
-	@Inject
-	public IntLeaderboardCtrl(MainCtrl mainCtrl) {
-		this.mainCtrl = mainCtrl;
 	}
 
 	public void setPlayers(HashMap<String, Integer> players) {
@@ -56,16 +50,16 @@ public class IntLeaderboardCtrl implements Initializable {
 		}
 		if (this.barChart.getData().size() == 0) {
 			for (Map.Entry<String, Integer> player : playersInTheGame) {
-				XYChart.Series series = new XYChart.Series();
-				series.getData().add(new XYChart.Data("", player.getValue()));
+				XYChart.Series<String, Integer> series = new XYChart.Series<>();
+				series.getData().add(new XYChart.Data<>("", player.getValue()));
 				series.setName(player.getKey());
 				this.barChart.getData().add(series);
 			}
 		} else {
-			List<XYChart.Series> data = this.barChart.getData();
+			List<XYChart.Series<String, Integer>> data = this.barChart.getData();
 			for (int i = 0; i < playersInTheGame.size(); i++) {
 				Map.Entry<String, Integer> player = playersInTheGame.get(i);
-				data.get(i).getData().set(0, new XYChart.Data("", player.getValue()));
+				data.get(i).getData().set(0, new XYChart.Data<>("", player.getValue()));
 			}
 		}
 	}

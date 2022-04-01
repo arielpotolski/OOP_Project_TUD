@@ -7,10 +7,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static commons.Utility.contentsEqual;
+import static commons.Utility.isNumeric;
+import static commons.Utility.max;
 import static commons.Utility.nullOrEmpty;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -32,7 +35,7 @@ class UtilityTest {
 
 	@Test
 	public void contentsNotEqualSameTypeTest() {
-		var ys = (Collection) this.xs.clone();
+		var ys = (Collection<String>) this.xs.clone();
 		ys.add("Foo");
 		assertFalse(contentsEqual(this.xs, ys));
 		ys.remove("Foo");
@@ -54,7 +57,7 @@ class UtilityTest {
 
 	@Test
 	public void contentsEqualSameTypeTest() {
-		assertTrue(contentsEqual(this.ys, (Collection) this.ys.clone()));
+		assertTrue(contentsEqual(this.ys, (Collection<Integer>) this.ys.clone()));
 	}
 
 	@Test
@@ -75,7 +78,7 @@ class UtilityTest {
 
 	@Test
 	public void nullOrEmptyEmptyCollectionTest() {
-		assertTrue(nullOrEmpty(new ArrayList()));
+		assertTrue(nullOrEmpty(new ArrayList<>()));
 	}
 
 	@Test
@@ -90,5 +93,26 @@ class UtilityTest {
 		double c = 1.0 / 4.0;
 		assertFalse(Utility.doubleEquals(a, c));
 		assertTrue(Utility.doubleEquals(a, b));
+	}
+
+	@Test
+	public void maxTest() {
+		assertEquals(9, max(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
+		assertEquals(9, max(9, 8, 7, 6, 5, 4, 3, 2, 1, 0));
+	}
+
+	@Test
+	public void isNumericNull() {
+		assertFalse(isNumeric(null));
+	}
+
+	@Test
+	public void isNumericHasChar() {
+		assertFalse(isNumeric("12Ad"));
+	}
+
+	@Test
+	public void isNumericTrue() {
+		assertTrue(isNumeric("1241"));
 	}
 }

@@ -14,18 +14,18 @@ import commons.MCQuestion;
 import commons.Question;
 
 public class QuestionSet {
-	private List<Question> questions; // List of the questions in this QuestionSet.
-	private List<Activity> activities; // List of Activities to be used in the questions.
-	private Random random; // Used to randomize the activities used per QuestionSet.
-	private int size; // Size of the list of activities.
-	private List<Integer> activityNumbers; // List containing the # of each activity
-											// so we can test its content.
+	private final List<Question> questions; // List of the questions in this QuestionSet.
+	private final List<Activity> activities; // List of Activities to be used in the questions.
+	private final Random random; // Used to randomize the activities used per QuestionSet.
+	private final int size; // Size of the list of activities.
+
+	// List containing the # of each activity so we can test its content.
+	private final List<Integer> activityNumbers;
 
 	/**
-	 * Constructor for the QuestionsSet
-	 *
-	 * @param activities list of activities
-	 * @param seed the seed with whom we generate the random order
+	 * Constructor for the QuestionsSet.
+	 * @param activities List of activities.
+	 * @param seed The seed with whom we generate the random order.
 	 */
 	public QuestionSet(List<Activity> activities, long seed) {
 		this.questions = new ArrayList<>();
@@ -37,7 +37,7 @@ public class QuestionSet {
 
 	/**
 	 * Getter for the list of Questions in this question set.
-	 * @return list of Questions.
+	 * @return List of Questions.
 	 */
 	public List<Question> getQuestions() {
 		return this.questions;
@@ -45,7 +45,7 @@ public class QuestionSet {
 
 	/**
 	 * Getter for the size of the question set.
-	 * @return the size of the question set.
+	 * @return The size of the question set.
 	 */
 	public int getQuestionSetSize() {
 		return this.questions.size();
@@ -53,34 +53,36 @@ public class QuestionSet {
 
 	/**
 	 * Getter for the list of the activity numbers.
-	 * @return list of activity numbers.
+	 * @return List of activity numbers.
 	 */
 	public List<Integer> getActivityNumbers() {
 		return this.activityNumbers;
 	}
 
 	/**
-	 * Fills all the container class with questions
-	 * @param numberOfQuestions the number of questions contained in the class
+	 * Fills all the container class with questions.
+	 * @param numberOfQuestions The number of questions contained in the class.
 	 */
 	public void fillSet(int numberOfQuestions) {
-		ArrayList<Character> seq = new ArrayList<>(generateSequence(numberOfQuestions));
-		Collections.shuffle(seq, random);
+		ArrayList<Character> seq = new ArrayList<>(this.generateSequence(numberOfQuestions));
+		Collections.shuffle(seq, this.random);
 
 		seq.forEach(c -> {
 			switch (c) {
-			case 'M' -> generateMCQ();
-			case 'H' -> generateHigh();
-			case 'E' -> generateEstimate();
-			case 'I' -> generateInstead();
-			default -> throw new IllegalArgumentException(
-				"Invalid question type, expected [MHEI] but got '" + c + "'");
+			case 'M' -> this.generateMCQ();
+			case 'H' -> this.generateHigh();
+			case 'E' -> this.generateEstimate();
+			case 'I' -> this.generateInstead();
+			default ->
+				throw new IllegalArgumentException(
+					"Invalid question type, expected [MHEI] but got '" + c + "'"
+				);
 			}
 		});
 	}
 
 	/**
-	 * Generates a random Multiple Choice Question
+	 * Generates a random Multiple Choice Question.
 	 */
 	private void generateMCQ() {
 		int randNumber = this.random.nextInt(this.size);
@@ -91,7 +93,7 @@ public class QuestionSet {
 	}
 
 	/**
-	 * Generates the Highest Consumption Question
+	 * Generates the Highest Consumption Question.
 	 */
 	private void generateHigh() {
 		int randNumber1 = this.random.nextInt(this.size);
@@ -109,7 +111,7 @@ public class QuestionSet {
 	}
 
 	/**
-	 * Generates a Estimate Question
+	 * Generates a Estimate Question.
 	 */
 	private void generateEstimate() {
 		int randNumber = this.random.nextInt(this.size);
@@ -120,7 +122,7 @@ public class QuestionSet {
 	}
 
 	/**
-	 * Generates Instead of Question
+	 * Generates Instead of Question.
 	 */
 	private void generateInstead() {
 		int randNumber1 = this.random.nextInt(this.size);
@@ -141,14 +143,14 @@ public class QuestionSet {
 	}
 
 	/**
-	 * Generates a random sequence of characters representing the order of questions in the class
-	 * @param numberOfQuestions the number of characters in the sequence
-	 * @return a random generated sequence of however many symbols one wants
+	 * Generates a random sequence of characters representing the order of questions in the class.
+	 * @param numberOfQuestions The number of characters in the sequence.
+	 * @return A random generated sequence of however many symbols one wants.
 	 */
 	public List<Character> generateSequence(int numberOfQuestions) {
-		int numberOfMCQ = ((Long) Math.round(numberOfQuestions * 0.35)).intValue();
-		int numberOfEst = ((Long) Math.round(numberOfQuestions * 0.15)).intValue();
-		int numberOfHigh = ((Long) Math.round(numberOfQuestions * 0.30)).intValue();
+		int numberOfMCQ = (int) Math.round(numberOfQuestions * 0.35);
+		int numberOfEst = (int) Math.round(numberOfQuestions * 0.15);
+		int numberOfHigh = (int) Math.round(numberOfQuestions * 0.30);
 		int numberOfInstead = numberOfQuestions - numberOfEst - numberOfMCQ - numberOfHigh;
 
 		var a = Stream.generate(() -> 'M').limit(numberOfMCQ);
