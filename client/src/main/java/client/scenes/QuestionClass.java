@@ -387,15 +387,15 @@ public abstract class QuestionClass {
 	}
 
 	/**
-	 * This method eliminates an incorrect answer when the user uses the
-	 * eliminateIncorrectAnswer joker. It disables the button and set its
-	 * color to grey.
+	 * This method eliminates an incorrect answer when the user uses the eliminateIncorrectAnswer
+	 * joker.  It disables the button and set its color to grey.
 	 */
 	public void eliminateAnswer() throws IOException{
 		int correctAnswer = this.mainCtrl.getAnswer();
 		String color = "-fx-background-color: #808080; -fx-background-radius: 15;";
 
-		if (correctAnswer == 1) {
+		switch (correctAnswer) {
+		case 1: {
 			int eliminated = this.generateRandom();
 			while (eliminated == 0 || eliminated == 1) {
 				eliminated = this.generateRandom();
@@ -407,7 +407,8 @@ public abstract class QuestionClass {
 				this.setStyleAnswerButton3(color);
 				this.answerButton3.setDisable(true);
 			}
-		} else if (correctAnswer == 2) {
+			break;
+		} case 2: {
 			int eliminated = this.generateRandom();
 			while (eliminated == 0 || eliminated == 2) {
 				eliminated = this.generateRandom();
@@ -419,7 +420,8 @@ public abstract class QuestionClass {
 				this.setStyleAnswerButton3(color);
 				this.answerButton3.setDisable(true);
 			}
-		} else if (correctAnswer == 3){
+			break;
+		} case 3: {
 			int eliminated = this.generateRandom();
 			while (eliminated == 0 || eliminated == 3) {
 				eliminated = this.generateRandom();
@@ -431,16 +433,16 @@ public abstract class QuestionClass {
 				this.setStyleAnswerButton1(color);
 				this.answerButton1.setDisable(true);
 			}
-		} else if (correctAnswer == -1){
+			break;
+		} default:
 			throw new IOException("It's not possible to eliminate an answer for this question.");
 		}
 	}
 
 	/**
-	 * Helper for the eliminateAnswer method. It generates a random number,
-	 * which will be the wrong answer to be eliminated. This way, we avoid
-	 * creating a pattern for the eliminated answer.
-	 * @return the number of the answer to nbe eliminated.
+	 * Helper for the eliminateAnswer method.  It generates a random number, which will be the wrong
+	 * answer to be eliminated.  This way, we avoid creating a pattern for the eliminated answer.
+	 * @return The number of the answers to be eliminated.
 	 */
 	private int generateRandom() {
 		Random random = new Random();

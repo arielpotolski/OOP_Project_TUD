@@ -883,12 +883,11 @@ public class MainCtrl {
 
 	/**
 	 * Getter for the correct answer of a question.
-	 * @return an integer representing the button containing the correct answer.
-	 * -1 if the correct answer is not found.
+	 * @return An integer representing the button containing the correct answer.  -1 if the correct
+	 * answer is not found.
 	 */
 	public int getAnswer() {
-		if (this.question instanceof MCQuestion) {
-			MCQuestion multipleChoiceQuestion = (MCQuestion) this.question;
+		if (this.question instanceof MCQuestion multipleChoiceQuestion) {
 			long button1 = multipleChoiceQuestion.getAnswer1();
 			long button2 = multipleChoiceQuestion.getAnswer2();
 			long button3 = multipleChoiceQuestion.getAnswer3();
@@ -901,10 +900,7 @@ public class MainCtrl {
 			} else if (correctAnswer == button3) {
 				return 3;
 			}
-		} else if (this.question instanceof HighestConsumptionQuestion) {
-			HighestConsumptionQuestion highConsumptionQuestion
-					= (HighestConsumptionQuestion) this.question;
-
+		} else if (this.question instanceof HighestConsumptionQuestion highConsumptionQuestion) {
 			Activity activity1 = highConsumptionQuestion.getActivity1();
 			Activity activity2 = highConsumptionQuestion.getActivity2();
 			Activity activity3 = highConsumptionQuestion.getActivity3();
@@ -917,9 +913,7 @@ public class MainCtrl {
 			} else if (correctAnswer == activity3.getConsumptionInWh()) {
 				return 3;
 			}
-		} else if (this.question instanceof InsteadOfQuestion){
-			InsteadOfQuestion insteadQuestion = (InsteadOfQuestion) this.question;
-
+		} else if (this.question instanceof InsteadOfQuestion insteadQuestion){
 			Activity answer1 = insteadQuestion.getAnswer1();
 			Activity answer2 = insteadQuestion.getAnswer2();
 			Activity answer3 = insteadQuestion.getAnswer3();
