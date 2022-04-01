@@ -114,6 +114,7 @@ public class WaitingScreenCtrl {
 			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.
 			this.mainCtrl.showQuestionScreen(false);
+			this.mainCtrl.setUpJokers();
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
