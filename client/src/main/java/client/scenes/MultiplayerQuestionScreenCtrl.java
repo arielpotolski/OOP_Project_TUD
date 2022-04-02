@@ -58,6 +58,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	Pane doublePointsPane;
 
 	@FXML
+	Pane decreaseTimePane;
+
+	@FXML
 	Pane eliminateAnswerPane;
 
 	@FXML
@@ -165,6 +168,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	public void decreaseOtherPlayersTime() throws IOException {
 		this.server.getConnection().send(new JokerMessage(JokerType.DECREASE));
+		this.hideJoker(this.decreaseTimePane);
 	}
 
 	/**
@@ -269,6 +273,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	public void setAllJokersUp() {
 		this.eliminateAnswerPane.setVisible(true);
 		this.doublePointsPane.setVisible(true);
+		this.decreaseTimePane.setVisible(true);
 		this.mainCtrl.setDoublePointsUsed(0);
 	}
 }
