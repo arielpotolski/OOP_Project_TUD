@@ -399,9 +399,9 @@ public abstract class QuestionClass {
 	}
 
 	/**
-	 * This method handles the actual elimination of an incorrect answer. It gets the
-	 * correct answer of the question as a parameter, so we do not eliminate it. It also
-	 * a String parameter color, which changes the color of the eliminated answer button to grey.
+	 * This method handles the actual elimination of an incorrect answer.  It gets the correct
+	 * answer of the question as a parameter, so we do not eliminate it.  It also a String parameter
+	 * color, which changes the color of the eliminated answer button to grey.
 	 * @param correctAnswer The correct answer of the question.
 	 * @param color The string which changes the color of the eliminated answer button.
 	 * @throws IOException If an answer cannot be eliminated in that question.

@@ -908,7 +908,7 @@ public class MainCtrl {
 			} else if (correctAnswer == activity3.getConsumptionInWh()) {
 				return 3;
 			}
-		} else if (this.question instanceof InsteadOfQuestion insteadQuestion){
+		} else if (this.question instanceof InsteadOfQuestion insteadQuestion) {
 			Activity answer1 = insteadQuestion.getAnswer1();
 			Activity answer2 = insteadQuestion.getAnswer2();
 			Activity answer3 = insteadQuestion.getAnswer3();
