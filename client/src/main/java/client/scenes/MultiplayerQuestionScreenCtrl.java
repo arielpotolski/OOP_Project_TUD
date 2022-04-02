@@ -267,7 +267,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * Sets up all the joker panes.
 	 */
 	public void setAllJokersUp() {
-		// TODO for all other jokers set everything visible
+		this.eliminateAnswerPane.setVisible(true);
 		this.doublePointsPane.setVisible(true);
 		this.mainCtrl.setDoublePointsUsed(0);
 	}
