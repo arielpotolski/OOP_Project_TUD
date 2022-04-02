@@ -455,11 +455,9 @@ public class MainCtrl {
 		// Set up label for the question and answers.
 		String questionText = question.getActivity().getTitle();
 		screenCtrl.setUpLabel(questionText);
-		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
-			this.clearImages();
-			screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
-			screenCtrl.setVisibleImageQuestion(true);
-		}
+		this.clearImages(screenCtrl);
+		screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
+		screenCtrl.setVisibleImageQuestion(true);
 		screenCtrl.setLabelButton1(Long.toString(question.getAnswer1()));
 		screenCtrl.setLabelButton2(Long.toString(question.getAnswer2()));
 		screenCtrl.setLabelButton3(Long.toString(question.getAnswer3()));
@@ -486,18 +484,16 @@ public class MainCtrl {
 		screenCtrl.setLabelButton3(question.answerString(3));
 		screenCtrl.setVisibleEstimateAnswer(false);
 
-		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
-			this.clearImages();
-			screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
-			screenCtrl.setVisibleImageQuestion(true);
-			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(1), 0);
-			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(2), 1);
-			screenCtrl.setVisibilityImageView(true, 1);
-			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(3), 2);
-			screenCtrl.setVisibilityImageView(true, 2);
-			screenCtrl.setVisibilityImageView(true, 0);
-			screenCtrl.setVisibleTextField(false);
-		}
+		this.clearImages(screenCtrl);
+		screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
+		screenCtrl.setVisibleImageQuestion(true);
+		screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(1), 0);
+		screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(2), 1);
+		screenCtrl.setVisibilityImageView(true, 1);
+		screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArray(3), 2);
+		screenCtrl.setVisibilityImageView(true, 2);
+		screenCtrl.setVisibilityImageView(true, 0);
+		screenCtrl.setVisibleTextField(false);
 	}
 
 	/**
@@ -520,16 +516,14 @@ public class MainCtrl {
 		screenCtrl.setLabelButton3(question.getActivity3Title());
 		screenCtrl.setVisibleEstimateAnswer(false);
 
-		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
-			this.clearImages();
-			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity3(), 2);
-			screenCtrl.setVisibilityImageView(true, 2);
-			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity2(), 1);
-			screenCtrl.setVisibilityImageView(true, 1);
-			screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity1(), 0);
-			screenCtrl.setVisibilityImageView(true, 0);
-			screenCtrl.setVisibleTextField(false);
-		}
+		this.clearImages(screenCtrl);
+		screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity3(), 2);
+		screenCtrl.setVisibilityImageView(true, 2);
+		screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity2(), 1);
+		screenCtrl.setVisibilityImageView(true, 1);
+		screenCtrl.setImagesInImageViewsAnswers(question.imageInByteArrayActivity1(), 0);
+		screenCtrl.setVisibilityImageView(true, 0);
+		screenCtrl.setVisibleTextField(false);
 	}
 
 	/**
@@ -556,11 +550,10 @@ public class MainCtrl {
 		String questionText = question.getActivityTitle();
 		screenCtrl.setUpLabel(questionText);
 
-		if (screenCtrl instanceof QuestionScreenSinglePlayerCtrl) {
-			this.clearImages();
-			screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
-			screenCtrl.setVisibleImageQuestion(true);
-		}
+		this.clearImages(screenCtrl);
+		screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
+		screenCtrl.setVisibleImageQuestion(true);
+
 		screenCtrl.setVisibleTextField(true);
 		screenCtrl.setVisibleButton1(false);
 		screenCtrl.setVisibleButton2(false);
@@ -570,12 +563,14 @@ public class MainCtrl {
 
 	/**
 	 * Hides all the visible imageViews.
+	 *
+	 * @param screenCtrl The screen controller which handles the task.
 	 */
-	public void clearImages() {
-		this.questionScreenSinglePlayerCtrl.setVisibleImageQuestion(false);
-		this.questionScreenSinglePlayerCtrl.setVisibilityImageView(false, 0);
-		this.questionScreenSinglePlayerCtrl.setVisibilityImageView(false, 1);
-		this.questionScreenSinglePlayerCtrl.setVisibilityImageView(false, 2);
+	public void clearImages(QuestionClass screenCtrl) {
+		screenCtrl.setVisibleImageQuestion(false);
+		screenCtrl.setVisibilityImageView(false, 0);
+		screenCtrl.setVisibilityImageView(false, 1);
+		screenCtrl.setVisibilityImageView(false, 2);
 	}
 
 	/**
