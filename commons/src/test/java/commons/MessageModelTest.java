@@ -7,62 +7,61 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class MessageModelTest {
-
 	MessageModel firstMessageModel;
 	MessageModel secondMessageModel;
 	MessageModel thirdMessageModel;
 
 	@BeforeEach
-	public void setUp() throws Exception {
-		firstMessageModel = new MessageModel("Hello", "Dimitar");
-		secondMessageModel = new MessageModel("Hello", "Alex");
-		thirdMessageModel = new MessageModel("Hello", "Dimitar");
+	public void setup() {
+		this.firstMessageModel = new MessageModel("Hello", "Dimitar");
+		this.secondMessageModel = new MessageModel("Hello", "Alex");
+		this.thirdMessageModel = new MessageModel("Hello", "Dimitar");
 	}
 
 	@Test
 	void constructorTest() {
-		assertNotNull(firstMessageModel);
+		assertNotNull(this.firstMessageModel);
 	}
 
 	@Test
 	void getMessage() {
-		assertEquals("Hello", firstMessageModel.getMessage());
+		assertEquals("Hello", this.firstMessageModel.getMessage());
 	}
 
 	@Test
 	void setMessage() {
-		firstMessageModel.setMessage("GG");
-		assertEquals("GG", firstMessageModel.getMessage());
+		this.firstMessageModel.setMessage("GG");
+		assertEquals("GG", this.firstMessageModel.getMessage());
 	}
 
 	@Test
 	void getNickname() {
-		assertEquals("Dimitar", firstMessageModel.getNickname());
+		assertEquals("Dimitar", this.firstMessageModel.getNickname());
 	}
 
 	@Test
 	void setNickname() {
-		firstMessageModel.setNickname("Viet Luong");
-		assertEquals("Viet Luong", firstMessageModel.getNickname());
+		this.firstMessageModel.setNickname("Viet Luong");
+		assertEquals("Viet Luong", this.firstMessageModel.getNickname());
 	}
 
 	@Test
 	void testEquals() {
-		assertEquals(firstMessageModel, thirdMessageModel);
+		assertEquals(this.firstMessageModel, this.thirdMessageModel);
 	}
 
 	@Test
 	void testEqualsToItSelf() {
-		assertEquals(firstMessageModel, firstMessageModel);
+		assertEquals(this.firstMessageModel, this.firstMessageModel);
 	}
 
 	@Test
 	void equalsTestFalse() {
-		assertNotEquals(firstMessageModel, secondMessageModel);
+		assertNotEquals(this.firstMessageModel, this.secondMessageModel);
 	}
 
 	@Test
 	void testHashCode() {
-		assertEquals(firstMessageModel.hashCode(), thirdMessageModel.hashCode());
+		assertEquals(this.firstMessageModel.hashCode(), this.thirdMessageModel.hashCode());
 	}
 }

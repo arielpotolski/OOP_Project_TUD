@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import client.utils.ServerUtils;
-
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,8 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 
 public class IntermediateSceneCtrl implements Initializable {
-	private MainCtrl mainCtrl;
-	private ServerUtils server;
+	private final MainCtrl mainCtrl;
 
 	@FXML
 	private ProgressBar timeUntilNextQuestion;
@@ -32,13 +29,11 @@ public class IntermediateSceneCtrl implements Initializable {
 
 	/**
 	 * Constructor for intermediate scene controller.
-	 *
-	 * @param mainCtrl the injected main controller.
+	 * @param mainCtrl The injected main controller.
 	 */
 	@Inject
 	public IntermediateSceneCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl = mainCtrl;
-		this.server = mainCtrl.getServer();
 	}
 
 	public void setLabelPoint(int point) {
@@ -59,9 +54,8 @@ public class IntermediateSceneCtrl implements Initializable {
 	}
 
 	/**
-	 * 	Decreases the progess in the progress bar by a certain, given, amount
-	 *
-	 * @param amount The amount of progress that the bar loses
+	 * Decreases the progess in the progress bar by a certain, given, amount.
+	 * @param amount The amount of progress that the bar loses.
 	 */
 	public void decreaseProgress(double amount) {
 		this.progress -= amount;
@@ -69,23 +63,26 @@ public class IntermediateSceneCtrl implements Initializable {
 	}
 
 	/**
-	 * 	Getter method for progress of the progress bar
-	 *
-	 * @return the progress
+	 * Getter method for progress of the progress bar.
+	 * @return The progress.
 	 */
 	public double getProgress() {
 		return this.progress;
 	}
 
+	/**
+	 * Set the progress of the time until the next question.
+	 * @param progress The progress.
+	 */
 	public void setProgress(double progress) {
 		this.progress = progress;
 		this.timeUntilNextQuestion.setProgress(progress);
 	}
 
 	/**
-	 * Changes the screen to leaderboard
-	 * @throws IOException if something goes wrong with the socket
-	 * @throws ClassNotFoundException if the class is not found
+	 * Changes the screen to leaderboard.
+	 * @throws IOException If something went wrong with the socket.
+	 * @throws ClassNotFoundException If the class was not found.
 	 */
 	public void changeToIntLeaderboard() throws IOException, ClassNotFoundException {
 		this.mainCtrl.changeToLeaderboard();

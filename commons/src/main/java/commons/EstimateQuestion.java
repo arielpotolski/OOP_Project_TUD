@@ -14,20 +14,20 @@ public class EstimateQuestion extends Question {
 
 	/**
 	 * Constructor of the class.
-	 * @param activity activity that will be used in the question.
+	 * @param activity Activity that will be used in the question.
 	 */
 	public EstimateQuestion(Activity activity) {
 		this.activity = activity;
 	}
 
 	/**
-	 * This empty constructor helps for create the Json Object
+	 * This empty constructor helps for create the Json Object.
 	 */
 	public EstimateQuestion() {}
 
 	/**
 	 * Getter for the activity's title.
-	 * @return the title of the activity in this question.
+	 * @return The title of the activity in this question.
 	 */
 	@JsonProperty("activity_title")
 	public String getActivityTitle() {
@@ -36,7 +36,7 @@ public class EstimateQuestion extends Question {
 
 	/**
 	 * Getter for the activity's image path.
-	 * @return the image path of the activity in this question.
+	 * @return The image path of the activity in this question.
 	 */
 	@JsonProperty("activity_image_path")
 	public String getActivityImagePath() {
@@ -44,36 +44,40 @@ public class EstimateQuestion extends Question {
 	}
 
 	/**
-	 * Useful for sending the information about a picture to the user
-	 * @return a byte array with information about the image for the question
+	 * Useful for sending the information about a picture to the user.
+	 * @return A byte array with information about the image for the question.
 	 */
 	public byte[] imageInByteArrayQuestion() {
-		return activity.getImageInArray();
+		return this.activity.getImageInArray();
 	}
 
 	/**
-	 * Calculates the total points earned by the player in this question.
-	 * It considers both the time took to answer and how close the given
-	 * answer is to the actual one. It gives more importance, however,
-	 * to being close to the actual answer.
-	 * @param maxPoints maximum of points the player can earn.
-	 * @param answerGiven answer given by the player.
-	 * @param progress time left
-	 * @return the amount of points player have earned in the question.
+	 * Calculates the total points earned by the player in this question.  It considers both the
+	 * time took to answer and how close the given answer is to the actual one.  It gives more
+	 * importance, however, to being close to the actual answer.
+	 * @param maxPoints Maximum of points the player can earn.
+	 * @param answerGiven Answer given by the player.
+	 * @param progress Time left.
+	 * @param doublePoints If the joker has been used.
+	 * @return The amount of points player have earned in the question.
 	 */
-	public int pointsEarned(int maxPoints, long answerGiven, double progress) {
-		double t = ((double) this.activity.getConsumptionInWh()) / ((double) answerGiven);
+	public int pointsEarned(
+		int maxPoints,
+		long answerGiven,
+		double progress,
+		boolean doublePoints
+	) {
+		double t = this.activity.getConsumptionInWh() / (double) answerGiven;
 		double partialPoints = Math.abs(Math.log10(t));
-		return (int) Math.round(1000 * progress / (partialPoints + 1));
+		int factor = doublePoints ? 2 : 1;
+		return (int) Math.round(factor * 1000 * progress / (partialPoints + 1));
 	}
 
 
 	/**
-	 * Compares this question with a given object and
-	 * determines if they are equal or not.
-	 * @param o object to compare this question to.
-	 * @return true if the objects have the same content and are of the same type;
-	 * false otherwise.
+	 * Compares this question with a given object and determines if they are equal or not.
+	 * @param o Object to compare this question to.
+	 * @return True if the objects have the same content and are of the same type; false otherwise.
 	 */
 	@Override
 	public boolean equals(Object o) {
@@ -95,13 +99,10 @@ public class EstimateQuestion extends Question {
 	}
 
 	/**
-	 *	Getter method for activity
-	 *
-	 * @return the activity that is enquired about
+	 * Getter method for activity.
+	 * @return The activity that is enquired about.
 	 */
 	public Activity getActivity() {
-		return activity;
+		return this.activity;
 	}
 }
-
-

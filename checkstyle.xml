@@ -64,7 +64,9 @@
 		<module name="TypeName"/>
 
 		<!-- Enforce use of the `this' keyword -->
-		<module name="RequireThis"/>
+		<module name="RequireThis">
+			<property name="validateOnlyOverlapping" value="false"/>
+		</module>
 
 		<!-- Extra stuff to avoid stupidity -->
 		<module name="EmptyBlock"/>

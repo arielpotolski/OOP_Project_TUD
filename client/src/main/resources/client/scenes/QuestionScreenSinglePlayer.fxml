@@ -13,96 +13,96 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.QuestionScreenSinglePlayerCtrl">
-   <children>
-      <ProgressBar fx:id="progressBarTime" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="900.0" progress="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <HBox prefHeight="600.0" prefWidth="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-         <children>
-            <VBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
-               <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0">
-                     <children>
-                        <Circle accessibleRole="BUTTON" fill="#4473c4" layoutX="50.0" layoutY="62.0" radius="21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                        <Circle fx:id="innerCircleTutorial" accessibleRole="BUTTON" fill="#b4c7e7" layoutX="50.0" layoutY="62.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-                        <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="44.0" layoutY="47.0" text="?" textFill="#999696">
-                           <font>
-                              <Font name="Calibri" size="26.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
-               </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="600.0" prefWidth="900.0"
+            style="-fx-background-color: #DEEAF6;" HBox.hgrow="ALWAYS" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.QuestionScreenSinglePlayerCtrl">
+   <ProgressBar fx:id="progressBarTime" minHeight="-Infinity" minWidth="-Infinity" prefHeight="18.0" prefWidth="900.0"
+                progress="1.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"/>
+   <HBox prefHeight="600.0" prefWidth="900.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+      <VBox alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
+         <Pane prefHeight="200.0" prefWidth="200.0">
+            <Circle accessibleRole="BUTTON" fill="#4473c4" layoutX="50.0" layoutY="62.0" radius="21.0"
+                    stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"/>
+            <Circle fx:id="innerCircleTutorial" accessibleRole="BUTTON" fill="#b4c7e7" layoutX="50.0"
+                    layoutY="62.0" radius="16.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0"/>
+            <Label accessibleRole="BUTTON" alignment="CENTER" layoutX="44.0" layoutY="47.0" text="?"
+                   textFill="#999696">
+               <font>
+                  <Font name="Calibri" size="26.0"/>
+               </font>
+            </Label>
+         </Pane>
+      </VBox>
+      <VBox alignment="TOP_CENTER" HBox.hgrow="SOMETIMES">
+         <Label fx:id="labelQuestion" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity"
+                prefHeight="147.0" prefWidth="570.0"
+                style="-fx-background-color: #b4c7e7; -fx-background-radius: 20;"
+                text="The question to be asked is being printed here" textAlignment="CENTER" wrapText="true">
+            <font>
+               <Font name="Calibri" size="18.0"/>
+            </font>
+            <VBox.margin>
+               <Insets top="40.0"/>
+            </VBox.margin>
+         </Label>
+         <ImageView fx:id="imageQuestion" fitHeight="102.0" fitWidth="200.0" pickOnBounds="true"
+                    preserveRatio="true">
+            <VBox.margin>
+               <Insets bottom="10.0" top="10.0"/>
+            </VBox.margin>
+         </ImageView>
+         <HBox fx:id="hBoxImages" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="105.0">
+            <VBox alignment="TOP_CENTER" prefWidth="237.0">
+               <ImageView fx:id="imageFirst" fitHeight="100.0" fitWidth="168.0" pickOnBounds="true"
+                          preserveRatio="true"/>
             </VBox>
-            <VBox alignment="TOP_CENTER" HBox.hgrow="SOMETIMES">
-               <children>
-                  <Label fx:id="labelQuestion" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" prefHeight="147.0" prefWidth="570.0" style="-fx-background-color: #b4c7e7; -fx-background-radius: 20;" text="The question to be asked is being printed here" textAlignment="CENTER" wrapText="true">
-                     <font>
-                        <Font name="Calibri" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets top="40.0" />
-                     </VBox.margin>
-                  </Label>
-                  <ImageView fx:id="imageQuestion" fitHeight="102.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <HBox fx:id="hBoxImages" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="105.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" prefWidth="237.0">
-                           <children>
-                              <ImageView fx:id="imageFirst" fitHeight="100.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="TOP_CENTER" prefWidth="237.0">
-                           <children>
-                              <ImageView fx:id="imageSecond" fitHeight="100.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </VBox>
-                        <VBox alignment="TOP_CENTER" prefWidth="237.0">
-                           <children>
-                              <ImageView fx:id="imageThird" fitHeight="100.0" fitWidth="168.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </HBox>
-                  <HBox alignment="TOP_CENTER" spacing="50.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Button fx:id="answerButton1" mnemonicParsing="false" onAction="#answerReturn" prefHeight="74.0" prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font name="Calibri" size="30.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="answerButton2" mnemonicParsing="false" onAction="#answerReturn" prefHeight="74.0" prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font name="Calibri" size="30.0" />
-                           </font>
-                        </Button>
-                        <Button fx:id="answerButton3" mnemonicParsing="false" onAction="#answerReturn" prefHeight="74.0" prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1" HBox.hgrow="ALWAYS">
-                           <font>
-                              <Font name="Calibri" size="30.0" />
-                           </font>
-                        </Button>
-                     </children>
-                     <padding>
-                        <Insets top="30.0" />
-                     </padding>
-                  </HBox>
-               </children>
+            <VBox alignment="TOP_CENTER" prefWidth="237.0">
+               <ImageView fx:id="imageSecond" fitHeight="100.0" fitWidth="168.0" pickOnBounds="true"
+                          preserveRatio="true"/>
             </VBox>
-            <VBox HBox.hgrow="ALWAYS">
-               <children>
-                  <Pane prefHeight="200.0" prefWidth="200.0" />
-               </children>
+            <VBox alignment="TOP_CENTER" prefWidth="237.0">
+               <ImageView fx:id="imageThird" fitHeight="100.0" fitWidth="168.0" pickOnBounds="true"
+                          preserveRatio="true"/>
             </VBox>
-         </children>
-      </HBox>
-      <TextField fx:id="textField" layoutX="375.0" layoutY="450.0" onAction="#answerReturn" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="376.0" />
-      <Label fx:id="estimateAnswer" alignment="CENTER" layoutX="350.0" layoutY="500.0" style="-fx-background-color: #b4c7e7; -fx-background-radius: 20;" text="The correct answer is [...]" textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="376.0">
-         <font>
-            <Font name="Calibri" size="18.0" />
-         </font>
-      </Label>
-   </children>
+         </HBox>
+         <HBox alignment="TOP_CENTER" spacing="50.0" VBox.vgrow="ALWAYS">
+            <padding>
+               <Insets top="30.0"/>
+            </padding>
+            <Button fx:id="answerButton1" mnemonicParsing="false" onAction="#answerReturn" prefHeight="74.0"
+                    prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;"
+                    text="Answer 1" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Calibri" size="30.0"/>
+               </font>
+            </Button>
+            <Button fx:id="answerButton2" mnemonicParsing="false" onAction="#answerReturn" prefHeight="74.0"
+                    prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;"
+                    text="Answer 1" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Calibri" size="30.0"/>
+               </font>
+            </Button>
+            <Button fx:id="answerButton3" mnemonicParsing="false" onAction="#answerReturn" prefHeight="74.0"
+                    prefWidth="239.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;"
+                    text="Answer 1" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="Calibri" size="30.0"/>
+               </font>
+            </Button>
+         </HBox>
+      </VBox>
+      <VBox HBox.hgrow="ALWAYS">
+         <Pane prefHeight="200.0" prefWidth="200.0"/>
+      </VBox>
+   </HBox>
+   <TextField fx:id="textField" layoutX="375.0" layoutY="450.0" onAction="#answerReturn" AnchorPane.leftAnchor="375.0"
+              AnchorPane.rightAnchor="376.0"/>
+   <Label fx:id="estimateAnswer" alignment="CENTER" layoutX="350.0" layoutY="500.0"
+          style="-fx-background-color: #b4c7e7; -fx-background-radius: 20;" text="The correct answer is [...]"
+          textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="376.0">
+      <font>
+         <Font name="Calibri" size="18.0"/>
+      </font>
+   </Label>
 </AnchorPane>

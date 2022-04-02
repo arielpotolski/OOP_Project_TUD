@@ -22,8 +22,7 @@ public class SinglePlayerPreGameCtrl {
 	private Button startButton;
 
 	/**
-	 * Constructor for single player pre-game controller.
-	 *
+	 * Constructor for the singleplayer pre-game controller.
 	 * @param mainCtrl the injected main controller.
 	 */
 	@Inject
@@ -33,19 +32,18 @@ public class SinglePlayerPreGameCtrl {
 	}
 
 	/**
-	 * the method change the single player pre-game screen to question screen.
+	 * The method changes the singleplayer pre-game screen to question screen.
 	 */
 	public void changeToQuestionScreen() throws IOException {
-		setNickname();
+		this.setNickname();
 		this.player = new Player(this.mainCtrl.getNickname(),0);
 		this.mainCtrl.getQuestions();
 		this.mainCtrl.showQuestionScreen(true);
 	}
 
 	/**
-	 * the method return a player
-	 *
-	 * @return a player
+	 * Return the player.
+	 * @return The player.
 	 */
 	public Player getPlayer() {
 		return this.player;
@@ -56,7 +54,7 @@ public class SinglePlayerPreGameCtrl {
 	}
 
 	/**
-	 * setter for the player's nickname from the MainCtrl nickname's field.
+	 * Setter for the player's nickname from the MainCtrl nickname's field.
 	 */
 	public void setNickname() {
 		this.mainCtrl.setNickname(this.nickname.getText());

@@ -32,8 +32,7 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 
 	/**
 	 * Constructor for global leader board controllers.
-	 *
-	 * @param mainCtrl the injected main controller.
+	 * @param mainCtrl The injected main controller.
 	 */
 	@Inject
 	public GlobalLeaderboardScreenCtrl(MainCtrl mainCtrl) {
@@ -43,12 +42,11 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 
 	/**
 	 * This method updates the list view by getting all the list of player in database.
-	 *
-	 * @param location
-	 * @param resources
+	 * @param _location Unused.
+	 * @param _resources Unused.
 	 */
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL _location, ResourceBundle _resources) {
 		this.scrollPane.prefWidthProperty().bind(this.listView.widthProperty());
 		this.scrollPane.prefHeightProperty().bind(this.listView.heightProperty());
 		this.scrollPane.setContent(this.listView);
@@ -63,6 +61,9 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 		this.listView.getItems().addAll(this.server.getPlayers());
 	}
 
+	/**
+	 * Jump to the splash screen.
+	 */
 	public void jumpToSplashScreen() {
 		this.mainCtrl.showSplashScreen();
 	}

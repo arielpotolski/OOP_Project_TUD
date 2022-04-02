@@ -1,19 +1,3 @@
-/*
- * Copyright 2021 Delft University of Technology
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package client.utils;
 
 import java.io.IOException;
@@ -56,11 +40,11 @@ public class ServerUtils {
 	private int id;
 	private Connection connection;
 	private StompSession session;
+	private static final int SERVER_PORT = 8080;
 
 	/**
 	 * Constructor for the connection between client and server.
-	 *
-	 * @param host the link that player types before playing the game
+	 * @param host The link that player types before playing the game.
 	 */
 	@Inject
 	public ServerUtils(String host) {
@@ -69,22 +53,26 @@ public class ServerUtils {
 	}
 
 	/**
-	 * Getter for the connection
-	 * @return the connection of this server
+	 * Getter for the connection.
+	 * @return The connection of this server.
 	 */
 	public Connection getConnection() {
-		return connection;
+		return this.connection;
 	}
 
 	private URI getServer() {
-		return UriBuilder.newInstance().scheme("http").host(this.host).port(8080).build();
+		return UriBuilder
+			.newInstance()
+			.scheme("http")
+			.host(this.host)
+			.port(SERVER_PORT)
+			.build();
 	}
 
 	/**
-	 * The method add a player to database
-	 *
-	 * @param player an information of a player.
-	 * @return a player
+	 * The method adds a player to the database.
+	 * @param player The player to add.
+	 * @return The added player.
 	 */
 	public Player addPlayer(Player player) {
 		return this.client
@@ -96,10 +84,9 @@ public class ServerUtils {
 
 
 	/**
-	 * Get a list of questions from the server
-	 *
-	 * @return A list of questions from the server
-	 * @param seed The seed that dictates the order of the questions
+	 * Get a list of questions from the server.
+	 * @return A list of questions from the server.
+	 * @param seed The seed that dictates the order of the questions.
 	 */
 	public List<Question> getQuestions(long seed) {
 		return this.client
@@ -123,9 +110,8 @@ public class ServerUtils {
 	}
 
 	/**
-	 * This method get a list of players for global leader board.
-	 *
-	 * @return a list of players.
+	 * This method gets a list of players for the global leaderboard.
+	 * @return A list of players.
 	 */
 	public List<Player> getPlayers() {
 		return this.client
@@ -137,9 +123,9 @@ public class ServerUtils {
 
 	/**
 	 * @param name Name of the player.
-	 * @return An optional LobbyResponse. If the request was successful
-	 * then the LobbyResponse is returned. Otherwise, `Optional.empty()`
-	 * is returned. This can happen if the name is already in use.
+	 * @return An optional LobbyResponse.  If the request was successful then the LobbyResponse is
+	 * returned.  Otherwise, `Optional.empty()` is returned.  This can happen if the name is already
+	 * in use.
 	 */
 	public Optional<LobbyResponse> connectToLobby(String name) throws ProcessingException {
 		try {
@@ -162,12 +148,11 @@ public class ServerUtils {
 		}
 	}
 
-
 	/**
 	 * Helper function for `refreshLobby` and `startMultiplayerGame`.
 	 * @param path API request path.
-	 * @return Optional LobbyResponse. Empty if something went wrong.
-	 * For example if the client timed out or is sending the wrong id.
+	 * @return Optional LobbyResponse.  Empty if something went wrong.  For example if the client
+	 * timed out or is sending the wrong id.
 	 */
 	private Optional<LobbyResponse> lobbyRequest(String path) {
 		try {
@@ -186,29 +171,24 @@ public class ServerUtils {
 
 	/**
 	 * Create a request to refresh our presence in the lobby.
-	 * @return LobbyResponse if the request was successful,
-	 * otherwise empty.
+	 * @return LobbyResponse if the request was successful, otherwise empty.
 	 */
 	public Optional<LobbyResponse> refreshLobby() {
-		return lobbyRequest("lobby/refresh/");
+		return this.lobbyRequest("lobby/refresh/");
 	}
 
 	/**
 	 * Create a request to start the multiplayer game.
-	 * @return LobbyResponse if the request was successful,
-	 * otherwise empty.
+	 * @return LobbyResponse if the request was successful, otherwise empty.
 	 */
 	public Optional<LobbyResponse> startMultiplayerGame() {
-		return lobbyRequest("lobby/start/");
+		return this.lobbyRequest("lobby/start/");
 	}
 
-
 	/**
-	 * Creates a TCP connection to the server and
-	 * sends a JOIN message.
+	 * Creates a TCP connection to the server and sends a JOIN message.
 	 * @param port Socket port to connect to.
-	 * @throws IOException When Connection creation fails
-	 * or if the sending fails.
+	 * @throws IOException When Connection creation fails or if the sending fails.
 	 */
 	public void makeConnection(int port) throws IOException {
 		this.connection = Connection.to(this.host, port);
@@ -243,27 +223,29 @@ public class ServerUtils {
 
 	private URI getWebSocketServer() {
 		return UriBuilder
-				.newInstance()
-				.scheme("ws")
-				.host(this.host)
-				.port(8080)
-				.path("/websocket")
-				.build();
+			.newInstance()
+			.scheme("ws")
+			.host(this.host)
+			.port(SERVER_PORT)
+			.path("/websocket")
+			.build();
 	}
 
 	/**
-	 * This method creates the connection between the client and the server
-	 * @return the session
+	 * This method creates the connection between the client and the server.
+	 * @return The session.
 	 */
 	public StompSession connect() {
 		var client = new StandardWebSocketClient();
 		var stomp = new WebSocketStompClient(client);
 		stomp.setMessageConverter(new MappingJackson2MessageConverter());
 
-		try{
-			return stomp.connect(getWebSocketServer().toString(),
-					new StompSessionHandlerAdapter() {}).get();
-		} catch(InterruptedException err) {
+		try {
+			return stomp.connect(
+				this.getWebSocketServer().toString(),
+				new StompSessionHandlerAdapter() {}
+			).get();
+		} catch (InterruptedException err) {
 			Thread.currentThread().interrupt();
 		} catch (ExecutionException err) {
 			throw new RuntimeException(err);
@@ -272,15 +254,14 @@ public class ServerUtils {
 	}
 
 	/**
-	 * This methods allow the server send the message to the client
-	 *
-	 * @param dest the client
-	 * @param type the type of the class
-	 * @param consumer consumer of the object
-	 * @param <T> the generic type of the object that the server send to the client
+	 * This method allows the server to send messages to the client.
+	 * @param dest The client.
+	 * @param type The type of the class.
+	 * @param consumer Consumer of the object.
+	 * @param <T> The generic type of the object that the server send to the client.
 	 */
 	public <T> void registerForMessages(String dest, Class<T> type, Consumer<T> consumer) {
-		session.subscribe(dest, new StompSessionHandlerAdapter() {
+		this.session.subscribe(dest, new StompSessionHandlerAdapter() {
 			@Override
 			public Type getPayloadType(StompHeaders headers) {
 				return type;
@@ -293,9 +274,9 @@ public class ServerUtils {
 	}
 
 	/**
-	 * This method allows the client to send the message to server
-	 * @param dest the destination - server
-	 * @param o the object - client will send this object to the server.
+	 * This method allows the client to send the message to server.
+	 * @param dest The destination - server.
+	 * @param o The object - client will send this object to the server.
 	 */
 	public void send(String dest, Object o) {
 		this.session.send(dest, o);
