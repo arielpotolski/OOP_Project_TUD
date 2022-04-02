@@ -394,47 +394,34 @@ public abstract class QuestionClass {
 		int correctAnswer = this.mainCtrl.getAnswer();
 		String color = "-fx-background-color: #808080; -fx-background-radius: 15;";
 
-		switch (correctAnswer) {
-		case 1: {
-			int eliminated = this.generateRandom();
-			while (eliminated == 0 || eliminated == 1) {
-				eliminated = this.generateRandom();
-			}
-			if (eliminated == 2) {
-				this.setStyleAnswerButton2(color);
-				this.answerButton2.setDisable(true);
-			} else {
-				this.setStyleAnswerButton3(color);
-				this.answerButton3.setDisable(true);
-			}
-			break;
-		} case 2: {
-			int eliminated = this.generateRandom();
-			while (eliminated == 0 || eliminated == 2) {
-				eliminated = this.generateRandom();
-			}
-			if (eliminated == 1) {
-				this.setStyleAnswerButton1(color);
-				this.answerButton1.setDisable(true);
-			} else {
-				this.setStyleAnswerButton3(color);
-				this.answerButton3.setDisable(true);
-			}
-			break;
-		} case 3: {
-			int eliminated = this.generateRandom();
-			while (eliminated == 0 || eliminated == 3) {
-				eliminated = this.generateRandom();
-			}
-			if (eliminated == 2) {
-				this.setStyleAnswerButton2(color);
-				this.answerButton2.setDisable(true);
-			} else {
-				this.setStyleAnswerButton1(color);
-				this.answerButton1.setDisable(true);
-			}
-			break;
-		} default:
+		this.eliminateAnswerHelper(correctAnswer, color);
+
+	}
+
+	/**
+	 * This method handles the actual elimination of an incorrect answer. It gets the
+	 * correct answer of the question as a parameter, so we do not eliminate it. It also
+	 * a String parameter color, which changes the color of the eliminated answer button to grey.
+	 * @param correctAnswer The correct answer of the question.
+	 * @param color The string which changes the color of the eliminated answer button.
+	 * @throws IOException If an answer cannot be eliminated in that question.
+	 */
+	private void eliminateAnswerHelper(int correctAnswer, String color) throws IOException {
+		int eliminated = this.generateRandom();
+		while (eliminated == 0 || eliminated == correctAnswer) {
+			eliminated = this.generateRandom();
+		}
+		switch (eliminated) {
+		case 1 -> {
+			this.setStyleAnswerButton1(color);
+			this.answerButton1.setDisable(true);
+		} case 2 -> {
+			this.setStyleAnswerButton2(color);
+			this.answerButton2.setDisable(true);
+		} case 3 -> {
+			this.setStyleAnswerButton3(color);
+			this.answerButton3.setDisable(true);
+		} default ->
 			throw new IOException("It's not possible to eliminate an answer for this question.");
 		}
 	}
