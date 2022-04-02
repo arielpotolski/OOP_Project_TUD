@@ -157,7 +157,7 @@
             </VBox>
             <VBox HBox.hgrow="ALWAYS">
                <children>
-                  <Pane prefHeight="100.0" prefWidth="300.0">
+                  <Pane fx:id="decreaseTimePane" prefHeight="100.0" prefWidth="300.0">
                      <VBox.margin>
                         <Insets top="110.0" />
                      </VBox.margin>
