@@ -923,7 +923,6 @@ public class MainCtrl {
 			}
 		}
 		return -1;
-
 	}
 
 	/**
