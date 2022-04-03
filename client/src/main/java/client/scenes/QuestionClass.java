@@ -10,7 +10,7 @@ import static commons.Utility.isNumeric;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -388,6 +388,6 @@ public abstract class QuestionClass {
 	// abstract classes
 	public abstract void showFinalScreen();
 	public abstract Player getPlayer();
-	public abstract Scene getScene();
+	public abstract Parent getScene();
 	public abstract void showIntermediateScene();
 }
