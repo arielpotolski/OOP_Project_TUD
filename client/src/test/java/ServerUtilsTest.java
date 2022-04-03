@@ -1,17 +1,26 @@
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
+import java.util.Objects;
 
 import client.utils.ServerUtils;
 import commons.Activity;
 import commons.HighestConsumptionQuestion;
+import commons.Player;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
+import javax.imageio.ImageIO;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static com.github.tomakehurst.wiremock.client.WireMock.equalToJson;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.put;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 
 public class ServerUtilsTest {
@@ -49,6 +58,29 @@ public class ServerUtilsTest {
 	@Test
 	void addPlayer() {
 
+		Player dimitar = new Player("Dimitar", 986);
+		Player mitnika = new Player("Mitnika", 199);
+		this.response.withBody("{\n" +
+				"        \"id\": 0,\n" +
+				"        \"nickname\": \"Dimitar\",\n" +
+				"        \"points\": 986\n" +
+				"    }");
+		this.mockServer.stubFor(
+				put("/api/players/addPlayer")
+						.withRequestBody(
+								equalToJson("{\n" +
+										"\"id\": 0,\n" +
+										"\"nickName\": \"Dimitar\",\n" +
+										"\"point\": 986,\n" +
+										"\"nickname\": \"Dimitar\",\n" +
+										"\"points\": 986\n" +
+										"}")
+						)
+						.willReturn(this.response)
+		);
+		Player result = this.serverUtils.addPlayer(dimitar);
+		assertNotEquals(mitnika, result);
+		assertEquals(dimitar, result);
 	}
 
 	@Test
@@ -178,13 +210,52 @@ public class ServerUtilsTest {
 
 	@Test
 	void makeConnection() throws IOException {
-//		this.serverUtils.makeConnection(8843);
 
 	}
 
 	@Test
-	void addActivity() {
+	void addActivity() throws IOException {
+		BufferedImage bufferedImage = ImageIO.read(
+				Objects.requireNonNull(
+						ServerUtilsTest
+								.class
+								.getClassLoader()
+								.getResourceAsStream("IMGNotFound.jpg")
+				)
+		);
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage, "jpg", bos);
+		String picture = Base64.getEncoder().encodeToString(bos.toByteArray());
+		Activity activity1 = new Activity("123", "title", 230, "pathpng", "some site");
+		Activity activity2 = new Activity("124", "titleFake", 212, "", "some site");
 
+		this.response.withBody("{\n" +
+				"\"valid\": true,\n" +
+				"\"id\": \"123\",\n" +
+				"\"title\": \"title\",\n" +
+				"\"consumption_in_wh\": 230,\n" +
+				"\"image_path\": \"pathpng\",\n" +
+				"\"source\": \"some site\",\n" +
+				"\"array-image\": \"\"\n" +
+				"}");
+		this.mockServer.stubFor(
+				put("/api/questions/addActivity")
+						.withRequestBody(
+								equalToJson("{\n" +
+										"\"valid\" : true,\n" +
+										"\"id\" : \"123\",\n" +
+										"\"title\" : \"title\",\n" +
+										"\"consumption_in_wh\" : 230,\n" +
+										"\"image_path\" : \"pathpng\",\n" +
+										"\"source\" : \"some site\",\n" +
+										"\"array-image\" :\"" + picture + "\"\n" +
+										"}")
+						)
+						.willReturn(this.response)
+		);
+		Activity result = this.serverUtils.addActivity(activity1);
+		assertNotEquals(activity2, result);
+		assertEquals(activity1, result);
 	}
 
 	@Test
