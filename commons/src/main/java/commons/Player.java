@@ -21,7 +21,7 @@ public class Player {
 	private int points;
 
 	@SuppressWarnings("unused")
-	private Player() {} // For object mapper
+	public Player() {} // For object mapper
 
 	public int getPoint() {
 		return this.points;

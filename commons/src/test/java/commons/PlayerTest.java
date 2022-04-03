@@ -19,6 +19,7 @@ public class PlayerTest {
 		Player examplePlayer = new Player("Don");
 		assertNotNull(examplePlayer);
 		assertNotNull(this.player);
+		assertNotNull(new Player());
 	}
 
 	@Test

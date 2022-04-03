@@ -34,6 +34,7 @@ public class HighestConsumptionQuestionTest{
 	@Test
 	public void constructorTest(){
 		assertNotNull(this.question);
+		assertNotNull(new HighestConsumptionQuestion());
 	}
 
 	@Test
@@ -158,5 +159,17 @@ public class HighestConsumptionQuestionTest{
 		ImageIO.write(bufferedImage, "jpg", bos);
 
 		assertArrayEquals(bos.toByteArray(), this.question.imageInByteArrayActivity3());
+	}
+
+	@Test
+	public void getCorrectAnswer() {
+		assertEquals(this.activity3, this.question.getCorrectAnswer());
+	}
+
+	@Test
+	public void getActivity() {
+		assertEquals(this.activity1, this.question.getActivity1());
+		assertEquals(this.activity2, this.question.getActivity2());
+		assertEquals(this.activity3, this.question.getActivity3());
 	}
 }

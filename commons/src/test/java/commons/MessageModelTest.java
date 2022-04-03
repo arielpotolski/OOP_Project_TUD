@@ -21,6 +21,7 @@ class MessageModelTest {
 	@Test
 	void constructorTest() {
 		assertNotNull(this.firstMessageModel);
+		assertNotNull(new MessageModel());
 	}
 
 	@Test
