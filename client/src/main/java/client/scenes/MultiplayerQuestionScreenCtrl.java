@@ -85,8 +85,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	public void sendMessage() {
 		String message = this.textFieldChat.getText();
-		this.server.send(
-			this.createWebSocketURL(this.gameId),
+		this.server.send(this.createWebSocketURL(this.gameId),
 			new MessageModel(message, this.player.getNickName())
 		);
 	}
@@ -94,8 +93,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	public void sendEmoji(ActionEvent event) {
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
-		this.server.send(
-			this.createWebSocketURL(this.gameId),
+		this.server.send(this.createWebSocketURL(this.gameId),
 			new MessageModel(emoji, this.player.getNickName())
 		);
 	}
@@ -128,9 +126,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		text.setFill(Color.color(0.934, 0.945, 0.996));
 		hBox.getChildren().add(textFlow);
 		this.textField.clear();
-		Platform.runLater(() -> {
-			this.vBox.getChildren().add(hBox);
-		});
+		Platform.runLater(() -> this.vBox.getChildren().add(hBox));
 	}
 
 	/**
@@ -152,9 +148,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		);
 		hBox.getChildren().add(textFlow);
 		this.textField.clear();
-		Platform.runLater(() -> {
-			this.vBox.getChildren().add(hBox);
-		});
+		Platform.runLater(() -> this.vBox.getChildren().add(hBox));
 	}
 
 	@Override
@@ -174,9 +168,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	public void decreaseOtherPlayersTime() throws IOException {
-		this.server.send(
-				this.createWebSocketURL(this.gameId),
-				new MessageModel("use decease other players' time joker",
+		this.server.send(this.createWebSocketURL(this.gameId),
+				new MessageModel("[Joker] Decrease Time",
 						this.player.getNickName()));
 		this.server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 		this.hideJoker(this.decreaseTimePane);
@@ -187,9 +180,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * @throws IOException
 	 */
 	public void eliminateIncorrectAnswer() throws IOException {
-		this.server.send(
-				this.createWebSocketURL(this.gameId),
-				new MessageModel("use eliminate incorrect answer joker",
+		this.server.send(this.createWebSocketURL(this.gameId),
+				new MessageModel("[Joker] Eliminate Incorrect Answer",
 						this.player.getNickName()));
 		super.eliminateAnswer();
 		this.hideJoker(this.eliminateAnswerPane);
@@ -278,9 +270,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * Uses the joker.
 	 */
 	public void useDoublePoints() {
-		this.server.send(
-				this.createWebSocketURL(this.gameId),
-				new MessageModel("use double point joker",
+		this.server.send(this.createWebSocketURL(this.gameId),
+				new MessageModel("[Joker] Double Points",
 						this.player.getNickName()));
 		this.hideJoker(this.doublePointsPane);
 		this.mainCtrl.setDoublePointsUsed(1);
