@@ -38,7 +38,7 @@ The game includes two game modes:
 
 
 #### You want to contribute with activities
-- Then you can just open the Admin Panel and from there you can create your own sets of activities, edit existing ones, delete and what no
+- Then you can just open the Admin Panel and from there you can create your own sets of activities, edit existing ones, delete and what not
 ## Group members
 
 | Profile Picture | Name | Email |
