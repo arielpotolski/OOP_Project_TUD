@@ -104,19 +104,20 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * This method will insert the message into the chat box after the client
 	 * sends the emojis to other clients.
 	 * @param message The message to send.
+	 * @param nickname The nickname of the player
 	 */
-	public void updateMessage(String message) {
+	public void updateMessage(String message, String nickname) {
 		switch (message) {
 		case "CRY":
 		case "WOW":
 		case "ANGRY":
 		case "VICTORY":
-			this.updateImage("/emojis/" + message + ".png");
+			this.updateImage("/emojis/" + message + ".png", nickname);
 			return;
 		}
 
 		HBox hBox = new HBox();
-		Text text = new Text(message);
+		Text text = new Text(nickname + ": " + message);
 		TextFlow textFlow = new TextFlow(text);
 		textFlow.setStyle(
 			"-fx-color: rgb(239,242,255);"
@@ -127,19 +128,23 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		text.setFill(Color.color(0.934, 0.945, 0.996));
 		hBox.getChildren().add(textFlow);
 		this.textField.clear();
-		Platform.runLater(() -> this.vBox.getChildren().add(hBox));
+		Platform.runLater(() -> {
+			this.vBox.getChildren().add(hBox);
+		});
 	}
 
 	/**
 	 * This method will insert the emojis into the chat box after the client
 	 * sends the emojis to other clients.
 	 * @param url The path of the image.
+	 * @param nickname The nickname of the player
 	 */
-	public void updateImage(String url) {
+	public void updateImage(String url, String nickname) {
 		Image image = new Image(url, 20, 20, false, true);
 		ImageView imageView = new ImageView(image);
 		HBox hBox = new HBox();
-		TextFlow textFlow = new TextFlow(imageView);
+		Text text = new Text(nickname + ": ");
+		TextFlow textFlow = new TextFlow(text, imageView);
 		textFlow.setStyle(
 			"-fx-color: rgb(239,242,255)"
 			+ ";-fx-background-color: rgb(15,125,242)"
@@ -147,7 +152,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		);
 		hBox.getChildren().add(textFlow);
 		this.textField.clear();
-		Platform.runLater(() -> this.vBox.getChildren().add(hBox));
+		Platform.runLater(() -> {
+			this.vBox.getChildren().add(hBox);
+		});
 	}
 
 	@Override
@@ -167,6 +174,10 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	public void decreaseOtherPlayersTime() throws IOException {
+		this.server.send(
+				this.createWebSocketURL(this.gameId),
+				new MessageModel("use decease other players' time joker",
+						this.player.getNickName()));
 		this.server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 		this.hideJoker(this.decreaseTimePane);
 	}
@@ -176,6 +187,10 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * @throws IOException
 	 */
 	public void eliminateIncorrectAnswer() throws IOException {
+		this.server.send(
+				this.createWebSocketURL(this.gameId),
+				new MessageModel("use eliminate incorrect answer joker",
+						this.player.getNickName()));
 		super.eliminateAnswer();
 		this.hideJoker(this.eliminateAnswerPane);
 	}
@@ -263,6 +278,10 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * Uses the joker.
 	 */
 	public void useDoublePoints() {
+		this.server.send(
+				this.createWebSocketURL(this.gameId),
+				new MessageModel("use double point joker",
+						this.player.getNickName()));
 		this.hideJoker(this.doublePointsPane);
 		this.mainCtrl.setDoublePointsUsed(1);
 	}

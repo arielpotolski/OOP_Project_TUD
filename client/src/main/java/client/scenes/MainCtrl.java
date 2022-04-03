@@ -315,9 +315,6 @@ public class MainCtrl {
 			screenCtrl = this.questionScreenSinglePlayerCtrl;
 		} else {
 			screenCtrl = this.multiplayerQuestionScreenCtrl;
-			this.server.registerForMessages("/message/receive", MessageModel.class, messageModel ->
-				this.multiplayerQuestionScreenCtrl.updateMessage(messageModel.getMessage())
-			);
 		}
 
 		// Enable all buttons to make sure the player can answer
@@ -1089,8 +1086,8 @@ public class MainCtrl {
 		return this.multiplayerQuestionScreenCtrl;
 	}
 
-	public void renderTheMessageInTheChatBox(String message) {
-		this.multiplayerQuestionScreenCtrl.updateMessage(message);
+	public void renderTheMessageInTheChatBox(String message, String nickname) {
+		this.multiplayerQuestionScreenCtrl.updateMessage(message, nickname);
 	}
 
 	public void setGameIdInMultiplayerQuestionScreen(int gameId) {
