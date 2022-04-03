@@ -33,9 +33,9 @@ public class Player {
 		this.points = point;
 	}
 
-	public Player(String nickname, int Point) {
+	public Player(String nickname, int points) {
 		this.nickname = nickname;
-		this.points = Point;
+		this.points = points;
 	}
 
 	public String getNickName() {
