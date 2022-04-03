@@ -61,7 +61,7 @@ public class EstimateQuestionTest {
 		Activity activity2 = new Activity("456", "act2", 1000, "pathpng2", "second site");
 		EstimateQuestion o = new EstimateQuestion(activity2);
 		assertNotEquals(this.question, o);
-		assertEquals(o , o);
+		assertEquals(o, o);
 		assertNotEquals(null, o);
 	}
 
