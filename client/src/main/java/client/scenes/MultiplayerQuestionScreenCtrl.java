@@ -61,6 +61,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	Pane decreaseTimePane;
 
 	@FXML
+	Pane eliminateAnswerPane;
+
+	@FXML
 	private TextField textFieldChat;
 
 	@FXML
@@ -169,6 +172,15 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	/**
+	 * Eliminates an incorrect answer when the corresponding joker is selected.
+	 * @throws IOException
+	 */
+	public void eliminateIncorrectAnswer() throws IOException {
+		super.eliminateAnswer();
+		this.hideJoker(this.eliminateAnswerPane);
+	}
+
+	/**
 	 * This method shows the intermediate scene.
 	 */
 	@Override
@@ -259,7 +271,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * Sets up all the joker panes.
 	 */
 	public void setAllJokersUp() {
-		// TODO for all other jokers set everything visible
+		this.eliminateAnswerPane.setVisible(true);
 		this.doublePointsPane.setVisible(true);
 		this.decreaseTimePane.setVisible(true);
 		this.mainCtrl.setDoublePointsUsed(0);

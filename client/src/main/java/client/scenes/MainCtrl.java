@@ -877,6 +877,55 @@ public class MainCtrl {
 	}
 
 	/**
+	 * Getter for the correct answer of a question.
+	 * @return An integer representing the button containing the correct answer.  -1 if the correct
+	 * answer is not found.
+	 */
+	public int getAnswer() {
+		if (this.question instanceof MCQuestion multipleChoiceQuestion) {
+			long button1 = multipleChoiceQuestion.getAnswer1();
+			long button2 = multipleChoiceQuestion.getAnswer2();
+			long button3 = multipleChoiceQuestion.getAnswer3();
+			long correctAnswer = multipleChoiceQuestion.getActivity().getConsumptionInWh();
+
+			if (correctAnswer == button1) {
+				return 1;
+			} else if (correctAnswer == button2) {
+				return 2;
+			} else if (correctAnswer == button3) {
+				return 3;
+			}
+		} else if (this.question instanceof HighestConsumptionQuestion highConsumptionQuestion) {
+			Activity activity1 = highConsumptionQuestion.getActivity1();
+			Activity activity2 = highConsumptionQuestion.getActivity2();
+			Activity activity3 = highConsumptionQuestion.getActivity3();
+			long correctAnswer = highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh();
+
+			if (correctAnswer == activity1.getConsumptionInWh()) {
+				return 1;
+			} else if (correctAnswer == activity2.getConsumptionInWh()) {
+				return 2;
+			} else if (correctAnswer == activity3.getConsumptionInWh()) {
+				return 3;
+			}
+		} else if (this.question instanceof InsteadOfQuestion insteadQuestion) {
+			Activity answer1 = insteadQuestion.getAnswer1();
+			Activity answer2 = insteadQuestion.getAnswer2();
+			Activity answer3 = insteadQuestion.getAnswer3();
+			long correctAnswer = insteadQuestion.correctAnswer().getConsumptionInWh();
+
+			if (correctAnswer == answer1.getConsumptionInWh()) {
+				return 1;
+			} else if (correctAnswer == answer2.getConsumptionInWh()) {
+				return 2;
+			} else if (correctAnswer == answer3.getConsumptionInWh()) {
+				return 3;
+			}
+		}
+		return -1;
+	}
+
+	/**
 	 * Getter method for the singleplayer pre game controller controller.
 	 * @return The singleplayer pre game controller.
 	 */
