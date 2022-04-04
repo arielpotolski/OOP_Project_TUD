@@ -45,51 +45,52 @@ import org.slf4j.LoggerFactory;
 
 public class MainCtrl {
 	private Stage primaryStage;
+	private Scene primaryScene;
 
 	private SplashCtrl splashCtrl;
-	private Scene splashScreen;
+	private Parent splashScreen;
 
 	private SinglePlayerPreGameCtrl singlePlayerPreGameCtrl;
-	private Scene singlePlayerPreGameScreen;
+	private Parent singlePlayerPreGameScreen;
 
 	private MultiplayerPreGameCtrl multiplayerPreGameCtrl;
-	private Scene multiplayerPreGameScreen;
+	private Parent multiplayerPreGameScreen;
 
 	private QuestionScreenSinglePlayerCtrl questionScreenSinglePlayerCtrl;
-	private Scene questionScreenSinglePlayer;
+	private Parent questionScreenSinglePlayer;
 
 	private GlobalLeaderboardScreenCtrl globalLeaderboardScreenCtrl;
-	private Scene globalLeaderboard;
+	private Parent globalLeaderboard;
 
 	private IntermediateSceneCtrl intermediateSceneCtrl;
-	private Scene intermediateScene;
+	private Parent intermediateScene;
 
 	private SinglePlayerFinalScreenCtrl singlePlayerFinalSceneCtrl;
-	private Scene singlePlayerFinalScene;
+	private Parent singlePlayerFinalScene;
 
 	private WaitingScreenCtrl waitingScreenCtrl;
-	private Scene waitingScreen;
+	private Parent waitingScreen;
 
 	private AdminInterfaceScreenCtrl adminInterfaceScreenCtrl;
-	private Scene adminInterfaceScreen;
+	private Parent adminInterfaceScreen;
 
 	private AdminAddActivityScreenCtrl adminAddActivityScreenCtrl;
-	private Scene adminAddActivityScreen;
+	private Parent adminAddActivityScreen;
 
 	private AdminRemoveActivityScreenCtrl adminRemoveActivityScreenCtrl;
-	private Scene adminRemoveActivityScreen;
+	private Parent adminRemoveActivityScreen;
 
 	private AdminEditActivityScreenCtrl adminEditActivityScreenCtrl;
-	private Scene adminEditActivityScreen;
+	private Parent adminEditActivityScreen;
 
 	private TopPlayersLeaderboardCtrl topPlayersLeaderboardCtrl;
-	private Scene topPlayersLeaderboard;
+	private Parent topPlayersLeaderboard;
 
 	private MultiplayerQuestionScreenCtrl multiplayerQuestionScreenCtrl;
-	private Scene multiPlayerQuestionScreen;
+	private Parent multiPlayerQuestionScreen;
 
 	private IntLeaderboardCtrl intLeaderboardCtrl;
-	private Scene intermediateLeaderboardScreen;
+	private Parent intermediateLeaderboardScreen;
 
 	private final ServerUtils server;
 
@@ -171,54 +172,57 @@ public class MainCtrl {
 		this.primaryStage = primaryStage;
 
 		this.multiplayerPreGameCtrl = multiPlayer.getKey();
-		this.multiplayerPreGameScreen = new Scene(multiPlayer.getValue());
+		this.multiplayerPreGameScreen = multiPlayer.getValue();
 
 		this.singlePlayerPreGameCtrl = singlePlayer.getKey();
-		this.singlePlayerPreGameScreen = new Scene(singlePlayer.getValue());
+		this.singlePlayerPreGameScreen = singlePlayer.getValue();
 
 		this.splashCtrl = splash.getKey();
-		this.splashScreen = new Scene(splash.getValue());
+		this.splashScreen = splash.getValue();
 
 		this.questionScreenSinglePlayerCtrl = questionScreenSinglePlayer.getKey();
-		this.questionScreenSinglePlayer = new Scene(questionScreenSinglePlayer.getValue());
+		this.questionScreenSinglePlayer = questionScreenSinglePlayer.getValue();
 
 		this.globalLeaderboardScreenCtrl = globalLeaderBoard.getKey();
-		this.globalLeaderboard = new Scene(globalLeaderBoard.getValue());
+		this.globalLeaderboard = globalLeaderBoard.getValue();
 
 		this.intermediateSceneCtrl = intermediateScene.getKey();
-		this.intermediateScene = new Scene(intermediateScene.getValue());
+		this.intermediateScene = intermediateScene.getValue();
 
 		this.singlePlayerFinalSceneCtrl = singlePlayerFinalScene.getKey();
-		this.singlePlayerFinalScene = new Scene(singlePlayerFinalScene.getValue());
+		this.singlePlayerFinalScene = singlePlayerFinalScene.getValue();
 
 		this.waitingScreenCtrl = waitingScreen.getKey();
-		this.waitingScreen = new Scene(waitingScreen.getValue());
+		this.waitingScreen = waitingScreen.getValue();
 
 		this.adminInterfaceScreenCtrl = adminInterfaceScreen.getKey();
-		this.adminInterfaceScreen = new Scene(adminInterfaceScreen.getValue());
+		this.adminInterfaceScreen = adminInterfaceScreen.getValue();
 
 		this.adminAddActivityScreenCtrl = adminAddActivityScreen.getKey();
-		this.adminAddActivityScreen = new Scene(adminAddActivityScreen.getValue());
+		this.adminAddActivityScreen = adminAddActivityScreen.getValue();
 
 		this.adminRemoveActivityScreenCtrl = adminRemoveActivityScreen.getKey();
-		this.adminRemoveActivityScreen = new Scene(adminRemoveActivityScreen.getValue());
+		this.adminRemoveActivityScreen = adminRemoveActivityScreen.getValue();
 
 		this.adminEditActivityScreenCtrl = adminEditActivityScreen.getKey();
-		this.adminEditActivityScreen = new Scene(adminEditActivityScreen.getValue());
+		this.adminEditActivityScreen = adminEditActivityScreen.getValue();
 
 		this.topPlayersLeaderboardCtrl = topPlayersLeaderboard.getKey();
-		this.topPlayersLeaderboard = new Scene(topPlayersLeaderboard.getValue());
+		this.topPlayersLeaderboard = topPlayersLeaderboard.getValue();
 
 		this.multiplayerQuestionScreenCtrl = multiPlayerQuestion.getKey();
-		this.multiPlayerQuestionScreen = new Scene(multiPlayerQuestion.getValue());
+		this.multiPlayerQuestionScreen = multiPlayerQuestion.getValue();
 
 		this.intLeaderboardCtrl = intLeaderboard.getKey();
-		this.intermediateLeaderboardScreen = new Scene(intLeaderboard.getValue());
+		this.intermediateLeaderboardScreen = intLeaderboard.getValue();
 
 		this.setEventHandlerForClosure();
 		this.closeConfirmation();
 
 		this.multiplayerQuestionScreenCtrl.setMainCtrl(this);
+
+		this.primaryScene = new Scene(this.splashScreen);
+		this.primaryStage.setScene(this.primaryScene);
 
 		this.showSplashScreen();
 		this.primaryStage.show();
@@ -273,7 +277,7 @@ public class MainCtrl {
 	 */
 	public void showSplashScreen() {
 		this.primaryStage.setTitle("Quizzzz");
-		this.primaryStage.setScene(this.splashScreen);
+		this.primaryScene.setRoot(this.splashScreen);
 		this.primaryStage.setOnCloseRequest(this.confirmCloseEventHandler);
 	}
 
@@ -282,7 +286,7 @@ public class MainCtrl {
 	 */
 	public void showSinglePlayerPreGameScreen() {
 		this.primaryStage.setTitle("Singleplayer");
-		this.primaryStage.setScene(this.singlePlayerPreGameScreen);
+		this.primaryScene.setRoot(this.singlePlayerPreGameScreen);
 	}
 
 	/**
@@ -290,7 +294,7 @@ public class MainCtrl {
 	 */
 	public void showMultiplePlayersPreGameScreen() {
 		this.primaryStage.setTitle("Multiplayer");
-		this.primaryStage.setScene(this.multiplayerPreGameScreen);
+		this.primaryScene.setRoot(this.multiplayerPreGameScreen);
 	}
 
 	/**
@@ -299,7 +303,7 @@ public class MainCtrl {
 	 */
 	public void showWaitingScreen(LobbyResponse firstResponse) {
 		this.primaryStage.setTitle("Waiting Lobby");
-		this.primaryStage.setScene(this.waitingScreen);
+		this.primaryScene.setRoot(this.waitingScreen);
 		this.waitingScreenCtrl.beginActiveRefresh();
 	}
 
@@ -379,7 +383,7 @@ public class MainCtrl {
 			this.setUpInsteadQuestion((InsteadOfQuestion) this.question, screenCtrl);
 		}
 
-		this.primaryStage.setScene(screenCtrl.getScene());
+		this.primaryScene.setRoot(screenCtrl.getScene());
 	}
 
 	public ServerUtils getServer() {
@@ -574,7 +578,7 @@ public class MainCtrl {
 	 */
 	public void showAdminInterfaceScreen() {
 		this.primaryStage.setTitle("Admin Interface");
-		this.primaryStage.setScene(this.adminInterfaceScreen);
+		this.primaryScene.setRoot(this.adminInterfaceScreen);
 	}
 
 	/**
@@ -583,7 +587,7 @@ public class MainCtrl {
 	public void showAdminAddActivityScreen() {
 		this.refreshActivities();
 		this.primaryStage.setTitle("Add Activity");
-		this.primaryStage.setScene(this.adminAddActivityScreen);
+		this.primaryScene.setRoot(this.adminAddActivityScreen);
 	}
 
 	/**
@@ -592,7 +596,7 @@ public class MainCtrl {
 	public void showAdminRemoveActivityScreen() {
 		this.refreshActivities();
 		this.primaryStage.setTitle("Remove Activity");
-		this.primaryStage.setScene(this.adminRemoveActivityScreen);
+		this.primaryScene.setRoot(this.adminRemoveActivityScreen);
 	}
 
 	/**
@@ -601,7 +605,7 @@ public class MainCtrl {
 	public void showAdminEditActivityScreen() {
 		this.refreshActivities();
 		this.primaryStage.setTitle("Edit Activity");
-		this.primaryStage.setScene(this.adminEditActivityScreen);
+		this.primaryScene.setRoot(this.adminEditActivityScreen);
 	}
 
 	public List<Activity> getActivities() {
@@ -629,7 +633,7 @@ public class MainCtrl {
 	public void showGlobalLeaderboardScreen() {
 		this.globalLeaderboardScreenCtrl.getItems();
 		this.primaryStage.setTitle("Leaderboard");
-		this.primaryStage.setScene(this.globalLeaderboard);
+		this.primaryScene.setRoot(this.globalLeaderboard);
 	}
 
 	/**
@@ -640,7 +644,7 @@ public class MainCtrl {
 		this.singlePlayerFinalSceneCtrl.setCorrectAnswers(this.numberOfCorrectAnswers);
 		this.singlePlayerFinalSceneCtrl.addPlayer(this.player);
 		this.primaryStage.setTitle("Final Score");
-		this.primaryStage.setScene(this.singlePlayerFinalScene);
+		this.primaryScene.setRoot(this.singlePlayerFinalScene);
 		this.questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
 	}
 
@@ -933,7 +937,7 @@ public class MainCtrl {
 	 * Getter method for the singleplayer pre game controller screen.
 	 * @return The singleplayer pre game screen.
 	 */
-	public Scene getSinglePlayerPreGameScreen() {
+	public Parent getSinglePlayerPreGameScreen() {
 		return this.questionScreenSinglePlayer;
 	}
 
@@ -949,7 +953,7 @@ public class MainCtrl {
 	 * Getter method for the multiplayer question screen.
 	 * @return The multiplayer question screen.
 	 */
-	public Scene getMultiplayerQuestionScreen() {
+	public Parent getMultiplayerQuestionScreen() {
 		return this.multiPlayerQuestionScreen;
 	}
 
@@ -997,7 +1001,7 @@ public class MainCtrl {
 	 * Getter method for the intermediate scene.
 	 * @return The intermediate scene.
 	 */
-	public Scene getIntermediateScene() {
+	public Parent getIntermediateScene() {
 		return this.intermediateScene;
 	}
 
@@ -1005,7 +1009,7 @@ public class MainCtrl {
 	 * Getter method for the intermediate leaderboard scene.
 	 * @return The intermediate leaderboard scene.
 	 */
-	public Scene getIntermediateLeaderboardScreen() {
+	public Parent getIntermediateLeaderboardScreen() {
 		return this.intermediateLeaderboardScreen;
 	}
 
@@ -1033,7 +1037,7 @@ public class MainCtrl {
 	 */
 	public void showTopPlayersLeaderboard() {
 		this.primaryStage.setTitle("Final Leaderboard");
-		this.primaryStage.setScene(this.topPlayersLeaderboard);
+		this.primaryScene.setRoot(this.topPlayersLeaderboard);
 	}
 
 	/**
@@ -1072,7 +1076,7 @@ public class MainCtrl {
 	 * Changes the scene to intermediate leaderboard.
 	 */
 	public void changeToLeaderboard() {
-		this.primaryStage.setScene(this.intermediateLeaderboardScreen);
+		this.primaryScene.setRoot(this.intermediateLeaderboardScreen);
 		this.primaryStage.setTitle("Leaderboard");
 		this.intLeaderboardCtrl.displayScores();
 	}
@@ -1091,5 +1095,13 @@ public class MainCtrl {
 
 	public void setGameIdInMultiplayerQuestionScreen(int gameId) {
 		this.multiplayerQuestionScreenCtrl.setGameId(gameId);
+	}
+
+	/**
+	 *  Getter method for the primary scene assigned to the stage
+	 * @return the primary scene assigned to the stage
+	 */
+	public Scene getPrimaryScene() {
+		return this.primaryScene;
 	}
 }

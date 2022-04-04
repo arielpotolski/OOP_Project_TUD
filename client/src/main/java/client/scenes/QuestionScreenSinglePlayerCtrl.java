@@ -11,6 +11,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -46,7 +47,7 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 	 * @return The scene assigned to singleplayer question screen.
 	 */
 	@Override
-	public Scene getScene() {
+	public Parent getScene() {
 		return this.mainCtrl.getSinglePlayerPreGameScreen();
 	}
 
@@ -56,12 +57,13 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 	public void showIntermediateScene() {
 		IntermediateSceneCtrl intermediateSceneCtrl = this.mainCtrl.getIntermediateSceneCtrl();
 		Stage primaryStage = this.mainCtrl.getPrimaryStage();
+		Scene primaryScene = this.mainCtrl.getPrimaryScene();
 
 		intermediateSceneCtrl.setQuestionAnswer(this.mainCtrl.getNumberOfQuestionsAnswered());
 		intermediateSceneCtrl.setLabelPoint(this.mainCtrl.getPlayer().getPoint());
 		intermediateSceneCtrl.setCurrentQuestionPointsEarned(this.mainCtrl.getCurrentPoints());
 		primaryStage.setTitle("Intermediate Scene");
-		primaryStage.setScene(this.mainCtrl.getIntermediateScene());
+		primaryScene.setRoot(this.mainCtrl.getIntermediateScene());
 
 		// This timeline will execute on another thread - run the count-down timer.
 		intermediateSceneCtrl.setProgress(1f);
