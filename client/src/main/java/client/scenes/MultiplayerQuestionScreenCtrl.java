@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -194,6 +195,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	public void showIntermediateScene() {
 		IntLeaderboardCtrl intLeaderboardCtrl = this.mainCtrl.getIntermediateLeaderboardCtrl();
 		Stage primaryStage = this.mainCtrl.getPrimaryStage();
+		Scene primaryScene = this.mainCtrl.getPrimaryScene();
 
 		intLeaderboardCtrl.setProgress(1f);
 		Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e ->
@@ -203,7 +205,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		intLeaderboardCtrl.displayScores();
 
 		primaryStage.setTitle("Intermediate Scene");
-		primaryStage.setScene(this.mainCtrl.getIntermediateLeaderboardScreen());
+		primaryScene.setRoot(this.mainCtrl.getIntermediateLeaderboardScreen());
 
 		// This timeline will execute on another thread - run the count-down timer.
 		intLeaderboardCtrl.setProgress(1f);
@@ -237,7 +239,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	@Override
-	public Scene getScene() {
+	public Parent getScene() {
 		return this.mainCtrl.getMultiplayerQuestionScreen();
 	}
 
