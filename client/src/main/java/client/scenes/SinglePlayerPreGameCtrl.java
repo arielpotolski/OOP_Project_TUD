@@ -38,6 +38,7 @@ public class SinglePlayerPreGameCtrl {
 		this.setNickname();
 		this.player = new Player(this.mainCtrl.getNickname(),0);
 		this.mainCtrl.getQuestions();
+		this.mainCtrl.resetNumberOfQuestionsAnswered();
 		this.mainCtrl.showQuestionScreen(true);
 	}
 
