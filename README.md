@@ -6,8 +6,8 @@ Add your own name (do not add the names for others!) to the section below.
 
 ## Description of project
 The project aims to **increase** the energy awareness of the player. In modern society, the average person takes energy for granted without
-actually realising how their actions influence **energy consumption** of the whole world. Through this interactive game we, the developers, hope
-that every player will become not only more aware of their energy usage but also be surprised by how much or how little certain actions take in comparison to others.
+actually realizing how their actions influence the **energy consumption** of the whole world. Through this interactive game we, the developers, hope
+that every player will become not only more aware of their energy usage but also be surprised by how much or how little certain actions use in comparison to others.
 
 The game includes two game modes:
 #### Single Player
@@ -38,7 +38,7 @@ The game includes two game modes:
 
 
 #### You want to contribute with activities
-- Then you can just open the Admin Panel and from there you can create your own sets of activities, edit existing ones, delete and what not
+- Open the Admin Panel and from there you can create your own sets of activities, edit existing ones, or delete them
 ## Group members
 
 | Profile Picture | Name | Email |
@@ -56,6 +56,5 @@ The game includes two game modes:
 - The config file needs to be placed in the repository folder, and you name it just *quizzzz.config*
 
 ## How to contribute to it
-Everybody is free to download the whole game and develop. Once you want to contribute you can contact every one of the developers so that they can discuss with everybody else the changes made to the project
-
+Everybody is free to download the whole game and develop. Once you want to contribute you can contact any of the developers so that they can discuss the changes with each other.
 ## Copyright / License (opt.)
