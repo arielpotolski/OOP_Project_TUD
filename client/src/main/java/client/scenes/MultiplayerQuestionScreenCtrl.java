@@ -218,10 +218,6 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		});
 	}
 
-	public void setPort(int port) {
-		this.port = port;
-	}
-
 	/**
 	 * This method shows answer when player click on one of the three buttons.
 	 * @param event The player click on the button.
