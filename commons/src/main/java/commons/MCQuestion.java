@@ -81,10 +81,12 @@ public class MCQuestion extends Question{
 	private long generateAnswer(long seed) {
 		long result;
 		Random random = new Random(seed);
+		System.out.println("seed");
+		System.out.println(seed);
 		do {
 			// At random principle answer is generated and this answer is of the same magnitude
 			// At least in most of the time
-			double moreOrLess = random.nextDouble() * 2;
+			double moreOrLess = random.nextDouble() * 3;
 			result = Math.round(this.activity.getConsumptionInWh() * moreOrLess);
 		} while (result == this.activity.getConsumptionInWh());
 		return result;
@@ -98,12 +100,13 @@ public class MCQuestion extends Question{
 	private HashMap<Integer, Long> generateAnswers(long seed) {
 		this.generateSequence(seed);
 		HashMap<Integer, Long> result = new HashMap<>();
+		Random random = new Random(seed);
 		for (Integer i : this.order) {
 			result.put(
 				i,
 				this.order.indexOf(i) == 0
 					? this.activity.getConsumptionInWh()
-					: this.generateAnswer(seed)
+					: this.generateAnswer(random.nextInt())
 			);
 		}
 		return result;
