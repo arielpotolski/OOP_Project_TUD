@@ -1,17 +1,17 @@
 package server.api;
 
 import java.lang.reflect.Type;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 import commons.MessageModel;
 import commons.Player;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static server.CustomAssertions.assertResponseEquals;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -63,13 +63,15 @@ class PlayerControllerTest {
 	}
 
 	@Test
-	void verifySendMessageIsWorking() throws ExecutionException, InterruptedException, TimeoutException {
+	void verifySendMessageIsWorking() throws ExecutionException,
+			InterruptedException, TimeoutException {
 		BlockingQueue<MessageModel> blockingQueue = new ArrayBlockingQueue(1);
 
-		webSocketStompClient.setMessageConverter(new MappingJackson2MessageConverter());
+		this.webSocketStompClient.setMessageConverter(
+				new MappingJackson2MessageConverter());
 
-		StompSession session = webSocketStompClient
-				.connect(String.format("ws://localhost:%d/websocket", port),
+		StompSession session = this.webSocketStompClient
+				.connect(String.format("ws://localhost:%d/websocket", this.port),
 						new StompSessionHandlerAdapter() {})
 				.get(1, SECONDS);
 
@@ -85,8 +87,8 @@ class PlayerControllerTest {
 			}
 		});
 
-		session.send("/app/chat/1", messageModel);
+		session.send("/app/chat/1", this.messageModel);
 
-		assertEquals(messageModel, blockingQueue.poll(1, SECONDS));
+		assertEquals(this.messageModel, blockingQueue.poll(1, SECONDS));
 	}
 }
