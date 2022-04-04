@@ -1,22 +1,45 @@
 package server.api;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 import commons.MessageModel;
 import commons.Player;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 import static server.CustomAssertions.assertResponseEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompHeaders;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
+import org.springframework.web.socket.sockjs.client.SockJsClient;
+import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PlayerControllerTest {
+
+	@LocalServerPort
+	private Integer port;
+
 	private Player player;
 	private PlayerController playerController;
 	private MessageModel messageModel;
 	List<Player> listPlayers;
+	private WebSocketStompClient webSocketStompClient;
 
 	@BeforeEach
 	void setup() {
@@ -25,6 +48,8 @@ class PlayerControllerTest {
 		this.listPlayers.add(this.player);
 		this.playerController = new PlayerController(new DummyPlayerRepository());
 		this.messageModel = new MessageModel("Hello World", "Viet Luong");
+		this.webSocketStompClient = new WebSocketStompClient(new SockJsClient(
+				List.of(new WebSocketTransport(new StandardWebSocketClient()))));
 	}
 
 	@Test
@@ -38,7 +63,30 @@ class PlayerControllerTest {
 	}
 
 	@Test
-	void sendMessage() {
-		assertEquals(this.messageModel, this.playerController.sendMessage("0", this.messageModel));
+	void verifySendMessageIsWorking() throws ExecutionException, InterruptedException, TimeoutException {
+		BlockingQueue<MessageModel> blockingQueue = new ArrayBlockingQueue(1);
+
+		webSocketStompClient.setMessageConverter(new MappingJackson2MessageConverter());
+
+		StompSession session = webSocketStompClient
+				.connect(String.format("ws://localhost:%d/websocket", port),
+						new StompSessionHandlerAdapter() {})
+				.get(1, SECONDS);
+
+		session.subscribe("/message/receive/1", new StompSessionHandlerAdapter() {
+			@Override
+			public Type getPayloadType(StompHeaders headers) {
+				return MessageModel.class;
+			}
+			@Override
+			public void handleFrame(StompHeaders headers, Object payload) {
+				System.out.println("Received message: " + payload);
+				blockingQueue.add((MessageModel) payload);
+			}
+		});
+
+		session.send("/app/chat/1", messageModel);
+
+		assertEquals(messageModel, blockingQueue.poll(1, SECONDS));
 	}
 }
