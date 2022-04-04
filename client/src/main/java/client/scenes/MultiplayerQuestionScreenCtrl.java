@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -85,8 +86,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	public void sendMessage() {
 		String message = this.textFieldChat.getText();
-		this.server.send(
-			this.createWebSocketURL(this.gameId),
+		this.server.send(this.createWebSocketURL(this.gameId),
 			new MessageModel(message, this.player.getNickname())
 		);
 	}
@@ -94,8 +94,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	public void sendEmoji(ActionEvent event) {
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
-		this.server.send(
-			this.createWebSocketURL(this.gameId),
+		this.server.send(this.createWebSocketURL(this.gameId),
 			new MessageModel(emoji, this.player.getNickname())
 		);
 	}
@@ -104,19 +103,20 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * This method will insert the message into the chat box after the client
 	 * sends the emojis to other clients.
 	 * @param message The message to send.
+	 * @param nickname The nickname of the player
 	 */
-	public void updateMessage(String message) {
+	public void updateMessage(String message, String nickname) {
 		switch (message) {
 		case "CRY":
 		case "WOW":
 		case "ANGRY":
 		case "VICTORY":
-			this.updateImage("/emojis/" + message + ".png");
+			this.updateImage("/emojis/" + message + ".png", nickname);
 			return;
 		}
 
 		HBox hBox = new HBox();
-		Text text = new Text(message);
+		Text text = new Text(nickname + ": " + message);
 		TextFlow textFlow = new TextFlow(text);
 		textFlow.setStyle(
 			"-fx-color: rgb(239,242,255);"
@@ -134,12 +134,14 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * This method will insert the emojis into the chat box after the client
 	 * sends the emojis to other clients.
 	 * @param url The path of the image.
+	 * @param nickname The nickname of the player
 	 */
-	public void updateImage(String url) {
+	public void updateImage(String url, String nickname) {
 		Image image = new Image(url, 20, 20, false, true);
 		ImageView imageView = new ImageView(image);
 		HBox hBox = new HBox();
-		TextFlow textFlow = new TextFlow(imageView);
+		Text text = new Text(nickname + ": ");
+		TextFlow textFlow = new TextFlow(text, imageView);
 		textFlow.setStyle(
 			"-fx-color: rgb(239,242,255)"
 			+ ";-fx-background-color: rgb(15,125,242)"
@@ -167,6 +169,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	public void decreaseOtherPlayersTime() throws IOException {
+		this.server.send(this.createWebSocketURL(this.gameId),
+				new MessageModel("[Joker] Decrease Time",
+						this.player.getNickname()));
 		this.server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 		this.hideJoker(this.decreaseTimePane);
 	}
@@ -176,6 +181,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * @throws IOException
 	 */
 	public void eliminateIncorrectAnswer() throws IOException {
+		this.server.send(this.createWebSocketURL(this.gameId),
+				new MessageModel("[Joker] Eliminate Incorrect Answer",
+						this.player.getNickname()));
 		super.eliminateAnswer();
 		this.hideJoker(this.eliminateAnswerPane);
 	}
@@ -187,6 +195,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	public void showIntermediateScene() {
 		IntLeaderboardCtrl intLeaderboardCtrl = this.mainCtrl.getIntermediateLeaderboardCtrl();
 		Stage primaryStage = this.mainCtrl.getPrimaryStage();
+		Scene primaryScene = this.mainCtrl.getPrimaryScene();
 
 		intLeaderboardCtrl.setProgress(1f);
 		Timeline timeLine = new Timeline(new KeyFrame(Duration.seconds(1), _e ->
@@ -196,7 +205,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		intLeaderboardCtrl.displayScores();
 
 		primaryStage.setTitle("Intermediate Scene");
-		primaryStage.setScene(this.mainCtrl.getIntermediateLeaderboardScreen());
+		primaryScene.setRoot(this.mainCtrl.getIntermediateLeaderboardScreen());
 
 		// This timeline will execute on another thread - run the count-down timer.
 		intLeaderboardCtrl.setProgress(1f);
@@ -226,7 +235,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	@Override
-	public Scene getScene() {
+	public Parent getScene() {
 		return this.mainCtrl.getMultiplayerQuestionScreen();
 	}
 
@@ -263,6 +272,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * Uses the joker.
 	 */
 	public void useDoublePoints() {
+		this.server.send(this.createWebSocketURL(this.gameId),
+				new MessageModel("[Joker] Double Points",
+						this.player.getNickname()));
 		this.hideJoker(this.doublePointsPane);
 		this.mainCtrl.setDoublePointsUsed(1);
 	}
