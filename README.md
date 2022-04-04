@@ -52,9 +52,10 @@ The game includes two game modes:
 
 ## How to run it
 - In order to run it you just need to install gradle and run the application by typing *gradle run*
-- There is a default server, but you can join whichever you like by adding a config file where you specify the IP of the server
+- There is a default server, but you can join whichever you like by adding a config file where you specify the IP of the server.
+- The config file needs to be placed in the repository folder, and you name it just *quizzzz.config*
 
 ## How to contribute to it
-Everybody is free to download the whole game and develop. Ones you want to contribute you can contact everyone of the developers so that they can discuss with everybody else the changes made to the project
+Everybody is free to download the whole game and develop. Once you want to contribute you can contact every one of the developers so that they can discuss with everybody else the changes made to the project
 
 ## Copyright / License (opt.)
