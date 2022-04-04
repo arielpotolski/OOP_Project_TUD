@@ -103,7 +103,7 @@ public class WaitingScreenCtrl {
 				"/message/receive/" + this.port,
 				MessageModel.class,
 				messageModel -> this.mainCtrl.renderTheMessageInTheChatBox(
-					messageModel.getMessage()
+					messageModel.getMessage(), messageModel.getNickname()
 				)
 			);
 			this.mainCtrl.setGameIdInMultiplayerQuestionScreen(this.port);
