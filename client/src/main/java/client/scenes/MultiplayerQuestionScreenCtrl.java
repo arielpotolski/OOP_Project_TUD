@@ -87,7 +87,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		String message = this.textFieldChat.getText();
 		this.server.send(
 			this.createWebSocketURL(this.gameId),
-			new MessageModel(message, this.player.getNickName())
+			new MessageModel(message, this.player.getNickname())
 		);
 	}
 
@@ -96,7 +96,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		String emoji = (String) node.getUserData();
 		this.server.send(
 			this.createWebSocketURL(this.gameId),
-			new MessageModel(emoji, this.player.getNickName())
+			new MessageModel(emoji, this.player.getNickname())
 		);
 	}
 

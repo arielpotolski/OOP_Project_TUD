@@ -23,12 +23,12 @@ public class Player {
 	@SuppressWarnings("unused")
 	public Player() {} // For object mapper
 
-	public int getPoint() {
+	public int getPoints() {
 		return this.points;
 	}
 
-	public void setPoint(int point) {
-		this.points = point;
+	public void setPoints(int points) {
+		this.points = points;
 	}
 
 	public Player(String nickname, int points) {
@@ -36,7 +36,7 @@ public class Player {
 		this.points = points;
 	}
 
-	public String getNickName() {
+	public String getNickname() {
 		return this.nickname;
 	}
 

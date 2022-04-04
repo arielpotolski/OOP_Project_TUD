@@ -70,8 +70,6 @@ public class ServerUtilsTest {
 						.withRequestBody(
 								equalToJson("{\n" +
 										"\"id\": 0,\n" +
-										"\"nickName\": \"Dimitar\",\n" +
-										"\"point\": 986,\n" +
 										"\"nickname\": \"Dimitar\",\n" +
 										"\"points\": 986\n" +
 										"}")
@@ -190,7 +188,7 @@ public class ServerUtilsTest {
 				"    }]");
 		this.mockServer.stubFor(get("/api/players/").willReturn(this.response));
 		assertEquals("Dimitar",
-				this.serverUtils.getPlayers().get(0).getNickName());
+				this.serverUtils.getPlayers().get(0).getNickname());
 	}
 
 	@Test

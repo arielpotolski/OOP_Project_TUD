@@ -24,24 +24,24 @@ public class PlayerTest {
 
 	@Test
 	void getPoint() {
-		assertEquals(989, this.player.getPoint());
+		assertEquals(989, this.player.getPoints());
 	}
 
 	@Test
 	void setPoint() {
-		this.player.setPoint(976);
-		assertEquals(976, this.player.getPoint());
+		this.player.setPoints(976);
+		assertEquals(976, this.player.getPoints());
 	}
 
 	@Test
 	void getNickname() {
-		assertEquals("Dimitar", this.player.getNickName());
+		assertEquals("Dimitar", this.player.getNickname());
 	}
 
 	@Test
 	void setNickname() {
 		this.player.setNickname("Doko");
-		assertEquals("Doko", this.player.getNickName());
+		assertEquals("Doko", this.player.getNickname());
 	}
 
 	@Test

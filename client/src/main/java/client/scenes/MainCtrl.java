@@ -640,7 +640,7 @@ public class MainCtrl {
 	 * This method shows the final screen.
 	 */
 	public void showSinglePlayerFinalScreen() {
-		this.singlePlayerFinalSceneCtrl.setTotalScore(this.player.getPoint());
+		this.singlePlayerFinalSceneCtrl.setTotalScore(this.player.getPoints());
 		this.singlePlayerFinalSceneCtrl.setCorrectAnswers(this.numberOfCorrectAnswers);
 		this.singlePlayerFinalSceneCtrl.addPlayer(this.player);
 		this.primaryStage.setTitle("Final Score");
@@ -688,7 +688,7 @@ public class MainCtrl {
 			);
 
 			// Set the point for the player
-			this.player.setPoint(this.player.getPoint() + this.currentPoints);
+			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 
 			// If the player clicked on the correct answer,
 			// number of correct answers would be increased.
@@ -705,7 +705,7 @@ public class MainCtrl {
 				this.doublePointsUsed == 1
 			);
 
-			this.player.setPoint(this.player.getPoint() + this.currentPoints);
+			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 
 			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
 					== highConsumptionQuestion.returnEnergyConsumption(button.getText())) {
@@ -718,7 +718,7 @@ public class MainCtrl {
 				timePassed,
 				this.doublePointsUsed == 1
 			);
-			this.player.setPoint(this.player.getPoint() + this.currentPoints);
+			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 			if (insteadQuestion.correctAnswer().getConsumptionInWh()
 					== insteadQuestion.returnEnergyConsumption(button.getText())) {
 				this.numberOfCorrectAnswers++;
@@ -730,12 +730,12 @@ public class MainCtrl {
 				timePassed,
 				this.doublePointsUsed == 1
 			);
-			this.player.setPoint(this.player.getPoint() + this.currentPoints);
+			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 		}
 		if (this.doublePointsUsed == 1) {
 			this.doublePointsUsed++;
 		}
-		this.server.getConnection().send(new PointMessage(this.nickname, this.player.getPoint()));
+		this.server.getConnection().send(new PointMessage(this.nickname, this.player.getPoints()));
 		this.showAnswer(screenCtrl);
 	}
 
