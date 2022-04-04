@@ -60,7 +60,7 @@ public class QuestionScreenSinglePlayerCtrl extends QuestionClass implements Ini
 		Scene primaryScene = this.mainCtrl.getPrimaryScene();
 
 		intermediateSceneCtrl.setQuestionAnswer(this.mainCtrl.getNumberOfQuestionsAnswered());
-		intermediateSceneCtrl.setLabelPoint(this.mainCtrl.getPlayer().getPoint());
+		intermediateSceneCtrl.setLabelPoint(this.mainCtrl.getPlayer().getPoints());
 		intermediateSceneCtrl.setCurrentQuestionPointsEarned(this.mainCtrl.getCurrentPoints());
 		primaryStage.setTitle("Intermediate Scene");
 		primaryScene.setRoot(this.mainCtrl.getIntermediateScene());

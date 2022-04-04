@@ -110,6 +110,7 @@ public class WaitingScreenCtrl {
 
 			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.
+			this.mainCtrl.resetNumberOfQuestionsAnswered();
 			this.mainCtrl.showQuestionScreen(false);
 			this.mainCtrl.setUpJokers();
 		} catch (Exception err) {

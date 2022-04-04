@@ -41,7 +41,7 @@ public class QuestionSetController {
 	public List<Question> getAll(@RequestParam long seed) {
 		List<Activity> as = this.repository.findAll();
 		QuestionSet qs = new QuestionSet(as, seed);
-		qs.fillSet(as.size());
+		qs.fillSet(20);
 		return qs.getQuestions();
 	}
 
