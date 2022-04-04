@@ -12,9 +12,9 @@ that every player will become not only more aware of their energy usage but also
 The game includes two game modes:
 #### Single Player
 - Here everybody can play on their own with a new set of questions every time
-- It includes 4 different type of questions
+- It includes 4 different types of questions
   - Multiple Choice Question
-    - In this type of question the player is presented with an activity and three answers out of which only one is correct. They need to answer to this question by clicking on the button with the answer they think is correct
+    - In this type of question the player is presented with an activity and three answers out of which only one is correct. They need to answer this question by clicking on the button with the answer they think is correct
   - Highest Consumption Question
     - In this type of question the user is presented with three different activities. They need to choose which one consumes the most energy
   - Instead Of Question
