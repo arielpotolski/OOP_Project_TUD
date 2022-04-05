@@ -735,7 +735,11 @@ public class MainCtrl {
 		if (this.doublePointsUsed == 1) {
 			this.doublePointsUsed++;
 		}
-		this.server.getConnection().send(new PointMessage(this.nickname, this.player.getPoints()));
+		if (screenCtrl instanceof MultiplayerQuestionScreenCtrl) {
+			this.server.getConnection().send(
+					new PointMessage(this.nickname, this.player.getPoints())
+			);
+		}
 		this.showAnswer(screenCtrl);
 	}
 
@@ -758,6 +762,7 @@ public class MainCtrl {
 	 * @param screenCtrl Screen controller which can be either for singleplayer or for multiplayer.
 	 */
 	private void showAnswer(QuestionClass screenCtrl) {
+		screenCtrl.disableButtons(true);
 		Button button = screenCtrl.getInputButton();
 		TextField textField = screenCtrl.getInputText();
 
@@ -1103,5 +1108,14 @@ public class MainCtrl {
 	 */
 	public Scene getPrimaryScene() {
 		return this.primaryScene;
+	}
+
+	/**
+	 * Reset the number of questions answered
+	 * This is necessary before every new game
+	 */
+	public void resetNumberOfQuestionsAnswered() {
+		this.numberOfCorrectAnswers = 0;
+		this.numberOfQuestionsAnswered = 0;
 	}
 }
