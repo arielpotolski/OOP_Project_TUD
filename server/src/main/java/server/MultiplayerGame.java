@@ -75,19 +75,6 @@ public class MultiplayerGame extends Thread {
 	}
 
 	/**
-	 * Sends a message to all players.
-	 * @param message The message for the players.
-	 * @throws IOException It would happen if there is an issue with the socket.
-	 */
-	private void sendMessageToAllPlayers(Message message) throws IOException {
-		// TODO Handle Exception here if player disconnects bcs if a player
-		//  disconnects then exception
-		for (PlayerConnection player : this.players) {
-			player.connection().send(message);
-		}
-	}
-
-	/**
 	 * Waits for all players from the lobby to create TCP connections to the server.
 	 * @throws IOException When something goes wrong with sockets.
 	 * @throws ClassNotFoundException When receiving an unrecognized message class.
@@ -173,17 +160,37 @@ public class MultiplayerGame extends Thread {
 		this.logger.debug(player.toString() + "sent a joker message");
 		// TODO track if player used joker
 		// TODO handle other stuff
-		this.sendMessageToAllClients(message, Optional.of(player));
+		this.sendMessageToAllPlayers(message, Optional.of(player));
 	}
 
-	private void sendMessageToAllClients(
-		Message message,
-		Optional<PlayerConnection> exclude
-	) throws IOException {
-		for (PlayerConnection player: this.players) {
+	/**
+	 * Sends a message to all players.
+	 * @param message The message for the players.
+	 * @param exclude Optionally exclude a specific player.
+	 */
+	private void sendMessageToAllPlayers(Message message, Optional<PlayerConnection> exclude) {
+		for (PlayerConnection player : this.players) {
 			if (exclude.isEmpty() || exclude.get() != player) {
-				player.connection.send(message);;
+				try {
+					player.connection().send(message);
+				} catch (IOException err) {
+					this.logger.debug(String.format(
+						"Error while sending message to player: %s\n%s",
+						player.name(),
+						err.getMessage()
+					));
+					this.logger.info(String.format("Removing player %s from the game.", player.name()))
+					this.players.remove(player);
+				}
 			}
 		}
+	}
+
+	/**
+	 * Sends a message to all players.
+	 * @param message The message for the players.
+	 */
+	private void sendMessageToAllPlayers(Message message) {
+		this.sendMessageToAllPlayers(message, Optional.empty());
 	}
 }
