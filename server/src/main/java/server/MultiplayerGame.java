@@ -24,7 +24,7 @@ public class MultiplayerGame extends Thread {
 	/**
 	 * A record for storing the information for each player in the game.
 	 */
-	private record Player(Connection connection, String name) {}
+	private record PlayerConnection(Connection connection, String name) {}
 
 	/**
 	 * Information about the players in the lobby.
@@ -38,9 +38,9 @@ public class MultiplayerGame extends Thread {
 	private final HashMap<String, Integer> scores;
 
 	/**
-	 * A list of players in the multiplayer game.
+	 * A list of players and their socket connections.
 	 */
-	private final List<Player> players;
+	private final List<PlayerConnection> players;
 
 	/**
 	 * The TCP socket each client connects to.
@@ -82,7 +82,7 @@ public class MultiplayerGame extends Thread {
 	private void sendMessageToAllPlayers(Message message) throws IOException {
 		// TODO Handle Exception here if player disconnects bcs if a player
 		//  disconnects then exception
-		for (Player player : this.players) {
+		for (PlayerConnection player : this.players) {
 			player.connection().send(message);
 		}
 	}
@@ -118,7 +118,7 @@ public class MultiplayerGame extends Thread {
 			}
 
 			// Save player.
-			this.players.add(new Player(connection, name));
+			this.players.add(new PlayerConnection(connection, name));
 		}
 		this.initializeScore();
 	}
@@ -127,7 +127,7 @@ public class MultiplayerGame extends Thread {
 	 * Initializes everybody's score to 0.
 	 */
 	private void initializeScore() {
-		for (Player player : this.players) {
+		for (PlayerConnection player : this.players) {
 			this.scores.put(player.name(), 0);
 		}
 	}
@@ -136,7 +136,7 @@ public class MultiplayerGame extends Thread {
 	 * Receives a message from the player.
 	 * @param player The sender of the message.
 	 */
-	private void receiveMessageFromThePlayer(Player player) {
+	private void receiveMessageFromThePlayer(PlayerConnection player) {
 		Thread thread = new Thread(() -> {
 			message_loop: while (true) {
 				try {
@@ -169,7 +169,7 @@ public class MultiplayerGame extends Thread {
 		thread.start();
 	}
 
-	private void handleJokerMessage(Player player, JokerMessage message) throws IOException {
+	private void handleJokerMessage(PlayerConnection player, JokerMessage message) throws IOException {
 		this.logger.debug(player.toString() + "sent a joker message");
 		// TODO track if player used joker
 		// TODO handle other stuff
@@ -178,9 +178,9 @@ public class MultiplayerGame extends Thread {
 
 	private void sendMessageToAllClients(
 		Message message,
-		Optional<Player> exclude
+		Optional<PlayerConnection> exclude
 	) throws IOException {
-		for (Player player: this.players) {
+		for (PlayerConnection player: this.players) {
 			if (exclude.isEmpty() || exclude.get() != player) {
 				player.connection.send(message);;
 			}
