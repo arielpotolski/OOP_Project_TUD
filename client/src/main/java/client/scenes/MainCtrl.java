@@ -737,7 +737,7 @@ public class MainCtrl {
 		}
 		if (screenCtrl instanceof MultiplayerQuestionScreenCtrl) {
 			this.server.getConnection().send(
-					new PointMessage(this.nickname, this.player.getPoints())
+				new PointMessage(this.player.getPoints())
 			);
 		}
 		this.showAnswer(screenCtrl);
