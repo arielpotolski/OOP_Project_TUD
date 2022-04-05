@@ -30,7 +30,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PlayerControllerTest {
-
 	@LocalServerPort
 	private Integer port;
 
@@ -66,13 +65,11 @@ class PlayerControllerTest {
 			InterruptedException, TimeoutException {
 		BlockingQueue<MessageModel> blockingQueue = new ArrayBlockingQueue(1);
 
-		this.webSocketStompClient.setMessageConverter(
-				new MappingJackson2MessageConverter());
+		this.webSocketStompClient.setMessageConverter(new MappingJackson2MessageConverter());
 
 		StompSession session = this.webSocketStompClient
 				.connect(String.format("ws://localhost:%d/websocket", this.port),
-						new StompSessionHandlerAdapter() {})
-				.get(1, SECONDS);
+						new StompSessionHandlerAdapter() {}).get(1, SECONDS);
 
 		session.subscribe("/message/receive/1", new StompSessionHandlerAdapter() {
 			@Override
