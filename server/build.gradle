@@ -4,7 +4,9 @@ plugins {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

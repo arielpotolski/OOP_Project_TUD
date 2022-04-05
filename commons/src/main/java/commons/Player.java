@@ -7,8 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 
 @Entity
 public class Player {
@@ -23,20 +21,19 @@ public class Player {
 	private int points;
 
 	@SuppressWarnings("unused")
-	private Player() {
-	} // For object mapper
+	public Player() {} // For object mapper
 
 	public int getPoints() {
 		return this.points;
 	}
 
-	public void setPoints(int point) {
-		this.points = point;
+	public void setPoints(int points) {
+		this.points = points;
 	}
 
-	public Player(String nickname, int Point) {
+	public Player(String nickname, int points) {
 		this.nickname = nickname;
-		this.points = Point;
+		this.points = points;
 	}
 
 	public String getNickname() {
@@ -63,6 +60,10 @@ public class Player {
 
 	@Override
 	public String toString() {
-		return ToStringBuilder.reflectionToString(this, MULTI_LINE_STYLE);
+		return "Player{" +
+				"id=" + this.id +
+				", nickname='" + this.nickname + '\'' +
+				", points=" + this.points +
+				'}';
 	}
 }

@@ -14,6 +14,8 @@ javafx {
 
 
 dependencies {
+
+	implementation 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
 	implementation project(":commons")
 	
 	implementation group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '3.0.3'
@@ -23,9 +25,11 @@ dependencies {
 	implementation group: 'jakarta.activation', name: 'jakarta.activation-api', version: '2.0.1'
 
 	implementation 'com.google.inject:guice:5.0.1'
-	
-	
-	
+
+	testImplementation 'org.mockito:mockito-core:4.1.0'
+	testImplementation "com.github.tomakehurst:wiremock-jre8:2.32.0"
+	testImplementation "com.github.tomakehurst:wiremock-jre8-standalone:2.32.0"
+
 	implementation 'org.openjfx:javafx-controls:17.0.2'
 	implementation 'org.openjfx:javafx-fxml:17.0.2'
 	
