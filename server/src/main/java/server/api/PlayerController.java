@@ -34,7 +34,7 @@ public class PlayerController {
 
 	@PutMapping("/addPlayer")
 	public ResponseEntity<Player> addPlayer(@RequestBody Player player) {
-		if (player == null || nullOrEmpty(player.getNickName())) {
+		if (player == null || nullOrEmpty(player.getNickname())) {
 			return ResponseEntity.badRequest().build();
 		}
 		Player result = this.playerRepository.save(player);
