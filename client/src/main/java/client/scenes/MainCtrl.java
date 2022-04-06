@@ -338,8 +338,12 @@ public class MainCtrl {
 		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
-		this.timeline = new Timeline(new KeyFrame(Duration.seconds(1), _e ->
-			screenCtrl.decreaseProgress(0.1f)
+		this.timeline = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
+			screenCtrl.decreaseProgress(0.1f);
+			if (screenCtrl.getProgress() <= 0) {
+				screenCtrl.disableButtons(true);
+			}
+		}
 		));
 		this.timeline.setOnFinished(_e -> {
 			try {
@@ -353,17 +357,6 @@ public class MainCtrl {
 			}
 		});
 		this.timeline.setCycleCount(10);
-		this.timeline.setOnFinished(_e -> {
-			try {
-				this.updatePoints(
-					screenCtrl.getInputButton(),
-					screenCtrl.getInputText(),
-					screenCtrl
-				);
-			} catch (IOException err) {
-				err.printStackTrace();
-			}
-		});
 		this.timeline.play();
 		this.primaryStage.setTitle("Question");
 
