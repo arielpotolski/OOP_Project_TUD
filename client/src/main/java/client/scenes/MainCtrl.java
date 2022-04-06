@@ -829,15 +829,19 @@ public class MainCtrl {
 			screenCtrl.setVisibleEstimateAnswer(true);
 
 			long answerGiven = Long.MIN_VALUE;
-			if (textField != null && !textField.getText().equals("")) {
-				answerGiven = Long.parseLong(textField.getText());
-				this.currentPoints = estimateQuestion.pointsEarned(
-					1000,
-					answerGiven,
-					screenCtrl.getTimestamp(),
-					this.doublePointsUsed == 2
-				);
-			} else {
+			try {
+				if (textField != null && !textField.getText().equals("")) {
+					answerGiven = Long.parseLong(textField.getText());
+					this.currentPoints = estimateQuestion.pointsEarned(
+							1000,
+							answerGiven,
+							screenCtrl.getTimestamp(),
+							this.doublePointsUsed == 2
+					);
+				} else {
+					this.currentPoints = 0;
+				}
+			} catch (NumberFormatException err) {
 				this.currentPoints = 0;
 			}
 			int stylingPoints = answerGiven != Long.MIN_VALUE ?
