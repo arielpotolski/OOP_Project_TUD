@@ -112,6 +112,8 @@ public class MainCtrl {
 	private Logger logger;
 
 	private static final double JOKER_DECREASE_TIME_PERCENT = 0.5;
+	private static final double SECONDS_FOR_QUESTION = 10.0;
+	private static final double SECONDS_AFTER_QUESTION = 3.0;
 
 	/**
 	 * This counts the amount of times the joker is used and will only give
@@ -338,13 +340,12 @@ public class MainCtrl {
 		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
-		this.timeline = new Timeline(new KeyFrame(Duration.seconds(1), _e -> {
-			screenCtrl.decreaseProgress(0.1f);
+		this.timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), _e -> {
+			screenCtrl.decreaseProgress(0.01 / SECONDS_FOR_QUESTION)
 			if (screenCtrl.getProgress() <= 0) {
 				screenCtrl.disableButtons(true);
 			}
-		}
-		));
+		}));
 		this.timeline.setOnFinished(_e -> {
 			try {
 				this.updatePoints(
@@ -356,7 +357,7 @@ public class MainCtrl {
 				err.printStackTrace();
 			}
 		});
-		this.timeline.setCycleCount(10);
+		this.timeline.setCycleCount((int) Math.round(100.0 * SECONDS_FOR_QUESTION));
 		this.timeline.play();
 		this.primaryStage.setTitle("Question");
 
@@ -758,10 +759,10 @@ public class MainCtrl {
 		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
-		this.timeline = new Timeline(new KeyFrame(Duration.seconds(1), _e ->
-			screenCtrl.decreaseProgress(1 / 3f)
+		this.timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), _e ->
+			screenCtrl.decreaseProgress(0.01 / SECONDS_AFTER_QUESTION)
 		));
-		this.timeline.setCycleCount(3);
+		this.timeline.setCycleCount((int) Math.round(100.0 * SECONDS_AFTER_QUESTION));
 		this.timeline.setOnFinished(_e -> screenCtrl.showIntermediateScene());
 		this.timeline.play();
 
