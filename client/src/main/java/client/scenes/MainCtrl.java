@@ -340,9 +340,12 @@ public class MainCtrl {
 		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
-		this.timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), _e ->
-			screenCtrl.decreaseProgress(0.01 / SECONDS_FOR_QUESTION)
-		));
+		this.timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), _e -> {
+			screenCtrl.decreaseProgress(0.01 / SECONDS_FOR_QUESTION);
+			if (screenCtrl.getProgress() <= 0) {
+				screenCtrl.disableButtons(true);
+			}
+		}));
 		this.timeline.setOnFinished(_e -> {
 			try {
 				this.updatePoints(
