@@ -76,8 +76,10 @@ public class MultiplayerGame extends Thread {
 			this.players.forEach(this::receiveMessageFromThePlayer);
 
 			// Wait until all players have answered 20 questions.
-			while (!this.players.isEmpty() && this.haveAnswered.values().stream().anyMatch((x) -> x < 20))  {
-				// TODO properly
+			while (
+				!this.players.isEmpty()
+				&& this.haveAnswered.values().stream().anyMatch((x) -> x < 20)
+			)  {
 				Thread.sleep(1000);
 			}
 

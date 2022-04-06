@@ -102,7 +102,12 @@ public class LobbyController {
 		player.updateTimestamp();
 
 		return new ResponseEntity<>(
-			new LobbyResponse(this.players.keySet(), id, player.getGameStarted(), player.getPort(), player.getSeed()),
+			new LobbyResponse(
+				this.players.keySet(),
+				id, player.getGameStarted(),
+				player.getPort(),
+				player.getSeed()
+			),
 			HttpStatus.ACCEPTED
 		);
 	}
