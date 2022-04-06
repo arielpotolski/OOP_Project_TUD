@@ -289,6 +289,7 @@ public abstract class QuestionClass {
 	 */
 	public void decreaseProgress(double amount) {
 		this.progress -= amount;
+		this.progress = Math.max(0.0, this.progress);
 		this.progressBarTime.setProgress(this.progress);
 	}
 
