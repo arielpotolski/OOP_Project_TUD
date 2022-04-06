@@ -400,29 +400,29 @@ public class MainCtrl {
 				try {
 					Message message = conn.receive();
 					switch (message.getType()) {
-					case LEADERBOARD:
-						this.intLeaderboardCtrl.setPlayers(
+						case LEADERBOARD -> this.intLeaderboardCtrl.setPlayers(
 							((LeaderboardMessage) message).getPlayers()
 						);
-						break;
-					case JOKER:
-						JokerMessage jokerMessage = (JokerMessage) message;
-						if (jokerMessage.getJokerType() == JokerType.DECREASE) {
-							this.multiplayerQuestionScreenCtrl.decreaseProgress(
-								this.multiplayerQuestionScreenCtrl.getProgress()
-									* JOKER_DECREASE_TIME_PERCENT
-							);
+						case JOKER -> {
+							JokerMessage jokerMessage = (JokerMessage) message;
+							if (jokerMessage.getJokerType() == JokerType.DECREASE) {
+								this.multiplayerQuestionScreenCtrl.decreaseProgress(
+									this.multiplayerQuestionScreenCtrl.getProgress()
+										* JOKER_DECREASE_TIME_PERCENT
+								);
+							}
 						}
-						break;
-					case JOIN:
-					case ERROR:
-						this.logger.error(
+						case ERROR -> this.logger.error(
 							"Received error message: "
-								+ ((ErrorMessage) message).getError()
+							+ ((ErrorMessage) message).getError()
 						);
-						break;
-					case KILLER:
-						return;
+						case KILLER -> {
+							return;
+						}
+						default -> this.logger.error(
+							"Received unexpected message: "
+							+ message
+						);
 					}
 				} catch (Exception err) {
 					err.printStackTrace();
