@@ -841,7 +841,7 @@ public class MainCtrl {
 				this.currentPoints = 0;
 			}
 			int stylingPoints = answerGiven != Long.MIN_VALUE ?
-					this.calculateStylingPoints(answerGiven, (EstimateQuestion) this.question) :
+					calculateStylingPoints(answerGiven, (EstimateQuestion) this.question) :
 					0;
 			if (this.doublePointsUsed == 2) {
 				this.doublePointsUsed++;
@@ -881,7 +881,7 @@ public class MainCtrl {
 	 * @param question the question to which the answer is given to
 	 * @return the styling points deserved
 	 */
-	private int calculateStylingPoints(long answer, EstimateQuestion question) {
+	private static int calculateStylingPoints(long answer, EstimateQuestion question) {
 		double t = question.getActivity().getConsumptionInWh() / (double) answer;
 		double partialPoints = Math.abs(Math.log10(t));
 		return (int) Math.round(1000 / (partialPoints + 1));
