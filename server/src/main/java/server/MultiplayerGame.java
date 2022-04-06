@@ -185,11 +185,12 @@ public class MultiplayerGame extends Thread {
 	/**
 	 * Sends a message to all players.
 	 * @param message The message for the players.
-	 * @param exclude Optionally exclude a specific player.
+	 * @param exclude Exclude a specific player.
+	 *                Pass in `null` if you do not want to exclude any player.
 	 */
-	private void sendMessageToAllPlayers(Message message, Optional<PlayerConnection> exclude) {
+	private void sendMessageToAllPlayers(Message message, PlayerConnection exclude) {
 		for (PlayerConnection player : this.players) {
-			if (exclude.isEmpty() || exclude.get() != player) {
+			if (!player.equals(exclude)) {
 				try {
 					player.connection().send(message);
 				} catch (IOException err) {
@@ -198,8 +199,7 @@ public class MultiplayerGame extends Thread {
 						player.name(),
 						err.getMessage()
 					));
-					this.logger.info(String.format("Removing player %s from the game.", player.name()))
-					this.players.remove(player);
+					this.removePlayer(player);
 				}
 			}
 		}
