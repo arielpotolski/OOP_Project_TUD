@@ -38,10 +38,10 @@ public class QuestionSetController {
 	 * @return The list of returned questions.
 	 */
 	@GetMapping(path = {"", "/"})
-	public List<Question> getAll(@RequestParam long seed) {
+	public List<Question> getQuestions(@RequestParam long seed) {
 		List<Activity> as = this.repository.findAll();
 		QuestionSet qs = new QuestionSet(as, seed);
-		qs.fillSet(Math.min(as.size(), 20));
+		qs.fillSet(20);
 		return qs.getQuestions();
 	}
 
