@@ -5,7 +5,6 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import commons.Connection;
 import commons.messages.ErrorMessage;
@@ -24,7 +23,7 @@ public class MultiplayerGame extends Thread {
 	/**
 	 * A record for storing the information for each player in the game.
 	 */
-	private record Player(Connection connection, String name) {}
+	private record PlayerConnection(Connection connection, String name) {}
 
 	/**
 	 * Information about the players in the lobby.
@@ -38,9 +37,14 @@ public class MultiplayerGame extends Thread {
 	private final HashMap<String, Integer> scores;
 
 	/**
-	 * A list of players in the multiplayer game.
+	 * Hashmap that stores how many questions each player has answered.
 	 */
-	private final List<Player> players;
+	private final HashMap<String, Integer> haveAnswered;
+
+	/**
+	 * A list of players and their socket connections.
+	 */
+	private final List<PlayerConnection> players;
 
 	/**
 	 * The TCP socket each client connects to.
@@ -52,38 +56,39 @@ public class MultiplayerGame extends Thread {
 	 */
 	private final Logger logger;
 
-	public MultiplayerGame(ServerSocket serverSocket, HashMap<String, LobbyPlayer> players) {
+	public MultiplayerGame(
+		ServerSocket serverSocket,
+		HashMap<String, LobbyPlayer> players
+	) {
 		this.serverSocket = serverSocket;
 		this.lobbyPlayers = players;
 		this.players = new ArrayList<>();
 		this.logger = LoggerFactory.getLogger(MultiplayerGame.class);
 		this.scores = new HashMap<>();
+		this.haveAnswered = new HashMap<>();
 	}
 
 	@Override
 	public void run() {
 		try {
 			this.waitForEveryoneToJoin();
+			// Begin a listener thread for each player.
 			this.players.forEach(this::receiveMessageFromThePlayer);
-			// TODO begin game
-			// TODO send out questions to players
-			// TODO track game progress
+
+			// Wait until all players have answered 20 questions.
+			while (
+				!this.players.isEmpty()
+				&& this.haveAnswered.values().stream().anyMatch((x) -> x < 20)
+			)  {
+				Thread.sleep(1000);
+			}
+
+			// Send final leaderboard.
 			this.sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
+			this.logger.info("Game is over, telling all players to stop listening.");
+			this.sendMessageToAllPlayers(new KillerMessage(true));
 		} catch (Exception err) {
 			err.printStackTrace();
-		}
-	}
-
-	/**
-	 * Sends a message to all players.
-	 * @param message The message for the players.
-	 * @throws IOException It would happen if there is an issue with the socket.
-	 */
-	private void sendMessageToAllPlayers(Message message) throws IOException {
-		// TODO Handle Exception here if player disconnects bcs if a player
-		//  disconnects then exception
-		for (Player player : this.players) {
-			player.connection().send(message);
 		}
 	}
 
@@ -118,17 +123,19 @@ public class MultiplayerGame extends Thread {
 			}
 
 			// Save player.
-			this.players.add(new Player(connection, name));
+			this.players.add(new PlayerConnection(connection, name));
 		}
-		this.initializeScore();
+		this.initializeHashMaps();
 	}
 
 	/**
 	 * Initializes everybody's score to 0.
+	 * Initializes every player's number of answered questions to 0.
 	 */
-	private void initializeScore() {
-		for (Player player : this.players) {
+	private void initializeHashMaps() {
+		for (PlayerConnection player : this.players) {
 			this.scores.put(player.name(), 0);
+			this.haveAnswered.put(player.name(), 0);
 		}
 	}
 
@@ -136,54 +143,108 @@ public class MultiplayerGame extends Thread {
 	 * Receives a message from the player.
 	 * @param player The sender of the message.
 	 */
-	private void receiveMessageFromThePlayer(Player player) {
+	private void receiveMessageFromThePlayer(PlayerConnection player) {
 		Thread thread = new Thread(() -> {
 			message_loop: while (true) {
 				try {
 					Message message = player.connection().receive();
+					this.logger.debug(String.format(
+						"Received message (%s) from %s",
+						message.getType().toString(),
+						player.name()
+					));
 					switch (message.getType()) {
 						case JOKER -> this.handleJokerMessage(player, (JokerMessage) message);
-						case POINTS -> {
-							PointMessage current = (PointMessage) message;
-							this.scores.put(
-								current.getName(),
-								current.getPoints() + this.scores.get(player.name())
-							);
-							// Give as argument a copy of the map
-							LeaderboardMessage res = new LeaderboardMessage(
-								new HashMap<>(this.scores)
-							);
-							this.sendMessageToAllPlayers(res);
-						}
+						case POINTS -> this.handlePointMessage(player, (PointMessage) message);
 						case KILLER -> {
-							player.connection().send(new KillerMessage());
-							this.players.remove(player);
+							this.handleKillerMessage(player, (KillerMessage) message);
 							break message_loop;
 						}
+						default -> this.logger.error("Received an unexpected message: " + message);
 					}
 				} catch (IOException | ClassNotFoundException err) {
 					err.printStackTrace();
+					this.removePlayer(player);
+					break message_loop;
 				}
 			}
 		});
 		thread.start();
 	}
 
-	private void handleJokerMessage(Player player, JokerMessage message) throws IOException {
-		this.logger.debug(player.toString() + "sent a joker message");
-		// TODO track if player used joker
-		// TODO handle other stuff
-		this.sendMessageToAllClients(message, Optional.of(player));
+	private void handleJokerMessage(PlayerConnection player, JokerMessage message) {
+		// TODO track who used joker
+		this.sendMessageToAllPlayers(message, player);
 	}
 
-	private void sendMessageToAllClients(
-		Message message,
-		Optional<Player> exclude
-	) throws IOException {
-		for (Player player: this.players) {
-			if (exclude.isEmpty() || exclude.get() != player) {
-				player.connection.send(message);;
+	private void handlePointMessage(PlayerConnection player, PointMessage message) {
+		this.scores.put(
+			player.name(),
+			message.getPoints() + this.scores.get(player.name())
+		);
+		this.haveAnswered.put(
+			player.name(),
+			this.haveAnswered.get(player.name()) + 1
+		);
+		// Send an updated leaderboard to all players.
+		this.sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
+	}
+
+	private void handleKillerMessage(PlayerConnection player, KillerMessage message) {
+		try {
+			// Send back their killer message.
+			if (message.shouldSendBack()) {
+				player.connection().send(new KillerMessage(false));
+			}
+		} catch (IOException err) {
+			// Don't have to do anything. Client is closing anyway.
+			this.logger.debug("Error while sending KillerMessage: " + err.getMessage());
+		}
+		this.removePlayer(player);
+	}
+
+	/**
+	 * Sends a message to all players.
+	 * @param message The message for the players.
+	 * @param exclude Exclude a specific player.
+	 *                Pass in `null` if you do not want to exclude any player.
+	 */
+	private void sendMessageToAllPlayers(Message message, PlayerConnection exclude) {
+		for (PlayerConnection player : this.players) {
+			if (!player.equals(exclude)) {
+				try {
+					player.connection().send(message);
+				} catch (IOException err) {
+					this.logger.debug(String.format(
+						"Error while sending message to player: %s\n%s",
+						player.name(),
+						err.getMessage()
+					));
+					this.removePlayer(player);
+				}
 			}
 		}
+	}
+
+	/**
+	 * Sends a message to all players.
+	 * @param message The message for the players.
+	 */
+	private void sendMessageToAllPlayers(Message message) {
+		this.sendMessageToAllPlayers(message, null);
+	}
+
+	/**
+	 * Remove a player. Called when a player disconnects or otherwise loses connection.
+	 * @param player PlayerConnection object of the player to remove.
+	 */
+	private void removePlayer(PlayerConnection player) {
+		this.logger.info(
+			String.format("Removing player %s from the game.", player.name())
+		);
+		this.players.remove(player);
+		this.haveAnswered.remove(player.name());
+		// Uncomment the line below if scores should also be removed when a player leaves.
+		// this.scores.remove(player.name());
 	}
 }

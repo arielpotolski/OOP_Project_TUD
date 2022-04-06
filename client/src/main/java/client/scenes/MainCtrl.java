@@ -39,7 +39,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -264,7 +263,7 @@ public class MainCtrl {
 				event.consume();
 			} else if (this.server != null && this.server.getConnection() != null){
 				try {
-					this.server.getConnection().send(new KillerMessage());
+					this.server.getConnection().send(new KillerMessage(true));
 				} catch (IOException err) {
 					err.printStackTrace();
 				}
@@ -400,29 +399,32 @@ public class MainCtrl {
 				try {
 					Message message = conn.receive();
 					switch (message.getType()) {
-					case LEADERBOARD:
-						this.intLeaderboardCtrl.setPlayers(
+						case LEADERBOARD -> this.intLeaderboardCtrl.setPlayers(
 							((LeaderboardMessage) message).getPlayers()
 						);
-						break;
-					case JOKER:
-						JokerMessage jokerMessage = (JokerMessage) message;
-						if (jokerMessage.getJokerType() == JokerType.DECREASE) {
-							this.multiplayerQuestionScreenCtrl.decreaseProgress(
-								this.multiplayerQuestionScreenCtrl.getProgress()
-									* JOKER_DECREASE_TIME_PERCENT
-							);
+						case JOKER -> {
+							JokerMessage jokerMessage = (JokerMessage) message;
+							if (jokerMessage.getJokerType() == JokerType.DECREASE) {
+								this.multiplayerQuestionScreenCtrl.decreaseProgress(
+									this.multiplayerQuestionScreenCtrl.getProgress()
+										* JOKER_DECREASE_TIME_PERCENT
+								);
+							}
 						}
-						break;
-					case JOIN:
-					case ERROR:
-						this.logger.error(
+						case ERROR -> this.logger.error(
 							"Received error message: "
-								+ ((ErrorMessage) message).getError()
+							+ ((ErrorMessage) message).getError()
 						);
-						break;
-					case KILLER:
-						return;
+						case KILLER -> {
+							if (((KillerMessage) message).shouldSendBack()) {
+								this.getServer().getConnection().send(new KillerMessage(false));
+							}
+							return;
+						}
+						default -> this.logger.error(
+							"Received unexpected message: "
+							+ message
+						);
 					}
 				} catch (Exception err) {
 					err.printStackTrace();
@@ -649,14 +651,6 @@ public class MainCtrl {
 	}
 
 	/**
-	 * This method shows the final screen for multiplayer.
-	 */
-	public void showMultiPlayerFinalScreen() {
-		// TODO show final screen for multiplayer
-		throw new NotImplementedException();
-	}
-
-	/**
 	 * This method reveals the answer after the player clicked on the button.
 	 * @param button The button.
 	 * @param textField The text field.
@@ -737,7 +731,7 @@ public class MainCtrl {
 		}
 		if (screenCtrl instanceof MultiplayerQuestionScreenCtrl) {
 			this.server.getConnection().send(
-					new PointMessage(this.nickname, this.player.getPoints())
+				new PointMessage(this.player.getPoints())
 			);
 		}
 		this.showAnswer(screenCtrl);
@@ -931,7 +925,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * Getter method for the singleplayer pre game controller controller.
+	 * Getter method for the singleplayer pre game controller.
 	 * @return The singleplayer pre game controller.
 	 */
 	public SinglePlayerPreGameCtrl getSinglePlayerPreGameCtrl() {

@@ -5,12 +5,14 @@ public class LobbyPlayer {
 	private long timestamp;
 	private boolean gameStarted;
 	private int port;
+	private int seed;
 
 	public LobbyPlayer(int id) {
 		this.id = id;
 		this.timestamp = System.currentTimeMillis();
 		this.gameStarted = false;
 		this.port = -1;
+		this.seed = -1;
 	}
 
 	public void updateTimestamp() {
@@ -23,6 +25,10 @@ public class LobbyPlayer {
 
 	public void setGamePort(int port) {
 		this.port = port;
+	}
+
+	public void setSeed(int seed) {
+		this.seed = seed;
 	}
 
 	public int getId() {
@@ -39,5 +45,9 @@ public class LobbyPlayer {
 
 	public int getPort() {
 		return this.port;
+	}
+
+	public int getSeed() {
+		return this.seed;
 	}
 }

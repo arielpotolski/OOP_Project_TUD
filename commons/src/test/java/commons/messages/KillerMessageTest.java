@@ -7,7 +7,7 @@ public class KillerMessageTest {
 
 	@Test
 	void getType() {
-		KillerMessage message = new KillerMessage();
+		KillerMessage message = new KillerMessage(true);
 		assertEquals(MessageType.KILLER, message.getType());
 	}
 }

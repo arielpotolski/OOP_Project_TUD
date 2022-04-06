@@ -241,7 +241,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	@Override
 	public void showFinalScreen() {
-		this.mainCtrl.showMultiPlayerFinalScreen();
+		this.mainCtrl.showTopPlayersLeaderboard();
 	}
 
 	private String createWebSocketURL(Integer gameId) {

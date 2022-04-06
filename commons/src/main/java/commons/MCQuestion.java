@@ -81,8 +81,6 @@ public class MCQuestion extends Question{
 	private long generateAnswer(long seed) {
 		long result;
 		Random random = new Random(seed);
-		System.out.println("seed");
-		System.out.println(seed);
 		do {
 			// At random principle answer is generated and this answer is of the same magnitude
 			// At least in most of the time

@@ -54,8 +54,6 @@ public class MultiplayerPreGameCtrl {
 		this.setNickname();
 		ServerUtils serverUtils = this.mainCtrl.getServer();
 
-		serverUtils.setSession(serverUtils.connect());
-
 		Optional<LobbyResponse> maybeResponse;
 		try {
 			maybeResponse = serverUtils.connectToLobby(this.mainCtrl.getNickname());
@@ -71,6 +69,7 @@ public class MultiplayerPreGameCtrl {
 		}
 
 		if (maybeResponse.isPresent()) {
+			serverUtils.setSession(serverUtils.connect());
 			this.mainCtrl.showWaitingScreen(maybeResponse.get());
 		} else {
 			// Tell user the name is already taken.

@@ -10,17 +10,12 @@ public class PointMessageTest {
 
 	@BeforeEach
 	void setUp() {
-		this.message = new PointMessage("Dimitar", 1200);
+		this.message = new PointMessage(1200);
 	}
 
 	@Test
 	void getType() {
 		assertEquals(MessageType.POINTS, this.message.getType());
-	}
-
-	@Test
-	void getName() {
-		assertEquals("Dimitar", this.message.getName());
 	}
 
 	@Test
