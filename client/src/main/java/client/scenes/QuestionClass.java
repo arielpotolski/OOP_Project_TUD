@@ -394,9 +394,7 @@ public abstract class QuestionClass {
 	public void eliminateAnswer() throws IOException{
 		int correctAnswer = this.mainCtrl.getAnswer();
 		String color = "-fx-background-color: #808080; -fx-background-radius: 15;";
-
 		this.eliminateAnswerHelper(correctAnswer, color);
-
 	}
 
 	/**

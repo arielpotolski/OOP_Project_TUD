@@ -34,6 +34,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -437,6 +438,14 @@ public class MainCtrl {
 	}
 
 	/**
+	 * Getter for the current question.
+	 * @return The current question being displayed.
+	 */
+	public Question getQuestion() {
+		return this.question;
+	}
+
+	/**
 	 * This method sets up the multiple choice question.
 	 * @param question Multiple choice question.
 	 * @param screenCtrl The screen controller which handles the task.
@@ -447,6 +456,7 @@ public class MainCtrl {
 		QuestionClass screenCtrl
 	) throws IOException {
 		this.hideTextFieldAndRevealButtons(screenCtrl);
+		this.makeEliminateAnswerJokerGrey(false);
 
 		// Set up label for the question and answers.
 		String questionText = question.getActivity().getTitle();
@@ -472,6 +482,8 @@ public class MainCtrl {
 		QuestionClass screenCtrl
 	) throws IOException {
 		this.hideTextFieldAndRevealButtons(screenCtrl);
+		this.makeEliminateAnswerJokerGrey(false);
+
 		// Set up label for the question and answers
 		String questionText = question.getQuestionActivity().getTitle();
 		screenCtrl.setUpLabel(questionText);
@@ -503,6 +515,7 @@ public class MainCtrl {
 		QuestionClass screenCtrl
 	) throws IOException {
 		this.hideTextFieldAndRevealButtons(screenCtrl);
+		this.makeEliminateAnswerJokerGrey(false);
 
 		// Set up label for the question and answers.
 		String questionText = "Which one of these activities consumes the most energy?";
@@ -545,6 +558,8 @@ public class MainCtrl {
 	) throws IOException {
 		String questionText = question.getActivityTitle();
 		screenCtrl.setUpLabel(questionText);
+
+		this.makeEliminateAnswerJokerGrey(true);
 
 		this.clearImages(screenCtrl);
 		screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
@@ -1105,5 +1120,43 @@ public class MainCtrl {
 	public void resetNumberOfQuestionsAnswered() {
 		this.numberOfCorrectAnswers = 0;
 		this.numberOfQuestionsAnswered = 0;
+	}
+
+	/**
+	 * This method makes the eliminateAnswerJoker grey when the question is an
+	 * instance of the EstimateQuestion class, and back to its normal colors
+	 * when the question is an instance of other question types.
+	 * @param disable True when the question is an EstimateQuestion. False otherwise.
+	 */
+	public void makeEliminateAnswerJokerGrey(boolean disable) {
+		if (disable) {
+			this.eliminateAnswerJokerGreyHelper("#808080", "#808080", "#808080");
+		} else {
+			this.eliminateAnswerJokerGreyHelper("#5b9ad5", "#e71717", "#c3e2ff");
+		}
+	}
+
+	/**
+	 * This method is a helper for the makeEliminateAnswerJokerGrey one, and handles
+	 * the actual change of colors.
+	 * @param butColor The color of the mini buttons inside the ellipse.
+	 * @param lineColor The color of the mini line inside one of the buttons.
+	 * @param ellipseColor The color of the ellipse.
+	 */
+	public void eliminateAnswerJokerGreyHelper(
+		String butColor,
+		String lineColor,
+		String ellipseColor
+	) {
+		this.multiplayerQuestionScreenCtrl.eliminateAnswerJoker
+				.setFill(Paint.valueOf(ellipseColor));
+		this.multiplayerQuestionScreenCtrl.elAnswerButton1
+				.setStyle("-fx-background-color:" + butColor + "; -fx-background-radius: 15;");
+		this.multiplayerQuestionScreenCtrl.elAnswerButton2
+				.setStyle("-fx-background-color:" + butColor + "; -fx-background-radius: 15;");
+		this.multiplayerQuestionScreenCtrl.elAnswerButton3
+				.setStyle("-fx-background-color:" + butColor + "; -fx-background-radius: 15;");
+		this.multiplayerQuestionScreenCtrl.elAnswerLine
+				.setStroke(Paint.valueOf(lineColor));
 	}
 }

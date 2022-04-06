@@ -181,22 +181,22 @@
                   <Pane fx:id="eliminateAnswerPane" prefHeight="100.0" prefWidth="300.0">
                      <children>
                         <Ellipse fx:id="eliminateAnswerJoker" fill="#c3e2ff" layoutX="47.0" layoutY="50.0" onMouseClicked="#eliminateIncorrectAnswer" radiusX="33.0" radiusY="21.0" stroke="BLACK" strokeType="INSIDE" />
-                        <Button layoutX="27.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#eliminateIncorrectAnswer" prefHeight="4.0" prefWidth="18.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
+                        <Button fx:id="elAnswerButton3" layoutX="27.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#eliminateIncorrectAnswer" prefHeight="4.0" prefWidth="18.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
                            <font>
                               <Font name="Calibri" size="3.0" />
                            </font>
                         </Button>
-                        <Button layoutX="37.0" layoutY="53.0" mnemonicParsing="false" onMouseClicked="#eliminateIncorrectAnswer" prefHeight="4.0" prefWidth="18.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
+                        <Button fx:id="elAnswerButton2" layoutX="37.0" layoutY="53.0" mnemonicParsing="false" onMouseClicked="#eliminateIncorrectAnswer" prefHeight="4.0" prefWidth="18.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
                            <font>
                               <Font name="Calibri" size="3.0" />
                            </font>
                         </Button>
-                        <Button layoutX="55.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#eliminateIncorrectAnswer" prefHeight="4.0" prefWidth="18.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
+                        <Button fx:id="elAnswerButton1" layoutX="55.0" layoutY="40.0" mnemonicParsing="false" onMouseClicked="#eliminateIncorrectAnswer" prefHeight="4.0" prefWidth="18.0" style="-fx-background-color: #5b9ad5; -fx-background-radius: 15;" text="Answer 1">
                            <font>
                               <Font name="Calibri" size="3.0" />
                            </font>
                         </Button>
-                        <Line endX="97.00001525878906" endY="-1.399993896484375" layoutX="-53.0" layoutY="47.0" onMouseClicked="#eliminateIncorrectAnswer" startX="81.39997863769531" startY="-6.399993896484375" stroke="#e71717" />
+                        <Line fx:id="elAnswerLine" endX="97.00001525878906" endY="-1.399993896484375" layoutX="-53.0" layoutY="47.0" onMouseClicked="#eliminateIncorrectAnswer" startX="81.39997863769531" startY="-6.399993896484375" stroke="#e71717" />
                      </children>
                   </Pane>
                </children>
