@@ -5,7 +5,6 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 
 import commons.Connection;
 import commons.messages.ErrorMessage;
@@ -38,6 +37,11 @@ public class MultiplayerGame extends Thread {
 	private final HashMap<String, Integer> scores;
 
 	/**
+	 * Hashmap that stores how many questions each player has answered.
+	 */
+	private final HashMap<String, Integer> haveAnswered;
+
+	/**
 	 * A list of players and their socket connections.
 	 */
 	private final List<PlayerConnection> players;
@@ -52,23 +56,35 @@ public class MultiplayerGame extends Thread {
 	 */
 	private final Logger logger;
 
-	public MultiplayerGame(ServerSocket serverSocket, HashMap<String, LobbyPlayer> players) {
+	public MultiplayerGame(
+		ServerSocket serverSocket,
+		HashMap<String, LobbyPlayer> players
+	) {
 		this.serverSocket = serverSocket;
 		this.lobbyPlayers = players;
 		this.players = new ArrayList<>();
 		this.logger = LoggerFactory.getLogger(MultiplayerGame.class);
 		this.scores = new HashMap<>();
+		this.haveAnswered = new HashMap<>();
 	}
 
 	@Override
 	public void run() {
 		try {
 			this.waitForEveryoneToJoin();
+			// Begin a listener thread for each player.
 			this.players.forEach(this::receiveMessageFromThePlayer);
-			// TODO begin game
-			// TODO send out questions to players
-			// TODO track game progress
+
+			// Wait until all players have answered 20 questions.
+			while (!this.players.isEmpty() && this.haveAnswered.values().stream().anyMatch((x) -> x < 20))  {
+				// TODO properly
+				Thread.sleep(1000);
+			}
+
+			// Send final leaderboard.
 			this.sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
+			// Tell all players to stop listening.
+			this.sendMessageToAllPlayers(new KillerMessage(true));
 		} catch (Exception err) {
 			err.printStackTrace();
 		}
@@ -107,15 +123,17 @@ public class MultiplayerGame extends Thread {
 			// Save player.
 			this.players.add(new PlayerConnection(connection, name));
 		}
-		this.initializeScore();
+		this.initializeHashMaps();
 	}
 
 	/**
 	 * Initializes everybody's score to 0.
+	 * Initializes every player's number of answered questions to 0.
 	 */
-	private void initializeScore() {
+	private void initializeHashMaps() {
 		for (PlayerConnection player : this.players) {
 			this.scores.put(player.name(), 0);
+			this.haveAnswered.put(player.name(), 0);
 		}
 	}
 
@@ -145,6 +163,7 @@ public class MultiplayerGame extends Thread {
 				} catch (IOException | ClassNotFoundException err) {
 					err.printStackTrace();
 					this.removePlayer(player);
+					break message_loop;
 				}
 			}
 		});
