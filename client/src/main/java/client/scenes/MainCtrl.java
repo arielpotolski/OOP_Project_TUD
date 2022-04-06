@@ -724,12 +724,16 @@ public class MainCtrl {
 				this.numberOfCorrectAnswers++;
 			}
 		} else if (this.question instanceof EstimateQuestion estimateQuestion) {
-			this.currentPoints = estimateQuestion.pointsEarned(
-				1000,
-				Long.parseLong(textField.getText()),
-				timePassed,
-				this.doublePointsUsed == 1
-			);
+			try {
+				this.currentPoints = estimateQuestion.pointsEarned(
+						1000,
+						Long.parseLong(textField.getText()),
+						timePassed,
+						this.doublePointsUsed == 1
+				);
+			} catch (NumberFormatException err) {
+				this.currentPoints = 0;
+			}
 			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 		}
 		if (this.doublePointsUsed == 1) {
