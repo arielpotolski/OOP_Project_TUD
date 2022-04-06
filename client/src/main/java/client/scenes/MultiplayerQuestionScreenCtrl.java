@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import client.utils.SoundHandler;
+import commons.EstimateQuestion;
 import commons.MessageModel;
 import commons.Player;
 import commons.messages.JokerMessage;
@@ -29,6 +30,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -64,6 +67,21 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	@FXML
 	Pane eliminateAnswerPane;
+
+	@FXML
+	Ellipse eliminateAnswerJoker;
+
+	@FXML
+	Button elAnswerButton1;
+
+	@FXML
+	Button elAnswerButton2;
+
+	@FXML
+	Button elAnswerButton3;
+
+	@FXML
+	Line elAnswerLine;
 
 	@FXML
 	private TextField textFieldChat;
@@ -173,8 +191,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	public void decreaseOtherPlayersTime() throws IOException {
 		SoundHandler.jokerSound();
 		this.server.send(this.createWebSocketURL(this.gameId),
-				new MessageModel("[Joker] Decrease Time",
-						this.player.getNickname()));
+			new MessageModel("[Joker] Decrease Time",
+				this.player.getNickname()));
 		this.server.getConnection().send(new JokerMessage(JokerType.DECREASE));
 		this.hideJoker(this.decreaseTimePane);
 	}
@@ -184,12 +202,14 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * @throws IOException
 	 */
 	public void eliminateIncorrectAnswer() throws IOException {
-		SoundHandler.jokerSound();
-		this.server.send(this.createWebSocketURL(this.gameId),
-				new MessageModel("[Joker] Eliminate Incorrect Answer",
-						this.player.getNickname()));
-		super.eliminateAnswer();
-		this.hideJoker(this.eliminateAnswerPane);
+		if (!(this.mainCtrl.getQuestion() instanceof EstimateQuestion)) {
+			SoundHandler.jokerSound();
+			this.server.send(this.createWebSocketURL(this.gameId),
+					new MessageModel("[Joker] Eliminate Incorrect Answer",
+							this.player.getNickname()));
+			super.eliminateAnswer();
+			this.hideJoker(this.eliminateAnswerPane);
+		}
 	}
 
 	/**

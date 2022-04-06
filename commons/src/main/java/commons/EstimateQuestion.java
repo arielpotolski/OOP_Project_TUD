@@ -67,12 +67,22 @@ public class EstimateQuestion extends Question {
 		double progress,
 		boolean doublePoints
 	) {
-		double t = this.activity.getConsumptionInWh() / (double) answerGiven;
-		double partialPoints = Math.abs(Math.log10(t));
+		int pointsWithoutTiming = this.calculatePointsIfNoTiming(maxPoints, answerGiven);
 		int factor = doublePoints ? 2 : 1;
-		return (int) Math.round(factor * 1000 * progress / (partialPoints + 1));
+		return (int) Math.round(((double) (factor * pointsWithoutTiming)) * progress);
 	}
 
+	/**
+	 * Calculates points if no timing or jokers are considered
+	 * @param maxPoints maximum amount of points
+	 * @param answerGiven the answer given by the player
+	 * @return the points without jokers or time progress
+	 */
+	public int calculatePointsIfNoTiming(int maxPoints, long answerGiven) {
+		double t = this.activity.getConsumptionInWh() / (double) answerGiven;
+		double partialPoints = Math.abs(Math.log10(t));
+		return (int) Math.round((double) maxPoints / (partialPoints + 1));
+	}
 
 	/**
 	 * Compares this question with a given object and determines if they are equal or not.

@@ -35,6 +35,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -113,6 +114,8 @@ public class MainCtrl {
 	private Logger logger;
 
 	private static final double JOKER_DECREASE_TIME_PERCENT = 0.5;
+	private static final double SECONDS_FOR_QUESTION = 10.0;
+	private static final double SECONDS_AFTER_QUESTION = 3.0;
 
 	/**
 	 * This counts the amount of times the joker is used and will only give
@@ -341,9 +344,12 @@ public class MainCtrl {
 		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
-		this.timeline = new Timeline(new KeyFrame(Duration.seconds(1), _e ->
-			screenCtrl.decreaseProgress(0.1f)
-		));
+		this.timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), _e -> {
+			screenCtrl.decreaseProgress(0.01 / SECONDS_FOR_QUESTION);
+			if (screenCtrl.getProgress() <= 0) {
+				screenCtrl.disableButtons(true);
+			}
+		}));
 		this.timeline.setOnFinished(_e -> {
 			try {
 				this.updatePoints(
@@ -355,18 +361,7 @@ public class MainCtrl {
 				err.printStackTrace();
 			}
 		});
-		this.timeline.setCycleCount(10);
-		this.timeline.setOnFinished(_e -> {
-			try {
-				this.updatePoints(
-					screenCtrl.getInputButton(),
-					screenCtrl.getInputText(),
-					screenCtrl
-				);
-			} catch (IOException err) {
-				err.printStackTrace();
-			}
-		});
+		this.timeline.setCycleCount((int) Math.round(100.0 * SECONDS_FOR_QUESTION));
 		this.timeline.play();
 		this.primaryStage.setTitle("Question");
 
@@ -446,6 +441,14 @@ public class MainCtrl {
 	}
 
 	/**
+	 * Getter for the current question.
+	 * @return The current question being displayed.
+	 */
+	public Question getQuestion() {
+		return this.question;
+	}
+
+	/**
 	 * This method sets up the multiple choice question.
 	 * @param question Multiple choice question.
 	 * @param screenCtrl The screen controller which handles the task.
@@ -456,6 +459,7 @@ public class MainCtrl {
 		QuestionClass screenCtrl
 	) throws IOException {
 		this.hideTextFieldAndRevealButtons(screenCtrl);
+		this.makeEliminateAnswerJokerGrey(false);
 
 		// Set up label for the question and answers.
 		String questionText = question.getActivity().getTitle();
@@ -481,6 +485,8 @@ public class MainCtrl {
 		QuestionClass screenCtrl
 	) throws IOException {
 		this.hideTextFieldAndRevealButtons(screenCtrl);
+		this.makeEliminateAnswerJokerGrey(false);
+
 		// Set up label for the question and answers
 		String questionText = question.getQuestionActivity().getTitle();
 		screenCtrl.setUpLabel(questionText);
@@ -512,6 +518,7 @@ public class MainCtrl {
 		QuestionClass screenCtrl
 	) throws IOException {
 		this.hideTextFieldAndRevealButtons(screenCtrl);
+		this.makeEliminateAnswerJokerGrey(false);
 
 		// Set up label for the question and answers.
 		String questionText = "Which one of these activities consumes the most energy?";
@@ -554,6 +561,8 @@ public class MainCtrl {
 	) throws IOException {
 		String questionText = question.getActivityTitle();
 		screenCtrl.setUpLabel(questionText);
+
+		this.makeEliminateAnswerJokerGrey(true);
 
 		this.clearImages(screenCtrl);
 		screenCtrl.setImageQuestionImageView(question.imageInByteArrayQuestion());
@@ -721,12 +730,16 @@ public class MainCtrl {
 				this.numberOfCorrectAnswers++;
 			}
 		} else if (this.question instanceof EstimateQuestion estimateQuestion) {
-			this.currentPoints = estimateQuestion.pointsEarned(
-				1000,
-				Integer.parseInt(textField.getText()),
-				timePassed,
-				this.doublePointsUsed == 1
-			);
+			try {
+				this.currentPoints = estimateQuestion.pointsEarned(
+						1000,
+						Long.parseLong(textField.getText()),
+						timePassed,
+						this.doublePointsUsed == 1
+				);
+			} catch (NumberFormatException err) {
+				this.currentPoints = 0;
+			}
 			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 		}
 		if (this.doublePointsUsed == 1) {
@@ -768,10 +781,10 @@ public class MainCtrl {
 		screenCtrl.setProgress(1f);
 
 		// This timeline will execute on another thread - run the count-down timer.
-		this.timeline = new Timeline(new KeyFrame(Duration.seconds(1), _e ->
-			screenCtrl.decreaseProgress(1 / 3f)
+		this.timeline = new Timeline(new KeyFrame(Duration.seconds(0.01), _e ->
+			screenCtrl.decreaseProgress(0.01 / SECONDS_AFTER_QUESTION)
 		));
-		this.timeline.setCycleCount(3);
+		this.timeline.setCycleCount((int) Math.round(100.0 * SECONDS_AFTER_QUESTION));
 		this.timeline.setOnFinished(_e -> screenCtrl.showIntermediateScene());
 		this.timeline.play();
 
@@ -825,20 +838,26 @@ public class MainCtrl {
 			String message;
 			screenCtrl.setVisibleEstimateAnswer(true);
 
-			if (textField != null && !textField.getText().equals("")) {
-				this.currentPoints = estimateQuestion.pointsEarned(
-					1000,
-					Integer.parseInt(textField.getText()),
-					screenCtrl.getTimestamp(),
-					this.doublePointsUsed == 2
-				);
-			} else {
+			long answerGiven = Long.MIN_VALUE;
+			try {
+				if (textField != null && !textField.getText().equals("")) {
+					answerGiven = Long.parseLong(textField.getText());
+					this.currentPoints = estimateQuestion.pointsEarned(
+							1000,
+							answerGiven,
+							screenCtrl.getTimestamp(),
+							this.doublePointsUsed == 2
+					);
+				} else {
+					this.currentPoints = 0;
+				}
+			} catch (NumberFormatException err) {
 				this.currentPoints = 0;
 			}
-
-			int stylingPoints = this.doublePointsUsed == 1
-				? this.currentPoints / 2
-				: this.currentPoints;
+			int stylingPoints = answerGiven != Long.MIN_VALUE ?
+					((EstimateQuestion) this.question)
+							.calculatePointsIfNoTiming(1000, answerGiven) :
+					0;
 			if (this.doublePointsUsed == 2) {
 				this.doublePointsUsed++;
 			}
@@ -871,7 +890,8 @@ public class MainCtrl {
 		}
 	}
 
-		/**
+
+	/**
 	 * Sets up the jokers in the beginning of the multiplayer game
 	 */
 	public void setUpJokers() {
@@ -1114,5 +1134,43 @@ public class MainCtrl {
 	public void resetNumberOfQuestionsAnswered() {
 		this.numberOfCorrectAnswers = 0;
 		this.numberOfQuestionsAnswered = 0;
+	}
+
+	/**
+	 * This method makes the eliminateAnswerJoker grey when the question is an
+	 * instance of the EstimateQuestion class, and back to its normal colors
+	 * when the question is an instance of other question types.
+	 * @param disable True when the question is an EstimateQuestion. False otherwise.
+	 */
+	public void makeEliminateAnswerJokerGrey(boolean disable) {
+		if (disable) {
+			this.eliminateAnswerJokerGreyHelper("#808080", "#808080", "#808080");
+		} else {
+			this.eliminateAnswerJokerGreyHelper("#5b9ad5", "#e71717", "#c3e2ff");
+		}
+	}
+
+	/**
+	 * This method is a helper for the makeEliminateAnswerJokerGrey one, and handles
+	 * the actual change of colors.
+	 * @param butColor The color of the mini buttons inside the ellipse.
+	 * @param lineColor The color of the mini line inside one of the buttons.
+	 * @param ellipseColor The color of the ellipse.
+	 */
+	public void eliminateAnswerJokerGreyHelper(
+		String butColor,
+		String lineColor,
+		String ellipseColor
+	) {
+		this.multiplayerQuestionScreenCtrl.eliminateAnswerJoker
+				.setFill(Paint.valueOf(ellipseColor));
+		this.multiplayerQuestionScreenCtrl.elAnswerButton1
+				.setStyle("-fx-background-color:" + butColor + "; -fx-background-radius: 15;");
+		this.multiplayerQuestionScreenCtrl.elAnswerButton2
+				.setStyle("-fx-background-color:" + butColor + "; -fx-background-radius: 15;");
+		this.multiplayerQuestionScreenCtrl.elAnswerButton3
+				.setStyle("-fx-background-color:" + butColor + "; -fx-background-radius: 15;");
+		this.multiplayerQuestionScreenCtrl.elAnswerLine
+				.setStroke(Paint.valueOf(lineColor));
 	}
 }
