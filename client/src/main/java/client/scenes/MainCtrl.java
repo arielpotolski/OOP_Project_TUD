@@ -263,7 +263,7 @@ public class MainCtrl {
 				event.consume();
 			} else if (this.server != null && this.server.getConnection() != null){
 				try {
-					this.server.getConnection().send(new KillerMessage());
+					this.server.getConnection().send(new KillerMessage(true));
 				} catch (IOException err) {
 					err.printStackTrace();
 				}
@@ -416,6 +416,9 @@ public class MainCtrl {
 							+ ((ErrorMessage) message).getError()
 						);
 						case KILLER -> {
+							if (((KillerMessage) message).shouldSendBack()) {
+								this.getServer().getConnection().send(new KillerMessage(false));
+							}
 							return;
 						}
 						default -> this.logger.error(
@@ -922,7 +925,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * Getter method for the singleplayer pre game controller controller.
+	 * Getter method for the singleplayer pre game controller.
 	 * @return The singleplayer pre game controller.
 	 */
 	public SinglePlayerPreGameCtrl getSinglePlayerPreGameCtrl() {

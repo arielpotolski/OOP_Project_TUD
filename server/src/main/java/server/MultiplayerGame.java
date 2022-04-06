@@ -128,39 +128,58 @@ public class MultiplayerGame extends Thread {
 			message_loop: while (true) {
 				try {
 					Message message = player.connection().receive();
+					this.logger.debug(String.format(
+						"Received message (%s) from %s",
+						message.getType().toString(),
+						player.name()
+					));
 					switch (message.getType()) {
 						case JOKER -> this.handleJokerMessage(player, (JokerMessage) message);
-						case POINTS -> {
-							PointMessage current = (PointMessage) message;
-							this.scores.put(
-								current.getName(),
-								current.getPoints() + this.scores.get(player.name())
-							);
-							// Give as argument a copy of the map
-							LeaderboardMessage res = new LeaderboardMessage(
-								new HashMap<>(this.scores)
-							);
-							this.sendMessageToAllPlayers(res);
-						}
+						case POINTS -> this.handlePointMessage(player, (PointMessage) message);
 						case KILLER -> {
-							player.connection().send(new KillerMessage());
-							this.players.remove(player);
+							this.handleKillerMessage(player, (KillerMessage) message);
 							break message_loop;
 						}
+						default -> this.logger.error("Received an unexpected message: " + message);
 					}
 				} catch (IOException | ClassNotFoundException err) {
 					err.printStackTrace();
+					this.removePlayer(player);
 				}
 			}
 		});
 		thread.start();
 	}
 
-	private void handleJokerMessage(PlayerConnection player, JokerMessage message) throws IOException {
-		this.logger.debug(player.toString() + "sent a joker message");
-		// TODO track if player used joker
-		// TODO handle other stuff
-		this.sendMessageToAllPlayers(message, Optional.of(player));
+	private void handleJokerMessage(PlayerConnection player, JokerMessage message) {
+		// TODO track who used joker
+		this.sendMessageToAllPlayers(message, player);
+	}
+
+	private void handlePointMessage(PlayerConnection player, PointMessage message) {
+		this.scores.put(
+			player.name(),
+			message.getPoints() + this.scores.get(player.name())
+		);
+		this.haveAnswered.put(
+			player.name(),
+			this.haveAnswered.get(player.name()) + 1
+		);
+		// Send an updated leaderboard to all players.
+		this.sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
+	}
+
+	private void handleKillerMessage(PlayerConnection player, KillerMessage message) {
+		try {
+			// Send back their killer message.
+			if (message.shouldSendBack()) {
+				player.connection().send(new KillerMessage(false));
+			}
+		} catch (IOException err) {
+			// Don't have to do anything. Client is closing anyway.
+			this.logger.debug("Error while sending KillerMessage: " + err.getMessage());
+		}
+		this.removePlayer(player);
 	}
 
 	/**
