@@ -83,7 +83,7 @@ public class MultiplayerGame extends Thread {
 
 			// Send final leaderboard.
 			this.sendMessageToAllPlayers(new LeaderboardMessage(new HashMap<>(this.scores)));
-			// Tell all players to stop listening.
+			this.logger.info("Game is over, telling all players to stop listening.");
 			this.sendMessageToAllPlayers(new KillerMessage(true));
 		} catch (Exception err) {
 			err.printStackTrace();
