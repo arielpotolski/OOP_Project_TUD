@@ -726,7 +726,7 @@ public class MainCtrl {
 		} else if (this.question instanceof EstimateQuestion estimateQuestion) {
 			this.currentPoints = estimateQuestion.pointsEarned(
 				1000,
-				Integer.parseInt(textField.getText()),
+				Long.parseLong(textField.getText()),
 				timePassed,
 				this.doublePointsUsed == 1
 			);
@@ -841,7 +841,8 @@ public class MainCtrl {
 				this.currentPoints = 0;
 			}
 			int stylingPoints = answerGiven != Long.MIN_VALUE ?
-					calculateStylingPoints(answerGiven, (EstimateQuestion) this.question) :
+					((EstimateQuestion) this.question)
+							.calculatePointsIfNoTiming(1000, answerGiven) :
 					0;
 			if (this.doublePointsUsed == 2) {
 				this.doublePointsUsed++;
@@ -875,17 +876,6 @@ public class MainCtrl {
 		}
 	}
 
-	/**
-	 * Calculates styling points for Estimate Question
-	 * @param answer the answer given by the user
-	 * @param question the question to which the answer is given to
-	 * @return the styling points deserved
-	 */
-	private static int calculateStylingPoints(long answer, EstimateQuestion question) {
-		double t = question.getActivity().getConsumptionInWh() / (double) answer;
-		double partialPoints = Math.abs(Math.log10(t));
-		return (int) Math.round(1000 / (partialPoints + 1));
-	}
 
 	/**
 	 * Sets up the jokers in the beginning of the multiplayer game
