@@ -3,6 +3,7 @@ package server;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.HashMap;
+import java.util.Random;
 
 import commons.LobbyResponse;
 
@@ -81,7 +82,7 @@ public class LobbyController {
 		int id = this.getUniqueID();
 		this.players.put(name, new LobbyPlayer(id));
 		return new ResponseEntity<>(
-			new LobbyResponse(this.players.keySet(), id, false, -1),
+			new LobbyResponse(this.players.keySet(), id, false, -1, -1),
 			HttpStatus.ACCEPTED
 		);
 	}
@@ -101,7 +102,7 @@ public class LobbyController {
 		player.updateTimestamp();
 
 		return new ResponseEntity<>(
-			new LobbyResponse(this.players.keySet(), id, player.getGameStarted(), player.getPort()),
+			new LobbyResponse(this.players.keySet(), id, player.getGameStarted(), player.getPort(), player.getSeed()),
 			HttpStatus.ACCEPTED
 		);
 	}
@@ -127,13 +128,15 @@ public class LobbyController {
 		// Set gameStarted to true for all players in the lobby
 		// so that the next time they refresh they know they are
 		// in a game.
+		int seed = new Random().nextInt();
 		for (LobbyPlayer player: this.players.values()) {
 			player.setGameStarted();
 			player.setGamePort(port);
+			player.setSeed(seed);
 		}
 
 		return new ResponseEntity<>(
-			new LobbyResponse(this.players.keySet(), id, true, port),
+			new LobbyResponse(this.players.keySet(), id, true, port, seed),
 			HttpStatus.ACCEPTED
 		);
 	}

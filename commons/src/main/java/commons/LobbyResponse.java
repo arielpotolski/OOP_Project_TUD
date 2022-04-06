@@ -6,5 +6,6 @@ public record LobbyResponse(
 	Set<String> playersInLobby,
 	int playerID,
 	boolean gameStarted,
-	int tcpPort
+	int tcpPort,
+	int seed
 ) {}
