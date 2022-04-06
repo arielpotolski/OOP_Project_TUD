@@ -39,7 +39,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -646,14 +645,6 @@ public class MainCtrl {
 		this.primaryStage.setTitle("Final Score");
 		this.primaryScene.setRoot(this.singlePlayerFinalScene);
 		this.questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
-	}
-
-	/**
-	 * This method shows the final screen for multiplayer.
-	 */
-	public void showMultiPlayerFinalScreen() {
-		// TODO show final screen for multiplayer
-		throw new NotImplementedException();
 	}
 
 	/**
