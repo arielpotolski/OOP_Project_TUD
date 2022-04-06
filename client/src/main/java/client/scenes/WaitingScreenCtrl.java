@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.LobbyResponse;
 import commons.MessageModel;
 import static commons.Utility.contentsEqual;
@@ -126,6 +127,7 @@ public class WaitingScreenCtrl {
 	 * connect to.  (See `beginActiveRefresh()`)
 	 */
 	public void startGame() {
+		SoundHandler.clickSound();
 		this.serverUtils.startMultiplayerGame();
 	}
 }

@@ -9,7 +9,7 @@ application {
 
 javafx {
     version = "17.0.2"
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.media' ]
 }
 
 
@@ -32,5 +32,6 @@ dependencies {
 
 	implementation 'org.openjfx:javafx-controls:17.0.2'
 	implementation 'org.openjfx:javafx-fxml:17.0.2'
+	implementation 'org.openjfx:javafx-media:17.0.2'
 	
 }

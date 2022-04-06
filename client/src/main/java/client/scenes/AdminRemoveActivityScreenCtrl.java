@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.Activity;
 
 import javafx.beans.value.ObservableValue;
@@ -88,6 +89,7 @@ public class AdminRemoveActivityScreenCtrl implements Initializable {
 	 */
 	@FXML
 	private void removeActivity() {
+		SoundHandler.clickSound();
 		String id = this.activityDropdown
 			.getSelectionModel()
 			.getSelectedItem();

@@ -8,6 +8,7 @@ import java.util.Random;
 
 import client.Main;
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.Activity;
 import commons.Connection;
 import commons.EstimateQuestion;
@@ -225,6 +226,8 @@ public class MainCtrl {
 
 		this.showSplashScreen();
 		this.primaryStage.show();
+
+		SoundHandler.playMusic();
 	}
 
 	/**
@@ -868,7 +871,7 @@ public class MainCtrl {
 		}
 	}
 
-	/**
+		/**
 	 * Sets up the jokers in the beginning of the multiplayer game
 	 */
 	public void setUpJokers() {

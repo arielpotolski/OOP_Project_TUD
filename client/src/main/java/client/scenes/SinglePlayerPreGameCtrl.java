@@ -3,6 +3,7 @@ package client.scenes;
 import java.io.IOException;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.Player;
 
 import com.google.inject.Inject;
@@ -35,6 +36,7 @@ public class SinglePlayerPreGameCtrl {
 	 * The method changes the singleplayer pre-game screen to question screen.
 	 */
 	public void changeToQuestionScreen() throws IOException {
+		SoundHandler.clickSound();
 		this.setNickname();
 		this.player = new Player(this.mainCtrl.getNickname(),0);
 		this.mainCtrl.getQuestions();

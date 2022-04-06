@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.Player;
 import commons.PlayerLeaderboard;
 
@@ -90,6 +91,7 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 	 * Jump to the splash screen.
 	 */
 	public void jumpToSplashScreen() {
+		SoundHandler.clickSound();
 		this.mainCtrl.showSplashScreen();
 	}
 }

@@ -1,6 +1,7 @@
 package client.scenes;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.Player;
 
 import com.google.inject.Inject;
@@ -58,6 +59,7 @@ public class SinglePlayerFinalScreenCtrl {
 	 * This method changes the final screen to pre-game screen.
 	 */
 	public void jumpToPreGameScene() {
+		SoundHandler.clickSound();
 		this.mainCtrl.showSinglePlayerPreGameScreen();
 	}
 

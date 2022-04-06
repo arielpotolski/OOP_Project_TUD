@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.MessageModel;
 import commons.Player;
 import commons.messages.JokerMessage;
@@ -92,6 +93,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	public void sendEmoji(ActionEvent event) {
+		SoundHandler.clickSound();
 		Node node = (Node) event.getSource();
 		String emoji = (String) node.getUserData();
 		this.server.send(this.createWebSocketURL(this.gameId),
@@ -169,6 +171,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	}
 
 	public void decreaseOtherPlayersTime() throws IOException {
+		SoundHandler.jokerSound();
 		this.server.send(this.createWebSocketURL(this.gameId),
 				new MessageModel("[Joker] Decrease Time",
 						this.player.getNickname()));
@@ -181,6 +184,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * @throws IOException
 	 */
 	public void eliminateIncorrectAnswer() throws IOException {
+		SoundHandler.jokerSound();
 		this.server.send(this.createWebSocketURL(this.gameId),
 				new MessageModel("[Joker] Eliminate Incorrect Answer",
 						this.player.getNickname()));
@@ -272,6 +276,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	 * Uses the joker.
 	 */
 	public void useDoublePoints() {
+		SoundHandler.jokerSound();
 		this.server.send(this.createWebSocketURL(this.gameId),
 				new MessageModel("[Joker] Double Points",
 						this.player.getNickname()));

@@ -1,5 +1,7 @@
 package client.scenes;
 
+import client.utils.SoundHandler;
+
 import javafx.fxml.FXML;
 import javax.inject.Inject;
 
@@ -12,6 +14,7 @@ public record AdminInterfaceScreenCtrl(MainCtrl mainCtrl) {
 	 */
 	@FXML
 	private void jumpToSplashScreen() {
+		SoundHandler.clickSound();
 		this.mainCtrl.showSplashScreen();
 	}
 
@@ -20,6 +23,7 @@ public record AdminInterfaceScreenCtrl(MainCtrl mainCtrl) {
 	 */
 	@FXML
 	private void jumpToAddActivityScreen() {
+		SoundHandler.clickSound();
 		this.mainCtrl.showAdminAddActivityScreen();
 	}
 
@@ -28,6 +32,7 @@ public record AdminInterfaceScreenCtrl(MainCtrl mainCtrl) {
 	 */
 	@FXML
 	private void jumpToRemoveActivityScreen() {
+		SoundHandler.clickSound();
 		this.mainCtrl.showAdminRemoveActivityScreen();
 	}
 
@@ -36,6 +41,7 @@ public record AdminInterfaceScreenCtrl(MainCtrl mainCtrl) {
 	 */
 	@FXML
 	private void jumpToEditActivityScreen() {
+		SoundHandler.clickSound();
 		this.mainCtrl.showAdminEditActivityScreen();
 	}
 }
