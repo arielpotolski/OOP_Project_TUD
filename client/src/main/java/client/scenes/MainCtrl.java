@@ -828,20 +828,21 @@ public class MainCtrl {
 			String message;
 			screenCtrl.setVisibleEstimateAnswer(true);
 
+			long answerGiven = Long.MIN_VALUE;
 			if (textField != null && !textField.getText().equals("")) {
+				answerGiven = Long.parseLong(textField.getText());
 				this.currentPoints = estimateQuestion.pointsEarned(
 					1000,
-					Integer.parseInt(textField.getText()),
+					answerGiven,
 					screenCtrl.getTimestamp(),
 					this.doublePointsUsed == 2
 				);
 			} else {
 				this.currentPoints = 0;
 			}
-
-			int stylingPoints = this.doublePointsUsed == 1
-				? this.currentPoints / 2
-				: this.currentPoints;
+			int stylingPoints = answerGiven != Long.MIN_VALUE ?
+					this.calculateStylingPoints(answerGiven, (EstimateQuestion) this.question) :
+					0;
 			if (this.doublePointsUsed == 2) {
 				this.doublePointsUsed++;
 			}
@@ -872,6 +873,18 @@ public class MainCtrl {
 				textField.clear();
 			}
 		}
+	}
+
+	/**
+	 * Calculates styling points for Estimate Question
+	 * @param answer the answer given by the user
+	 * @param question the question to which the answer is given to
+	 * @return the styling points deserved
+	 */
+	private int calculateStylingPoints(long answer, EstimateQuestion question) {
+		double t = question.getActivity().getConsumptionInWh() / (double) answer;
+		double partialPoints = Math.abs(Math.log10(t));
+		return (int) Math.round(1000 / (partialPoints + 1));
 	}
 
 	/**
