@@ -210,6 +210,20 @@ public class MultiplayerGame extends Thread {
 	 * @param message The message for the players.
 	 */
 	private void sendMessageToAllPlayers(Message message) {
-		this.sendMessageToAllPlayers(message, Optional.empty());
+		this.sendMessageToAllPlayers(message, null);
+	}
+
+	/**
+	 * Remove a player. Called when a player disconnects or otherwise loses connection.
+	 * @param player PlayerConnection object of the player to remove.
+	 */
+	private void removePlayer(PlayerConnection player) {
+		this.logger.info(
+			String.format("Removing player %s from the game.", player.name())
+		);
+		this.players.remove(player);
+		this.haveAnswered.remove(player.name());
+		// Uncomment the line below if scores should also be removed when a player leaves.
+		// this.scores.remove(player.name());
 	}
 }
