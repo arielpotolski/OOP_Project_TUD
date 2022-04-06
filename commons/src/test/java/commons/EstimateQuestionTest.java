@@ -26,6 +26,7 @@ public class EstimateQuestionTest {
 	@Test
 	public void constructor(){
 		assertNotNull(this.question);
+		assertNotNull(new EstimateQuestion());
 	}
 
 	@Test
@@ -60,6 +61,8 @@ public class EstimateQuestionTest {
 		Activity activity2 = new Activity("456", "act2", 1000, "pathpng2", "second site");
 		EstimateQuestion o = new EstimateQuestion(activity2);
 		assertNotEquals(this.question, o);
+		assertEquals(o, o);
+		assertNotEquals(null, o);
 	}
 
 	@Test
@@ -76,5 +79,10 @@ public class EstimateQuestionTest {
 		ImageIO.write(bufferedImage, "jpg", bos);
 
 		assertArrayEquals(bos.toByteArray(), this.question.imageInByteArrayQuestion());
+	}
+
+	@Test
+	public void getActivity() {
+		assertEquals(this.activity, this.question.getActivity());
 	}
 }

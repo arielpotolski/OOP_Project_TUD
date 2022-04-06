@@ -22,6 +22,7 @@ public class WaitingScreenCtrl {
 	private ServerUtils serverUtils;
 	private static final long REFRESH_DELAY = 500;
 	private int port;
+	private int seed;
 
 	@FXML
 	private AnchorPane peopleInTheLeaderBoardPane;
@@ -58,6 +59,7 @@ public class WaitingScreenCtrl {
 					LobbyResponse response = maybeLobbyResponse.get();
 					gameStarted = response.gameStarted();
 					this.port = response.tcpPort();
+					this.seed = response.seed();
 
 					/* Refresh the list of users in the lobby.  It's important to remember to clear
 					 * the list every loop as if you don't you end up with an infinitely growing
@@ -96,7 +98,7 @@ public class WaitingScreenCtrl {
 			this.serverUtils.makeConnection(this.port);
 
 			// Set the same unique seed to all players inside the lobby.
-			this.mainCtrl.setSeed(this.port);
+			this.mainCtrl.setSeed(this.seed);
 			this.mainCtrl.getQuestions();
 
 			this.serverUtils.registerForMessages(
@@ -110,6 +112,7 @@ public class WaitingScreenCtrl {
 
 			this.mainCtrl.startMessageReceiverThread();
 			// Move to game screen.
+			this.mainCtrl.resetNumberOfQuestionsAnswered();
 			this.mainCtrl.showQuestionScreen(false);
 			this.mainCtrl.setUpJokers();
 		} catch (Exception err) {

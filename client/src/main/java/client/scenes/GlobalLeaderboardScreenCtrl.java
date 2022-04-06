@@ -1,34 +1,36 @@
 package client.scenes;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
 import commons.Player;
+import commons.PlayerLeaderboard;
 
 import com.google.inject.Inject;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListView;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.shape.Polygon;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 public class GlobalLeaderboardScreenCtrl implements Initializable {
 	private final MainCtrl mainCtrl;
 	private final ServerUtils server;
 
 	@FXML
-	private Polygon backArrow;
+	private TableView<PlayerLeaderboard> leaderboard;
 
 	@FXML
-	private AnchorPane leaderboard;
+	private TableColumn<PlayerLeaderboard, Integer> position;
 
 	@FXML
-	private ScrollPane scrollPane;
+	private TableColumn<PlayerLeaderboard, String> name;
 
 	@FXML
-	private ListView<Player> listView;
+	private TableColumn<PlayerLeaderboard,  Integer> points;
 
 	/**
 	 * Constructor for global leader board controllers.
@@ -47,18 +49,41 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 	 */
 	@Override
 	public void initialize(URL _location, ResourceBundle _resources) {
-		this.scrollPane.prefWidthProperty().bind(this.listView.widthProperty());
-		this.scrollPane.prefHeightProperty().bind(this.listView.heightProperty());
-		this.scrollPane.setContent(this.listView);
-		this.scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-		this.scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+		this.position.setCellValueFactory(
+				new PropertyValueFactory<PlayerLeaderboard, Integer>("position")
+		);
+		this.name.setCellValueFactory(
+				new PropertyValueFactory<PlayerLeaderboard, String>("name")
+		);
+		this.points.setCellValueFactory(
+				new PropertyValueFactory<PlayerLeaderboard, Integer>("points")
+		);
+
+		this.leaderboard.getItems().setAll(this.getItems());
 	}
 
 	/**
 	 * This method helps for updating the list view after a new player finished his/her game.
+	 *
+	 * @return a list with all the players
 	 */
-	public void getItems() {
-		this.listView.getItems().addAll(this.server.getPlayers());
+	public List<PlayerLeaderboard> getItems() {
+		List<PlayerLeaderboard> listOfLeaderboard = new ArrayList<PlayerLeaderboard>();
+		List<Player> listOfPlayers = this.server
+				.getPlayers()
+				.stream()
+				.sorted((_u, _v) -> Integer.compare(_v.getPoints(), _u.getPoints()))
+				.toList();
+		for (int i = 0;i < listOfPlayers.size(); ++i) {
+			Player player = listOfPlayers.get(i);
+			listOfLeaderboard.add(new PlayerLeaderboard(
+					i + 1,
+					player.getNickname(),
+					player.getPoints()
+			));
+		}
+
+		return listOfLeaderboard;
 	}
 
 	/**

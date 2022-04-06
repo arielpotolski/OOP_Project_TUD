@@ -15,14 +15,17 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 public class QuestionSetControllerTest {
 	private QuestionSetController qsc = new QuestionSetController(new DummyActivityRepository());
 
+	/**
+	 * Check that we get 20 questions even when there are fewer activities.
+	 */
 	@Test
-	void getAll() throws IOException {
+	void getQuestionsTest() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
 
-		assertEquals(this.qsc.getAll(0).size(), 2);
+		assertEquals(this.qsc.getQuestions(0).size(), 20);
 	}
 
 	/**
@@ -30,13 +33,13 @@ public class QuestionSetControllerTest {
 	 * @throws IOException
 	 */
 	@Test
-	void getAll2() throws IOException {
+	void getQuestionsSameSeed() throws IOException {
 		this.qsc.addActivities(List.of(
 				new Activity("42", "42", 42, "42", "42"),
 				new Activity("69", "69", 69, "69", "69")
 		));
 
-		assertEquals(this.qsc.getAll(404), this.qsc.getAll(404));
+		assertEquals(this.qsc.getQuestions(404), this.qsc.getQuestions(404));
 	}
 
 	/**
@@ -44,7 +47,7 @@ public class QuestionSetControllerTest {
 	 * @throws IOException
 	 */
 	@Test
-	void getAll3() throws IOException {
+	void getQuestionsSameSeedMoreActivities() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69"),
@@ -52,7 +55,7 @@ public class QuestionSetControllerTest {
 			new Activity("701034", "701034", 701034, "701034", "701034")
 		));
 
-		assertEquals(this.qsc.getAll(404), this.qsc.getAll(404));
+		assertEquals(this.qsc.getQuestions(404), this.qsc.getQuestions(404));
 	}
 
 	/**
@@ -60,7 +63,7 @@ public class QuestionSetControllerTest {
 	 * @throws IOException
 	 */
 	@Test
-	void getAll4() throws IOException {
+	void getQuestionsDifferentSeeds() throws IOException {
 		this.qsc.addActivities(List.of(
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69"),
@@ -68,7 +71,7 @@ public class QuestionSetControllerTest {
 			new Activity("701034", "701034", 701034, "701034", "701034")
 		));
 
-		assertNotEquals(this.qsc.getAll(404), this.qsc.getAll(1));
+		assertNotEquals(this.qsc.getQuestions(404), this.qsc.getQuestions(1));
 	}
 
 	/**
@@ -264,9 +267,7 @@ public class QuestionSetControllerTest {
 	/**
 	 * Assert that deleting an activity by ID when the activity actually exists results in a 200 OK
 	 * and removes the activity.  To check that the activity was removed, we just check the size of
-	 * the return value of `getAll()' as there is no method to get a list of activities.  Also, we
-	 * can't check the individual activities for the reasons laid out in the comment in the test
-	 * for `getAll()' at the top of this file.
+	 * the return value of `getActivities()'.
 	 */
 	@Test
 	void deleteByIdValid() throws IOException {
@@ -274,9 +275,9 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertEquals(this.qsc.getAll(0).size(), 2);
+		assertEquals(this.qsc.getActivities().size(), 2);
 		assertResponseEquals(HttpStatus.OK, this.qsc.deleteById("69"));
-		assertEquals(this.qsc.getAll(0).size(), 1);
+		assertEquals(this.qsc.getActivities().size(), 1);
 	}
 
 	/**
@@ -289,9 +290,9 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertEquals(this.qsc.getAll(0).size(), 2);
+		assertEquals(this.qsc.getActivities().size(), 2);
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.deleteById("1337"));
-		assertEquals(this.qsc.getAll(0).size(), 2);
+		assertEquals(this.qsc.getActivities().size(), 2);
 	}
 
 	/**
@@ -303,9 +304,9 @@ public class QuestionSetControllerTest {
 			new Activity("42", "42", 42, "42", "42"),
 			new Activity("69", "69", 69, "69", "69")
 		));
-		assertEquals(this.qsc.getAll(0).size(), 2);
+		assertEquals(this.qsc.getActivities().size(), 2);
 		assertResponseEquals(HttpStatus.BAD_REQUEST, this.qsc.deleteById(null));
-		assertEquals(this.qsc.getAll(0).size(), 2);
+		assertEquals(this.qsc.getActivities().size(), 2);
 	}
 
 	/**

@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ActivityTest {
 	private Activity activity1;
@@ -144,5 +145,10 @@ class ActivityTest {
 		ImageIO.write(bufferedImage, "jpg", bos);
 		this.activity1.setImageInArray(new byte[] {0, 1});
 		assertArrayEquals(new byte[] {0, 1}, this.activity1.getImageInArray());
+	}
+
+	@Test
+	void isValid() {
+		assertTrue(this.activity1.isValid());
 	}
 }

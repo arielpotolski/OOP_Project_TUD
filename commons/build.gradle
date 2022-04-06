@@ -1,6 +1,8 @@
 
 
 dependencies {
+
+	implementation 'io.github.ricall.junit5-wiremock:junit5-wiremock:2.0.0'
 	implementation group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '2.2.3'
 	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.13.1'
 }

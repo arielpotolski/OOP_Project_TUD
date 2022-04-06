@@ -67,6 +67,7 @@ public class IntLeaderboardCtrl implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		this.timeUntilNextQuestion.setStyle("-fx-accent: #00FF00");
+		this.players = new HashMap<>();
 	}
 
 	/**

@@ -39,7 +39,6 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import javafx.util.Pair;
-import org.apache.commons.lang3.NotImplementedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -264,7 +263,7 @@ public class MainCtrl {
 				event.consume();
 			} else if (this.server != null && this.server.getConnection() != null){
 				try {
-					this.server.getConnection().send(new KillerMessage());
+					this.server.getConnection().send(new KillerMessage(true));
 				} catch (IOException err) {
 					err.printStackTrace();
 				}
@@ -400,29 +399,32 @@ public class MainCtrl {
 				try {
 					Message message = conn.receive();
 					switch (message.getType()) {
-					case LEADERBOARD:
-						this.intLeaderboardCtrl.setPlayers(
+						case LEADERBOARD -> this.intLeaderboardCtrl.setPlayers(
 							((LeaderboardMessage) message).getPlayers()
 						);
-						break;
-					case JOKER:
-						JokerMessage jokerMessage = (JokerMessage) message;
-						if (jokerMessage.getJokerType() == JokerType.DECREASE) {
-							this.multiplayerQuestionScreenCtrl.decreaseProgress(
-								this.multiplayerQuestionScreenCtrl.getProgress()
-									* JOKER_DECREASE_TIME_PERCENT
-							);
+						case JOKER -> {
+							JokerMessage jokerMessage = (JokerMessage) message;
+							if (jokerMessage.getJokerType() == JokerType.DECREASE) {
+								this.multiplayerQuestionScreenCtrl.decreaseProgress(
+									this.multiplayerQuestionScreenCtrl.getProgress()
+										* JOKER_DECREASE_TIME_PERCENT
+								);
+							}
 						}
-						break;
-					case JOIN:
-					case ERROR:
-						this.logger.error(
+						case ERROR -> this.logger.error(
 							"Received error message: "
-								+ ((ErrorMessage) message).getError()
+							+ ((ErrorMessage) message).getError()
 						);
-						break;
-					case KILLER:
-						return;
+						case KILLER -> {
+							if (((KillerMessage) message).shouldSendBack()) {
+								this.getServer().getConnection().send(new KillerMessage(false));
+							}
+							return;
+						}
+						default -> this.logger.error(
+							"Received unexpected message: "
+							+ message
+						);
 					}
 				} catch (Exception err) {
 					err.printStackTrace();
@@ -640,20 +642,12 @@ public class MainCtrl {
 	 * This method shows the final screen.
 	 */
 	public void showSinglePlayerFinalScreen() {
-		this.singlePlayerFinalSceneCtrl.setTotalScore(this.player.getPoint());
+		this.singlePlayerFinalSceneCtrl.setTotalScore(this.player.getPoints());
 		this.singlePlayerFinalSceneCtrl.setCorrectAnswers(this.numberOfCorrectAnswers);
 		this.singlePlayerFinalSceneCtrl.addPlayer(this.player);
 		this.primaryStage.setTitle("Final Score");
 		this.primaryScene.setRoot(this.singlePlayerFinalScene);
 		this.questionScreenSinglePlayerCtrl.setVisibleEstimateAnswer(false);
-	}
-
-	/**
-	 * This method shows the final screen for multiplayer.
-	 */
-	public void showMultiPlayerFinalScreen() {
-		// TODO show final screen for multiplayer
-		throw new NotImplementedException();
 	}
 
 	/**
@@ -688,7 +682,7 @@ public class MainCtrl {
 			);
 
 			// Set the point for the player
-			this.player.setPoint(this.player.getPoint() + this.currentPoints);
+			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 
 			// If the player clicked on the correct answer,
 			// number of correct answers would be increased.
@@ -705,7 +699,7 @@ public class MainCtrl {
 				this.doublePointsUsed == 1
 			);
 
-			this.player.setPoint(this.player.getPoint() + this.currentPoints);
+			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 
 			if (highConsumptionQuestion.getCorrectAnswer().getConsumptionInWh()
 					== highConsumptionQuestion.returnEnergyConsumption(button.getText())) {
@@ -718,7 +712,7 @@ public class MainCtrl {
 				timePassed,
 				this.doublePointsUsed == 1
 			);
-			this.player.setPoint(this.player.getPoint() + this.currentPoints);
+			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 			if (insteadQuestion.correctAnswer().getConsumptionInWh()
 					== insteadQuestion.returnEnergyConsumption(button.getText())) {
 				this.numberOfCorrectAnswers++;
@@ -730,12 +724,16 @@ public class MainCtrl {
 				timePassed,
 				this.doublePointsUsed == 1
 			);
-			this.player.setPoint(this.player.getPoint() + this.currentPoints);
+			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 		}
 		if (this.doublePointsUsed == 1) {
 			this.doublePointsUsed++;
 		}
-		this.server.getConnection().send(new PointMessage(this.nickname, this.player.getPoint()));
+		if (screenCtrl instanceof MultiplayerQuestionScreenCtrl) {
+			this.server.getConnection().send(
+				new PointMessage(this.player.getPoints())
+			);
+		}
 		this.showAnswer(screenCtrl);
 	}
 
@@ -758,6 +756,7 @@ public class MainCtrl {
 	 * @param screenCtrl Screen controller which can be either for singleplayer or for multiplayer.
 	 */
 	private void showAnswer(QuestionClass screenCtrl) {
+		screenCtrl.disableButtons(true);
 		Button button = screenCtrl.getInputButton();
 		TextField textField = screenCtrl.getInputText();
 
@@ -926,7 +925,7 @@ public class MainCtrl {
 	}
 
 	/**
-	 * Getter method for the singleplayer pre game controller controller.
+	 * Getter method for the singleplayer pre game controller.
 	 * @return The singleplayer pre game controller.
 	 */
 	public SinglePlayerPreGameCtrl getSinglePlayerPreGameCtrl() {
@@ -1103,5 +1102,14 @@ public class MainCtrl {
 	 */
 	public Scene getPrimaryScene() {
 		return this.primaryScene;
+	}
+
+	/**
+	 * Reset the number of questions answered
+	 * This is necessary before every new game
+	 */
+	public void resetNumberOfQuestionsAnswered() {
+		this.numberOfCorrectAnswers = 0;
+		this.numberOfQuestionsAnswered = 0;
 	}
 }
