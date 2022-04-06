@@ -82,6 +82,12 @@ public class EstimateQuestionTest {
 	}
 
 	@Test
+	public void calculatePointsWithoutTime() {
+		int result = this.question.calculatePointsIfNoTiming(1000, 100);
+		assertEquals(500, result);
+	}
+
+	@Test
 	public void getActivity() {
 		assertEquals(this.activity, this.question.getActivity());
 	}

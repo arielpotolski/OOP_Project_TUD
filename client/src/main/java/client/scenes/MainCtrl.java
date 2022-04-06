@@ -727,12 +727,16 @@ public class MainCtrl {
 				this.numberOfCorrectAnswers++;
 			}
 		} else if (this.question instanceof EstimateQuestion estimateQuestion) {
-			this.currentPoints = estimateQuestion.pointsEarned(
-				1000,
-				Integer.parseInt(textField.getText()),
-				timePassed,
-				this.doublePointsUsed == 1
-			);
+			try {
+				this.currentPoints = estimateQuestion.pointsEarned(
+						1000,
+						Long.parseLong(textField.getText()),
+						timePassed,
+						this.doublePointsUsed == 1
+				);
+			} catch (NumberFormatException err) {
+				this.currentPoints = 0;
+			}
 			this.player.setPoints(this.player.getPoints() + this.currentPoints);
 		}
 		if (this.doublePointsUsed == 1) {
@@ -831,20 +835,26 @@ public class MainCtrl {
 			String message;
 			screenCtrl.setVisibleEstimateAnswer(true);
 
-			if (textField != null && !textField.getText().equals("")) {
-				this.currentPoints = estimateQuestion.pointsEarned(
-					1000,
-					Integer.parseInt(textField.getText()),
-					screenCtrl.getTimestamp(),
-					this.doublePointsUsed == 2
-				);
-			} else {
+			long answerGiven = Long.MIN_VALUE;
+			try {
+				if (textField != null && !textField.getText().equals("")) {
+					answerGiven = Long.parseLong(textField.getText());
+					this.currentPoints = estimateQuestion.pointsEarned(
+							1000,
+							answerGiven,
+							screenCtrl.getTimestamp(),
+							this.doublePointsUsed == 2
+					);
+				} else {
+					this.currentPoints = 0;
+				}
+			} catch (NumberFormatException err) {
 				this.currentPoints = 0;
 			}
-
-			int stylingPoints = this.doublePointsUsed == 1
-				? this.currentPoints / 2
-				: this.currentPoints;
+			int stylingPoints = answerGiven != Long.MIN_VALUE ?
+					((EstimateQuestion) this.question)
+							.calculatePointsIfNoTiming(1000, answerGiven) :
+					0;
 			if (this.doublePointsUsed == 2) {
 				this.doublePointsUsed++;
 			}
@@ -876,6 +886,7 @@ public class MainCtrl {
 			}
 		}
 	}
+
 
 	/**
 	 * Sets up the jokers in the beginning of the multiplayer game

@@ -90,6 +90,7 @@ public abstract class QuestionClass {
 	 * @param event The player click on the button.
 	 */
 	public void answerReturn(ActionEvent event) throws IOException {
+		if (this.textField != null) this.textField.setVisible(false);
 		String color = "-fx-background-color: #f0dca5; -fx-background-radius: 15;";
 		Object source = event.getSource();
 		this.mainCtrl.clearButtons(this);
