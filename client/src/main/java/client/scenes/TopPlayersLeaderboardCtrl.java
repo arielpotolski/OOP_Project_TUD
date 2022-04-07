@@ -22,6 +22,9 @@ public class TopPlayersLeaderboardCtrl {
 	private Polygon backArrow;
 
 	@FXML
+	private Label back;
+
+	@FXML
 	private Polygon crown;
 
 	@FXML
