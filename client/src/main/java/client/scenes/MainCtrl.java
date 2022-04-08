@@ -2,6 +2,7 @@ package client.scenes;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -1069,6 +1070,7 @@ public class MainCtrl {
 				.map(Map.Entry::getKey)
 				.toList()
 		);
+		Collections.reverse(players);
 		// Make sure there are enough players so that we don't get an exception
 		if (players.size() < 3) {
 			players.add("...");
