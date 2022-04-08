@@ -645,7 +645,7 @@ public class MainCtrl {
 	 * This method shows the global leader board screen.
 	 */
 	public void showGlobalLeaderboardScreen() {
-		this.globalLeaderboardScreenCtrl.getItems();
+		this.globalLeaderboardScreenCtrl.updateGlobalLeaderBoard();
 		this.primaryStage.setTitle("Leaderboard");
 		this.primaryScene.setRoot(this.globalLeaderboard);
 	}
