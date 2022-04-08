@@ -23,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -88,6 +89,9 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 	@FXML
 	private VBox vBox;
+
+	@FXML
+	private ScrollPane scrollPane;
 
 	private Player player;
 
@@ -302,6 +306,17 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 				this.player.getNickname()));
 		this.hideJoker(this.doublePointsPane);
 		this.mainCtrl.setDoublePointsUsed(1);
+	}
+
+	/**
+	 * Clears the chat box for the new game
+	 */
+	public void clearMessages() {
+		this.vBox = null;
+		this.vBox = new VBox();
+		this.vBox.setPrefHeight(184);
+		this.vBox.setPrefWidth(157);
+		this.scrollPane.setContent(this.vBox);
 	}
 
 	/**
