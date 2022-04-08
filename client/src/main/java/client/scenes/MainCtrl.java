@@ -1,8 +1,11 @@
 package client.scenes;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -1065,6 +1068,23 @@ public class MainCtrl {
 	 * of the top 3 players.
 	 */
 	public void showTopPlayersLeaderboard() {
+		List<String> players = new ArrayList<>(
+			this.intLeaderboardCtrl
+				.getPlayers()
+				.entrySet()
+				.stream()
+				.sorted(Map.Entry.comparingByValue())
+				.map(Map.Entry::getKey)
+				.toList()
+		);
+		Collections.reverse(players);
+		// Make sure there are enough players so that we don't get an exception
+		if (players.size() < 3) {
+			players.add("...");
+			players.add("...");
+			players.add("...");
+		}
+		this.topPlayersLeaderboardCtrl.setNames(players.get(0), players.get(1), players.get(2));
 		this.primaryStage.setTitle("Final Leaderboard");
 		this.primaryScene.setRoot(this.topPlayersLeaderboard);
 	}
