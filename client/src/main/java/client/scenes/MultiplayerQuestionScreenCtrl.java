@@ -298,8 +298,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 	public void useDoublePoints() {
 		SoundHandler.jokerSound();
 		this.server.send(this.createWebSocketURL(this.gameId),
-				new MessageModel("[Joker] Double Points",
-						this.player.getNickname()));
+			new MessageModel("[Joker] Double Points",
+				this.player.getNickname()));
 		this.hideJoker(this.doublePointsPane);
 		this.mainCtrl.setDoublePointsUsed(1);
 	}
