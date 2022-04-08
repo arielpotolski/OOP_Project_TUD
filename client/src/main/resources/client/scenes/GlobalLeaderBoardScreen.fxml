@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Polygon?>
-<?import javafx.scene.shape.SVGPath?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.GlobalLeaderboardScreenCtrl">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #DEEAF6;" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.scenes.GlobalLeaderboardScreenCtrl">
     <HBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="200.0" AnchorPane.bottomAnchor="-1.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="-1.0" AnchorPane.topAnchor="-1.0">
         <VBox prefHeight="200.0" prefWidth="100.0" />
         <VBox alignment="CENTER" prefHeight="602.0" prefWidth="685.0" spacing="35.0">
@@ -44,7 +37,7 @@
         <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
             <Pane prefHeight="200.0" prefWidth="200.0">
                 <Polygon accessibleRole="BUTTON" fill="DODGERBLUE" layoutX="-199.0" layoutY="-12.0" onMouseClicked="#jumpToSplashScreen" points="240.800048828125, 152.79998779296875, 209.60003662109375, 174.80001831054688, 240.800048828125, 196.60003662109375, 240.800048828125, 185.60003662109375, 289.60003662109375, 185.60003662109375, 289.60003662109375, 164.0, 240.800048828125, 164.0" scaleX="-1.0" stroke="BLACK" strokeType="INSIDE" />
-                <Label alignment="CENTER" layoutX="11.0" layoutY="151.0" onMouseClicked="#jumpToSplashScreen" prefHeight="17.0" prefWidth="53.0" text="Back">
+                <Label alignment="CENTER" layoutX="11.0" layoutY="151.0" onMouseClicked="#jumpToSplashScreen" prefHeight="17.0" prefWidth="53.0" text="back">
                     <font>
                         <Font name="Calibri Bold" size="18.0" />
                     </font>
