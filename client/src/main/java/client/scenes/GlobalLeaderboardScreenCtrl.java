@@ -59,7 +59,9 @@ public class GlobalLeaderboardScreenCtrl implements Initializable {
 		this.points.setCellValueFactory(
 				new PropertyValueFactory<PlayerLeaderboard, Integer>("points")
 		);
+	}
 
+	public void updateGlobalLeaderBoard() {
 		this.leaderboard.getItems().setAll(this.getItems());
 	}
 
