@@ -313,6 +313,13 @@ public class MainCtrl {
 	}
 
 	/**
+	 * Clears the chat box
+	 */
+	public void clearMessages() {
+		this.multiplayerQuestionScreenCtrl.clearMessages();
+	}
+
+	/**
 	 * This method shows up the question screen in single player mode.
 	 * @param isSingleplayer Whether the current game mode is single player or not.
 	 */
