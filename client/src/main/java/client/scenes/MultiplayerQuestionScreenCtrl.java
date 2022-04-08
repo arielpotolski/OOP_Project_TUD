@@ -205,8 +205,8 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 		if (!(this.mainCtrl.getQuestion() instanceof EstimateQuestion)) {
 			SoundHandler.jokerSound();
 			this.server.send(this.createWebSocketURL(this.gameId),
-					new MessageModel("[Joker] Eliminate Incorrect Answer",
-							this.player.getNickname()));
+				new MessageModel("[Joker] Eliminate Incorrect Answer",
+					this.player.getNickname()));
 			super.eliminateAnswer();
 			this.hideJoker(this.eliminateAnswerPane);
 		}
