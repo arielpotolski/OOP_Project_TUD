@@ -8,6 +8,7 @@ import java.util.Random;
 
 import client.Main;
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.Activity;
 import commons.Connection;
 import commons.EstimateQuestion;
@@ -228,6 +229,8 @@ public class MainCtrl {
 
 		this.showSplashScreen();
 		this.primaryStage.show();
+
+		SoundHandler.playMusic();
 	}
 
 	/**

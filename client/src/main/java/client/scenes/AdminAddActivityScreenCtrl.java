@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.Activity;
 
 import javafx.fxml.FXML;
@@ -58,6 +59,7 @@ public class AdminAddActivityScreenCtrl {
 		 * characters lowercase, and remove all symbols.
 		 */
 		long consumption;
+		SoundHandler.clickSound();
 		String title = this.activityTitle.getText();
 		String imagePath = this.activityImagePath.getText();
 		String source = this.activitySource.getText();

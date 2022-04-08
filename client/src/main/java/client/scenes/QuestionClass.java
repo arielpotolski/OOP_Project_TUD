@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Random;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.Player;
 import static commons.Utility.isNumeric;
 
@@ -91,6 +92,8 @@ public abstract class QuestionClass {
 	 */
 	public void answerReturn(ActionEvent event) throws IOException {
 		if (this.textField != null) this.textField.setVisible(false);
+		SoundHandler.clickSound();
+
 		String color = "-fx-background-color: #f0dca5; -fx-background-radius: 15;";
 		Object source = event.getSource();
 		this.mainCtrl.clearButtons(this);

@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.Activity;
 
 import javafx.beans.value.ObservableValue;
@@ -105,6 +106,7 @@ public class AdminEditActivityScreenCtrl implements Initializable {
 		 * title, imagePath, source). The consumption is handled afterwards;
 		 */
 		long consumption;
+		SoundHandler.clickSound();
 		String activityString = this.activityData.getText();
 		String[] activityInfo = activityString.split("\n");
 		String id = activityInfo[0].split(": ", 2)[1];

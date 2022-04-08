@@ -3,6 +3,7 @@ package client.scenes;
 import java.util.Optional;
 
 import client.utils.ServerUtils;
+import client.utils.SoundHandler;
 import commons.LobbyResponse;
 import commons.Player;
 
@@ -51,6 +52,7 @@ public class MultiplayerPreGameCtrl {
 	 * of MainCtrl and moves to the waiting screen.
 	 */
 	public void joinLobby() {
+		SoundHandler.clickSound();
 		this.setNickname();
 		ServerUtils serverUtils = this.mainCtrl.getServer();
 
