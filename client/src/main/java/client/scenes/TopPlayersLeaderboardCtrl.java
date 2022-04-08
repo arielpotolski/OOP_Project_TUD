@@ -50,4 +50,10 @@ public class TopPlayersLeaderboardCtrl {
 	public void jumpToSplashScreen() {
 		this.mainCtrl.showSplashScreen();
 	}
+
+	public void setNames(String first, String second, String third) {
+		this.nicknameFirst.setText(first);
+		this.nicknameSecond.setText(second);
+		this.nicknameThird.setText(third);
+	}
 }

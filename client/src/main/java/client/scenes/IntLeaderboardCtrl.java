@@ -36,6 +36,10 @@ public class IntLeaderboardCtrl implements Initializable {
 		this.players = players;
 	}
 
+	public HashMap<String, Integer> getPlayers() {
+		return new HashMap<>(this.players);
+	}
+
 	/**
 	 * Displays the scores of the players in a barchart
 	 */
