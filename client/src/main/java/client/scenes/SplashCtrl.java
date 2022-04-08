@@ -3,7 +3,6 @@ package client.scenes;
 import client.utils.SoundHandler;
 
 import com.google.inject.Inject;
-import org.apache.commons.lang3.NotImplementedException;
 
 public record SplashCtrl(MainCtrl mainCtrl) {
 	/**
