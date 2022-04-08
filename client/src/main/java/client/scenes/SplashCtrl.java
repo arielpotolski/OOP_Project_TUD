@@ -33,8 +33,4 @@ public record SplashCtrl(MainCtrl mainCtrl) {
 		this.mainCtrl.showAdminInterfaceScreen();
 	}
 
-	public void showHelp() {
-		// TODO
-		throw new NotImplementedException();
-	}
 }
