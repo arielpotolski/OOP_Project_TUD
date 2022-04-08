@@ -146,7 +146,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 
 		text.setFill(Color.color(0.934, 0.945, 0.996));
 		hBox.getChildren().add(textFlow);
-		this.textField.clear();
+		this.textFieldChat.clear();
 		Platform.runLater(() -> this.vBox.getChildren().add(hBox));
 	}
 
@@ -168,7 +168,7 @@ public class MultiplayerQuestionScreenCtrl extends QuestionClass  implements Ini
 			+ ";-fx-background-radius: 20px"
 		);
 		hBox.getChildren().add(textFlow);
-		this.textField.clear();
+		this.textFieldChat.clear();
 		Platform.runLater(() -> this.vBox.getChildren().add(hBox));
 	}
 
