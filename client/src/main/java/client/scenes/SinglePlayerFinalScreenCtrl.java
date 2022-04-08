@@ -77,4 +77,9 @@ public class SinglePlayerFinalScreenCtrl {
 	public void addPlayer(Player player) {
 		this.server.addPlayer(player);
 	}
+
+	public void jumpToMultiplayer() {
+		SoundHandler.clickSound();
+		this.mainCtrl.showMultiplePlayersPreGameScreen();
+	}
 }
